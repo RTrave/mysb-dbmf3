@@ -91,6 +91,11 @@ class MySBModule_dbmf3 {
             array(0,0,0,0),
             5,'','dbmf3');
 
+        MySBPluginHelper::create('dbmf_request','FrontPage',
+            array("request", '', '',''),
+            array(0,0,0,0),
+            5,"dbmf_user",'dbmf3');
+
         $editrole = MySBRole::create('dbmf_editor','Can edit DB entries');
         $editrole->assignToGroup('admin',true);
         $editrole = MySBRole::create('dbmf_user','Can view DB entries',true);
@@ -104,6 +109,7 @@ class MySBModule_dbmf3 {
         MySBRole::delete('dbmf_editor');
 
         //plugins
+        MySBPluginHelper::delete('dbmf_request','dbmf3');
         MySBPluginHelper::delete('addcontact_menutext','dbmf3');
         MySBPluginHelper::delete('dbmfcontact_php','dbmf3');
     }
