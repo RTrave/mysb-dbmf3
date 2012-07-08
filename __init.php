@@ -1,7 +1,7 @@
 <?php
 /***************************************************************************
  *
- *   phpMySandBox/RSVP module - TRoman<abadcafe@free.fr> - 2012
+ *   phpMySandBox/DBMF3 module - TRoman<abadcafe@free.fr> - 2012
  *   This program is free software; you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
  *   the Free Software Foundation; either version 2 of the License', or
@@ -20,7 +20,8 @@ class MySBModule_dbmf3 {
         global $app;
 
         //tables
-        $req = MySBDB::query('CREATE TABLE '.MySB_DBPREFIX.'dbmfcommon ( '.
+        $req = MySBDB::query('CREATE TABLE '.MySB_DBPREFIX.'dbmfcontacts ( '.
+            'id int, '.
             'prefix varchar(32), '.
             'lastname varchar(512), '.
             'firstname varchar(512), '.
@@ -66,7 +67,7 @@ class MySBModule_dbmf3 {
         MySBPluginHelper::delete('dbmforga_useroption','dbmf3');
 
         //tables
-        $req = MySBDB::query('DROP TABLE '.MySB_DBPREFIX.'dbmfcommon',
+        $req = MySBDB::query('DROP TABLE '.MySB_DBPREFIX.'dbmfcontacts',
             "__init.php",
             true, "dbmf3");
         $req = MySBDB::query('DROP TABLE '.MySB_DBPREFIX.'dbmfblocks',
@@ -80,12 +81,31 @@ class MySBModule_dbmf3 {
     public function init1() {
         global $app;
 
+        MySBPluginHelper::create('addcontact_menutext','MenuItem',
+            array("DBMF_topmenu_addcontact", "addcontact", 'DBMF_topmenu_addcontactinfos',''),
+            array(1,0,0,0),
+            4,"dbmf_editor",'dbmf3');
+
+        MySBPluginHelper::create('dbmfcontact_php','Include',
+            array("libraries/contact.php", '', '',''),
+            array(0,0,0,0),
+            5,'','dbmf3');
+
+        $editrole = MySBRole::create('dbmf_editor','Can edit DB entries');
+        $editrole->assignToGroup('admin',true);
+        $editrole = MySBRole::create('dbmf_user','Can view DB entries',true);
+        $editrole->assignToGroup('admin',true);
     }
 
     public function uninit() {
         global $app;
 
+        MySBRole::delete('dbmf_user');
+        MySBRole::delete('dbmf_editor');
+
         //plugins
+        MySBPluginHelper::delete('addcontact_menutext','dbmf3');
+        MySBPluginHelper::delete('dbmfcontact_php','dbmf3');
     }
 
 }
