@@ -27,8 +27,8 @@ class MySBModule_dbmf3 {
             'firstname varchar(512), '.
             'adress_1 varchar(512), '.
             'adress_2 varchar(512), '.
-            'tel_pro varchar(32), '.
-            'tel_dom varchar(32), '.
+            'tel_1 varchar(32), '.
+            'tel_2 varchar(32), '.
             'tel_fax varchar(32), '.
             'mail varchar(512), '.
             'function varchar(512), '.
@@ -40,9 +40,10 @@ class MySBModule_dbmf3 {
             true, "dbmf3");
 
         $req = MySBDB::query('CREATE TABLE '.MySB_DBPREFIX.'dbmfblocks ( '.
-            'bid int not null,  '.
-            'bname varchar(32),  '.
-            'lname varchar(512) )',
+            'id int not null,  '.
+            'name varchar(32),  '.
+            'lname varchar(512), '.
+            'group_id int )',
             "__init.php",
             true, "dbmf3");
 
@@ -90,6 +91,10 @@ class MySBModule_dbmf3 {
             array("libraries/contact.php", '', '',''),
             array(0,0,0,0),
             5,'','dbmf3');
+        MySBPluginHelper::create('dbmfblock_php','Include',
+            array("libraries/block.php", '', '',''),
+            array(0,0,0,0),
+            6,'','dbmf3');
 
         MySBPluginHelper::create('dbmf_request','FrontPage',
             array("request", '', '',''),
@@ -111,6 +116,7 @@ class MySBModule_dbmf3 {
         //plugins
         MySBPluginHelper::delete('dbmf_request','dbmf3');
         MySBPluginHelper::delete('addcontact_menutext','dbmf3');
+        MySBPluginHelper::delete('dbmfblock_php','dbmf3');
         MySBPluginHelper::delete('dbmfcontact_php','dbmf3');
     }
 

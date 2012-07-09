@@ -24,8 +24,8 @@ class MySBDBMFContact extends MySBObject {
     public $firstname = null;
     public $adress_1 = null;
     public $adress_2 = null;
-    public $tel_pro = null;
-    public $tel_dom = null;
+    public $tel_1 = null;
+    public $tel_2 = null;
     public $tel_fax = null;
     public $mail = null;
     public $function = null;
@@ -53,8 +53,8 @@ class MySBDBMFContact extends MySBObject {
         $today = getdate();
         $today_date = $today['year'].'-'.$today['mon'].'-'.$today['mday'].' '.$today['hours'].':'.$today['minutes'].':'.$today['seconds'];
         MySBDB::query('INSERT INTO '.MySB_DBPREFIX.'dbmfcontacts '.
-            '(id, lastname, firstname, date_creat) VALUES '.
-            "(".$cid.", '".$lastname."', '".$firstname."', '".$today_date."' ); ",
+            '(id, lastname, firstname, date_creat, date_modif) VALUES '.
+            "(".$cid.", '".$lastname."', '".$firstname."', '".$today_date."', '".$today_date."' ); ",
             "MySBDBMFContact::create($title,$date,$pass_ids)",
             true, 'dbmf3' );
         $new_contact = new MySBDBMFContact($cid);

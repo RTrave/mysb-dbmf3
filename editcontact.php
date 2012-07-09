@@ -71,12 +71,12 @@ echo '
     <td><textarea name="adress_2" cols="64" rows="3">'.$contact->adress_2.'</textarea></td>
 </tr>
 <tr>
-    <td><b>'._G("DBMF_tel_pro").':</b></td>
-    <td><input type="text" name="tel_pro" size="16" maxlength="16" value="'.$contact->tel_pro.'"></td>
+    <td><b>'._G("DBMF_tel_1").':</b></td>
+    <td><input type="text" name="tel_1" size="16" maxlength="16" value="'.$contact->tel_1.'"></td>
 </tr>
 <tr>
-    <td><b>'._G("DBMF_tel_dom").':</b></td>
-    <td><input type="text" name="tel_dom" size="16" maxlength="16" value="'.$contact->tel_dom.'"></td>
+    <td><b>'._G("DBMF_tel_2").':</b></td>
+    <td><input type="text" name="tel_2" size="16" maxlength="16" value="'.$contact->tel_2.'"></td>
 </tr>
 <tr>
     <td><b>'._G("DBMF_tel_fax").':</b></td>

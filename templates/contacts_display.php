@@ -37,12 +37,12 @@ while($data_print = MySBDB::fetch_array($search_result)) {
     else {$odd='odd';}; 
     echo '
 <tr class='.$odd.'>
-    <td width="24px">
+    <td>
         <a href="javascript:editwinopen(\'index_wom.php?mod=dbmf3&amp;tpl=editcontact&amp;contact_id='.$contact->id.'&amp;mode=screen\',\'contactinfos\')">
         <img src="modules/dbmf3/images/edit_icon24.png" alt="Edition '.$contact->id.'" title="Edition '.$contact->id.'">
         </a>
     </td>
-    <td width="32px">';
+    <td>';
     if($contact->mail!='') 
         echo '
         <a href="mailto:'.$contact->mail.'">
@@ -62,7 +62,7 @@ while($data_print = MySBDB::fetch_array($search_result)) {
         <i>'.$contact->function.'</i><br>'.$contact->organism.'
     </td>
     <td>
-        <i>pro:</i>'.$contact->tel_pro.'<br><i>dom:</i>'.$contact->tel_dom.'
+        <i>'._G('DBMF_tel_1').':</i> '.$contact->tel_1.'<br><i>'._G('DBMF_tel_2').':</i> '.$contact->tel_2.'
     </td>';
     echo '
 </tr>';
