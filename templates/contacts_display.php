@@ -30,7 +30,6 @@ echo '
 </tr>';
 
 $odd = 'odd';
-if ($days_new!='') $days_old = 99999;
 while($data_print = MySBDB::fetch_array($search_result)) {
 
     $contact = new MySBDBMFContact(null,$data_print);
@@ -39,7 +38,7 @@ while($data_print = MySBDB::fetch_array($search_result)) {
     echo '
 <tr class='.$odd.'>
     <td width="24px">
-        <a href="javascript:infoswinopen(\'index_wom.php?mod=dbmf3&amp;tpl=editcontact&amp;contact_id='.$contact->id.'&amp;mode=screen\',\'contactinfos\')">
+        <a href="javascript:editwinopen(\'index_wom.php?mod=dbmf3&amp;tpl=editcontact&amp;contact_id='.$contact->id.'&amp;mode=screen\',\'contactinfos\')">
         <img src="modules/dbmf3/images/edit_icon24.png" alt="Edition '.$contact->id.'" title="Edition '.$contact->id.'">
         </a>
     </td>
@@ -53,8 +52,10 @@ while($data_print = MySBDB::fetch_array($search_result)) {
     </td>
     <td>
         <b>'.$contact->lastname.'</b> '.$contact->firstname;
-    if($days_old!='' OR $days_new!='') 
-        echo '<br><small>'.$days_old_entry.' days old</small>';
+    $date_modif = new MySBDateTime($contact->date_modif);
+    $daysold = $date_modif->getRest();
+    //if($days_old!='' OR $days_new!='') 
+        echo '<br><small>'.sprintf(_G('DBMF_days_old'),$daysold).'</small>';
     echo '
     </td>
     <td>
