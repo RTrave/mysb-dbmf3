@@ -44,10 +44,13 @@ if(isset($_POST['dbmf_request'])) {
 <p>
 '.MySBDB::num_rows($app->dbmf_search_result).' results<br>
 </p>
-<div class="table_support">';
+';
+
+    $app->tpl_dbmf_searchresult = $app->dbmf_search_result;
+    _T('templates/contacts_display.php','dbmf3');
 
     echo '
-</div>';
+';
 }
 
 ?>
