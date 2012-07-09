@@ -46,6 +46,7 @@ if(isset($_POST['contact_edit'])) {
         'comments' => $_POST['comments'],
         'date_modif' => $today_date );
     $contact->update('dbmfcontacts', $contact_datas);
+    $app->pushMessage(_G('DBMF_contact_modified'));
 }
 
 
