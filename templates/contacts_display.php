@@ -19,7 +19,7 @@ $search_result = $app->tpl_dbmf_searchresult;
 
 echo '
 <div class="table_support">
-<table id="render" width="100%"><tbody>';
+<table width="100%"><tbody>';
 
 echo '
 <tr class="title">

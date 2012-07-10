@@ -37,7 +37,7 @@ class MySBModule_dbmf3 {
             'date_modif varchar(32), '.
             'comments varchar(512) )',
             "__init.php",
-            true, "dbmf3");
+            false, "dbmf3");
 
         $req = MySBDB::query('CREATE TABLE '.MySB_DBPREFIX.'dbmfblocks ( '.
             'id int not null,  '.
@@ -45,38 +45,35 @@ class MySBModule_dbmf3 {
             'lname varchar(512), '.
             'group_id int )',
             "__init.php",
-            true, "dbmf3");
+            false, "dbmf3");
 
         $req = MySBDB::query('CREATE TABLE '.MySB_DBPREFIX.'dbmfrouting ( '.
             'id int, '.
             'lname varchar(512) )',
             "__init.php",
-            true, "dbmf3");
+            false, "dbmf3");
 
-        //plugins using tables
-        MySBPluginHelper::create('dbmforga_useroption','UserOption',
-            array("dbmforga", "userorga_form", 'userorga_process',''),
-            array(1,0,0,0),
-            5,"admin",'dbmf3');
+        $req = MySBDB::query('ALTER TABLE '.MySB_DBPREFIX.'groups ADD COLUMN '.
+            'dbmf_priority int',
+            "__init.php",
+            false, "dbmf3");
+
 
     }
 
     public function delete() {
         global $app;
 
-        //plugins using tables
-        MySBPluginHelper::delete('dbmforga_useroption','dbmf3');
-
         //tables
         $req = MySBDB::query('DROP TABLE '.MySB_DBPREFIX.'dbmfcontacts',
             "__init.php",
-            true, "dbmf3");
+            false, "dbmf3");
         $req = MySBDB::query('DROP TABLE '.MySB_DBPREFIX.'dbmfblocks',
             "__init.php",
-            true, "dbmf3");
+            false, "dbmf3");
          $req = MySBDB::query('DROP TABLE '.MySB_DBPREFIX.'dbmfrouting',
             "__init.php",
-            true, "dbmf3");
+            false, "dbmf3");
     }
 
     public function init1() {
@@ -87,6 +84,15 @@ class MySBModule_dbmf3 {
             array(1,0,0,0),
             4,"dbmf_editor",'dbmf3');
 
+        MySBPluginHelper::create('dbmfadmin_menutext','MenuItem',
+            array("DBMF_topmenu_dbmfadmin", "adminblocks", 'DBMF_topmenu_dbmfadmininfos',''),
+            array(2,0,0,0),
+            4,"dbmf_admin",'dbmf3');
+
+        MySBPluginHelper::create('dbmfgroup_php','Include',
+            array("libraries/group.php", '', '',''),
+            array(0,0,0,0),
+            5,'','dbmf3');
         MySBPluginHelper::create('dbmfcontact_php','Include',
             array("libraries/contact.php", '', '',''),
             array(0,0,0,0),
@@ -101,6 +107,8 @@ class MySBModule_dbmf3 {
             array(0,0,0,0),
             5,"dbmf_user",'dbmf3');
 
+        $editrole = MySBRole::create('dbmf_admin','Can admin DB blocks');
+        $editrole->assignToGroup('admin',true);
         $editrole = MySBRole::create('dbmf_editor','Can edit DB entries');
         $editrole->assignToGroup('admin',true);
         $editrole = MySBRole::create('dbmf_user','Can view DB entries',true);
@@ -112,12 +120,15 @@ class MySBModule_dbmf3 {
 
         MySBRole::delete('dbmf_user');
         MySBRole::delete('dbmf_editor');
+        MySBRole::delete('dbmf_admin');
 
         //plugins
         MySBPluginHelper::delete('dbmf_request','dbmf3');
+        MySBPluginHelper::delete('dbmfadmin_menutext','dbmf3');
         MySBPluginHelper::delete('addcontact_menutext','dbmf3');
         MySBPluginHelper::delete('dbmfblock_php','dbmf3');
         MySBPluginHelper::delete('dbmfcontact_php','dbmf3');
+        MySBPluginHelper::delete('dbmfgroup_php','dbmf3');
     }
 
 }
