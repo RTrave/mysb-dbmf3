@@ -42,20 +42,21 @@ class MySBDBMFGroup extends MySBGroup {
 
 
 /**
- * DBMF group class
+ * DBMF group helper class
  * 
  */
 class MySBDBMFGroupHelper {
 
     public function load() {
         global $app;
+        if(isset($app->dbmfgroups)) return $app->dbmfgroups;
         $app->dbmfgroups = array();
         $req_groups = MySBDB::query("SELECT * FROM ".MySB_DBPREFIX."groups ".
                 "ORDER BY id",
                 "MySBDBMFGroupHelper::load()",
                 true, 'dbmf3' );
         while($data_group = MySBDB::fetch_array($req_groups)) {
-            $app->dbmfgroups[] = new MySBDBMFGroup(-1, $data_group);
+            $app->dbmfgroups[$data_group['id']] = new MySBDBMFGroup(-1, $data_group);
         }
         return $app->dbmfgroups;
     }
@@ -69,7 +70,7 @@ class MySBDBMFGroupHelper {
             $groupname = 'g'.$group->id;
             //echo $groupname.'/'.$user->$groupname.'/'.$group->dbmf_priority.'/'.$priority.'<br>';
             if($group->dbmf_priority>=1 and $user->$groupname==1) {
-                if($group->dbmf_priority<=$priority) {
+                if($group->dbmf_priority<$priority) {
                     $priority = $group->dbmf_priority;
                     $primary = $group;
                 }

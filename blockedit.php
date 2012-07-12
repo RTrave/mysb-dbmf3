@@ -15,14 +15,7 @@ defined('_MySBEXEC') or die;
 global $app;
 
 echo '
-<div id="mysb_topadmin">
-<div class="mysb_topadmin_menu">
-<a href="index.php?mod=dbmf3&amp;tpl=admingroups">'._G('DBMF_admin_groups').'</a>
-<a href="index.php?mod=dbmf3&amp;tpl=adminblocks">'._G('DBMF_admin_blocks').'</a>
-<br>
-</div>
-</div>
-<h1>'._G('DBMF_admin_blocks').'</h1>
+<h1>'._G('DBMF_blocks_edit').'</h1>
 
 <h2>'._G('DBMF_currentblocks').'</h2>
 <div class="table_support">
@@ -38,13 +31,17 @@ echo '
 
 $blocks = MySBDBMFBlockHelper::load();
 foreach($blocks as $block) {
+    if($block->isEditable()) $editable = ' editable';
+    else $editable = ' non editable';
+    $group_edit = MySBGroupHelper::getByID($block->groupedit_id);
+    $group_view = MySBGroupHelper::getByID($block->groupview_id);
     echo '
 <tr>
     <td>'.$block->id.'</td>
     <td>'.$block->name.'</td>
     <td>'.$block->lname.'</td>
-    <td>'.'</td>
-    <td>'.'</td>
+    <td>'.$group_edit->comments.' / '.$editable.'</td>
+    <td>'.$group_view->comments.' / '.$editable.'</td>
 </tr>';
 }
 
@@ -55,7 +52,7 @@ echo '
 
 echo '
 <h2>'._G('DBMF_addblock').'</h2>
-<form action="?mod=dbmf3&amp;tpl=adminblocks" method="post">
+<form action="?mod=dbmf3&amp;tpl=blockedit" method="post">
 <p>
    '._G('DBMF_block_name').' <input type="text" name="addblock_name">
    <input type="hidden" name="block_add" value="1">

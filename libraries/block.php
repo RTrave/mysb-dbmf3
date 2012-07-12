@@ -22,7 +22,8 @@ class MySBDBMFBlock extends MySBObject {
     public $id = null;
     public $name = null;
     public $lname = null;
-    public $group_id = null;
+    public $groupedit_id = null;
+    public $groupview_id = null;
 
     public function __construct($id=null, $data_block = array()) {
         global $app;
@@ -34,11 +35,29 @@ class MySBDBMFBlock extends MySBObject {
             $data_block = MySBDB::fetch_array($req_block);
         } else $id = $data_block['id'];
         parent::__construct((array) ($data_block));
-        $req_blockref = MySBDB::query("SELECT * FROM ".MySB_DBPREFIX.'dbmfblock'.$id.'_ref ' ,
+        $req_blockref = MySBDB::query("SELECT * FROM ".MySB_DBPREFIX.'dbmfblockrefs '.
+                'WHERE block_id='.$id ,
                 "MySBDBMFBlock::__construct($id)",
                 false, 'dbmf3');
         $data_blockref = MySBDB::fetch_array($req_blockref);
         parent::__construct((array) ($data_blockref), 'ref_');
+    }
+
+    public function isEditable() {
+        global $app;
+        $groups = MySBDBMFGroupHelper::load();
+        if($groups[$this->groupedit_id]->dbmf_priority<=0) return false;
+        if($app->auth_user->haveGroup($this->groupedit_id)) return true;
+        return false;
+    }
+
+    public function isViewable() {
+        global $app;
+        if($this->isEditable()) return true;
+        $groups = MySBDBMFGroupHelper::load();
+        if($groups[$this->groupview_id]->dbmf_priority<=0) return false;
+        if($app->auth_user->haveGroup($this->groupview_id)) return true;
+        return false;
     }
 
 }
@@ -53,10 +72,10 @@ class MySBDBMFBlockHelper {
         $pri_group = MySBDBMFGroupHelper::get_primary($app->auth_user);
         if($pri_group==null) return; 
         MySBDB::query('INSERT INTO '.MySB_DBPREFIX."dbmfblocks VALUES ".
-            "( $bid,'".$new_block_name."','".MySBUtil::str2db($lname)."',".$pri_group->id.")",
+            "( $bid,'".$new_block_name."','".MySBUtil::str2db($lname)."',".$pri_group->id.",".$pri_group->id.")",
             "MySBDBMFBlockHelper::create($name,$lname)",
             true, "dbmf3");
-
+/*
         $table_ref_name = $new_block_name.'_ref';
         MySBDB::query('CREATE TABLE '.MySB_DBPREFIX.$table_ref_name.' ('.
             'id int not null, '.
@@ -66,6 +85,7 @@ class MySBDBMFBlockHelper {
             'disabled int)',
             "MySBDBMFBlockHelper::create($name,$lname)",
             true, "dbmf3");
+*/
         return $new_block_name;
     }
 

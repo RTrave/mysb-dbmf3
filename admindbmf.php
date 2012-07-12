@@ -15,16 +15,11 @@ defined('_MySBEXEC') or die;
 global $app;
 
 echo '
-<div id="mysb_topadmin">
-<div class="mysb_topadmin_menu">
-<a href="index.php?mod=dbmf3&amp;tpl=admingroups">'._G('DBMF_admin_groups').'</a>
-<a href="index.php?mod=dbmf3&amp;tpl=adminblocks">'._G('DBMF_admin_blocks').'</a>
-<br>
-</div>
-</div>
-<h1>'._G('DBMF_admin_groups').'</h1>
+<h1>'._G('DBMF_admin_dbmf').'</h1>
 
-<h2>'._G('DBMF_listgroups').'</h2>
+<h2>'._G('DBMF_admin_groups').'</h2>
+
+<h3>'._G('DBMF_listgroups').'</h3>
 <div class="table_support">
 <center>
 <table width="50%"><tbody>
@@ -43,7 +38,7 @@ foreach($dbmf_groups as $group) {
     <td>'.$group->name.'</td>
     <td>'.$group->comments.'</td>
     <td>
-        <form action="index.php?mod=dbmf3&amp;tpl=admingroups" method="post">
+        <form action="index.php?mod=dbmf3&amp;tpl=admindbmf&amp;plg=admin" method="post">
         <select name="dbmf_priority">
             <option value="">Unactive</option>';
     $i = 1;
