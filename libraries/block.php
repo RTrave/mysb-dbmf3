@@ -13,6 +13,7 @@
 defined('_MySBEXEC') or die;
 
 
+
 /**
  * DBMF Block class
  * 
@@ -23,11 +24,10 @@ class MySBDBMFBlock extends MySBObject {
     public $name = null;
     public $lname = null;
     public $groupedit_id = null;
-    public $groupview_id = null;
 
-    public function __construct($id=null, $data_block = array()) {
+    public function __construct($id=-1, $data_block = array()) {
         global $app;
-        if($id!=null) {
+        if($id!=-1) {
             $req_block = MySBDB::query("SELECT * FROM ".MySB_DBPREFIX.'dbmfblocks '.
                 'WHERE id='.$id, 
                 "MySBDBMFBlock::__construct($id)",
@@ -35,12 +35,23 @@ class MySBDBMFBlock extends MySBObject {
             $data_block = MySBDB::fetch_array($req_block);
         } else $id = $data_block['id'];
         parent::__construct((array) ($data_block));
+        $this->blockrefs = array();
+        $blockrefs = MySBDBMFBlockRefHelper::load();
+        foreach($blockrefs as $blockref)
+            if($blockref->block_id==$this->id)
+                $this->blockrefs[$blockref->id] = $blockref;
+/*
         $req_blockref = MySBDB::query("SELECT * FROM ".MySB_DBPREFIX.'dbmfblockrefs '.
                 'WHERE block_id='.$id ,
                 "MySBDBMFBlock::__construct($id)",
                 false, 'dbmf3');
         $data_blockref = MySBDB::fetch_array($req_blockref);
         parent::__construct((array) ($data_blockref), 'ref_');
+*/
+    }
+
+    public function update($data_block) {
+        parent::update( 'dbmfblocks', $data_block );
     }
 
     public function isEditable() {
@@ -60,6 +71,17 @@ class MySBDBMFBlock extends MySBObject {
         return false;
     }
 
+    public function refAdd($lname,$type) {
+        global $app;
+        $blockref = MySBDBMFBlockRefHelper::create($lname,$type,$this->id);
+        $this->blockrefs[$blockref->id] = $blockref;
+    }
+
+    public function refDel($id) {
+        MySBDBMFBlockRefHelper::delete($id);
+        unset($this->blockrefs[$id]);
+    }
+
 }
 
 class MySBDBMFBlockHelper {
@@ -71,35 +93,36 @@ class MySBDBMFBlockHelper {
         $new_block_name = 'dbmfblock'.$bid;
         $pri_group = MySBDBMFGroupHelper::get_primary($app->auth_user);
         if($pri_group==null) return; 
-        MySBDB::query('INSERT INTO '.MySB_DBPREFIX."dbmfblocks VALUES ".
-            "( $bid,'".$new_block_name."','".MySBUtil::str2db($lname)."',".$pri_group->id.",".$pri_group->id.")",
+        MySBDB::query('INSERT INTO '.MySB_DBPREFIX."dbmfblocks ".
+            "(id, name, lname, groupedit_id) VALUES ".
+            "( $bid,'".$new_block_name."','".MySBUtil::str2db($lname)."',".$pri_group->id." )",
             "MySBDBMFBlockHelper::create($name,$lname)",
             true, "dbmf3");
-/*
-        $table_ref_name = $new_block_name.'_ref';
-        MySBDB::query('CREATE TABLE '.MySB_DBPREFIX.$table_ref_name.' ('.
-            'id int not null, '.
-            'name varchar(32), '.
-            'lname varchar(64), '.
-            'type varchar(64), '.
-            'disabled int)',
-            "MySBDBMFBlockHelper::create($name,$lname)",
-            true, "dbmf3");
-*/
-        return $new_block_name;
+        $new_block = new MySBDBMFBlock($bid);
+        if(isset($app->cache_dbmfblocks)) 
+            $app->cache_dbmfblocks[$brid] = $new_block;
+        return $new_block;
     }
 
     public function load() {
         global $app;
-        $app->dbmfblocks = array();
+        if(isset($app->cache_dbmfblocks)) 
+            return $app->cache_dbmfblocks;
+        $app->cache_dbmfblocks = array();
         $req_dbmfblocks = MySBDB::query("SELECT * FROM ".MySB_DBPREFIX."dbmfblocks ".
                 "ORDER BY id",
                 "MySBDBMFBlockHelper::load()",
                 true, 'dbmf3' );
         while($data_block = MySBDB::fetch_array($req_dbmfblocks)) {
-            $app->dbmfblocks[] = new MySBDBMFBlock(null, $data_block);
+            $app->cache_dbmfblocks[$data_block['id']] = new MySBDBMFBlock(-1, $data_block);
         }
-        return $app->dbmfblocks;
+        return $app->cache_dbmfblocks;
+    }
+
+    public function getByID($id) {
+        global $app;
+        $blocks = MySBDBMFBlockHelper::load();
+        return $blocks[$id];
     }
 
 }
