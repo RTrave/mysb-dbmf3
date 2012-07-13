@@ -27,20 +27,24 @@ echo '
     <td>id</td>
     <td width="100px">'._G('DBMF_group_name').'</td>
     <td>'._G('DBMF_groups_comments').'</td>
-    <td width="350">'._G('DBMF_groups_dbmfpriority').'</td>
+    <td width="250px" align="center">'._G('DBMF_groups_dbmfpriority').'</td>
 </tr>';
 
 $dbmf_groups = MySBDBMFGroupHelper::load();
 foreach($dbmf_groups as $group) {
+    if($group->dbmf_priority=='' or $group->dbmf_priority==0) 
+        $class_group = ' style="background: #bbbbbb;"';
+    else 
+        $class_group = '';
     echo '
-<tr>
+<tr '.$class_group.'>
     <td>'.$group->id.'</td>
     <td>'.$group->name.'</td>
     <td>'.$group->comments.'</td>
-    <td>
+    <td align="center">
         <form action="index.php?mod=dbmf3&amp;tpl=admindbmf&amp;plg=admin" method="post">
         <select name="dbmf_priority">
-            <option value="">Unactive</option>';
+            <option value="">'._G('DBMF_groups_unused').'</option>';
     $i = 1;
     while($i<=5) {
         echo '
@@ -50,7 +54,7 @@ foreach($dbmf_groups as $group) {
     echo '
         </select>
         <input type="hidden" name="group_id" value="'.$group->id.'">
-        <input type="submit" value="'._G('DBMF_group_modify').'">
+        <input type="submit" value="'._G('DBMF_group_modify').'" class="submit">
         </form>
     </td>
 </tr>
