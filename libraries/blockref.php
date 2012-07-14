@@ -49,6 +49,33 @@ class MySBDBMFBlockRef extends MySBObject {
             $this->update( array( 'status'=>MYSB_DBMF_BLOCKREF_STATUS_ACTIVE ) );
     }
 
+    public function htmlForm($value) {
+        switch($this->type) {
+            case MYSB_DBMF_BLOCKREF_TYPE_INT:
+                return '<input type="text" name="'.$this->name.'" size="3" maxlength="3" value="'.$value.'">';
+            case MYSB_DBMF_BLOCKREF_TYPE_BOOL:
+                return '<input type="checkbox" name="'.$this->name.'" '.MySBUtil::form_ischecked($value,1).'>';
+            case MYSB_DBMF_BLOCKREF_TYPE_VARCHAR64:
+                return '<input type="text" name="'.$this->name.'" size="52" maxlength="62" value="'.$value.'">';
+            case MYSB_DBMF_BLOCKREF_TYPE_VARCHAR512:
+                return '<textarea name="comments" cols="60" rows="3">'.$contact->comments.'</textarea>';
+        }
+    }
+
+    public function htmlProcess($value) {
+        switch($this->type) {
+            case MYSB_DBMF_BLOCKREF_TYPE_INT:
+                return $value;
+            case MYSB_DBMF_BLOCKREF_TYPE_BOOL:
+                if($value=='on') return 1;
+                return 0;
+            case MYSB_DBMF_BLOCKREF_TYPE_VARCHAR64:
+                return $value;
+            case MYSB_DBMF_BLOCKREF_TYPE_VARCHAR512:
+                return $value;
+        }
+    }
+
 }
 
 class MySBDBMFBlockRefHelper {

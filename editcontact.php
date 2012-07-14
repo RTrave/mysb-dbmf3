@@ -47,52 +47,77 @@ echo '
     <td colspan="2">'._G("DBMF_contact_common_infos").'</td>
 </tr>
 <tr>
-    <td><b>'._G("DBMF_lastname").':</b></td>
+    <td style="vertical-align: top; text-align: right;"><b>'._G("DBMF_lastname").':</b></td>
     <td><input type="text" name="lastname" size="24" maxlength="64" value="'.$contact->lastname.'"></td>
 </tr>
 <tr>
-    <td><b>'._G("DBMF_firstname").':</b></td>
+    <td style="vertical-align: top; text-align: right;"><b>'._G("DBMF_firstname").':</b></td>
     <td><input type="text" name="firstname" size="24" maxlength="64" value="'.$contact->firstname.'"></td>
 </tr>
 <tr>
-    <td><b>'._G("DBMF_organism").':</b></td>
+    <td style="vertical-align: top; text-align: right;"><b>'._G("DBMF_organism").':</b></td>
     <td><input type="text" name="organism" size="56" maxlength="64" value="'.$contact->organism.'"></td>
 </tr>
 <tr>
-    <td><b>'._G("DBMF_function").':</b></td>
-    <td><textarea name="function" cols="64" rows="1">'.$contact->function.'</textarea></td>
+    <td style="vertical-align: top; text-align: right;"><b>'._G("DBMF_function").':</b></td>
+    <td><textarea name="function" cols="60" rows="1">'.$contact->function.'</textarea></td>
 </tr>
 <tr>
-    <td><b>'._G("DBMF_adress_1").':</b></td>
-    <td><textarea name="adress_1" cols="64" rows="3">'.$contact->adress_1.'</textarea></td>
+    <td style="vertical-align: top; text-align: right;"><b>'._G("DBMF_adress_1").':</b></td>
+    <td><textarea name="adress_1" cols="60" rows="3">'.$contact->adress_1.'</textarea></td>
 </tr>
 <tr>
-    <td><b>'._G("DBMF_adress_2").':</b></td>
-    <td><textarea name="adress_2" cols="64" rows="3">'.$contact->adress_2.'</textarea></td>
+    <td style="vertical-align: top; text-align: right;"><b>'._G("DBMF_adress_2").':</b></td>
+    <td><textarea name="adress_2" cols="60" rows="3">'.$contact->adress_2.'</textarea></td>
 </tr>
 <tr>
-    <td><b>'._G("DBMF_tel_1").':</b></td>
+    <td style="vertical-align: top; text-align: right;"><b>'._G("DBMF_tel_1").':</b></td>
     <td><input type="text" name="tel_1" size="16" maxlength="16" value="'.$contact->tel_1.'"></td>
 </tr>
 <tr>
-    <td><b>'._G("DBMF_tel_2").':</b></td>
+    <td style="vertical-align: top; text-align: right;"><b>'._G("DBMF_tel_2").':</b></td>
     <td><input type="text" name="tel_2" size="16" maxlength="16" value="'.$contact->tel_2.'"></td>
 </tr>
 <tr>
-    <td><b>'._G("DBMF_tel_fax").':</b></td>
+    <td style="vertical-align: top; text-align: right;"><b>'._G("DBMF_tel_fax").':</b></td>
     <td><input type="text" name="tel_fax" size="16" maxlength="16" value="'.$contact->tel_fax.'"></td>
 </tr>
 <tr>
-    <td><b>'._G("DBMF_mail").':</b></td>
+    <td style="vertical-align: top; text-align: right;"><b>'._G("DBMF_mail").':</b></td>
     <td><input type="text" name="mail" size="56" maxlength="64" value="'.$contact->mail.'">
     <input type="hidden" name="mail_old" value="'.$contact->mail.'"></td>
 </tr>
 <tr>
-    <td><b>'._G("DBMF_comments").':</b></td>
-    <td><textarea name="comments" cols="64" rows="3">'.$contact->comments.'</textarea></td>
+    <td style="vertical-align: top; text-align: right;"><b>'._G("DBMF_comments").':</b></td>
+    <td><textarea name="comments" cols="60" rows="3">'.$contact->comments.'</textarea></td>
 </tr>';
 
-
+$blocks = MySBDBMFBlockHelper::load();
+foreach($blocks as $block) {
+    $group_edit = MySBGroupHelper::getByID($block->groupedit_id);
+    if(!$block->isEditable())
+        $class_edit = 'background: #bbbbbb;';
+    else 
+        $class_edit = '';
+    echo '
+<tr class="title" >
+    <td colspan="2">'.$block->lname.' <small><i>('.$group_edit->comments.')</i></small></td>
+</tr>';
+    foreach($block->blockrefs as $blockref) {
+        $refname = 'br'.$blockref->id;
+        echo '
+<tr>
+    <td style="vertical-align: top; text-align: right; '.$class_edit.'"><b>'.$blockref->lname.':</b></td>
+    <td>';
+        if($block->isEditable()) 
+            echo $blockref->htmlForm($contact->$refname);
+        else 
+            echo $contact->$refname;
+        echo '
+    </td>
+</tr>';
+    }
+}
 
 echo '
 <tr>

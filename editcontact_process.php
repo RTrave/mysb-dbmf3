@@ -45,6 +45,13 @@ if(isset($_POST['contact_edit'])) {
         'mail' => $_POST['mail'],
         'comments' => $_POST['comments'],
         'date_modif' => $today_date );
+    $blocks = MySBDBMFBlockHelper::load();
+    foreach($blocks as $block) {
+        $group_edit = MySBGroupHelper::getByID($block->groupedit_id);
+        foreach($block->blockrefs as $blockref) {
+            $contact_datas[$blockref->name] = $blockref->htmlProcess($_POST[$blockref->name]);
+        }
+    }
     $contact->update('dbmfcontacts', $contact_datas);
     $app->pushMessage(_G('DBMF_contact_modified'));
 }
