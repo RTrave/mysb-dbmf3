@@ -18,7 +18,6 @@ defined('_MySBEXEC') or die;
  */
 class MySBDBMFContact extends MySBObject {
 
-    public $id = null;
     public $prefix = null;
     public $lastname = null;
     public $firstname = null;
@@ -45,6 +44,9 @@ class MySBDBMFContact extends MySBObject {
         }
         parent::__construct((array) ($data_contact));
     }
+}
+
+class MySBDBMFContactHelper {
 
     public function create($lastname,$firstname) {
         global $app;

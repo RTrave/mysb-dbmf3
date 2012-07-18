@@ -18,7 +18,7 @@ if(!MySBRoleHelper::checkAccess('dbmf_editor')) return;
 
 if(isset($_GET['contact_id'])) {
     if($_GET['contact_id']==-1) {
-        $contact = MySBDBMFContact::create($_GET['lastname'], $_GET['firstname']);
+        $contact = MySBDBMFContactHelper::create($_GET['lastname'], $_GET['firstname']);
         $app->pushMessage(_G('DBMF_contact_added'));
     } else {
         $contact = new MySBDBMFContact($_GET['contact_id']);
@@ -49,7 +49,7 @@ if(isset($_POST['contact_edit'])) {
     foreach($blocks as $block) {
         $group_edit = MySBGroupHelper::getByID($block->groupedit_id);
         foreach($block->blockrefs as $blockref) {
-            $contact_datas[$blockref->name] = $blockref->htmlProcess($_POST[$blockref->name]);
+            $contact_datas[$blockref->name] = $blockref->htmlProcessValue('',$_POST[$blockref->name]);
         }
     }
     $contact->update('dbmfcontacts', $contact_datas);
