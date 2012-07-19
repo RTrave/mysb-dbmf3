@@ -109,24 +109,6 @@ class MySBModule_dbmf3 {
             array("DBMF_adminmenu_dbmf", "admindbmf", 'DBMF_adminmenu_dbmfinfos',''),
             array(3,0,0,0),
             6,"dbmf_admin",'dbmf3');
-
-        MySBPluginHelper::create('dbmfgroup_php','Include',
-            array("libraries/group.php", '', '',''),
-            array(0,0,0,0),
-            5,'','dbmf3');
-        MySBPluginHelper::create('dbmfcontact_php','Include',
-            array("libraries/contact.php", '', '',''),
-            array(0,0,0,0),
-            5,'','dbmf3');
-        MySBPluginHelper::create('dbmfblock_php','Include',
-            array("libraries/block.php", '', '',''),
-            array(0,0,0,0),
-            6,'','dbmf3');
-        MySBPluginHelper::create('dbmfblockref_php','Include',
-            array("libraries/blockref.php", '', '',''),
-            array(0,0,0,0),
-            5,'','dbmf3');
-
         MySBPluginHelper::create('dbmf_request','FrontPage',
             array("request", '', '',''),
             array(0,0,0,0),
@@ -155,10 +137,6 @@ class MySBModule_dbmf3 {
         MySBPluginHelper::delete('dbmfadmin_menutext','dbmf3');
         MySBPluginHelper::delete('admindbmf_menutext','dbmf3');
         MySBPluginHelper::delete('addcontact_menutext','dbmf3');
-        MySBPluginHelper::delete('dbmfblockref_php','dbmf3');
-        MySBPluginHelper::delete('dbmfblock_php','dbmf3');
-        MySBPluginHelper::delete('dbmfcontact_php','dbmf3');
-        MySBPluginHelper::delete('dbmfgroup_php','dbmf3');
     }
 
 }
