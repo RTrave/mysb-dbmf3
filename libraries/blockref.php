@@ -12,28 +12,30 @@
 // No direct access.
 defined('_MySBEXEC') or die;
 
-define('MYSB_DBMF_BLOCKREF_TYPE_INT', 1);
-define('MYSB_DBMF_BLOCKREF_TYPE_BOOL', 2);
-define('MYSB_DBMF_BLOCKREF_TYPE_VARCHAR64', 3);
-define('MYSB_DBMF_BLOCKREF_TYPE_VARCHAR512', 4);
 
 define('MYSB_DBMF_BLOCKREF_STATUS_INACTIVE', 0);
 define('MYSB_DBMF_BLOCKREF_STATUS_ACTIVE', 1);
+
 
 /**
  * DBMF Block References class
  * 
  */
-class MySBDBMFBlockRef extends MySBObject {
-    public $id = null;
+class MySBDBMFBlockRef extends MySBValue {
     public $block_id = null;
     public $name = null;
     public $lname = null;
-    public $type = null;
     public $disabled = null;
 
-    public function __construct( $data_blockref ) {
+    public function __construct( $id=-1, $data_blockref=array() ) {
         global $app;
+        if($id!=-1) {
+            $req_blockrefs = MySBDB::query("SELECT * FROM ".MySB_DBPREFIX.'dbmfblockrefs WHERE '.
+                'id='.$id,
+                "MySBDBMFBlockRef::__construct()",
+                true, 'dbmf3');
+            $data_blockref = MySBDB::fetch_array($req_blockrefs);
+        }
         parent::__construct((array) ($data_blockref));
     }
 
@@ -49,31 +51,9 @@ class MySBDBMFBlockRef extends MySBObject {
             $this->update( array( 'status'=>MYSB_DBMF_BLOCKREF_STATUS_ACTIVE ) );
     }
 
-    public function htmlForm($value) {
-        switch($this->type) {
-            case MYSB_DBMF_BLOCKREF_TYPE_INT:
-                return '<input type="text" name="'.$this->name.'" size="3" maxlength="3" value="'.$value.'">';
-            case MYSB_DBMF_BLOCKREF_TYPE_BOOL:
-                return '<input type="checkbox" name="'.$this->name.'" '.MySBUtil::form_ischecked($value,1).'>';
-            case MYSB_DBMF_BLOCKREF_TYPE_VARCHAR64:
-                return '<input type="text" name="'.$this->name.'" size="52" maxlength="62" value="'.$value.'">';
-            case MYSB_DBMF_BLOCKREF_TYPE_VARCHAR512:
-                return '<textarea name="comments" cols="60" rows="3">'.$contact->comments.'</textarea>';
-        }
-    }
-
-    public function htmlProcess($value) {
-        switch($this->type) {
-            case MYSB_DBMF_BLOCKREF_TYPE_INT:
-                return $value;
-            case MYSB_DBMF_BLOCKREF_TYPE_BOOL:
-                if($value=='on') return 1;
-                return 0;
-            case MYSB_DBMF_BLOCKREF_TYPE_VARCHAR64:
-                return $value;
-            case MYSB_DBMF_BLOCKREF_TYPE_VARCHAR512:
-                return $value;
-        }
+    public function isActive() {
+        if($this->status==MYSB_DBMF_BLOCKREF_STATUS_ACTIVE) return true;
+        return FALSE;
     }
 
 }
@@ -89,25 +69,11 @@ class MySBDBMFBlockRefHelper {
             "($brid, $block_id, '$brname', '$lname', $type, ".MYSB_DBMF_BLOCKREF_STATUS_INACTIVE.") ",
             "MySBDBMFBlockRefHelper::create($lname,$type,$block_id)",
             true, 'dbmf3');
-        if( $type==MYSB_DBMF_BLOCKREF_TYPE_INT or $type==MYSB_DBMF_BLOCKREF_TYPE_BOOL ) 
-            $sql_type = 'int';
-        elseif( $type==MYSB_DBMF_BLOCKREF_TYPE_VARCHAR64 )
-            $sql_type = 'varchar(64)';
-        elseif( $type==MYSB_DBMF_BLOCKREF_TYPE_VARCHAR512 ) 
-            $sql_type = 'varchar(512)';
+        $new_blockref = new MySBDBMFBlockRef($brid);
         MySBDB::query("ALTER TABLE ".MySB_DBPREFIX.'dbmfcontacts '.
-            'ADD COLUMN '.$brname.' '.$sql_type,
+            'ADD COLUMN '.$brname.' '.$new_blockref->getSQLType(),
             "MySBDBMFBlockRefHelper::create($lname,$type,$block_id)",
             true, 'dbmf3');
-
-        $new_blockref = new MySBDBMFBlockRef( array(
-            'id' => $brid,
-            'block_id' => $block_id,
-            'name' => $brname,
-            'lname' => $lname,
-            'type' => $type,
-            'disabled' => MYSB_DBMF_BLOCKREF_STATUS_INACTIVE,
-            ) );
         if(isset($app->cache_dbmfblockrefs)) 
             $app->cache_dbmfblockrefs[$brid] = $new_blockref;
         return $new_blockref;
@@ -135,7 +101,7 @@ class MySBDBMFBlockRefHelper {
                 "MySBDBMFBlockRefHelper::load()",
                 true, 'dbmf3');
         while($data_blockref = MySBDB::fetch_array($req_blockrefs)) {
-            $app->cache_dbmfblockrefs[$data_blockref['id']] = new MySBDBMFBlockRef((array) ($data_blockref));
+            $app->cache_dbmfblockrefs[$data_blockref['id']] = new MySBDBMFBlockRef(-1,(array) ($data_blockref));
         }
         return $app->cache_dbmfblockrefs;
     }

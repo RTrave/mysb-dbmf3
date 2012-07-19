@@ -40,14 +40,6 @@ class MySBDBMFBlock extends MySBObject {
         foreach($blockrefs as $blockref)
             if($blockref->block_id==$this->id)
                 $this->blockrefs[$blockref->id] = $blockref;
-/*
-        $req_blockref = MySBDB::query("SELECT * FROM ".MySB_DBPREFIX.'dbmfblockrefs '.
-                'WHERE block_id='.$id ,
-                "MySBDBMFBlock::__construct($id)",
-                false, 'dbmf3');
-        $data_blockref = MySBDB::fetch_array($req_blockref);
-        parent::__construct((array) ($data_blockref), 'ref_');
-*/
     }
 
     public function update($data_block) {
@@ -82,6 +74,34 @@ class MySBDBMFBlock extends MySBObject {
         unset($this->blockrefs[$id]);
     }
 
+    /**
+     * Get the HTML input form to search matching values.
+     * @param   string  $prefix             form name prefix
+     * @return  string                      input form in HTML format.
+     */
+    public function htmlFormWhereClause($prefix) {
+        global $app;
+        return '<input type="checkbox" name="'.$prefix.$this->name.'">';
+    }
+
+    /**
+     * Get the SQL 'where' part from the HTML input form to search matching values.
+     * @param   string  $prefix             form name prefix
+     * @return  string                      WHERE condition in SQL format.
+     */
+    public function htmlProcessWhereClause($prefix) {
+        global $_POST;
+        $clause = '';
+        if($_POST[$prefix.$this->name]=='on') {
+            foreach($this->blockrefs as $blockref) {
+                if($this->isEditable() and $blockref->isActive()) {
+                    if($clause!='')  $clause .= ' '.$_POST['blockref_andorflag_'.$this->id].' ';
+                    $clause .= $blockref->name."!='' ";
+                }
+            }
+        }
+        return $clause;
+    }
 }
 
 class MySBDBMFBlockHelper {

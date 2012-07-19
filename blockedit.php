@@ -86,7 +86,7 @@ foreach($blocks as $block) {
         }
         echo '
     </td>
-    <td align="center">'.$blockref->type.'</td>
+    <td align="center">'.$blockref->getType().'</td>
     <td align="center">';
         if($block->isEditable()) {
             echo '
@@ -133,10 +133,11 @@ foreach($blocks as $block) {
         '._G('DBMF_blockref_name').': <input type="text" name="lname" value="">
         '._G('DBMF_blockref_type').': 
         <select name="type">
-            <option value="1" >int</option>
-            <option value="2" >bool</option>
-            <option value="3" >varchar64</option>
-            <option value="4" >varchar512</option>
+            <option value="'.MYSB_VALUE_TYPE_INT.'" >int</option>
+            <option value="'.MYSB_VALUE_TYPE_BOOL.'" >bool</option>
+            <option value="'.MYSB_VALUE_TYPE_VARCHAR64.'" >varchar(64)</option>
+            <option value="'.MYSB_VALUE_TYPE_VARCHAR512.'" >varchar(512)</option>
+            <option value="'.MYSB_VALUE_TYPE_LINES.'" >text/varchar(512)</option>
         </select><br>
         <input type="hidden" name="blockref_add" value="'.$block->id.'">
         <input type="submit" value="'._G('DBMF_blockref_add').'" class="submit">

@@ -38,12 +38,35 @@ if(isset($_POST['dbmf_request'])) {
 	$app->dbmf_search_result = MySBDB::query( $sql_r,
 	    "request_process.php",
 	    false, 'dbmf3');
+}
 
-/*
-	echo '<table id="render" width="100%"><tbody>';
-	include ('include/render_td.php');
-	echo '</tbody></table>';
-*/
+if(isset($_POST['dbmf_request_advanced'])) {
+
+    $sql_a = 'SELECT * from '.MySB_DBPREFIX.'dbmfcontacts ';
+    $clause_a = '';
+    $blocks = MySBDBMFBlockHelper::load();
+    foreach($blocks as $block) {
+        $group_edit = MySBGroupHelper::getByID($block->groupedit_id);
+        if(($clause=$block->htmlProcessWhereClause('b'))=='') {
+            foreach($block->blockrefs as $blockref) {
+                if($block->isEditable() and $blockref->isActive()) {
+                    $refname = 'br'.$blockref->id;
+                    if(($clause_t = $blockref->htmlProcessWhereClause('br'))!=null) {
+                        if($clause!='') $clause .= ' '.$_POST['blockref_andorflag_'.$block->id].' ';
+                        $clause .= $clause_t;
+                    }
+                }
+            }
+        }
+        if($clause_a!='' and $clause!='') $clause_a .= ' '.$_POST['block_andorflag_'.$block->id].' ';
+        if($clause!='') $clause_a .= '('.$clause.')';
+    }
+    if($clause_a!='') $sql_a .= 'WHERE '.$clause_a.' ';
+    $sql_a .= 'ORDER by lastname';
+	$app->dbmf_search_result = MySBDB::query( $sql_a,
+	    "request_process.php",
+	    false, 'dbmf3');
+
 }
 
 ?>

@@ -95,24 +95,24 @@ echo '
 $blocks = MySBDBMFBlockHelper::load();
 foreach($blocks as $block) {
     $group_edit = MySBGroupHelper::getByID($block->groupedit_id);
-    if(!$block->isEditable())
-        $class_edit = 'background: #bbbbbb;';
-    else 
-        $class_edit = '';
     echo '
 <tr class="title" >
     <td colspan="2">'.$block->lname.' <small><i>('.$group_edit->comments.')</i></small></td>
 </tr>';
     foreach($block->blockrefs as $blockref) {
+        if(!$block->isEditable() or !$blockref->isActive())
+            $class_edit = 'background: #cccccc;';
+        else 
+            $class_edit = '';
         $refname = 'br'.$blockref->id;
         echo '
-<tr>
-    <td style="vertical-align: top; text-align: right; '.$class_edit.'"><b>'.$blockref->lname.':</b></td>
+<tr style="'.$class_edit.'">
+    <td style="vertical-align: top; text-align: right;"><b>'.$blockref->lname.':</b></td>
     <td>';
-        if($block->isEditable()) 
-            echo $blockref->htmlForm($contact->$refname);
+        if($block->isEditable() and $blockref->isActive()) 
+            echo $blockref->htmlForm('',$contact->$refname);
         else 
-            echo $contact->$refname;
+            echo $blockref->htmlFormNonEditable('',$contact->$refname);
         echo '
     </td>
 </tr>';
