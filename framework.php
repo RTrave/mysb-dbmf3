@@ -1,7 +1,7 @@
 <?php
 /***************************************************************************
  *
- *   phpMySandBox - TRoman<abadcafe@free.fr> - 2012
+ *   phpMySandBox/DBMF3 module - TRoman<abadcafe@free.fr> - 2012
  *   This program is free software; you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
  *   the Free Software Foundation; either version 2 of the License', or
@@ -23,5 +23,10 @@ require (MySB_ROOTPATH.'/modules/dbmf3/libraries/block.php');
 require (MySB_ROOTPATH.'/modules/dbmf3/libraries/blockref.php');
 require (MySB_ROOTPATH.'/modules/dbmf3/libraries/contact.php');
 
+require (MySB_ROOTPATH.'/modules/dbmf3/libraries/export.php');
+
+$pluginsExport = MySBPluginHelper::loadByType('DBMFExport');
+foreach($pluginsExport as $plugin) 
+    $plugin->includeFile();
 
 ?>

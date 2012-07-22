@@ -63,7 +63,93 @@ foreach($dbmf_groups as $group) {
 echo '
 </tbody></table>
 </center>
-</div>';
+</div>
 
+<h2>'._G('DBMF_admin_exports').'</h2>
+
+<h3>'._G('DBMF_listexports').'</h3>
+<div class="table_support">
+<center>
+<table width="80%"><tbody>
+<tr class="title">
+    <td>id</td>
+    <td width="100px">'._G('DBMF_export_name').'</td>
+    <td>'._G('DBMF_export_comments').'</td>
+    <td width="50px">'._G('DBMF_export_type').'</td>
+    <td width="100px">'._G('DBMF_export_group').'</td>
+    <td width="250px" align="center">'._G('DBMF_export_config').'</td>
+</tr>';
+
+$exports = MySBDBMFExportHelper::load();
+foreach($exports as $export) {
+    $group = MySBGroupHelper::getByID($export->group_id);
+    echo '
+<tr>
+    <td>'.$export->id.'</td>
+    <td>'.$export->name.'</td>
+    <td>'.$export->comments.'</td>
+    <td>'.$export->type.'</td>
+    <td>'.$group->comments.'</td>
+    <td>'.$export->config.'</td>
+</tr>';
+}
+
+echo '
+</tbody></table>
+</center>
+</div>
+
+<h3>'._G('DBMF_addexports').'</h3>
+
+<form action="?mod=dbmf3&tpl=admindbmf&plg=admin" method="post">
+
+<div class="table_support">
+<center>
+<table><tbody>
+<tr>
+    <td>'._G('DBMF_export_name').'</td>
+    <td><input type="text" name="export_name" value=""></td>
+</tr>
+<tr>
+    <td>'._G('DBMF_export_comments').'</td>
+    <td><input type="text" name="export_comments" value=""></td>
+</tr>
+<tr>
+    <td>'._G('DBMF_export_type').'</td>
+    <td>
+    <select name="export_type">';
+$pluginsExport = MySBPluginHelper::loadByType('DBMFExport');
+foreach($pluginsExport as $plugin) 
+    echo '
+        <option value="'.$plugin->value0.'">'.$plugin->value1.'</option>';
+echo '
+    </select>    
+    </td>
+</tr>
+<tr>
+    <td>'._G('DBMF_export_group').'</td>
+    <td>
+    <select name="export_groupid">';
+
+foreach($dbmf_groups as $group) {
+    echo '
+        <option value="'.$group->id.'">'.$group->comments.'</option>';
+}
+
+echo '
+    </select>    
+    </td>
+</tr>
+<tr>
+    <td colspan="2" style="text-align: center;">
+        <input type="hidden" name="dbmf_addexport" value="1">
+        <input type="submit" value="'._G('DBMF_addexports').'" class="submit">
+    </td>
+</tr>
+</tbody></table>
+</center>
+</div>
+
+</form>';
 
 ?>

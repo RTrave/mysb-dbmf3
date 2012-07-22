@@ -57,6 +57,16 @@ class MySBModule_dbmf3 {
             "__init.php",
             false, "dbmf3");
 
+        $req = MySBDB::query('CREATE TABLE '.MySB_DBPREFIX.'dbmfexports ( '.
+            'id int, '.
+            'type varchar(32), '.
+            'name varchar(64), '.
+            'comments varchar(128), '.
+            'config varchar(512), '.
+            'group_id int )',
+            "__init.php",
+            false, "dbmf3");
+
         $req = MySBDB::query('CREATE TABLE '.MySB_DBPREFIX.'dbmfrouting ( '.
             'id int, '.
             'lname varchar(512) )',
@@ -87,6 +97,9 @@ class MySBModule_dbmf3 {
         $req = MySBDB::query('DROP TABLE '.MySB_DBPREFIX.'dbmfblocks',
             "__init.php",
             false, "dbmf3");
+         $req = MySBDB::query('DROP TABLE '.MySB_DBPREFIX.'dbmfexports',
+            "__init.php",
+            false, "dbmf3");
          $req = MySBDB::query('DROP TABLE '.MySB_DBPREFIX.'dbmfrouting',
             "__init.php",
             false, "dbmf3");
@@ -99,6 +112,11 @@ class MySBModule_dbmf3 {
             array("DBMF_topmenu_addcontact", "addcontact", 'DBMF_topmenu_addcontactinfos',''),
             array(1,0,0,0),
             4,"dbmf_editor",'dbmf3');
+
+        MySBPluginHelper::create('export_menutext','MenuItem',
+            array("DBMF_topmenu_export", "export", 'DBMF_topmenu_exportinfos',''),
+            array(1,0,0,0),
+            5,"dbmf_user",'dbmf3');
 
         MySBPluginHelper::create('blockedit_menutext','MenuItem',
             array("DBMF_topmenu_blockedit", "blockedit", 'DBMF_topmenu_blockeditinfos',''),
@@ -114,6 +132,11 @@ class MySBModule_dbmf3 {
             array(0,0,0,0),
             5,"dbmf_user",'dbmf3');
 
+        MySBPluginHelper::create('dbmf_exportdisplay','DBMFExport',
+            array("Display", 'HTML display render', 'libraries/export_display.php',''),
+            array(0,0,0,0),
+            5,"dbmf_user",'dbmf3');
+
         $adminrole = MySBRoleHelper::create('dbmf_admin','Can admin DBMF');
         $adminrole->assignToGroup('admin',true);
         $blockeditrole = MySBRoleHelper::create('dbmf_blockedit','Can edit DB blocks');
@@ -122,6 +145,8 @@ class MySBModule_dbmf3 {
         $editrole->assignToGroup('admin',true);
         $userrole = MySBRoleHelper::create('dbmf_user','Can view DB entries',true);
         $userrole->assignToGroup('admin',true);
+
+        MySBDBMFExportHelper::create("DBMF_display","Display","HTML table", '', 1);
     }
 
     public function uninit() {
@@ -133,10 +158,15 @@ class MySBModule_dbmf3 {
         MySBRoleHelper::delete('dbmf_admin');
 
         //plugins
+        MySBPluginHelper::delete('dbmf_exportdisplay','dbmf3');
+
         MySBPluginHelper::delete('dbmf_request','dbmf3');
         MySBPluginHelper::delete('dbmfadmin_menutext','dbmf3');
         MySBPluginHelper::delete('admindbmf_menutext','dbmf3');
         MySBPluginHelper::delete('addcontact_menutext','dbmf3');
+        MySBPluginHelper::delete('export_menutext','dbmf3');
+        
+        MySBDBMFExportHelper::delete(MySBDBMFExportHelper::getByName('DBMF_display')->id);
     }
 
 }

@@ -12,16 +12,28 @@
 // No direct access.
 defined('_MySBEXEC') or die;
 
-global $app;
 
-if(isset($_POST['group_id'])) {
-    $group = new MySBDBMFGroup($_POST['group_id']);
-    $group->setPriority($_POST['dbmf_priority']);
-}
+/**
+ * DBMF Export class
+ * 
+ */
+class MySBDBMFExportDisplay extends MySBDBMFExport {
 
-if(isset($_POST['dbmf_addexport'])) {
-    if(!empty($_POST['export_name']) and !empty($_POST['export_comments']))
-        MySBDBMFExportHelper::create( $_POST['export_name'], $_POST['export_type'], $_POST['export_comments'], $_POST['export_config'], $_POST['export_groupid'] );
+    public function __construct($id=-1, $data_export = array()) {
+        global $app;
+        parent::__construct($id,(array) ($data_export));
+    }
+
+/*
+    public function update($data_export) {
+        parent::update( $data_export );
+    }
+*/
+
+    public function selectionProcess( $selection ) {
+        
+    }
+
 }
 
 ?>
