@@ -35,10 +35,53 @@ class MySBDBMFExport extends MySBObject {
             $data_export = MySBDB::fetch_array($req_export);
         } else $id = $data_export['id'];
         parent::__construct((array) ($data_export));
+        $this->config_array = array();
+        $config_values = explode(';',$this->config);
+        foreach($config_values as $value) {
+            $config = explode('=',$value);
+            if($config[0]!='') 
+                $this->config_array[$config[0]] = $config[1];
+        }
     }
 
     public function update($data_export) {
         parent::update( 'dbmfexports', $data_export );
+        $config_values = explode(';',$this->config);
+        foreach($config_values as $value) {
+            $config = explode('=',$value);
+            if($config[0]!='') 
+                $this->config_array[$config[0]] = $config[1];
+        }    }
+
+    public function displayConfig() {
+        $str_res = '';
+        foreach($this->config_array as $name => $config) {
+            $str_res .= $name.' = '.$config.'<br>';
+        }
+        return $str_res;
+    }
+
+    /**
+     * Option form display
+     * @param   
+     */
+    public function htmlConfigForm($export=null) {
+        return _G('DBMF_export_noconfig');
+/*
+        if($export==null) $export = $this;
+        $str_res = '';
+        foreach($export->config_array as $name => $config) {
+            $str_res .= $name.' = '.$config.'<br>';
+        }
+        return $str_res;
+*/
+    }
+
+    /**
+     * Option form display
+     * @param   
+     */
+    public function htmlConfigProcess($export=null) {
     }
 
 }
@@ -55,9 +98,12 @@ class MySBDBMFExportHelper {
             "MySBDBMFExportHelper::create($name,$type)",
             true, "dbmf3");
         $exportClass = 'MySBDBMFExport'.$type;
-        $new_export = new $exportClass($bid);
-        if(isset($app->cache_dbmfexports)) 
-            $app->cache_dbmfexports[$bid] = $new_export;
+        if (class_exists($exportClass)) {
+            $new_export = new $exportClass($bid);
+            if(isset($app->cache_dbmfexports)) 
+                $app->cache_dbmfexports[$bid] = $new_export;
+        } else 
+            $app->ERR("MySBDBMFExportHelper::create($name,$type): class '$exportClass' not found");
         return $new_export;
     }
 
@@ -82,9 +128,18 @@ class MySBDBMFExportHelper {
                 true, 'dbmf3' );
         while($data_export = MySBDB::fetch_array($req_dbmfexports)) {
             $exportClass = 'MySBDBMFExport'.$data_export['type'];
-            $app->cache_dbmfexports[$data_export['id']] = new $exportClass(-1, $data_export);
+            if (class_exists($exportClass)) 
+                $app->cache_dbmfexports[$data_export['id']] = new $exportClass(-1, $data_export);
+            else 
+            $app->LOG("MySBDBMFExportHelper::load(): class '$exportClass' not found");
         }
         return $app->cache_dbmfexports;
+    }
+
+    public function getByID($id) {
+        global $app;
+        $exports = MySBDBMFExportHelper::load();
+        return $exports[$id];
     }
 
     public function getByName($name) {
@@ -114,21 +169,21 @@ class MySBPluginDBMFExport extends MySBPlugin {
     }
 
     /**
+     * Include process after plugin creation
+     * @param   
+     */
+    public function post_create() {
+        global $app;
+        require (MySB_ROOTPATH.'/modules/'.$this->module.'/'.$this->value2);
+    }
+
+    /**
      * Include process
      * @param   
      */
     public function includeFile() {
         global $app;
         require (MySB_ROOTPATH.'/modules/'.$this->module.'/'.$this->value2);
-    }
-
-    /**
-     * Option form display
-     * @param   
-     */
-    public function htmlOption() {
-        global $app;
-        return '<option value="'.$this->id.'">'.$this->value1.'</option>';
     }
 
 }

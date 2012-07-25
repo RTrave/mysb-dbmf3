@@ -15,8 +15,17 @@ defined('_MySBEXEC') or die;
 global $app;
 
 echo '
-<h1>'._G('DBMF_admin_dbmf').'</h1>
+<h1>'._G('DBMF_admin_dbmf').'</h1>';
 
+if(isset($_POST['dbmf_editexport'])) {
+    echo '
+<div id="hide_1"><h2><a onClick="hide(\'hide_1\');show(\'hide_2\');"><u>'._G('DBMF_admin_groups').'</u></a></h2></div>
+<div id="hide_2" style="display: none;">';
+} else {
+    echo '
+<div>';
+}
+echo '
 <h2>'._G('DBMF_admin_groups').'</h2>
 
 <h3>'._G('DBMF_listgroups').'</h3>
@@ -65,19 +74,80 @@ echo '
 </center>
 </div>
 
-<h2>'._G('DBMF_admin_exports').'</h2>
+</div>
 
-<h3>'._G('DBMF_listexports').'</h3>
+<h2>'._G('DBMF_admin_exports').'</h2>';
+
+if(isset($_POST['dbmf_editexport'])) {
+    $export = MySBDBMFExportHelper::getByID($_POST['dbmf_editexport']);
+    echo '
+<h3>'._G('DBMF_editexport').'</h3>
+
+<form action="?mod=dbmf3&amp;tpl=admindbmf&amp;plg=admin" method="post">
+
+<div class="table_support">
+<center>
+<table><tbody>
+<tr>
+    <td>'._G('DBMF_export_name').'</td>
+    <td><input type="text" name="export_name" value="'.$export->name.'"></td>
+</tr>
+<tr>
+    <td>'._G('DBMF_export_comments').'</td>
+    <td><input type="text" name="export_comments" value="'.$export->comments.'"></td>
+</tr>
+<tr>
+    <td>'._G('DBMF_export_type').'</td>
+    <td>';
+    $pluginsExport = MySBPluginHelper::loadByType('DBMFExport');
+    foreach($pluginsExport as $plugin) 
+        if($plugin->value0==$export->type) break;
+    echo $plugin->value1.'</td>
+</tr>
+<tr>
+    <td>'._G('DBMF_export_group').'</td>
+    <td>
+    <select name="export_groupid" >';
+    foreach($dbmf_groups as $group) {
+        echo '
+        <option value="'.$group->id.'" '.MySBUtil::form_isselected($group->id,$export->group_id).'>'.$group->comments.'</option>';
+    }
+    echo '
+    </select>    
+    </td>
+</tr>
+<tr>
+    <td>'._G('DBMF_export_config').'</td>
+    <td>';
+    echo '
+        '.$export->htmlConfigForm();
+    echo '
+    </td>
+</tr>
+<tr>
+    <td colspan="2" style="text-align: center;">
+        <input type="hidden" name="dbmf_editexport_process" value="'.$export->id.'">
+        <input type="submit" value="'._G('DBMF_editexport_submit').'" class="submit">
+    </td>
+</tr>
+</tbody></table>
+</center>
+</div>';
+}
+
+echo '
+</form><h3>'._G('DBMF_listexports').'</h3>
 <div class="table_support">
 <center>
 <table width="80%"><tbody>
 <tr class="title">
-    <td>id</td>
+    <td width="20px">id</td>
     <td width="100px">'._G('DBMF_export_name').'</td>
-    <td>'._G('DBMF_export_comments').'</td>
+    <td width="100px">'._G('DBMF_export_comments').'</td>
     <td width="50px">'._G('DBMF_export_type').'</td>
     <td width="100px">'._G('DBMF_export_group').'</td>
-    <td width="250px" align="center">'._G('DBMF_export_config').'</td>
+    <td align="center">'._G('DBMF_export_config').'</td>
+    <td width="50px" align="center">'._G('DBMF_edition').'</td>
 </tr>';
 
 $exports = MySBDBMFExportHelper::load();
@@ -90,7 +160,13 @@ foreach($exports as $export) {
     <td>'.$export->comments.'</td>
     <td>'.$export->type.'</td>
     <td>'.$group->comments.'</td>
-    <td>'.$export->config.'</td>
+    <td>'.$export->displayConfig().'</td>
+    <td>
+    <form action="?mod=dbmf3&amp;tpl=admindbmf&amp;plg=admin" method="post">
+        <input type="hidden" name="dbmf_editexport" value="'.$export->id.'">
+        <input type="submit" value="'._G('DBMF_editexport').'" class="submit">
+    </form>
+    </td>
 </tr>';
 }
 
@@ -101,7 +177,7 @@ echo '
 
 <h3>'._G('DBMF_addexports').'</h3>
 
-<form action="?mod=dbmf3&tpl=admindbmf&plg=admin" method="post">
+<form action="?mod=dbmf3&amp;tpl=admindbmf&amp;plg=admin" method="post">
 
 <div class="table_support">
 <center>

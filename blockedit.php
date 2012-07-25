@@ -60,9 +60,9 @@ foreach($blocks as $block) {
 <tr class="title">
     <td width="20px">id</td>
     <td>'._G('DBMF_blockref_name').'</td>
-    <td width="100px" align="center">'._G('DBMF_blockref_type').'</td>
-    <td width="150px" align="center">'._G('DBMF_blockref_active').'</td>
-    <td width="150px" align="center">'._G('DBMF_blockref_delete').'</td>
+    <td width="50px" align="center">'._G('DBMF_blockref_type').'</td>
+    <td width="100px" align="center">'._G('DBMF_blockref_active').'</td>
+    <td width="100px" align="center">'._G('DBMF_blockref_delete').'</td>
 </tr>';
     foreach($block->blockrefs as $blockref) {
         if($blockref->status==MYSB_DBMF_BLOCKREF_STATUS_ACTIVE)
@@ -129,6 +129,7 @@ foreach($blocks as $block) {
         echo '
 <tr>
     <td colspan="5" align="center">
+        <br>
         <form action="?mod=dbmf3&amp;tpl=blockedit" method="post">
         '._G('DBMF_blockref_name').': <input type="text" name="lname" value="">
         '._G('DBMF_blockref_type').': 
@@ -142,6 +143,7 @@ foreach($blocks as $block) {
         <input type="hidden" name="blockref_add" value="'.$block->id.'">
         <input type="submit" value="'._G('DBMF_blockref_add').'" class="submit">
         </form>
+        <br>
     </td>
 </tr>';
 
