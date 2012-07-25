@@ -157,6 +157,8 @@ class MySBModule_dbmf3 {
         MySBRoleHelper::delete('dbmf_blockedit');
         MySBRoleHelper::delete('dbmf_admin');
 
+        MySBDBMFExportHelper::delete(MySBDBMFExportHelper::getByName('DBMF_display')->id);
+
         //plugins
         MySBPluginHelper::delete('dbmf_exportdisplay','dbmf3');
 
@@ -165,8 +167,8 @@ class MySBModule_dbmf3 {
         MySBPluginHelper::delete('admindbmf_menutext','dbmf3');
         MySBPluginHelper::delete('addcontact_menutext','dbmf3');
         MySBPluginHelper::delete('export_menutext','dbmf3');
+        MySBPluginHelper::delete('blockedit_menutext','dbmf3');
         
-        MySBDBMFExportHelper::delete(MySBDBMFExportHelper::getByName('DBMF_display')->id);
     }
 
 }
