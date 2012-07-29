@@ -15,11 +15,19 @@ defined('_MySBEXEC') or die;
 global $app;
 
 echo '
-<h1>'._G('DBMF_export').'</h1>
+<h1>'._G('DBMF_export').'</h1>';
 
+if(isset($_POST['dbmf_export_process'])) {
+    echo '
+<h2>'._G('DBMF_search_results').'</h2>';
+
+    echo $app->dbmf_export_plugin->htmlResultOutput($app->dbmf_search_result);
+}
+
+echo '
 <form action="?mod=dbmf3&amp;tpl=export" method="post">
 
-<h2>'._G('DBMF_export_type').'</h2>
+<h2>'._G('DBMF_export_contacts').'</h2>
 
 <h3>'._G('DBMF_export_select_type').'</h3>
 
@@ -27,13 +35,13 @@ echo '
 
 $exports = MySBDBMFExportHelper::load();
 echo '
-<select onChange="';
+<select name="export_plug" onChange="';
 foreach($exports as $export) 
-    echo 'hide(\'hide'.$export->id.'\');';
+    echo 'hide(\'export_plug'.$export->id.'\');';
 echo 'show(this.options[this.selectedIndex].value);">';
 foreach($exports as $export) 
     echo '
-    <option value="hide'.$export->id.'">'.$export->name.'</option>';
+    <option value="export_plug'.$export->id.'">'.$export->name.'</option>';
 
 echo '
 </select>
@@ -42,20 +50,16 @@ echo '
 $hide_flag = '';
 foreach($exports as $export) {
     echo '
-<div id="hide'.$export->id.'" '.$hide_flag.'>
-<h3>'.$export->name.': configuration</h3>
-<p>'.$export->comments.'</p>
+<div id="export_plug'.$export->id.'" '.$hide_flag.'>
+<h4>'.$export->name.' parameters</h4>
+<p>'.$export->comments.'<br>
+'.$export->htmlParamForm().'
+</p>
 </div>';
     if($hide_flag=='') $hide_flag = ' style="display: none;"';
 }
 
 echo '
-<h2>'._G('DBMF_export_criteria').'</h2>
-
-<h3>'._G('DBMF_export_generalcriteria').'</h3>
-<p>
-</p>
-
 <h3>'._G('DBMF_export_blockscriteria').'</h3>
 <div class="table_support" align="center">
 <table><tbody>
@@ -66,7 +70,7 @@ $blocks = MySBDBMFBlockHelper::load();
 $blockn_flag = 0;
 foreach($blocks as $block) {
     $group_edit = MySBGroupHelper::getByID($block->groupedit_id);
-    if($blockn_flag==0) $blockn_flag = 1;
+    if($blockn_flag==0 and $block->isEditable()) $blockn_flag = 1;
     elseif($block->isEditable()) {
         echo '
 <tr>
@@ -78,14 +82,13 @@ foreach($blocks as $block) {
     </td>
 </tr>';
     }
-    echo '
+    if($block->isEditable()) {
+        echo '
 <tr class="title" >
     <td colspan="2">';
-    if($block->isEditable()) 
         echo $block->htmlFormWhereClause('b').' ';
-    echo $block->lname.' <small><i>('.$group_edit->comments.')</i></small></td>
+        echo $block->lname.' <small><i>('.$group_edit->comments.')</i></small></td>
 </tr>';
-    if($block->isEditable()) {
         echo '
 <tr>
     <td style="text-align: right;">'._G('DBMF_request_blockref_and_or').'</td>
@@ -96,18 +99,18 @@ foreach($blocks as $block) {
     </select>
     </td>
 </tr>';
-    }
-    foreach($block->blockrefs as $blockref) {
-        if($block->isEditable() and $blockref->isActive()) {
-            $refname = 'br'.$blockref->id;
-            echo '
+        foreach($block->blockrefs as $blockref) {
+            if($blockref->isActive()) {
+                $refname = 'br'.$blockref->id;
+                echo '
 <tr style="'.$class_edit.'">
     <td style="vertical-align: top; text-align: right;"><b>'.$blockref->lname.':</b></td>
     <td>';
-            echo $blockref->htmlFormWhereClause('br',$contact->$refname);
-            echo '
+                echo $blockref->htmlFormWhereClause('br',$contact->$refname);
+                echo '
     </td>
 </tr>';
+            }
         }
     }
 }
@@ -120,20 +123,5 @@ echo '
     <input type="submit" value="'._G('DBMF_search_submit').'" class="submit">
 </p>
 </form>';
-
-if(isset($_POST['dbmf_export_process'])) {
-    echo '
-<h2>'._G('DBMF_search_results').'</h2>
-<p>
-'.MySBDB::num_rows($app->dbmf_search_result).' results<br>
-</p>
-';
-
-    $app->tpl_dbmf_searchresult = $app->dbmf_search_result;
-    _T('templates/contacts_display.php','dbmf3');
-
-    echo '
-';
-}
 
 ?>

@@ -16,9 +16,21 @@ global $app;
 
 if(isset($_POST['dbmf_export_process'])) {
 
+    $app->dbmf_export_plugin = MySBDBMFExportHelper::getByID($_POST['export_plug'][11]);
+
+    $app->dbmf_export_plugin->htmlParamProcess();
+
+    $blocks = MySBDBMFBlockHelper::load();
+    $clause_owner = '';
+    foreach($blocks as $block) {
+        if($block->isEditable()) {
+            if($clause_owner!='')  $clause_owner .= ' or ';
+            $clause_owner .= $block->htmlProcessWhereClause();
+        }
+    }
+
     $sql_a = 'SELECT * from '.MySB_DBPREFIX.'dbmfcontacts ';
     $clause_a = '';
-    $blocks = MySBDBMFBlockHelper::load();
     foreach($blocks as $block) {
         $group_edit = MySBGroupHelper::getByID($block->groupedit_id);
         if(($clause=$block->htmlProcessWhereClause('b'))=='') {
@@ -35,6 +47,8 @@ if(isset($_POST['dbmf_export_process'])) {
         if($clause_a!='' and $clause!='') $clause_a .= ' '.$_POST['block_andorflag_'.$block->id].' ';
         if($clause!='') $clause_a .= '('.$clause.')';
     }
+    if($clause_owner!='' and $clause_a!='') $clause_a .= ' and ('.$clause_owner.')';
+    elseif($clause_owner!='') $clause_a .= '('.$clause_owner.')';
     if($clause_a!='') $sql_a .= 'WHERE '.$clause_a.' ';
     $sql_a .= 'ORDER by lastname';
 	$app->dbmf_search_result = MySBDB::query( $sql_a,

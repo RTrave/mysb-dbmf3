@@ -89,13 +89,20 @@ class MySBDBMFBlock extends MySBObject {
      * @param   string  $prefix             form name prefix
      * @return  string                      WHERE condition in SQL format.
      */
-    public function htmlProcessWhereClause($prefix) {
+    public function htmlProcessWhereClause($prefix='') {
         global $_POST;
+        if($prefix=='') { // force check conditions
+            $check_flag = 'on';
+            $andor_flag = 'or';
+        } else {
+            $check_flag = $_POST[$prefix.$this->name];
+            $andor_flag = $_POST['blockref_andorflag_'.$this->id];
+        }
         $clause = '';
-        if($_POST[$prefix.$this->name]=='on') {
+        if($check_flag=='on') {
             foreach($this->blockrefs as $blockref) {
                 if($this->isEditable() and $blockref->isActive()) {
-                    if($clause!='')  $clause .= ' '.$_POST['blockref_andorflag_'.$this->id].' ';
+                    if($clause!='')  $clause .= ' '.$andor_flag.' ';
                     $clause .= $blockref->name."!='' ";
                 }
             }

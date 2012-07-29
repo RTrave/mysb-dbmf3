@@ -62,26 +62,41 @@ class MySBDBMFExport extends MySBObject {
     }
 
     /**
-     * Option form display
+     * Config form display
      * @param   
      */
-    public function htmlConfigForm($export=null) {
+    public function htmlConfigForm() {
         return _G('DBMF_export_noconfig');
-/*
-        if($export==null) $export = $this;
-        $str_res = '';
-        foreach($export->config_array as $name => $config) {
-            $str_res .= $name.' = '.$config.'<br>';
-        }
-        return $str_res;
-*/
     }
 
     /**
-     * Option form display
+     * Config form process
      * @param   
      */
-    public function htmlConfigProcess($export=null) {
+    public function htmlConfigProcess() {
+    }
+
+    /**
+     * Parameters form display
+     * @param   
+     */
+    public function htmlParamForm() {
+        return _G('DBMF_export_noparam');
+    }
+
+    /**
+     * Parameters form process
+     * @param   
+     */
+    public function htmlParamProcess() {
+    }
+
+    /**
+     * Search result output
+     * @param   
+     */
+    public function htmlResultOutput($results) {
+        return '<p>No export output</p>';
     }
 
 }

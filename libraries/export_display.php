@@ -34,6 +34,73 @@ class MySBDBMFExportDisplay extends MySBDBMFExport {
         
     }
 
+    public function htmlParamForm() {
+        $output = '';
+        $output .= '
+<div class="table_support">
+<table><tbody>';
+        $blocks = MySBDBMFBlockHelper::load();
+        foreach($blocks as $block) {
+            $group_edit = MySBGroupHelper::getByID($block->groupedit_id);
+            if($block->isEditable()) {
+                $output .= '
+<tr class="title" >
+    <td colspan="2">';
+                $output .= $block->lname.' <small><i>('.$group_edit->comments.')</i></small>
+    </td>
+</tr>';
+                foreach($block->blockrefs as $blockref) {
+                    if($blockref->isActive()) {
+                        $refname = 'br'.$blockref->id;
+                        $output .= '
+<tr style="'.$class_edit.'">
+    <td style="vertical-align: top; text-align: right;"><b>'.$blockref->lname.':</b></td>
+    <td>';
+                        $output .= '<input type="checkbox" name="display_'.$blockref->id.'">';
+                        $output .= '
+    </td>
+</tr>';
+                    }
+                }
+            }
+        }
+        $output .= '
+</tbody></table>
+</div>';
+        return $output;
+    }
+
+    public function htmlParamProcess() {
+        global $app;
+        $app->tpl_display_columns = array();
+        $blocks = MySBDBMFBlockHelper::load();
+        foreach($blocks as $block) {
+            if($block->isEditable()) {
+                foreach($block->blockrefs as $blockref) {
+                    if($blockref->isActive() and $_POST['display_'.$blockref->id]=='on') {
+                        $app->tpl_display_columns[] = $blockref;
+                    }
+                }
+            }
+        }
+    }
+
+    /**
+     * Search result output
+     * @param   
+     */
+    public function htmlResultOutput($results) {
+        global $app;
+        echo '
+<p>
+'.MySBDB::num_rows($results).' results<br>
+</p>
+';
+        $app->tpl_dbmf_searchresult = $results;
+        _T('templates/contacts_display.php','dbmf3');
+
+    }
+
 }
 
 ?>

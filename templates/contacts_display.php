@@ -26,7 +26,13 @@ echo '
     <td width="24px" class="title"></td><td width="24px"></td>
     <td><b>'._G("DBMF_lastname").'</b> '._G("DBMF_firstname").'</td>
     <td width="200px"><i>'._G("DBMF_function").'</i><br>'._G("DBMF_organism").'</td>
-    <td width="180px">Tel</td>
+    <td width="180px">Tel</td>';
+if(isset($app->tpl_display_columns)) 
+foreach($app->tpl_display_columns as $column) {
+    echo '
+    <td width="50px">'.$column->lname.'</td>';
+}
+echo '
 </tr>';
 
 $odd = 'odd';
@@ -64,6 +70,12 @@ while($data_print = MySBDB::fetch_array($search_result)) {
     <td>
         <i>'._G('DBMF_tel_1').':</i> '.$contact->tel_1.'<br><i>'._G('DBMF_tel_2').':</i> '.$contact->tel_2.'
     </td>';
+    if(isset($app->tpl_display_columns)) 
+    foreach($app->tpl_display_columns as $column) {
+        $column_name = "br".$column->id;
+        echo '
+    <td>'.$contact->$column_name.'</td>';
+    }
     echo '
 </tr>';
 }
