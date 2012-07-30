@@ -135,7 +135,11 @@ class MySBModule_dbmf3 {
         MySBPluginHelper::create('dbmf_exportdisplay','DBMFExport',
             array("Display", 'HTML display render', 'libraries/export_display.php',''),
             array(0,0,0,0),
-            5,"dbmf_user",'dbmf3');
+            6,"dbmf_user",'dbmf3');
+        MySBPluginHelper::create('dbmf_exportmailing','DBMFExport',
+            array("Mailing", 'Mailing engine', 'libraries/export_mailing.php',''),
+            array(0,0,0,0),
+            3,"dbmf_user",'dbmf3');
 
         $adminrole = MySBRoleHelper::create('dbmf_admin','Can admin DBMF');
         $adminrole->assignToGroup('admin',true);
@@ -160,6 +164,7 @@ class MySBModule_dbmf3 {
         MySBDBMFExportHelper::delete(MySBDBMFExportHelper::getByName('DBMF_display')->id);
 
         //plugins
+        MySBPluginHelper::delete('dbmf_exportmailing','dbmf3');
         MySBPluginHelper::delete('dbmf_exportdisplay','dbmf3');
 
         MySBPluginHelper::delete('dbmf_request','dbmf3');
