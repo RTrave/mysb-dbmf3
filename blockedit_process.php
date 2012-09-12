@@ -71,5 +71,15 @@ if(isset($_POST['blockref_new_option'])) {
     $app->tpl_blockref_edit = $blockref;
 }
 
+if(isset($_POST['blockref_orderup'])) {
+    $blockref = MySBDBMFBlockRefHelper::getByID($_POST['blockref_orderup']);
+    $blockref->indexUP();
+}
+
+if(isset($_POST['blockref_orderdown'])) {
+    $blockref = MySBDBMFBlockRefHelper::getByID($_POST['blockref_orderdown']);
+    $blockref->indexDOWN();
+}
+
 
 ?>

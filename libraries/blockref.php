@@ -56,6 +56,26 @@ class MySBDBMFBlockRef extends MySBValue {
         return FALSE;
     }
 
+    public function indexUP() {
+        MySBDB::query("UPDATE ".MySB_DBPREFIX."dbmfblockrefs SET ".
+                "i_index=".($this->i_index-3)." ".
+                "WHERE id=".$this->id,
+                "MySBDBMFBlockRef::indexUP()",
+                true, 'dbmf3');
+        $block = MySBDBMFBlockHelper::getByID($this->block_id);
+        $block->indexCheck();
+    }
+
+    public function indexDOWN() {
+        MySBDB::query("UPDATE ".MySB_DBPREFIX."dbmfblockrefs SET ".
+                "i_index=".($this->i_index+3)." ".
+                "WHERE id=".$this->id,
+                "MySBDBMFBlockRef::indexUP()",
+                true, 'dbmf3');
+        $block = MySBDBMFBlockHelper::getByID($this->block_id);
+        $block->indexCheck();
+    }
+
 }
 
 
@@ -66,9 +86,16 @@ class MySBDBMFBlockRefHelper {
         $brid = MySBUTIL::lastid('dbmfblockrefs')+1;
         if($brid==0) $brid = 1;
         $brkeyname = 'br'.$brid;
+        $req_blockrefs = MySBDB::query("SELECT * FROM ".MySB_DBPREFIX."dbmfblockrefs ".
+            "WHERE block_id=".$block_id." ".
+            "ORDER by i_index DESC",
+            "MySBDBMFBlockRefHelper::create()",
+            true, 'dbmf3');
+        $data_blockref = MySBDB::fetch_array($req_blockrefs);
+        $index = $data_blockref['i_index'] + 2;
         MySBDB::query("INSERT INTO ".MySB_DBPREFIX.'dbmfblockrefs '.
-            "(id, block_id, keyname, lname, type, status) VALUES ".
-            "($brid, $block_id, '$brkeyname', '$lname', $type, ".MYSB_DBMF_BLOCKREF_STATUS_INACTIVE.") ",
+            "(id, block_id, keyname, lname, type, status, i_index) VALUES ".
+            "($brid, $block_id, '$brkeyname', '$lname', $type, ".MYSB_DBMF_BLOCKREF_STATUS_INACTIVE.", ".$index.") ",
             "MySBDBMFBlockRefHelper::create($lname,$type,$block_id)",
             true, 'dbmf3');
         $new_blockref = new MySBDBMFBlockRef($brid);
@@ -96,14 +123,15 @@ class MySBDBMFBlockRefHelper {
             unset($app->cache_dbmfblockrefs[$id]);
     }
 
-    public function load() {
+    public function load($forced=false) {
         global $app;
-        if(isset($app->cache_dbmfblockrefs)) 
+        if(isset($app->cache_dbmfblockrefs) and $forced==false) 
             return $app->cache_dbmfblockrefs;
         $app->cache_dbmfblockrefs = array();
-        $req_blockrefs = MySBDB::query("SELECT * FROM ".MySB_DBPREFIX.'dbmfblockrefs ',
-                "MySBDBMFBlockRefHelper::load()",
-                true, 'dbmf3');
+        $req_blockrefs = MySBDB::query("SELECT * FROM ".MySB_DBPREFIX."dbmfblockrefs ".
+            "ORDER BY i_index",
+            "MySBDBMFBlockRefHelper::load()",
+            true, 'dbmf3');
         while($data_blockref = MySBDB::fetch_array($req_blockrefs)) {
             $blockref = new MySBDBMFBlockRef(-1,(array) ($data_blockref));
             $blockref->grp = 'dbmf3';

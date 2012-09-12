@@ -53,7 +53,8 @@ class MySBModule_dbmf3 {
             'keyname varchar(32), '.
             'lname varchar(64), '.
             'type varchar(64), '.
-            'status int)',
+            'status int, '.
+            'i_index int)',
             "__init.php",
             false, "dbmf3");
 

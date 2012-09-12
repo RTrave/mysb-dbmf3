@@ -110,6 +110,30 @@ class MySBDBMFBlock extends MySBObject {
         }
         return $clause;
     }
+
+    public function indexCheck() {
+        global $app;
+        $index = 1;
+        $req_blockrefs = MySBDB::query("SELECT * FROM ".MySB_DBPREFIX."dbmfblockrefs ".
+            "WHERE block_id=".$this->id." ".
+            "ORDER by i_index",
+            "MySBDBMFBlock::indexCheck()",
+            true, 'dbmf3');
+        while($data_blockref = MySBDB::fetch_array($req_blockrefs)) {
+            MySBDB::query("UPDATE ".MySB_DBPREFIX."dbmfblockrefs SET ".
+                "i_index=".$index." ".
+                "WHERE id=".$data_blockref['id'],
+                "MySBDBMFBlock::indexCheck()",
+                true, 'dbmf3');
+            $index += 2;
+        }
+        $this->blockrefs = array();
+        $blockrefs = MySBDBMFBlockRefHelper::load(true);
+        foreach($blockrefs as $blockref)
+            if($blockref->block_id==$this->id)
+                $this->blockrefs[$blockref->id] = $blockref;
+    }
+
 }
 
 class MySBDBMFBlockHelper {
