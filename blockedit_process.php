@@ -29,7 +29,8 @@ if(isset($_POST['block_edit'])) {
 
 if(isset($_POST['blockref_add'])) {
     $block = MySBDBMFBlockHelper::getByID($_POST['blockref_add']);
-    $block->refAdd($_POST['lname'],$_POST['type']);
+    $blockref = $block->refAdd($_POST['lname'],$_POST['type']);
+    $app->tpl_blockref_edit = $blockref;
 }
 
 if(isset($_POST['blockref_del'])) {
@@ -37,14 +38,38 @@ if(isset($_POST['blockref_del'])) {
     $block->refDel($_POST['blockref_del']);
 }
 
-if(isset($_POST['blockref_rename'])) {
-    $blockref = MySBDBMFBlockRefHelper::getByID($_POST['blockref_rename']);
+if(isset($_POST['blockref_edit_process'])) {
+    $blockref = MySBDBMFBlockRefHelper::getByID($_POST['blockref_edit_process']);
     $blockref->update( array( 'lname'=>$_POST['lname'] ) );
+    $app->tpl_blockref_edit = $blockref;
+}
+
+if(isset($_POST['blockref_edit'])) {
+    $app->tpl_blockref_edit = MySBDBMFBlockRefHelper::getByID($_POST['blockref_edit']);
 }
 
 if(isset($_POST['blockref_switchactive'])) {
     $blockref = MySBDBMFBlockRefHelper::getByID($_POST['blockref_switchactive']);
     $blockref->statusSwitch();
 }
+
+if(isset($_POST['blockref_mod_option'])) {
+    $blockref = MySBDBMFBlockRefHelper::getByID($_POST['blockref_edit']);
+    $blockref->modSelectOption($_POST['blockref_option_id'], $_POST['blockref_mod_option']);
+    $app->tpl_blockref_edit = $blockref;
+}
+
+if(isset($_POST['blockref_del_option'])) {
+    $blockref = MySBDBMFBlockRefHelper::getByID($_POST['blockref_edit']);
+    $blockref->delSelectOption($_POST['blockref_option_id']);
+    $app->tpl_blockref_edit = $blockref;
+}
+
+if(isset($_POST['blockref_new_option'])) {
+    $blockref = MySBDBMFBlockRefHelper::getByID($_POST['blockref_edit']);
+    $blockref->addSelectOption($_POST['blockref_new_option']);
+    $app->tpl_blockref_edit = $blockref;
+}
+
 
 ?>

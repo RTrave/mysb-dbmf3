@@ -50,7 +50,7 @@ class MySBModule_dbmf3 {
         $req = MySBDB::query('CREATE TABLE '.MySB_DBPREFIX.'dbmfblockrefs ( '.
             'id int not null, '.
             'block_id int, '.
-            'name varchar(32), '.
+            'keyname varchar(32), '.
             'lname varchar(64), '.
             'type varchar(64), '.
             'status int)',

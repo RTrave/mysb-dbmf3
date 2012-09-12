@@ -67,6 +67,7 @@ class MySBDBMFBlock extends MySBObject {
         global $app;
         $blockref = MySBDBMFBlockRefHelper::create($lname,$type,$this->id);
         $this->blockrefs[$blockref->id] = $blockref;
+        return $blockref;
     }
 
     public function refDel($id) {
@@ -103,7 +104,7 @@ class MySBDBMFBlock extends MySBObject {
             foreach($this->blockrefs as $blockref) {
                 if($this->isEditable() and $blockref->isActive()) {
                     if($clause!='')  $clause .= ' '.$andor_flag.' ';
-                    $clause .= $blockref->name."!='' ";
+                    $clause .= $blockref->keyname."!='' ";
                 }
             }
         }

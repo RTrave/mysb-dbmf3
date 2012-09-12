@@ -49,7 +49,7 @@ if(isset($_POST['contact_edit'])) {
     foreach($blocks as $block) {
         $group_edit = MySBGroupHelper::getByID($block->groupedit_id);
         foreach($block->blockrefs as $blockref) {
-            $contact_datas[$blockref->name] = $blockref->htmlProcessValue('',$_POST[$blockref->name]);
+            $contact_datas[$blockref->keyname] = $blockref->htmlProcessValue('blockref');
         }
     }
     $contact->update('dbmfcontacts', $contact_datas);

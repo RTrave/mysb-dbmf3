@@ -2,7 +2,7 @@
 /***************************************************************************
  *
  *   phpMySandBox/DBMF3 module - TRoman<abadcafe@free.fr> - 2012
- *   This program is free software; you can redistribute it and/or modify
+ *   blockref program is free software; you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
  *   the Free Software Foundation; either version 2 of the License', or
  *   ('at your option) any later version.
@@ -15,7 +15,96 @@ defined('_MySBEXEC') or die;
 global $app;
 
 echo '
-<h1>'._G('DBMF_blocks_edit').'</h1>
+<h1>'._G('DBMF_blocks_edit').'</h1>';
+
+
+if($_POST['blockref_edit'] or $_POST['blockref_edit_process'] or $_POST['blockref_add']) {
+
+$blockref = $app->tpl_blockref_edit;
+echo '
+
+<h2>'._G('DBMF_blockref_edition').'</h2>
+
+<div class="table_support">
+<form action="?mod=dbmf3&amp;tpl=blockedit" method="post">
+<center>
+<table width="50%"><tbody>
+<tr class="title">
+    <td align="center" colspan="2">'.$blockref->lname.'('.$blockref->keyname.')</td>
+</tr>
+<tr>
+    <td width="50%" align="right">'._G('DBMF_blockref_lname').'</td>
+    <td><input type="text" name="lname" value="'.$blockref->lname.'"></td>
+</tr>
+<tr>
+    <td width="50%" align="right">'._G('DBMF_blockref_type').'</td>
+    <td>'.$blockref->getType().'</td>
+</tr>
+<tr>
+    <td colspan="2" align="center">
+        <input type="hidden" name="blockref_edit_process" value="'.$blockref->id.'">
+        <input type="submit" value="'._G('DBMF_blockref_edition_process').'" class="submit"><br>
+    </td>
+</tr>
+</tbody></table>
+</center>
+</form>
+
+<center>
+<table width="50%"><tbody>
+<tr class="title">
+    <td align="center" colspan="3">Options</td>
+</tr>';
+
+if($blockref->type==MYSB_VALUE_TYPE_VARCHAR64_SELECT) {
+    $req_options = MySBDB::query("SELECT * from ".MySB_DBPREFIX."valueoptions ".
+        "WHERE value_keyname='".$blockref->grp."-".$blockref->keyname."' ".
+        "ORDER BY value0",
+        "MySBDBMFBlockRef::htmlOptionFormTR()");
+    while($option = MySBDB::fetch_array($req_options)) {
+        echo '
+<tr>
+    <td>Option '.$option['value0'].'</td>
+    <td>
+        <form action="?mod=dbmf3&amp;tpl=blockedit" method="post">
+        <input type="text" name="blockref_mod_option" value="'.$option['value1'].'">
+        <input type="hidden" name="blockref_option_id" value="'.$option['value0'].'">
+        <input type="hidden" name="blockref_edit" value="'.$blockref->id.'">
+        <input type="submit" value="'._G('DBMF_blockref_mod_option').'" class="submit">
+        </form>
+    </td>
+    <td width="50px">
+        <form action="?mod=dbmf3&amp;tpl=blockedit" method="post">
+        <input type="hidden" name="blockref_del_option" value="'.$option['value1'].'">
+        <input type="hidden" name="blockref_edit" value="'.$blockref->id.'">
+        <input type="hidden" name="blockref_option_id" value="'.$option['value0'].'">
+        <input type="submit" value="'._G('DBMF_blockref_del_option').'" class="submit">
+        </form>
+    </td>
+</tr>';
+    }
+    echo '
+<tr>
+    <td>'._G('DBMF_blockref_newoption').'</td>
+    <td colspan="2">
+        <form action="?mod=dbmf3&amp;tpl=blockedit" method="post">
+        <input type="text" name="blockref_new_option" value="">
+        <input type="hidden" name="blockref_edit" value="'.$blockref->id.'">
+        <input type="submit" value="'._G('DBMF_blockref_add_option').'" class="submit">
+        </form>
+    </td>
+</tr>';
+}
+
+echo '
+</tbody></table>
+</center>
+</div>
+';
+}
+
+
+echo '
 
 <h2>'._G('DBMF_currentblocks').'</h2>';
 
@@ -26,12 +115,15 @@ foreach($blocks as $block) {
 <h3>'.$block->lname.' <small><i>('.$group_edit->comments.')</i></small></h3>';
     if($block->isEditable()) 
         echo '
-<form action="?mod=dbmf3&amp;tpl=blockedit" method="post">
 <div class="table_support">
+<form action="?mod=dbmf3&amp;tpl=blockedit" method="post">
 <center>
-<table><tbody>
+<table width="40%"><tbody>
 <tr class="title">
-    <td align="right">id</td>
+    <td align="center" colspan="2">'.$block->lname.'</td>
+</tr>
+<tr>
+    <td width="50%" align="right">id</td>
     <td>'.$block->id.'</td>
 </tr>
 <tr>
@@ -50,35 +142,28 @@ foreach($blocks as $block) {
 </tr>
 </tbody></table>
 </center>
-</div>
 </form>';
 
     echo '
-<div class="table_support">
 <center>
 <table width="70%"><tbody>
-<tr class="title">
-    <td width="20px">id</td>
-    <td>'._G('DBMF_blockref_name').'</td>
-    <td width="50px" align="center">'._G('DBMF_blockref_type').'</td>
-    <td width="100px" align="center">'._G('DBMF_blockref_active').'</td>
-    <td width="100px" align="center">'._G('DBMF_blockref_delete').'</td>
-</tr>';
+';
     foreach($block->blockrefs as $blockref) {
         if($blockref->status==MYSB_DBMF_BLOCKREF_STATUS_ACTIVE)
             $class_bref = '';
         else $class_bref = ' style="background: #bbbbbb;"';
         echo '
 <tr '.$class_bref.'>
-    <td>'.$blockref->id.'</td>
+    <td width="20px">'.$blockref->id.'</td>
     <td>';
         
         if($block->isEditable()) {
-            echo '
+            echo '<b>'.$blockref->lname.'</b>
+    </td>
+    <td width="100px" align="center">
         <form action="?mod=dbmf3&amp;tpl=blockedit" method="post">
-        <input type="text" name="lname" value="'.$blockref->lname.'">
-        <input type="hidden" name="blockref_rename" value="'.$blockref->id.'">
-        <input type="submit" value="'._G('DBMF_blockref_rename').'" class="submit">
+        <input type="hidden" name="blockref_edit" value="'.$blockref->id.'">
+        <input type="submit" value="'._G('DBMF_blockref_edition').'" class="submit">
         </form>';
         } else {
             echo '
@@ -86,8 +171,20 @@ foreach($blocks as $block) {
         }
         echo '
     </td>
-    <td align="center">'.$blockref->getType().'</td>
-    <td align="center">';
+    <td width="100px" align="center">'.$blockref->getType().'</td>
+    <td align="center" width="50px">
+        <form action="?mod=dbmf3&amp;tpl=blockedit" method="post">
+        <input type="hidden" name="blockref_orderdown" value="'.$blockref->id.'">
+        <input type="submit" value="&darr;" class="submit">
+        </form>
+    </td>
+    <td align="center" width="50px">
+        <form action="?mod=dbmf3&amp;tpl=blockedit" method="post">
+        <input type="hidden" name="blockref_orderup" value="'.$blockref->id.'">
+        <input type="submit" value="&uarr;" class="submit">
+        </form>
+    </td>
+    <td width="100px" align="center">';
         if($block->isEditable()) {
             echo '
         <form action="?mod=dbmf3&amp;tpl=blockedit" method="post">
@@ -110,7 +207,7 @@ foreach($blocks as $block) {
         }
         echo '
     </td>
-    <td align="center">';
+    <td width="100px" align="center">';
         if($block->isEditable()) {
             echo '
         <form action="?mod=dbmf3&amp;tpl=blockedit" method="post">
@@ -128,7 +225,7 @@ foreach($blocks as $block) {
     if($block->isEditable()) 
         echo '
 <tr>
-    <td colspan="5" align="center">
+    <td colspan="8" align="center">
         <br>
         <form action="?mod=dbmf3&amp;tpl=blockedit" method="post">
         '._G('DBMF_blockref_name').': <input type="text" name="lname" value="">
@@ -138,12 +235,12 @@ foreach($blocks as $block) {
             <option value="'.MYSB_VALUE_TYPE_BOOL.'" >bool</option>
             <option value="'.MYSB_VALUE_TYPE_VARCHAR64.'" >varchar(64)</option>
             <option value="'.MYSB_VALUE_TYPE_VARCHAR512.'" >varchar(512)</option>
-            <option value="'.MYSB_VALUE_TYPE_LINES.'" >text/varchar(512)</option>
+            <option value="'.MYSB_VALUE_TYPE_TEXT.'" >text/varchar(512)</option>
+            <option value="'.MYSB_VALUE_TYPE_VARCHAR64_SELECT.'" >select/varchar(64)</option>
         </select><br>
         <input type="hidden" name="blockref_add" value="'.$block->id.'">
         <input type="submit" value="'._G('DBMF_blockref_add').'" class="submit">
         </form>
-        <br>
     </td>
 </tr>';
 
