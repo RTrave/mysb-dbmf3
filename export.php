@@ -41,7 +41,7 @@ foreach($exports as $export)
 echo 'show(this.options[this.selectedIndex].value);">';
 foreach($exports as $export) 
     echo '
-    <option value="export_plug'.$export->id.'">'.$export->name.'</option>';
+    <option value="export_plug'.$export->id.'">'._G($export->name).'</option>';
 
 echo '
 </select>
@@ -51,9 +51,8 @@ $hide_flag = '';
 foreach($exports as $export) {
     echo '
 <div id="export_plug'.$export->id.'" '.$hide_flag.'>
-<h4>'.$export->name.' parameters</h4>
-<p>'.$export->comments.'<br>
-'.$export->htmlParamForm().'
+<h4>'._G('DBMF_export_param_for').' '._G($export->name).' ('._G($export->comments).')</h4>
+<p>'.$export->htmlParamForm().'
 </p>
 </div>';
     if($hide_flag=='') $hide_flag = ' style="display: none;"';
@@ -74,7 +73,7 @@ foreach($blocks as $block) {
     elseif($block->isEditable()) {
         echo '
 <tr>
-    <td colspan="2" style="text-align: center;">
+    <td colspan="2" style="text-align: center; background: #c0c0c0;">
     <select name="block_andorflag_'.$block->id.'">
         <option value="or">OR</option>
         <option value="and">AND</option>
@@ -91,12 +90,12 @@ foreach($blocks as $block) {
 </tr>';
         echo '
 <tr>
-    <td style="text-align: right;">'._G('DBMF_request_blockref_and_or').'</td>
+    <td style="text-align: right;"><small>'._G('DBMF_request_blockref_and_or').'</small></td>
     <td>
-    <select name="blockref_andorflag_'.$block->id.'">
-        <option value="or">OR</option>
-        <option value="and">AND</option>
-    </select>
+        <small>
+        <input type="radio" name="blockref_andorflag_'.$block->id.'" value="or" checked>OR 
+        <input type="radio" name="blockref_andorflag_'.$block->id.'" value="and">AND<br>
+        </small>
     </td>
 </tr>';
         foreach($block->blockrefs as $blockref) {

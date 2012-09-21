@@ -151,7 +151,7 @@ class MySBModule_dbmf3 {
         $userrole = MySBRoleHelper::create('dbmf_user','Can view DB entries',true);
         $userrole->assignToGroup('admin',true);
 
-        MySBDBMFExportHelper::create("DBMF_display","Display","HTML table", '', 1);
+        MySBDBMFExportHelper::create("DBMF_display","Display","DBMF_HTML_table", '', 1);
     }
 
     public function uninit() {

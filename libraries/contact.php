@@ -50,7 +50,7 @@ class MySBDBMFContactHelper {
 
     public function create($lastname,$firstname) {
         global $app;
-        $cid = MySBUTIL::lastid('dbmfcontacts')+1;
+        $cid = MySBDB::lastID('dbmfcontacts')+1;
         if($cid==0) $cid = 1;
         $today = getdate();
         $today_date = $today['year'].'-'.$today['mon'].'-'.$today['mday'].' '.$today['hours'].':'.$today['minutes'].':'.$today['seconds'];

@@ -140,7 +140,7 @@ class MySBDBMFBlockHelper {
 
     public function create($lname) {
         global $app;
-        $bid = MySBUTIL::lastid('dbmfblocks')+1;
+        $bid = MySBDB::lastID('dbmfblocks')+1;
         if($bid==0) $bid = 1;
         $new_block_name = 'dbmfblock'.$bid;
         $pri_group = MySBDBMFGroupHelper::get_primary($app->auth_user);

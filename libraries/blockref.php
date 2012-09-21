@@ -83,7 +83,7 @@ class MySBDBMFBlockRefHelper {
 
     public function create($lname,$type,$block_id) {
         global $app;
-        $brid = MySBUTIL::lastid('dbmfblockrefs')+1;
+        $brid = MySBDB::lastID('dbmfblockrefs')+1;
         if($brid==0) $brid = 1;
         $brkeyname = 'br'.$brid;
         $req_blockrefs = MySBDB::query("SELECT * FROM ".MySB_DBPREFIX."dbmfblockrefs ".

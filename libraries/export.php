@@ -105,7 +105,7 @@ class MySBDBMFExportHelper {
 
     public function create($name,$type,$comments,$config,$group_id) {
         global $app;
-        $bid = MySBUTIL::lastid('dbmfexports')+1;
+        $bid = MySBDB::firstID('dbmfexports');
         if($bid==0) $bid = 1;
         MySBDB::query('INSERT INTO '.MySB_DBPREFIX."dbmfexports ".
             "(id, type, name, comments, config, group_id) VALUES ".

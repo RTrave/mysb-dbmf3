@@ -35,12 +35,17 @@ class MySBDBMFExportMailing extends MySBDBMFExport {
     }
 
     public function htmlParamForm() {
-        $output = '';
+        $output = '
+'._G('DBMF_exportmail_modulo').' = 
+    <input type="text" name="dbmf_exportmail_modulo" value="0" size="6" maxsize="5">
+';
         return $output;
     }
 
     public function htmlParamProcess() {
         global $app;
+        $app->tpl_dbmfexportmail_modulo = $_POST['dbmf_exportmail_modulo'];
+        
     }
 
     /**
@@ -49,19 +54,28 @@ class MySBDBMFExportMailing extends MySBDBMFExport {
      */
     public function htmlResultOutput($results) {
         global $app;
-        echo '
+        $output = '
 <p>
 '.MySBDB::num_rows($results).' results<br>
 </p>
-<p>Mails:<br>
+<p>Mails (by '.$app->tpl_dbmfexportmail_modulo.'):<br><br>
+<code style="width: 70%;">
 ';
-        //$search_result = $app->tpl_dbmf_searchresult;
+        $modulo_index = 0;
         while($data_result = MySBDB::fetch_array($results)) {
+            if($modulo_index>=$app->tpl_dbmfexportmail_modulo) {
+                $modulo_index = 0;
+                $output .= "<br><br>\n";
+            }
+            $modulo_index++;
             $contact = new MySBDBMFContact(null,$data_result);
             if($contact->mail!='') 
-                echo $contact->mail.'; ';
+                 $output .= $contact->mail.'; ';
         }
-        echo '</p>';
+        $output .= '
+</code>
+</p>';
+        return $output;
     }
 
 }
