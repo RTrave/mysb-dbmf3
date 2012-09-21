@@ -110,10 +110,13 @@ echo '
 
 $blocks = MySBDBMFBlockHelper::load();
 foreach($blocks as $block) {
+
     $group_edit = MySBGroupHelper::getByID($block->groupedit_id);
     echo '
 <h3>'.$block->lname.' <small><i>('.$group_edit->comments.')</i></small></h3>';
-    if($block->isEditable()) 
+
+    if($block->isEditable()) {
+    
         echo '
 <div class="table_support">
 <form action="?mod=dbmf3&amp;tpl=blockedit" method="post">
@@ -142,34 +145,27 @@ foreach($blocks as $block) {
 </tr>
 </tbody></table>
 </center>
-</form>';
-
-    echo '
+</form>
 <center>
 <table width="70%"><tbody>
 ';
-    foreach($block->blockrefs as $blockref) {
-        if($blockref->status==MYSB_DBMF_BLOCKREF_STATUS_ACTIVE)
-            $class_bref = '';
-        else $class_bref = ' style="background: #bbbbbb;"';
-        echo '
+
+        foreach($block->blockrefs as $blockref) {
+
+            if($blockref->status==MYSB_DBMF_BLOCKREF_STATUS_ACTIVE)
+                $class_bref = '';
+            else $class_bref = ' style="background: #bbbbbb;"';
+            echo '
 <tr '.$class_bref.'>
     <td width="20px">'.$blockref->id.'</td>
-    <td>';
-        
-        if($block->isEditable()) {
-            echo '<b>'.$blockref->lname.'</b>
+    <td>
+        <b>'.$blockref->lname.'</b>
     </td>
     <td width="100px" align="center">
         <form action="?mod=dbmf3&amp;tpl=blockedit" method="post">
         <input type="hidden" name="blockref_edit" value="'.$blockref->id.'">
         <input type="submit" value="'._G('DBMF_blockref_edition').'" class="submit">
-        </form>';
-        } else {
-            echo '
-        '.$blockref->lname.'';
-        }
-        echo '
+        </form>
     </td>
     <td width="100px" align="center">'.$blockref->getType().'</td>
     <td align="center" width="50px">
@@ -184,45 +180,31 @@ foreach($blocks as $block) {
         <input type="submit" value="&uarr;" class="submit">
         </form>
     </td>
-    <td width="100px" align="center">';
-        if($block->isEditable()) {
-            echo '
+    <td width="100px" align="center">
         <form action="?mod=dbmf3&amp;tpl=blockedit" method="post">
         <input type="hidden" name="blockref_switchactive" value="'.$blockref->id.'">';
+
             if($blockref->status==MYSB_DBMF_BLOCKREF_STATUS_ACTIVE) 
                 echo '
         <input type="submit" value="'._G('DBMF_blockref_desactive').'" class="submit">';
             else 
                 echo '
         <input type="submit" value="'._G('DBMF_blockref_active').'" class="submit">';
+
             echo '
-        </form>';
-        } else {
-            if($blockref->status==MYSB_DBMF_BLOCKREF_STATUS_ACTIVE) 
-                echo '
-        '._G('DBMF_blockref_actived').'';
-            else 
-                echo '
-        '._G('DBMF_blockref_desactived').'';
-        }
-        echo '
+        </form>
     </td>
-    <td width="100px" align="center">';
-        if($block->isEditable()) {
-            echo '
+    <td width="100px" align="center">
         <form action="?mod=dbmf3&amp;tpl=blockedit" method="post">
         <input type="hidden" name="block_id" value="'.$block->id.'">
         <input type="hidden" name="blockref_del" value="'.$blockref->id.'">
         <input type="submit" value="'._G('DBMF_blockref_delete').'" class="submit">
-        </form>';
-        } else {
-            echo _G('DBMF_block_noneditable');
-        }
-        echo '
+        </form>
     </td>
-</tr>';
-    }
-    if($block->isEditable()) 
+</tr>
+';
+        }
+
         echo '
 <tr>
     <td colspan="8" align="center">
@@ -242,22 +224,26 @@ foreach($blocks as $block) {
         <input type="submit" value="'._G('DBMF_blockref_add').'" class="submit">
         </form>
     </td>
-</tr>';
+</tr>
 
-    echo '
 </tbody></table>
 </center>
-</div>';
+</div>
+';
+    }
 }
 
 echo '
 <h2>'._G('DBMF_addblock').'</h2>
+<div class="table_support">
 <form action="?mod=dbmf3&amp;tpl=blockedit" method="post">
 <p>
    '._G('DBMF_block_name').' <input type="text" name="addblock_name">
    <input type="hidden" name="block_add" value="1">
    <input type="submit" value="'._G('DBMF_block_add').'" class="submit">
 </p>
-</form>';
+</form>
+</div>
+';
 
 ?>
