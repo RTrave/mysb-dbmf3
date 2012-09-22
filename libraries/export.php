@@ -51,7 +51,8 @@ class MySBDBMFExport extends MySBObject {
             $config = explode('=',$value);
             if($config[0]!='') 
                 $this->config_array[$config[0]] = $config[1];
-        }    }
+        }
+    }
 
     public function displayConfig() {
         $str_res = '';
@@ -89,6 +90,20 @@ class MySBDBMFExport extends MySBObject {
      * @param   
      */
     public function htmlParamProcess() {
+    }
+
+    /**
+     * "WHERE" clause of export
+     * @param   
+     */
+    public function requestWhereClause() {
+    }
+
+    /**
+     * "ORDER BY" clause of export
+     * @param   
+     */
+    public function requestOrderBy() {
     }
 
     /**
@@ -143,10 +158,12 @@ class MySBDBMFExportHelper {
                 true, 'dbmf3' );
         while($data_export = MySBDB::fetch_array($req_dbmfexports)) {
             $exportClass = 'MySBDBMFExport'.$data_export['type'];
-            if (class_exists($exportClass)) 
-                $app->cache_dbmfexports[$data_export['id']] = new $exportClass(-1, $data_export);
-            else 
-            $app->LOG("MySBDBMFExportHelper::load(): class '$exportClass' not found");
+            if (class_exists($exportClass)) {
+                if($app->auth_user->haveGroup($data_export['group_id']) or $app->auth_user->haveGroup('0')) {
+                    $app->cache_dbmfexports[$data_export['id']] = new $exportClass(-1, $data_export);
+                }
+            } else 
+                $app->LOG("MySBDBMFExportHelper::load(): class '$exportClass' not found");
         }
         return $app->cache_dbmfexports;
     }

@@ -49,8 +49,15 @@ if(isset($_POST['dbmf_export_process'])) {
     }
     if($clause_owner!='' and $clause_a!='') $clause_a .= ' and ('.$clause_owner.')';
     elseif($clause_owner!='') $clause_a .= '('.$clause_owner.')';
+
+    $clause_export = $app->dbmf_export_plugin->requestWhereClause();
+    if($clause_export!='') $clause_a = '('.$clause_a.' and ('.$clause_export.'))';
+
     if($clause_a!='') $sql_a .= 'WHERE '.$clause_a.' ';
-    $sql_a .= 'ORDER by lastname';
+
+    $orderby_export = $app->dbmf_export_plugin->requestOrderBy();
+    if($orderby_export!='') $sql_a .= 'ORDER BY '.$orderby_export;
+    else $sql_a .= 'ORDER BY lastname';
 	$app->dbmf_search_result = MySBDB::query( $sql_a,
 	    "request_process.php",
 	    false, 'dbmf3');
