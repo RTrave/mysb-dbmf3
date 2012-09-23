@@ -36,9 +36,9 @@ class MySBDBMFExportMailing extends MySBDBMFExport {
 
     public function htmlParamForm() {
         $output = '
-'._G('DBMF_exportmail_modulo').' = 
-    <input type="text" name="dbmf_exportmail_modulo" value="0" size="6" maxsize="5">
-';
+<p>'._G('DBMF_exportmail_modulo').' = 
+    <input type="text" name="dbmf_exportmail_modulo" value="0" size="6">
+</p>';
         return $output;
     }
 

@@ -16,8 +16,11 @@ global $app;
 
 if(isset($_POST['dbmf_export_process'])) {
 
-    $app->dbmf_export_plugin = MySBDBMFExportHelper::getByID($_POST['export_plug'][11]);
-
+    $strp = explode('export_plug',$_POST['export_plug'] );
+    $plug_id = intval($strp[1]);
+    //$app->dbmf_export_plugin = MySBDBMFExportHelper::getByID($_POST['export_plug'][11]);
+    $app->dbmf_export_plugin = MySBDBMFExportHelper::getByID($plug_id);
+    //echo $app->dbmf_export_plugin->name.'<br>';
     $app->dbmf_export_plugin->htmlParamProcess();
 
     $blocks = MySBDBMFBlockHelper::load();

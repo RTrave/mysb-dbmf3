@@ -25,7 +25,7 @@ if(isset($_POST['dbmf_export_process'])) {
 }
 
 echo '
-<form action="?mod=dbmf3&amp;tpl=export" method="post">
+<form action="" method="post">
 
 <h2>'._G('DBMF_export_contacts').'</h2>
 
@@ -52,8 +52,8 @@ foreach($exports as $export) {
     echo '
 <div id="export_plug'.$export->id.'" '.$hide_flag.'>
 <h4>'._G('DBMF_export_param_for').' '._G($export->name).' ('._G($export->comments).')</h4>
-<p>'.$export->htmlParamForm().'
-</p>
+'.$export->htmlParamForm().'
+
 </div>';
     if($hide_flag=='') $hide_flag = ' style="display: none;"';
 }
