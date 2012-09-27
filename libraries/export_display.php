@@ -36,24 +36,28 @@ class MySBDBMFExportDisplay extends MySBDBMFExport {
 
     public function htmlParamForm() {
         $output = '';
+        $blocks = MySBDBMFBlockHelper::load();
         $output .= '
 <div class="table_support">
-<table><tbody>';
-        $blocks = MySBDBMFBlockHelper::load();
+<table style="border: 0px;"><tbody>
+<tr>';
+        //$blocks = MySBDBMFBlockHelper::load();
         foreach($blocks as $block) {
-            $group_edit = MySBGroupHelper::getByID($block->groupedit_id);
+            //$group_edit = MySBGroupHelper::getByID($block->groupedit_id);
             if($block->isEditable()) {
                 $output .= '
+<td style="vertical-align: top;">
+<table><tbody>
 <tr class="title" >
     <td colspan="2">';
-                $output .= $block->lname.' <small><i>('.$group_edit->comments.')</i></small>
+                $output .= $block->lname.'
     </td>
 </tr>';
                 foreach($block->blockrefs as $blockref) {
                     if($blockref->isActive()) {
-                        $refname = 'br'.$blockref->id;
+                        $refname = $blockref->keyname;
                         $output .= '
-<tr style="'.$class_edit.'">
+<tr>
     <td style="vertical-align: top; text-align: right;"><b>'.$blockref->lname.':</b></td>
     <td>';
                         $output .= '<input type="checkbox" name="display_'.$blockref->id.'">';
@@ -63,8 +67,12 @@ class MySBDBMFExportDisplay extends MySBDBMFExport {
                     }
                 }
             }
+            $output .= '
+</tbody></table>
+</td>';
         }
         $output .= '
+</tr>
 </tbody></table>
 </div>';
         return $output;
