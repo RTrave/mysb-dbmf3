@@ -100,7 +100,7 @@ foreach($blocks as $block) {
 </tr>';
         foreach($block->blockrefs as $blockref) {
             if($blockref->isActive()) {
-                $refname = 'br'.$blockref->id;
+                $refname = $blockref->keyname;
                 echo '
 <tr style="'.$class_edit.'">
     <td style="vertical-align: top; text-align: right;"><b>'.$blockref->lname.':</b></td>

@@ -83,40 +83,50 @@ class MySBDBMFBlockRefHelper {
 
     public function create($lname,$type,$block_id) {
         global $app;
-        $brid = MySBDB::lastID('dbmfblockrefs')+1;
-        if($brid==0) $brid = 1;
-        $brkeyname = 'br'.$brid;
+
+        $req_lastid = MySBDB::query('SELECT keyname from '.MySB_DBPREFIX.'dbmfblockrefs '.
+            'WHERE block_id='.$block_id.' '.
+            'ORDER BY keyname DESC',
+            "MySBDB::lastID($table)" );
+        $data_lastid = MySBDB::fetch_array($req_lastid);
+        if($data_lastid['keyname']!='') {
+            $tmpid = explode('r',$data_lastid['keyname']);
+            $brid = ((int) $tmpid[1]) + 1;
+        } else $brid = 1;
+        $brkeyname = 'b'.$block_id.'r'.$brid;
         $req_blockrefs = MySBDB::query("SELECT * FROM ".MySB_DBPREFIX."dbmfblockrefs ".
             "WHERE block_id=".$block_id." ".
             "ORDER by i_index DESC",
             "MySBDBMFBlockRefHelper::create()",
             true, 'dbmf3');
         $data_blockref = MySBDB::fetch_array($req_blockrefs);
+        $new_id = MySBDB::lastID('dbmfblockrefs')+1;
         $index = $data_blockref['i_index'] + 2;
         MySBDB::query("INSERT INTO ".MySB_DBPREFIX.'dbmfblockrefs '.
             "(id, block_id, keyname, lname, type, status, i_index) VALUES ".
-            "($brid, $block_id, '$brkeyname', '$lname', $type, ".MYSB_DBMF_BLOCKREF_STATUS_INACTIVE.", ".$index.") ",
+            "($new_id, $block_id, '$brkeyname', '$lname', $type, ".MYSB_DBMF_BLOCKREF_STATUS_INACTIVE.", ".$index.") ",
             "MySBDBMFBlockRefHelper::create($lname,$type,$block_id)",
             true, 'dbmf3');
-        $new_blockref = new MySBDBMFBlockRef($brid);
+        $new_blockref = new MySBDBMFBlockRef($new_id);
         $new_blockref->grp = 'dbmf3';
         MySBDB::query("ALTER TABLE ".MySB_DBPREFIX.'dbmfcontacts '.
             'ADD COLUMN '.$brkeyname.' '.$new_blockref->getSQLType(),
             "MySBDBMFBlockRefHelper::create($lname,$type,$block_id)",
             true, 'dbmf3');
         if(isset($app->cache_dbmfblockrefs)) 
-            $app->cache_dbmfblockrefs[$brid] = $new_blockref;
+            $app->cache_dbmfblockrefs[$new_id] = $new_blockref;
         return $new_blockref;
     }
 
     public function delete($id) {
         global $app;
+        $blockref = MySBDBMFBlockRefHelper::getByID($id);
         MySBDB::query("DELETE FROM ".MySB_DBPREFIX.'dbmfblockrefs WHERE '.
             "id=$id",
             "MySBDBMFBlockRefHelper::delete($id)",
             true, 'dbmf3');
         MySBDB::query("ALTER TABLE ".MySB_DBPREFIX.'dbmfcontacts '.
-		    'DROP COLUMN br'.$id,
+		    'DROP COLUMN '.$blockref->keyname,
             "MySBDBMFBlockRefHelper::delete($id)",
             false, 'dbmf3');
         if(isset($app->cache_dbmfblockrefs)) 

@@ -39,7 +39,7 @@ if(isset($_POST['dbmf_export_process'])) {
         if(($clause=$block->htmlProcessWhereClause('b'))=='') {
             foreach($block->blockrefs as $blockref) {
                 if($block->isEditable() and $blockref->isActive()) {
-                    $refname = 'br'.$blockref->id;
+                    $refname = $blockref->keyname;
                     if(($clause_t = $blockref->htmlProcessWhereClause('br'))!=null) {
                         if($clause!='') $clause .= ' '.$_POST['blockref_andorflag_'.$block->id].' ';
                         $clause .= $clause_t;
@@ -50,7 +50,7 @@ if(isset($_POST['dbmf_export_process'])) {
         if($clause_a!='' and $clause!='') $clause_a .= ' '.$_POST['block_andorflag_'.$block->id].' ';
         if($clause!='') $clause_a .= '('.$clause.')';
     }
-    if($clause_owner!='' and $clause_a!='') $clause_a .= ' and ('.$clause_owner.')';
+    if($clause_owner!='' and $clause_a!='') $clause_a = '('.$clause_a.') and ('.$clause_owner.')';
     elseif($clause_owner!='') $clause_a .= '('.$clause_owner.')';
 
     $clause_export = $app->dbmf_export_plugin->requestWhereClause();

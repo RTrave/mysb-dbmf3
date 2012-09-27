@@ -157,7 +157,7 @@ foreach($blocks as $block) {
             else $class_bref = ' style="background: #bbbbbb;"';
             echo '
 <tr '.$class_bref.'>
-    <td width="20px">'.$blockref->id.'</td>
+    <td width="20px">'.$blockref->keyname.'</td>
     <td>
         <b>'.$blockref->lname.'</b>
     </td>

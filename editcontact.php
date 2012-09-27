@@ -44,7 +44,7 @@ foreach($blocks as $block) {
                 $class_edit = 'background: #cccccc;';
             else 
                 $class_edit = '';
-            $refname = 'br'.$blockref->id;
+            $refname = $blockref->keyname;
             echo '
 <tr style="'.$class_edit.'">
     <td style="vertical-align: top; text-align: right;"><b>'.$blockref->lname.':</b></td>

@@ -72,7 +72,7 @@ while($data_print = MySBDB::fetch_array($search_result)) {
     </td>';
     if(isset($app->tpl_display_columns)) 
     foreach($app->tpl_display_columns as $column) {
-        $column_name = "br".$column->id;
+        $column_name = $column->keyname;
         echo '
     <td>'.$contact->$column_name.'</td>';
     }
