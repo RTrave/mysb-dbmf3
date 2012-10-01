@@ -48,6 +48,7 @@ class MySBDBMFBlock extends MySBObject {
 
     public function isEditable() {
         global $app;
+        if(!MySBRoleHelper::checkAccess('dbmf_editor',false)) return false;
         $groups = MySBDBMFGroupHelper::load();
         if($groups[$this->groupedit_id]->dbmf_priority<=0) return false;
         if($app->auth_user->haveGroup($this->groupedit_id)) return true;

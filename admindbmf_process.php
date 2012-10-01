@@ -14,6 +14,8 @@ defined('_MySBEXEC') or die;
 
 global $app;
 
+if(!MySBRoleHelper::checkAccess('admin')) return;
+
 if(isset($_POST['group_id'])) {
     $group = new MySBDBMFGroup($_POST['group_id']);
     $group->setPriority($_POST['dbmf_priority']);

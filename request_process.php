@@ -14,6 +14,11 @@ defined('_MySBEXEC') or die;
 
 global $app;
 
+if( !MySBRoleHelper::checkAccess('dbmf_editor',false) and 
+    !MySBRoleHelper::checkAccess('dbmf_user',false) ) 
+    return;
+
+
 if(isset($_POST['dbmf_request'])) {
 
     $sql_r = 'SELECT * from '.MySB_DBPREFIX.'dbmfcontacts ';

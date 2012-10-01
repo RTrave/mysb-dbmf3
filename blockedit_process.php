@@ -14,6 +14,8 @@ defined('_MySBEXEC') or die;
 
 global $app;
 
+if(!MySBRoleHelper::checkAccess('dbmf_blockedit')) return;
+
 
 if(isset($_POST['addblock_name']) and !empty($_POST['addblock_name'])) {
     MySBDBMFBlockHelper::create($_POST['addblock_name']);

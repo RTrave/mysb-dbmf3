@@ -142,8 +142,6 @@ class MySBModule_dbmf3 {
             array(0,0,0,0),
             3,"dbmf_user",'dbmf3');
 
-        $adminrole = MySBRoleHelper::create('dbmf_admin','Can admin DBMF');
-        $adminrole->assignToGroup('admin',true);
         $blockeditrole = MySBRoleHelper::create('dbmf_blockedit','Can edit DB blocks');
         $blockeditrole->assignToGroup('admin',true);
         $editrole = MySBRoleHelper::create('dbmf_editor','Can edit DB entries');
@@ -160,7 +158,6 @@ class MySBModule_dbmf3 {
         MySBRoleHelper::delete('dbmf_user');
         MySBRoleHelper::delete('dbmf_editor');
         MySBRoleHelper::delete('dbmf_blockedit');
-        MySBRoleHelper::delete('dbmf_admin');
 
         MySBDBMFExportHelper::delete(MySBDBMFExportHelper::getByName('DBMF_display')->id);
 

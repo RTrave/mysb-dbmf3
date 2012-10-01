@@ -14,7 +14,9 @@ defined('_MySBEXEC') or die;
 
 global $app;
 
-if(!MySBRoleHelper::checkAccess('dbmf_editor')) return;
+if( !MySBRoleHelper::checkAccess('dbmf_editor',false) and 
+    !MySBRoleHelper::checkAccess('dbmf_user',false) ) 
+    return;
 
 if(isset($_GET['contact_id'])) {
     if($_GET['contact_id']==-1) {
