@@ -37,9 +37,9 @@ if($app->dbmf_req_wcheck!='') {
 <form action="index.php?mod=dbmf3&amp;tpl=addcontact" method="post">
 <p>
 <input type="hidden" name="add_status" value="1">
-<b>'._G('DBMF_lastname').':</b>
+<b>'._G('DBMF_common_lastname').':</b>
 <input type="text" name="lastname" size="24" maxlength="64" value="'.$data_x['lastname'].'"><br>
-<b>'._G('DBMF_firstname').':</b>
+<b>'._G('DBMF_common_firstname').':</b>
 <input type="text" name="firstname" size="24" maxlength="64" value="'.$data_x['firstname'].'"><br>
 <br>
 <input type="submit" value="'._G('DBMF_addcontact_verify').'" class="submit">
