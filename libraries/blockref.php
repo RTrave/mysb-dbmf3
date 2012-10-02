@@ -105,7 +105,7 @@ class MySBDBMFBlockRefHelper {
         $index = $data_blockref['i_index'] + 2;
         MySBDB::query("INSERT INTO ".MySB_DBPREFIX.'dbmfblockrefs '.
             "(id, block_id, keyname, lname, type, status, i_index) VALUES ".
-            "($new_id, $block_id, '$brkeyname', '$lname', $type, ".MYSB_DBMF_BLOCKREF_STATUS_INACTIVE.", ".$index.") ",
+            "($new_id, $block_id, '$brkeyname', '".MySBUtil::str2db($lname)."', $type, ".MYSB_DBMF_BLOCKREF_STATUS_INACTIVE.", ".$index.") ",
             "MySBDBMFBlockRefHelper::create($lname,$type,$block_id)",
             true, 'dbmf3');
         $new_blockref = new MySBDBMFBlockRef($new_id);
