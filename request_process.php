@@ -30,7 +30,7 @@ if(isset($_POST['dbmf_request'])) {
         }
     }
     if($clause_owner=='') {
-        $app->pushAlert(_G('SBGT_unauthorised_alert'));
+        $app->pushAlert(_G('DBMF_no_rights'));
     }
     if (!empty($_POST['search_all'])) {
         $str_search_all = MySBUtil::str2whereclause($_POST['search_all']);

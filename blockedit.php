@@ -137,7 +137,18 @@ foreach($blocks as $block) {
 </tr>
 <tr>
     <td align="right">'._G('DBMF_block_groupedit').'</td>
-    <td>'.$group_edit->comments.'</td>
+    <td>
+        <select name="group_id">';
+
+        $groups = MySBDBMFGroupHelper::load();
+        foreach($groups as $group) {
+            if($group->dbmf_priority>0) echo '
+            <option value="'.$group->id.'" '.MySBUtil::form_isselected($group->id,$group_edit->id).'>'.$group->comments.'</option>';
+        }
+        
+        echo '
+        </select>
+    </td>
 </tr>
 <tr>
     <td colspan="2" align="center">

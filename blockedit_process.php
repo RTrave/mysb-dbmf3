@@ -25,7 +25,8 @@ if(isset($_POST['addblock_name']) and !empty($_POST['addblock_name'])) {
 if(isset($_POST['block_edit'])) {
     $block = MySBDBMFBlockHelper::getByID($_POST['block_edit']);
     $block->update( array(
-        'lname' => $_POST['lname']
+        'lname' => $_POST['lname'],
+        'groupedit_id' => $_POST['group_id']
     ) );
 }
 

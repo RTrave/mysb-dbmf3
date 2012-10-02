@@ -35,7 +35,7 @@ if(isset($_POST['dbmf_export_process'])) {
         }
     }
     if($clause_owner=='') {
-        $app->pushAlert(_G('SBGT_unauthorised_alert'));
+        $app->pushAlert(_G('DBMF_no_rights'));
     }
     
     $sql_a = 'SELECT * from '.MySB_DBPREFIX.'dbmfcontacts ';
