@@ -22,20 +22,10 @@ class MySBModule_dbmf3 {
         //tables
         $req = MySBDB::query('CREATE TABLE '.MySB_DBPREFIX.'dbmfcontacts ( '.
             'id int, '.
-            'prefix varchar(32), '.
-            'lastname varchar(512), '.
-            'firstname varchar(512), '.
-            'adress_1 varchar(512), '.
-            'adress_2 varchar(512), '.
-            'tel_1 varchar(32), '.
-            'tel_2 varchar(32), '.
-            'tel_fax varchar(32), '.
-            'mail varchar(512), '.
-            'function varchar(512), '.
-            'organism varchar(512), '.
-            'date_creat varchar(32), '.
-            'date_modif varchar(32), '.
-            'comments varchar(512) )',
+            'date_creat date, '.
+            'date_modif date, '.
+            'lastname varchar(64), '.
+            'firstname varchar(64) ) ',
             "__init.php",
             false, "dbmf3");
 
@@ -79,6 +69,25 @@ class MySBModule_dbmf3 {
             "__init.php",
             false, "dbmf3");
 
+        include(MySB_ROOTPATH.'/modules/dbmf3/framework.php');
+
+        $common_block = MySBDBMFBlockHelper::create('DBMF_common_blockname');
+        $prefix = MySBDBMFBlockRefHelper::create('DBMF_common_prefix',MYSB_VALUE_TYPE_VARCHAR64_SELECT,$common_block->id);
+        MySBDBMFBlockRefHelper::create('DBMF_common_function',MYSB_VALUE_TYPE_VARCHAR512,$common_block->id);
+        MySBDBMFBlockRefHelper::create('DBMF_common_organism',MYSB_VALUE_TYPE_VARCHAR512,$common_block->id);
+        //MySBDBMFBlockRefHelper::create('DBMF_common_lastname',MYSB_VALUE_TYPE_VARCHAR64,$common_block->id);
+        //MySBDBMFBlockRefHelper::create('DBMF_common_firstname',MYSB_VALUE_TYPE_VARCHAR64,$common_block->id);
+        MySBDBMFBlockRefHelper::create('DBMF_common_adress_1',MYSB_VALUE_TYPE_TEXT,$common_block->id);
+        //MySBDBMFBlockRefHelper::create('DBMF_common_adress_2',MYSB_VALUE_TYPE_TEXT,$common_block->id);
+        MySBDBMFBlockRefHelper::create('DBMF_common_tel_1',MYSB_VALUE_TYPE_VARCHAR64,$common_block->id);
+        MySBDBMFBlockRefHelper::create('DBMF_common_tel_2',MYSB_VALUE_TYPE_VARCHAR64,$common_block->id);
+        MySBDBMFBlockRefHelper::create('DBMF_common_tel_fax',MYSB_VALUE_TYPE_VARCHAR64,$common_block->id);
+        MySBDBMFBlockRefHelper::create('DBMF_common_mail',MYSB_VALUE_TYPE_VARCHAR512,$common_block->id);
+        MySBDBMFBlockRefHelper::create('DBMF_common_comments',MYSB_VALUE_TYPE_TEXT,$common_block->id);
+
+        $prefix->addSelectOption('DBMF_common_prefix_miss');
+        $prefix->addSelectOption('DBMF_common_prefix_mr');
+
 
     }
 
@@ -98,12 +107,15 @@ class MySBModule_dbmf3 {
         $req = MySBDB::query('DROP TABLE '.MySB_DBPREFIX.'dbmfblocks',
             "__init.php",
             false, "dbmf3");
-         $req = MySBDB::query('DROP TABLE '.MySB_DBPREFIX.'dbmfexports',
+        $req = MySBDB::query('DROP TABLE '.MySB_DBPREFIX.'dbmfexports',
             "__init.php",
             false, "dbmf3");
-         $req = MySBDB::query('DROP TABLE '.MySB_DBPREFIX.'dbmfrouting',
+        $req = MySBDB::query('DROP TABLE '.MySB_DBPREFIX.'dbmfrouting',
             "__init.php",
             false, "dbmf3");
+
+        MySBDB::query("DELETE FROM ".MySB_DBPREFIX."valueoptions WHERE value_keyname='dbmf3-b1r01'",
+                "__init.php");
     }
 
     public function init1() {
@@ -127,7 +139,7 @@ class MySBModule_dbmf3 {
         MySBPluginHelper::create('admindbmf_menutext','MenuItem',
             array("DBMF_adminmenu_dbmf", "admindbmf", 'DBMF_adminmenu_dbmfinfos',''),
             array(3,0,0,0),
-            6,"dbmf_admin",'dbmf3');
+            6,"admin",'dbmf3');
         MySBPluginHelper::create('dbmf_request','FrontPage',
             array("request", '', '',''),
             array(0,0,0,0),
@@ -148,6 +160,7 @@ class MySBModule_dbmf3 {
         $editrole->assignToGroup('admin',true);
         $userrole = MySBRoleHelper::create('dbmf_user','Can view DB entries',true);
         $userrole->assignToGroup('admin',true);
+        $userrole->assignToGroup('users',true);
 
         MySBDBMFExportHelper::create("DBMF_display","Display","DBMF_HTML_table", '', 1);
     }

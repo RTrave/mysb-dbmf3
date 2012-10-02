@@ -26,7 +26,7 @@ echo '
 <form action="?mod=dbmf3&amp;tpl=editcontact&amp;contact_id='.$contact->id.'" method="post">
 
 <div class="table_support" align="center">
-<table><tbody>
+<table width="90%"><tbody>
 ';
 
 _T('templates/common_edition.php','dbmf3');
@@ -36,7 +36,7 @@ foreach($blocks as $block) {
     $group_edit = MySBGroupHelper::getByID($block->groupedit_id);
     echo '
 <tr class="title" >
-    <td colspan="2">'.$block->lname.' <small><i>('.$group_edit->comments.')</i></small></td>
+    <td colspan="2">'._G($block->lname).' <small><i>('.$group_edit->comments.')</i></small></td>
 </tr>';
     foreach($block->blockrefs as $blockref) {
         if($blockref->isActive()) {
@@ -47,7 +47,7 @@ foreach($blocks as $block) {
             $refname = $blockref->keyname;
             echo '
 <tr style="'.$class_edit.'">
-    <td style="vertical-align: top; text-align: right;"><b>'.$blockref->lname.':</b></td>
+    <td style="vertical-align: top; text-align: right;"><b>'._G($blockref->lname).':</b></td>
     <td>';
             if($block->isEditable()) 
                 echo $blockref->htmlForm('blockref',$contact->$refname);
@@ -60,14 +60,15 @@ foreach($blocks as $block) {
     }
 }
 
-echo '
+if(MySBRoleHelper::checkAccess('dbmf_editor',false)) echo '
 <tr>
     <td colspan="2" align="center">
         <input type="hidden" name="contact_edit" value="1">
         <input type="submit" value="'._G('DBMF_contact_edition_submit').'" class="submit">
     </td>
-</tr>
+</tr>';
 
+echo '
 </tbody></table>
 </div>
 </form>

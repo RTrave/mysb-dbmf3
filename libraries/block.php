@@ -58,9 +58,10 @@ class MySBDBMFBlock extends MySBObject {
     public function isViewable() {
         global $app;
         if($this->isEditable()) return true;
+        if(!MySBRoleHelper::checkAccess('dbmf_user',false)) return false;
         $groups = MySBDBMFGroupHelper::load();
-        if($groups[$this->groupview_id]->dbmf_priority<=0) return false;
-        if($app->auth_user->haveGroup($this->groupview_id)) return true;
+        if($groups[$this->groupedit_id]->dbmf_priority<=0) return false;
+        if($app->auth_user->haveGroup($this->groupedit_id)) return true;
         return false;
     }
 
@@ -103,7 +104,7 @@ class MySBDBMFBlock extends MySBObject {
         $clause = '';
         if($check_flag=='on') {
             foreach($this->blockrefs as $blockref) {
-                if($this->isEditable() and $blockref->isActive()) {
+                if($blockref->isActive()) {
                     if($clause!='')  $clause .= ' '.$andor_flag.' ';
                     $clause .= $blockref->keyname."!='' ";
                 }
@@ -145,10 +146,11 @@ class MySBDBMFBlockHelper {
         if($bid==0) $bid = 1;
         $new_block_name = 'dbmfblock'.$bid;
         $pri_group = MySBDBMFGroupHelper::get_primary($app->auth_user);
-        if($pri_group==null) return; 
+        if($pri_group==null) $pri_group_id = 1;
+        else $pri_group_id = $pri_group->id; 
         MySBDB::query('INSERT INTO '.MySB_DBPREFIX."dbmfblocks ".
             "(id, name, lname, groupedit_id) VALUES ".
-            "( $bid,'".$new_block_name."','".MySBUtil::str2db($lname)."',".$pri_group->id." )",
+            "( $bid,'".$new_block_name."','".MySBUtil::str2db($lname)."',".$pri_group_id." )",
             "MySBDBMFBlockHelper::create($name,$lname)",
             true, "dbmf3");
         $new_block = new MySBDBMFBlock($bid);

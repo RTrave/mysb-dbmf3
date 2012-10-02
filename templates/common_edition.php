@@ -31,53 +31,22 @@ echo '
     <td><b>'._G("DBMF_date_modif").':</b></td>
     <td>'.$date_modif->strAEBY_l().'</td>
 </tr>
+<tr>
+    <td><b>'._G("DBMF_common_lastname").':</b></td>';
+if(MySBRoleHelper::checkAccess('dbmf_editor',false)) echo '
+    <td><input type="text" name="lastname" size="24" maxlength="64" value="'.$contact->lastname.'"></td>';
+else echo '
+    <td>'.$contact->lastname.'</td>';
+echo '
+</tr>
+<tr>
+    <td><b>'._G("DBMF_common_firstname").':</b></td>';
+if(MySBRoleHelper::checkAccess('dbmf_editor',false)) echo '
+    <td><input type="text" name="firstname" size="24" maxlength="64" value="'.$contact->firstname.'"></td>';
+else echo '
+    <td>'.$contact->firstname.'</td>';
+echo '
+</tr>
+';
 
-<tr class="title" >
-    <td colspan="2">'._G("DBMF_contact_common_infos").'</td>
-</tr>
-<tr>
-    <td style="vertical-align: top; text-align: right;"><b>'._G("DBMF_lastname").':</b></td>
-    <td><input type="text" name="lastname" size="24" maxlength="64" value="'.$contact->lastname.'"></td>
-</tr>
-<tr>
-    <td style="vertical-align: top; text-align: right;"><b>'._G("DBMF_firstname").':</b></td>
-    <td><input type="text" name="firstname" size="24" maxlength="64" value="'.$contact->firstname.'"></td>
-</tr>
-<tr>
-    <td style="vertical-align: top; text-align: right;"><b>'._G("DBMF_organism").':</b></td>
-    <td><input type="text" name="organism" size="56" maxlength="64" value="'.$contact->organism.'"></td>
-</tr>
-<tr>
-    <td style="vertical-align: top; text-align: right;"><b>'._G("DBMF_function").':</b></td>
-    <td><textarea name="function" cols="60" rows="1">'.$contact->function.'</textarea></td>
-</tr>
-<tr>
-    <td style="vertical-align: top; text-align: right;"><b>'._G("DBMF_adress_1").':</b></td>
-    <td><textarea name="adress_1" cols="60" rows="3">'.$contact->adress_1.'</textarea></td>
-</tr>
-<tr>
-    <td style="vertical-align: top; text-align: right;"><b>'._G("DBMF_adress_2").':</b></td>
-    <td><textarea name="adress_2" cols="60" rows="3">'.$contact->adress_2.'</textarea></td>
-</tr>
-<tr>
-    <td style="vertical-align: top; text-align: right;"><b>'._G("DBMF_tel_1").':</b></td>
-    <td><input type="text" name="tel_1" size="16" maxlength="16" value="'.$contact->tel_1.'"></td>
-</tr>
-<tr>
-    <td style="vertical-align: top; text-align: right;"><b>'._G("DBMF_tel_2").':</b></td>
-    <td><input type="text" name="tel_2" size="16" maxlength="16" value="'.$contact->tel_2.'"></td>
-</tr>
-<tr>
-    <td style="vertical-align: top; text-align: right;"><b>'._G("DBMF_tel_fax").':</b></td>
-    <td><input type="text" name="tel_fax" size="16" maxlength="16" value="'.$contact->tel_fax.'"></td>
-</tr>
-<tr>
-    <td style="vertical-align: top; text-align: right;"><b>'._G("DBMF_mail").':</b></td>
-    <td><input type="text" name="mail" size="56" maxlength="64" value="'.$contact->mail.'">
-    <input type="hidden" name="mail_old" value="'.$contact->mail.'"></td>
-</tr>
-<tr>
-    <td style="vertical-align: top; text-align: right;"><b>'._G("DBMF_comments").':</b></td>
-    <td><textarea name="comments" cols="60" rows="3">'.$contact->comments.'</textarea></td>
-</tr>';
 ?>

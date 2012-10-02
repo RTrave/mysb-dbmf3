@@ -44,13 +44,13 @@ class MySBDBMFExportDisplay extends MySBDBMFExport {
         //$blocks = MySBDBMFBlockHelper::load();
         foreach($blocks as $block) {
             //$group_edit = MySBGroupHelper::getByID($block->groupedit_id);
-            if($block->isEditable()) {
+            if($block->isViewable()) {
                 $output .= '
 <td style="vertical-align: top;">
 <table><tbody>
 <tr class="title" >
     <td colspan="2">';
-                $output .= $block->lname.'
+                $output .= _G($block->lname).'
     </td>
 </tr>';
                 foreach($block->blockrefs as $blockref) {
@@ -58,7 +58,7 @@ class MySBDBMFExportDisplay extends MySBDBMFExport {
                         $refname = $blockref->keyname;
                         $output .= '
 <tr>
-    <td style="vertical-align: top; text-align: right;"><b>'.$blockref->lname.':</b></td>
+    <td style="vertical-align: top; text-align: right;"><b>'._G($blockref->lname).':</b></td>
     <td>';
                         $output .= '<input type="checkbox" name="display_'.$blockref->id.'">';
                         $output .= '
@@ -83,7 +83,7 @@ class MySBDBMFExportDisplay extends MySBDBMFExport {
         $app->tpl_display_columns = array();
         $blocks = MySBDBMFBlockHelper::load();
         foreach($blocks as $block) {
-            if($block->isEditable()) {
+            if($block->isViewable()) {
                 foreach($block->blockrefs as $blockref) {
                     if($blockref->isActive() and $_POST['display_'.$blockref->id]=='on') {
                         $app->tpl_display_columns[] = $blockref;

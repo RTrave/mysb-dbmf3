@@ -24,13 +24,15 @@ echo '
 echo '
 <tr class="title">
     <td width="24px" class="title"></td><td width="24px"></td>
-    <td><b>'._G("DBMF_lastname").'</b> '._G("DBMF_firstname").'</td>
-    <td width="200px"><i>'._G("DBMF_function").'</i><br>'._G("DBMF_organism").'</td>
+    <td><b>'._G("DBMF_common_lastname").'</b> '._G("DBMF_common_firstname").'</td>
+    <td width="200px"><i>'._G("DBMF_common_function").'</i><br>'._G("DBMF_common_organism").'</td>
     <td width="180px">Tel</td>';
 if(isset($app->tpl_display_columns)) 
 foreach($app->tpl_display_columns as $column) {
+    if($column->type==MYSB_VALUE_TYPE_TEXT) $disp_px = '200';
+    else $disp_px = '70';
     echo '
-    <td width="50px">'.$column->lname.'</td>';
+    <td width="'.$disp_px.'px">'._G($column->lname).'</td>';
 }
 echo '
 </tr>';
@@ -45,14 +47,14 @@ while($data_print = MySBDB::fetch_array($search_result)) {
 <tr class='.$odd.'>
     <td>
         <a href="javascript:editwinopen(\'index_wom.php?mod=dbmf3&amp;tpl=editcontact&amp;contact_id='.$contact->id.'&amp;mode=screen\',\'contactinfos\')">
-        <img src="modules/dbmf3/images/edit_icon24.png" alt="Edition '.$contact->id.'" title="Edition '.$contact->id.'">
+        <img src="modules/dbmf3/images/edit_icon24.png" alt="Edition '.$contact->id.'" title="'._G('DBMF_edit').' '.$contact->lastname.' '.$contact->firstname.' ('.$contact->id.')">
         </a>
     </td>
     <td>';
-    if($contact->mail!='') 
+    if($contact->b1r08!='') 
         echo '
-        <a href="mailto:'.$contact->mail.'">
-            <img src="modules/dbmf3/images/mail_icon24.png" alt="Mail to '.$contact->id.'" title="Mail to '.$contact->id.'">
+        <a href="mailto:'.$contact->b1r08.'">
+            <img src="modules/dbmf3/images/mail_icon24.png" alt="'._G('DBMF_mailto').' '.$contact->id.'" title="Mail to '.$contact->lastname.' '.$contact->firstname.' ('.$contact->id.')">
         </a>';
     echo '
     </td>
@@ -65,16 +67,18 @@ while($data_print = MySBDB::fetch_array($search_result)) {
     echo '
     </td>
     <td>
-        <i>'.$contact->function.'</i><br>'.$contact->organism.'
+        <i>'.$contact->b1r02.'</i><br>'.$contact->b1r03.'
     </td>
     <td>
-        <i>'._G('DBMF_tel_1').':</i> '.$contact->tel_1.'<br><i>'._G('DBMF_tel_2').':</i> '.$contact->tel_2.'
+        <i>'._G('DBMF_common_tel_1').':</i> '.$contact->b1r05.'<br><i>'._G('DBMF_common_tel_2').':</i> '.$contact->b1r06.'
     </td>';
     if(isset($app->tpl_display_columns)) 
     foreach($app->tpl_display_columns as $column) {
         $column_name = $column->keyname;
+        if($column->type==MYSB_VALUE_TYPE_VARCHAR64_SELECT) $column_value = _G($contact->$column_name);
+        else $column_value = MySBUtil::str2html($contact->$column_name);
         echo '
-    <td>'.$contact->$column_name.'</td>';
+    <td>'.$column_value.'</td>';
     }
     echo '
 </tr>';

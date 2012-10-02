@@ -18,7 +18,9 @@ echo '
 <h1>'._G('DBMF_blocks_edit').'</h1>';
 
 
-if($_POST['blockref_edit'] or $_POST['blockref_edit_process'] or $_POST['blockref_add']) {
+if( isset($_POST['blockref_edit']) or 
+    isset($_POST['blockref_edit_process']) or 
+    isset($_POST['blockref_add']) ) {
 
 $blockref = $app->tpl_blockref_edit;
 echo '
@@ -30,7 +32,7 @@ echo '
 <center>
 <table width="50%"><tbody>
 <tr class="title">
-    <td align="center" colspan="2">'.$blockref->lname.'('.$blockref->keyname.')</td>
+    <td align="center" colspan="2">'._G($blockref->lname).'('.$blockref->keyname.')</td>
 </tr>
 <tr>
     <td width="50%" align="right">'._G('DBMF_blockref_lname').'</td>
@@ -113,7 +115,7 @@ foreach($blocks as $block) {
 
     $group_edit = MySBGroupHelper::getByID($block->groupedit_id);
     echo '
-<h3>'.$block->lname.' <small><i>('.$group_edit->comments.')</i></small></h3>';
+<h3>'._G($block->lname).' <small><i>('.$group_edit->comments.')</i></small></h3>';
 
     if($block->isEditable()) {
     
@@ -123,7 +125,7 @@ foreach($blocks as $block) {
 <center>
 <table width="40%"><tbody>
 <tr class="title">
-    <td align="center" colspan="2">'.$block->lname.'</td>
+    <td align="center" colspan="2">'._G($block->lname).'</td>
 </tr>
 <tr>
     <td width="50%" align="right">id</td>
@@ -159,7 +161,7 @@ foreach($blocks as $block) {
 <tr '.$class_bref.'>
     <td width="20px">'.$blockref->keyname.'</td>
     <td>
-        <b>'.$blockref->lname.'</b>
+        <b>'._G($blockref->lname).'</b>
     </td>
     <td width="100px" align="center">
         <form action="?mod=dbmf3&amp;tpl=blockedit" method="post">

@@ -87,13 +87,14 @@ class MySBDBMFBlockRefHelper {
         $req_lastid = MySBDB::query('SELECT keyname from '.MySB_DBPREFIX.'dbmfblockrefs '.
             'WHERE block_id='.$block_id.' '.
             'ORDER BY keyname DESC',
-            "MySBDB::lastID($table)" );
+            "MySBDBMFBlockRefHelper::create($lname,$type,$block_id)" );
         $data_lastid = MySBDB::fetch_array($req_lastid);
         if($data_lastid['keyname']!='') {
             $tmpid = explode('r',$data_lastid['keyname']);
             $brid = ((int) $tmpid[1]) + 1;
         } else $brid = 1;
-        $brkeyname = 'b'.$block_id.'r'.$brid;
+        if($brid>9) $brkeyname = 'b'.$block_id.'r'.$brid;
+        else $brkeyname = 'b'.$block_id.'r0'.$brid;
         $req_blockrefs = MySBDB::query("SELECT * FROM ".MySB_DBPREFIX."dbmfblockrefs ".
             "WHERE block_id=".$block_id." ".
             "ORDER by i_index DESC",

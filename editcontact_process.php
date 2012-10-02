@@ -37,15 +37,6 @@ if(isset($_POST['contact_edit'])) {
     $contact_datas = array(
         'lastname' => $_POST['lastname'],
         'firstname' => $_POST['firstname'],
-        'organism' => $_POST['organism'],
-        'function' => $_POST['function'],
-        'adress_1' => $_POST['adress_1'],
-        'adress_2' => $_POST['adress_2'],
-        'tel_1' => $_POST['tel_1'],
-        'tel_2' => $_POST['tel_2'],
-        'tel_fax' => $_POST['tel_fax'],
-        'mail' => $_POST['mail'],
-        'comments' => $_POST['comments'],
         'date_modif' => $today_date );
     $blocks = MySBDBMFBlockHelper::load();
     foreach($blocks as $block) {

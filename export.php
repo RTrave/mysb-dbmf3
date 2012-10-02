@@ -14,6 +14,7 @@ defined('_MySBEXEC') or die;
 
 global $app;
 
+
 echo '
 <h1>'._G('DBMF_export').'</h1>';
 
@@ -69,8 +70,8 @@ $blocks = MySBDBMFBlockHelper::load();
 $blockn_flag = 0;
 foreach($blocks as $block) {
     $group_edit = MySBGroupHelper::getByID($block->groupedit_id);
-    if($blockn_flag==0 and $block->isEditable()) $blockn_flag = 1;
-    elseif($block->isEditable()) {
+    if($blockn_flag==0 and $block->isViewable()) $blockn_flag = 1;
+    elseif($block->isViewable()) {
         echo '
 <tr>
     <td colspan="2" style="text-align: center; background: #c0c0c0;">
@@ -81,12 +82,12 @@ foreach($blocks as $block) {
     </td>
 </tr>';
     }
-    if($block->isEditable()) {
+    if($block->isViewable()) {
         echo '
 <tr class="title" >
     <td colspan="2">';
         echo $block->htmlFormWhereClause('b').' ';
-        echo $block->lname.' <small><i>('.$group_edit->comments.')</i></small></td>
+        echo _G($block->lname).' <small><i>('.$group_edit->comments.')</i></small></td>
 </tr>';
         echo '
 <tr>
@@ -103,7 +104,7 @@ foreach($blocks as $block) {
                 $refname = $blockref->keyname;
                 echo '
 <tr style="'.$class_edit.'">
-    <td style="vertical-align: top; text-align: right;"><b>'.$blockref->lname.':</b></td>
+    <td style="vertical-align: top; text-align: right;"><b>'._G($blockref->lname).':</b></td>
     <td>';
                 echo $blockref->htmlFormWhereClause('br',$contact->$refname);
                 echo '

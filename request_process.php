@@ -14,9 +14,7 @@ defined('_MySBEXEC') or die;
 
 global $app;
 
-if( !MySBRoleHelper::checkAccess('dbmf_editor',false) and 
-    !MySBRoleHelper::checkAccess('dbmf_user',false) ) 
-    return;
+if( !MySBRoleHelper::checkAccess('dbmf_user',false) ) return;
 
 
 if(isset($_POST['dbmf_request'])) {
@@ -26,19 +24,22 @@ if(isset($_POST['dbmf_request'])) {
     $blocks = MySBDBMFBlockHelper::load();
     $clause_owner = '';
     foreach($blocks as $block) {
-        if($block->isEditable()) {
+        if($block->id!=1 and $block->isViewable()) {
             if($clause_owner!='')  $clause_owner .= ' or ';
             $clause_owner .= $block->htmlProcessWhereClause();
         }
     }
+    if($clause_owner=='') {
+        $app->pushAlert(_G('SBGT_unauthorised_alert'));
+    }
     if (!empty($_POST['search_all'])) {
         $str_search_all = MySBUtil::str2whereclause($_POST['search_all']);
    	    $clause_a = 'lastname RLIKE \''.$str_search_all.'\' OR '.
-   	        'firstname RLIKE \''.$str_search_all.'\' OR '.
-   	        'function RLIKE \''.$str_search_all.'\' OR '.
-   	        'organism RLIKE \''.$str_search_all.'\' OR '.
-   	        'comments LIKE \''.$str_search_all.'\' OR '.
-   	        'mail RLIKE \''.$str_search_all.'\'';
+   	        'firstname RLIKE \''.$str_search_all.'\' ';
+        $block_common = MySBDBMFBlockHelper::getByID(1);
+        foreach($block_common->blockrefs as $blockref) {
+            $clause_a .= ' OR '.$blockref->keyname.' RLIKE \''.$str_search_all.'\'';
+        }
    	    $_POST['search_name'] = '';
     } elseif(!empty($_POST['search_name'])) {
         $clause_a = 'lastname RLIKE \''.MySBUtil::str2whereclause($_POST['search_name']).'\' ';

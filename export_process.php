@@ -14,9 +14,7 @@ defined('_MySBEXEC') or die;
 
 global $app;
 
-if( !MySBRoleHelper::checkAccess('dbmf_editor',false) and 
-    !MySBRoleHelper::checkAccess('dbmf_user',false) ) 
-    return;
+if( !MySBRoleHelper::checkAccess('dbmf_user') ) return;
 
 
 if(isset($_POST['dbmf_export_process'])) {
@@ -31,19 +29,22 @@ if(isset($_POST['dbmf_export_process'])) {
     $blocks = MySBDBMFBlockHelper::load();
     $clause_owner = '';
     foreach($blocks as $block) {
-        if($block->isEditable()) {
+        if($block->id!=1 and $block->isViewable()) {
             if($clause_owner!='')  $clause_owner .= ' or ';
             $clause_owner .= $block->htmlProcessWhereClause();
         }
     }
-
+    if($clause_owner=='') {
+        $app->pushAlert(_G('SBGT_unauthorised_alert'));
+    }
+    
     $sql_a = 'SELECT * from '.MySB_DBPREFIX.'dbmfcontacts ';
     $clause_a = '';
     foreach($blocks as $block) {
         $group_edit = MySBGroupHelper::getByID($block->groupedit_id);
         if(($clause=$block->htmlProcessWhereClause('b'))=='') {
             foreach($block->blockrefs as $blockref) {
-                if($block->isEditable() and $blockref->isActive()) {
+                if($block->isViewable() and $blockref->isActive()) {
                     $refname = $blockref->keyname;
                     if(($clause_t = $blockref->htmlProcessWhereClause('br'))!=null) {
                         if($clause!='') $clause .= ' '.$_POST['blockref_andorflag_'.$block->id].' ';
