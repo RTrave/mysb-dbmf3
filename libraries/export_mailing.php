@@ -37,7 +37,7 @@ class MySBDBMFExportMailing extends MySBDBMFExport {
     public function htmlParamForm() {
         $output = '
 <p>'._G('DBMF_exportmail_modulo').' = 
-    <input type="text" name="dbmf_exportmail_modulo" value="0" size="6">
+    <input type="text" name="dbmf_exportmail_modulo" value="50" size="6">
 </p>';
         return $output;
     }
@@ -67,10 +67,11 @@ class MySBDBMFExportMailing extends MySBDBMFExport {
                 $modulo_index = 0;
                 $output .= "<br><br>\n";
             }
-            $modulo_index++;
             $contact = new MySBDBMFContact(null,$data_result);
-            if($contact->mail!='') 
-                 $output .= $contact->mail.'; ';
+            if($contact->b1r08!='') {
+                 $modulo_index++;
+                 $output .= $contact->b1r08.'; ';
+            }
         }
         $output .= '
 </code>
