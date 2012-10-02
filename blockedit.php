@@ -115,6 +115,7 @@ foreach($blocks as $block) {
 
     $group_edit = MySBGroupHelper::getByID($block->groupedit_id);
     echo '
+<a name="a_block'.$block->id.'">
 <h3>'._G($block->lname).' <small><i>('.$group_edit->comments.')</i></small></h3>';
 
     if($block->isEditable()) {
@@ -182,19 +183,19 @@ foreach($blocks as $block) {
     </td>
     <td width="100px" align="center">'.$blockref->getType().'</td>
     <td align="center" width="50px">
-        <form action="?mod=dbmf3&amp;tpl=blockedit" method="post">
+        <form action="?mod=dbmf3&amp;tpl=blockedit#a_block'.$block->id.'" method="post">
         <input type="hidden" name="blockref_orderdown" value="'.$blockref->id.'">
         <input type="submit" value="&darr;" class="submit">
         </form>
     </td>
     <td align="center" width="50px">
-        <form action="?mod=dbmf3&amp;tpl=blockedit" method="post">
+        <form action="?mod=dbmf3&amp;tpl=blockedit#a_block'.$block->id.'" method="post">
         <input type="hidden" name="blockref_orderup" value="'.$blockref->id.'">
         <input type="submit" value="&uarr;" class="submit">
         </form>
     </td>
     <td width="100px" align="center">
-        <form action="?mod=dbmf3&amp;tpl=blockedit" method="post">
+        <form action="?mod=dbmf3&amp;tpl=blockedit#a_block'.$block->id.'" method="post">
         <input type="hidden" name="blockref_switchactive" value="'.$blockref->id.'">';
 
             if($blockref->status==MYSB_DBMF_BLOCKREF_STATUS_ACTIVE) 
@@ -208,7 +209,7 @@ foreach($blocks as $block) {
         </form>
     </td>
     <td width="100px" align="center">
-        <form action="?mod=dbmf3&amp;tpl=blockedit" method="post">
+        <form action="?mod=dbmf3&amp;tpl=blockedit#a_block'.$block->id.'" method="post">
         <input type="hidden" name="block_id" value="'.$block->id.'">
         <input type="hidden" name="blockref_del" value="'.$blockref->id.'">
         <input type="submit" value="'._G('DBMF_blockref_delete').'" class="submit">
