@@ -29,10 +29,13 @@ if(isset($_POST['dbmf_export_process'])) {
     $blocks = MySBDBMFBlockHelper::load();
     $clause_owner = '';
     foreach($blocks as $block) {
+        $clause_owner_part = '';
         if($block->id!=1 and $block->isViewable()) {
-            if($clause_owner!='')  $clause_owner .= ' or ';
-            $clause_owner .= $block->htmlProcessWhereClause();
+            if($clause_owner_part!='')  $clause_owner_part .= ' or ';
+            $clause_owner_part .= $block->htmlProcessWhereClause();
         }
+        if($clause_owner!='' and $clause_owner_part!='') $clause_owner .= ' or ';
+        if($clause_owner_part!='') $clause_owner .= $clause_owner_part;
     }
     if($clause_owner=='') {
         $app->pushAlert(_G('DBMF_no_rights'));
