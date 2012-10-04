@@ -116,6 +116,9 @@ class MySBModule_dbmf3 {
 
         MySBDB::query("DELETE FROM ".MySB_DBPREFIX."valueoptions WHERE value_keyname='dbmf3-b1r01'",
                 "__init.php");
+
+        //configs
+        MySBConfigHelper::delete('dbmf_showfields_colsnb', 'dbmf3');
     }
 
     public function init1() {
@@ -154,6 +157,11 @@ class MySBModule_dbmf3 {
             array(0,0,0,0),
             3,"dbmf_user",'dbmf3');
 
+        //configs
+        MySBConfigHelper::create('dbmf_showfields_colsnb','6',MYSB_VALUE_TYPE_INT,
+            'How many columns to display blocks', 'dbmf3');
+
+        //roles
         $blockeditrole = MySBRoleHelper::create('dbmf_blockedit','Can edit DB blocks');
         $blockeditrole->assignToGroup('admin',true);
         $editrole = MySBRoleHelper::create('dbmf_editor','Can edit DB entries');

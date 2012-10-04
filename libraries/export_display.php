@@ -35,19 +35,27 @@ class MySBDBMFExportDisplay extends MySBDBMFExport {
     }
 
     public function htmlParamForm() {
+        $showfields_colsnb = MySBConfigHelper::Value('dbmf_showfields_colsnb', 'dbmf3');
         $output = '';
         $blocks = MySBDBMFBlockHelper::load();
         $output .= '
 <div class="table_support">
-<table style="border: 0px;"><tbody>
+'._G('DBMF_display_orderby').':
+<select name="dbmf_exportdisplay_orderby'.$this->id.'">
+    <option value="lastname">'._G('DBMF_common_lastname').'</option>
+    <option value="b1r03">'._G('DBMF_common_organism').'</option>
+    <option value="date_modif">'._G('DBMF_date_modif').'</option>
+</select><br>
+'._G('DBMF_display_showfield').':<br>
+<table style="border: 0px; font-size: 80%"><tbody>
 <tr>';
-        //$blocks = MySBDBMFBlockHelper::load();
+
+        $col_nb = 1;
         foreach($blocks as $block) {
-            //$group_edit = MySBGroupHelper::getByID($block->groupedit_id);
             if($block->isViewable()) {
                 $output .= '
 <td style="vertical-align: top;">
-<table><tbody>
+<table style="width: 100%;"><tbody>
 <tr class="title" >
     <td colspan="2">';
                 $output .= _G($block->lname).'
@@ -70,6 +78,18 @@ class MySBDBMFExportDisplay extends MySBDBMFExport {
             $output .= '
 </tbody></table>
 </td>';
+            if($col_nb==$showfields_colsnb) {
+                $output .= '
+</tr><tr>';
+                $col_nb = 0;
+            }
+            $col_nb++;
+        }
+        if($col_nb!=1) {
+        while($col_nb!=($showfields_colsnb+1)) {
+            $output .= '<td>&nbsp;</td>';
+            $col_nb++;
+        }
         }
         $output .= '
 </tr>
@@ -92,6 +112,11 @@ class MySBDBMFExportDisplay extends MySBDBMFExport {
             }
         }
     }
+
+    public function requestOrderBy() {
+        return $_POST["dbmf_exportdisplay_orderby$this->id"];
+    }
+
 
     /**
      * Search result output
