@@ -16,6 +16,9 @@ global $app;
 
 if( !MySBRoleHelper::checkAccess('dbmf_user') ) return;
 
+$exports = MySBDBMFExportHelper::load();
+if(count($exports)<1) 
+    $app->pushAlert(_G('DBMF_no_exportrights'));
 
 if(isset($_POST['dbmf_export_process'])) {
 

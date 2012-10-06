@@ -25,6 +25,7 @@ if(isset($_POST['dbmf_export_process'])) {
     echo $app->dbmf_export_plugin->htmlResultOutput($app->dbmf_search_result);
 }
 
+
 echo '
 <form action="" method="post">
 
@@ -34,9 +35,9 @@ echo '
 
 <p>';
 
-$exports = MySBDBMFExportHelper::load();
 echo '
 <select name="export_plug" onChange="';
+$exports = MySBDBMFExportHelper::load();
 foreach($exports as $export) 
     echo 'hide(\'export_plug'.$export->id.'\');';
 echo 'show(this.options[this.selectedIndex].value);">';
@@ -46,7 +47,10 @@ foreach($exports as $export)
 
 echo '
 </select>
-</p>';
+<br><br>
+<a id="params_show" onClick="show(\'params\');hide(\'params_show\');" class="button">'._G('DBMF_export_showparams').'</a>
+</p>
+<div id="params" style="display: none;">';
 
 $hide_flag = '';
 foreach($exports as $export) {
@@ -60,6 +64,7 @@ foreach($exports as $export) {
 }
 
 echo '
+</div>
 <h3>'._G('DBMF_export_blockscriteria').'</h3>
 <div class="table_support" align="center">
 <table><tbody>
