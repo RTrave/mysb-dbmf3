@@ -14,12 +14,11 @@ defined('_MySBEXEC') or die;
 
 global $app;
 
-if( !MySBRoleHelper::checkAccess('dbmf_editor',false) and 
-    !MySBRoleHelper::checkAccess('dbmf_user',false) ) 
-    return;
+if( !MySBRoleHelper::checkAccess('dbmf_user') ) return;
+
 
 if(isset($_GET['contact_id'])) {
-    if($_GET['contact_id']==-1) {
+    if($_GET['contact_id']==-1 and MySBRoleHelper::checkAccess('dbmf_editor',false)) {
         $contact = MySBDBMFContactHelper::create($_GET['lastname'], $_GET['firstname']);
         $app->pushMessage(_G('DBMF_contact_added'));
     } else {
@@ -30,7 +29,7 @@ if(isset($_GET['contact_id'])) {
     
 }
 
-if(isset($_POST['contact_edit'])) {
+if(isset($_POST['contact_edit']) and MySBRoleHelper::checkAccess('dbmf_editor',false)) {
     $today = getdate();
     $today_date = $today['year'].'-'.$today['mon'].'-'.$today['mday'].' '.
                   $today['hours'].':'.$today['minutes'].':'.$today['seconds'];
