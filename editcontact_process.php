@@ -30,6 +30,10 @@ if(isset($_GET['contact_id'])) {
 }
 
 if(isset($_POST['contact_edit']) and MySBRoleHelper::checkAccess('dbmf_editor',false)) {
+    $pluginsDisplay = MySBPluginHelper::loadByType('DBMFEvent');
+    foreach($pluginsDisplay as $plugin) 
+        $plugin->contactModif($app->tpl_currentcontact);
+
     $today = getdate();
     $today_date = $today['year'].'-'.$today['mon'].'-'.$today['mday'].' '.
                   $today['hours'].':'.$today['minutes'].':'.$today['seconds'];

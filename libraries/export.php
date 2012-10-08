@@ -54,6 +54,12 @@ class MySBDBMFExport extends MySBObject {
         }
     }
 
+    public function post_create() {
+    }
+
+    public function pre_delete() {
+    }
+
     public function displayConfig() {
         $str_res = '';
         foreach($this->config_array as $name => $config) {
@@ -130,6 +136,7 @@ class MySBDBMFExportHelper {
         $exportClass = 'MySBDBMFExport'.$type;
         if (class_exists($exportClass)) {
             $new_export = new $exportClass($bid);
+            $new_export->post_create();
             if(isset($app->cache_dbmfexports)) 
                 $app->cache_dbmfexports[$bid] = $new_export;
         } else 
@@ -139,6 +146,8 @@ class MySBDBMFExportHelper {
 
     public function delete($id) {
         global $app;
+        $export = MySBDBMFExportHelper::getByID($id);
+        $export->pre_delete();
         MySBDB::query('DELETE FROM '.MySB_DBPREFIX."dbmfexports ".
             "WHERE id='".$id."'",
             "MySBDBMFExportHelper::delete($id)",
@@ -206,7 +215,7 @@ class MySBPluginDBMFExport extends MySBPlugin {
      */
     public function post_create() {
         global $app;
-        require (MySB_ROOTPATH.'/modules/'.$this->module.'/'.$this->value2);
+        require_once (MySB_ROOTPATH.'/modules/'.$this->module.'/'.$this->value2);
     }
 
     /**
@@ -215,7 +224,7 @@ class MySBPluginDBMFExport extends MySBPlugin {
      */
     public function includeFile() {
         global $app;
-        require (MySB_ROOTPATH.'/modules/'.$this->module.'/'.$this->value2);
+        //require (MySB_ROOTPATH.'/modules/'.$this->module.'/'.$this->value2);
     }
 
 }

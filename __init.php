@@ -58,12 +58,6 @@ class MySBModule_dbmf3 {
             "__init.php",
             false, "dbmf3");
 
-        $req = MySBDB::query('CREATE TABLE '.MySB_DBPREFIX.'dbmfrouting ( '.
-            'id int, '.
-            'lname varchar(512) )',
-            "__init.php",
-            false, "dbmf3");
-
         $req = MySBDB::query('ALTER TABLE '.MySB_DBPREFIX.'groups ADD COLUMN '.
             'dbmf_priority int',
             "__init.php",
@@ -110,9 +104,6 @@ class MySBModule_dbmf3 {
         $req = MySBDB::query('DROP TABLE '.MySB_DBPREFIX.'dbmfexports',
             "__init.php",
             false, "dbmf3");
-        $req = MySBDB::query('DROP TABLE '.MySB_DBPREFIX.'dbmfrouting',
-            "__init.php",
-            false, "dbmf3");
 
         MySBDB::query("DELETE FROM ".MySB_DBPREFIX."valueoptions WHERE value_keyname='dbmf3-b1r01'",
                 "__init.php");
@@ -157,6 +148,19 @@ class MySBModule_dbmf3 {
             array(0,0,0,0),
             3,"dbmf_user",'dbmf3');
 
+        MySBPluginHelper::create('dbmf_showmail','DBMFDisplay',
+            array("DBMFPluginsDisplayMail", '', '',''),
+            array(1,0,0,0),
+            3,"dbmf_user",'dbmf3');
+        MySBPluginHelper::create('dbmf_showorga','DBMFDisplay',
+            array("DBMFPluginsDisplayOrganism", '', '',''),
+            array(2,0,0,0),
+            4,"dbmf_user",'dbmf3');
+        MySBPluginHelper::create('dbmf_showtels','DBMFDisplay',
+            array("DBMFPluginsDisplayTel", '', '',''),
+            array(2,0,0,0),
+            3,"dbmf_user",'dbmf3');
+
         //configs
         MySBConfigHelper::create('dbmf_showfields_colsnb','6',MYSB_VALUE_TYPE_INT,
             'How many columns to display blocks', 'dbmf3');
@@ -183,6 +187,10 @@ class MySBModule_dbmf3 {
         MySBDBMFExportHelper::delete(MySBDBMFExportHelper::getByName('DBMF_display')->id);
 
         //plugins
+        MySBPluginHelper::delete('dbmf_showmail','dbmf3');
+        MySBPluginHelper::delete('dbmf_showorga','dbmf3');
+        MySBPluginHelper::delete('dbmf_showtels','dbmf3');
+
         MySBPluginHelper::delete('dbmf_exportmailing','dbmf3');
         MySBPluginHelper::delete('dbmf_exportdisplay','dbmf3');
 
