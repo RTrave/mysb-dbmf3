@@ -21,17 +21,6 @@ class MySBDBMFContact extends MySBObject {
     public $prefix = null;
     public $lastname = null;
     public $firstname = null;
-    public $adress_1 = null;
-    public $adress_2 = null;
-    public $tel_1 = null;
-    public $tel_2 = null;
-    public $tel_fax = null;
-    public $mail = null;
-    public $function = null;
-    public $organism = null;
-    public $date_creat = null;
-    public $date_modif = null;
-    public $comments = null;
 
     public function __construct($id=null, $data_contact = array()) {
         global $app;
@@ -64,5 +53,6 @@ class MySBDBMFContactHelper {
     }
 
 }
+
 
 ?>

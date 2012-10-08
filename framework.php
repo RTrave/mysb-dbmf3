@@ -18,15 +18,21 @@ if(MySB_PHPMailer!='')
         require_once (MySB_PHPMailer.'/class.phpmailer.php');
 */
 
+require (MySB_ROOTPATH.'/modules/dbmf3/libraries/plugins_dbmf.php');
+
 require (MySB_ROOTPATH.'/modules/dbmf3/libraries/group.php');
 require (MySB_ROOTPATH.'/modules/dbmf3/libraries/block.php');
 require (MySB_ROOTPATH.'/modules/dbmf3/libraries/blockref.php');
 require (MySB_ROOTPATH.'/modules/dbmf3/libraries/contact.php');
 
 require (MySB_ROOTPATH.'/modules/dbmf3/libraries/export.php');
+require (MySB_ROOTPATH.'/modules/dbmf3/libraries/export_display.php');
+require (MySB_ROOTPATH.'/modules/dbmf3/libraries/export_mailing.php');
 
+/*
 $pluginsExport = MySBPluginHelper::loadByType('DBMFExport');
 foreach($pluginsExport as $plugin) 
     $plugin->includeFile();
+*/
 
 ?>
