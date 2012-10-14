@@ -18,7 +18,6 @@ defined('_MySBEXEC') or die;
  */
 class MySBDBMFContact extends MySBObject {
 
-    public $prefix = null;
     public $lastname = null;
     public $firstname = null;
 
@@ -46,10 +45,18 @@ class MySBDBMFContactHelper {
         MySBDB::query('INSERT INTO '.MySB_DBPREFIX.'dbmfcontacts '.
             '(id, lastname, firstname, date_creat, date_modif) VALUES '.
             "(".$cid.", '".$lastname."', '".$firstname."', '".$today_date."', '".$today_date."' ); ",
-            "MySBDBMFContact::create($title,$date,$pass_ids)",
+            "MySBDBMFContactHelper::create($lastname,$firstname)",
             true, 'dbmf3' );
         $new_contact = new MySBDBMFContact($cid);
         return $new_contact;
+    }
+
+    public function delete($id) {
+        global $app;
+        MySBDB::query('DELETE FROM '.MySB_DBPREFIX.'dbmfcontacts '.
+            'WHERE id='.$id,
+            "MySBDBMFContactHelper::delete($id)",
+            true, 'dbmf3' );
     }
 
 }

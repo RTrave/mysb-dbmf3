@@ -20,7 +20,9 @@ echo '
 <h1>'._G('DBMF_request_title').'</h1>
 ';
 
-if(isset($_POST['dbmf_request']) or isset($_POST['dbmf_request_advanced'])) {
+if( isset($_POST['dbmf_request']) 
+    or isset($_POST['dbmf_request_advanced'])
+    or isset($_POST['dbmf_contact_delete']) ) {
     echo '
 <h2>'._G('DBMF_search_results').'</h2>
 <p>

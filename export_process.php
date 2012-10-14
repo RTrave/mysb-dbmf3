@@ -16,9 +16,21 @@ global $app;
 
 if( !MySBRoleHelper::checkAccess('dbmf_user') ) return;
 
+
 $exports = MySBDBMFExportHelper::load();
 if(count($exports)<1) 
     $app->pushAlert(_G('DBMF_no_exportrights'));
+
+if(isset($_POST['dbmf_contact_delete'])) {
+    MySBDBMFContactHelper::delete($_POST['dbmf_contact_delete']);
+}
+
+if(isset($_POST['dbmf_request_reuse'])) {
+    $app->dbmf_search_result = MySBDB::query( $_SESSION['dbmf_search_query'],
+	    "request_process.php(reuse)",
+	    false, 'dbmf3');
+	$app->dbmf_export_plugin = $_SESSION['dbmf_export_plugin'];
+}
 
 if(isset($_POST['dbmf_export_process'])) {
 
@@ -26,6 +38,7 @@ if(isset($_POST['dbmf_export_process'])) {
     $plug_id = intval($strp[1]);
     //$app->dbmf_export_plugin = MySBDBMFExportHelper::getByID($_POST['export_plug'][11]);
     $app->dbmf_export_plugin = MySBDBMFExportHelper::getByID($plug_id);
+    $_SESSION['dbmf_export_plugin'] = $app->dbmf_export_plugin;
     //echo $app->dbmf_export_plugin->name.'<br>';
     $app->dbmf_export_plugin->htmlParamProcess();
 
@@ -73,6 +86,7 @@ if(isset($_POST['dbmf_export_process'])) {
     $orderby_export = $app->dbmf_export_plugin->requestOrderBy();
     if($orderby_export!='') $sql_a .= 'ORDER BY '.$orderby_export;
     else $sql_a .= 'ORDER BY lastname';
+	$_SESSION['dbmf_search_query'] = $sql_a;
 	$app->dbmf_search_result = MySBDB::query( $sql_a,
 	    "request_process.php",
 	    false, 'dbmf3');

@@ -39,18 +39,22 @@ foreach($app->tpl_display_columns as $column) {
     <td width="'.$disp_px.'px">'._G($column->lname).'</td>';
 }
 echo '
+<td width="24px" class="title"></td>
 </tr>';
 
 $odd = 'odd';
+$anchor_nb = 0;
 while($data_print = MySBDB::fetch_array($search_result)) {
 
+    $anchor_nb++;
     $contact = new MySBDBMFContact(null,$data_print);
     if($odd=='odd') {$odd='notodd';}
     else {$odd='odd';}; 
     echo '
 <tr class='.$odd.'>
     <td>
-        <a href="javascript:editwinopen(\'index_wom.php?mod=dbmf3&amp;tpl=editcontact&amp;contact_id='.$contact->id.'&amp;mode=screen\',\'contactinfos\')">
+        <a  name="contact'.$anchor_nb.'"
+            href="javascript:editwinopen(\'index_wom.php?mod=dbmf3&amp;tpl=editcontact&amp;contact_id='.$contact->id.'&amp;mode=screen\',\'contactinfos\')">
         <img src="modules/dbmf3/images/edit_icon24.png" alt="Edition '.$contact->id.'" title="'._G('DBMF_edit').' '.$contact->lastname.' '.$contact->firstname.' ('.$contact->id.')">
         </a>
     </td>';
@@ -76,6 +80,15 @@ while($data_print = MySBDB::fetch_array($search_result)) {
     <td>'.$column_value.'</td>';
     }
     echo '
+    <td>
+    <form   action="#contact'.($anchor_nb-1).'" method="post" 
+            OnSubmit="return mysb_confirm(\''.MySBUtil::str2strict(sprintf(_G('DBMF_confirm_contact_delete'),$contact->lastname, $contact->firstname )).'\')">
+        <input  type="hidden" name="dbmf_contact_delete" value="'.$contact->id.'">
+        <input  type="hidden" name="dbmf_request_reuse" value="1">
+        <input  border="0" src="modules/dbmf3/images/delete_icon24.png"
+                type="image" value="submit" align="middle">
+    </form>
+    </td>
 </tr>';
 }
 

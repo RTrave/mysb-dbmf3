@@ -17,6 +17,16 @@ global $app;
 if( !MySBRoleHelper::checkAccess('dbmf_user',false) ) return;
 
 
+if(isset($_POST['dbmf_contact_delete'])) {
+    MySBDBMFContactHelper::delete($_POST['dbmf_contact_delete']);
+}
+
+if(isset($_POST['dbmf_request_reuse'])) {
+    $app->dbmf_search_result = MySBDB::query( $_SESSION['dbmf_search_query'],
+	    "request_process.php(reuse)",
+	    false, 'dbmf3');
+}
+
 if(isset($_POST['dbmf_request'])) {
 
     $sql_r = 'SELECT * from '.MySB_DBPREFIX.'dbmfcontacts ';
@@ -53,9 +63,11 @@ if(isset($_POST['dbmf_request'])) {
     elseif($clause_owner!='') $clause_a .= '('.$clause_owner.')';
     if($clause_a!='') $sql_r .= 'WHERE '.$clause_a.' ';
     $sql_r .= 'ORDER by lastname';
+	$_SESSION['dbmf_search_query'] = $sql_r;
 	$app->dbmf_search_result = MySBDB::query( $sql_r,
 	    "request_process.php",
 	    false, 'dbmf3');
+    
 }
 
 ?>
