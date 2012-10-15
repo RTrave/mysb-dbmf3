@@ -31,12 +31,33 @@ class MySBPluginDBMFEvent extends MySBPlugin {
     }
 
     /**
-     * Table header cell code.
+     * 
      * @param   
      */
-    public function contactModif($contact) {
+    public function contactCreate($contact) {
         global $app;
-        if($this->plugref!=null) return $this->plugref->contactModif($contact);
+        if( $this->plugref!=null and method_exists($this->plugref,'contactCreate') ) 
+            return $this->plugref->contactCreate($contact);
+    }
+
+    /**
+     * 
+     * @param   
+     */
+    public function contactUpdate($contact) {
+        global $app;
+        if( $this->plugref!=null and method_exists($this->plugref,'contactUpdate') ) 
+            return $this->plugref->contactUpdate($contact);
+    }
+
+    /**
+     * 
+     * @param   
+     */
+    public function contactDelete($contact) {
+        global $app;
+        if( $this->plugref!=null and method_exists($this->plugref,'contactDelete') ) 
+            return $this->plugref->contactDelete($contact);
     }
 }
 

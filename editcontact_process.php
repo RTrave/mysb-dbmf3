@@ -30,9 +30,10 @@ if(isset($_GET['contact_id'])) {
 }
 
 if(isset($_POST['contact_edit']) and MySBRoleHelper::checkAccess('dbmf_editor',false)) {
-    $pluginsDisplay = MySBPluginHelper::loadByType('DBMFEvent');
-    foreach($pluginsDisplay as $plugin) 
-        $plugin->contactModif($app->tpl_currentcontact);
+
+    $pluginsEvent = MySBPluginHelper::loadByType('DBMFEvent');
+    foreach($pluginsEvent as $plugin) 
+        $plugin->contactUpdate($app->tpl_currentcontact);
 
     $today = getdate();
     $today_date = $today['year'].'-'.$today['mon'].'-'.$today['mday'].' '.
@@ -48,7 +49,7 @@ if(isset($_POST['contact_edit']) and MySBRoleHelper::checkAccess('dbmf_editor',f
             $contact_datas[$blockref->keyname] = $blockref->htmlProcessValue('blockref');
         }
     }
-    $contact->update('dbmfcontacts', $contact_datas);
+    $contact->update($contact_datas);
     $app->pushMessage(_G('DBMF_contact_modified'));
 }
 

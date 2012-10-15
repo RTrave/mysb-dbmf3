@@ -32,6 +32,12 @@ class MySBDBMFContact extends MySBObject {
         }
         parent::__construct((array) ($data_contact));
     }
+
+    public function update( $data_contact ) {
+        global $app;
+        parent::update('dbmfcontacts', (array) ($data_contact));
+    }
+
 }
 
 class MySBDBMFContactHelper {
@@ -48,11 +54,18 @@ class MySBDBMFContactHelper {
             "MySBDBMFContactHelper::create($lastname,$firstname)",
             true, 'dbmf3' );
         $new_contact = new MySBDBMFContact($cid);
+        $pluginsEvent = MySBPluginHelper::loadByType('DBMFEvent');
+        foreach($pluginsEvent as $plugin) 
+            $plugin->contactCreate($new_contact);
         return $new_contact;
     }
 
     public function delete($id) {
         global $app;
+        $contact = new MySBDBMFContact($id);
+        $pluginsEvent = MySBPluginHelper::loadByType('DBMFEvent');
+        foreach($pluginsEvent as $plugin) 
+            $plugin->contactDelete($contact);
         MySBDB::query('DELETE FROM '.MySB_DBPREFIX.'dbmfcontacts '.
             'WHERE id='.$id,
             "MySBDBMFContactHelper::delete($id)",
