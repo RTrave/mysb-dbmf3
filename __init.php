@@ -147,6 +147,10 @@ class MySBModule_dbmf3 {
             array("Mailing", 'Mailing engine', 'libraries/export_mailing.php',''),
             array(0,0,0,0),
             3,"dbmf_user",'dbmf3');
+        MySBPluginHelper::create('dbmf_exportmailscsv','DBMFExport',
+            array("MailsCSV", 'CSV Mails export', 'libraries/export_mails.php',''),
+            array(0,0,0,0),
+            4,"dbmf_user",'dbmf3');
 
         MySBPluginHelper::create('dbmf_showmail','DBMFDisplay',
             array("DBMFPluginsDisplayMail", '', '',''),
@@ -191,6 +195,7 @@ class MySBModule_dbmf3 {
         MySBPluginHelper::delete('dbmf_showorga','dbmf3');
         MySBPluginHelper::delete('dbmf_showtels','dbmf3');
 
+        MySBPluginHelper::delete('dbmf_exportmailscsv','dbmf3');
         MySBPluginHelper::delete('dbmf_exportmailing','dbmf3');
         MySBPluginHelper::delete('dbmf_exportdisplay','dbmf3');
 

@@ -14,10 +14,10 @@ defined('_MySBEXEC') or die;
 
 
 /**
- * DBMF Mailing Export class
+ * DBMF CSV'Mails Export class
  * 
  */
-class MySBDBMFExportMailing extends MySBDBMFExport {
+class MySBDBMFExportMailsCSV extends MySBDBMFExport {
 
     public function __construct($id=-1, $data_export = array()) {
         global $app;
@@ -36,18 +36,16 @@ class MySBDBMFExportMailing extends MySBDBMFExport {
 
     public function htmlParamForm() {
         $output = '
-<p>'._G('DBMF_exportmailing_subject').':
-    <input type="text" name="dbmf_exportmailing_subject" value="" size="24"><br>
-    '._G('DBMF_exportmailing_body').':<br>
-    <textarea name="dbmf_exportmailing_body" cols="60" rows="8"></textarea>
+<p>'._G('DBMF_exportmail_modulo').' = 
+    <input type="text" name="dbmf_exportmailscsv_modulo" value="50" size="6">
 </p>';
         return $output;
     }
 
     public function htmlParamProcess() {
         global $app;
-        $app->tpl_dbmfexportmailing_subject = $_POST['dbmf_exportmailing_subject'];
-        $app->tpl_dbmfexportmailing_body = $_POST['dbmf_exportmailing_body'];
+        $app->tpl_dbmfexportmailscsv_modulo = $_POST['dbmf_exportmailscsv_modulo'];
+        
     }
 
     /**
@@ -60,40 +58,23 @@ class MySBDBMFExportMailing extends MySBDBMFExport {
 <p>
 '.MySBDB::num_rows($results).' results<br>
 </p>
-<p>Sending mails:<br>
+<p>Mails (by '.$app->tpl_dbmfexportmailscsv_modulo.'):<br><br>
 <code style="width: 70%;">
-<b>'.$app->tpl_dbmfexportmailing_subject.'</b><br>
-'.$app->tpl_dbmfexportmailing_body.'
-</code><br><br>
 ';
         $modulo_index = 0;
         while($data_result = MySBDB::fetch_array($results)) {
-
-            if($modulo_index>=50) {
+            if($modulo_index>=$app->tpl_dbmfexportmailscsv_modulo) {
                 $modulo_index = 0;
-                $current_mail->send();
-                unset($current_mail);
-                $output .= "mail sent!!!\n<br>";
+                $output .= "<br><br>\n";
             }
             $contact = new MySBDBMFContact(null,$data_result);
             if($contact->b1r08!='') {
                  $modulo_index++;
-                if(!isset($current_mail)) {
-                    $current_mail = new MySBMail('mail_mailing','dbmf3');
-                    $current_mail->data['body'] = $app->tpl_dbmfexportmailing_body;
-                    $current_mail->data['subject'] = $app->tpl_dbmfexportmailing_subject;
-                }
-                 $current_mail->addTO($contact->b1r08,$contact->firstname.' '.$contact->lastname);
-                 //$output .= '"'.$contact->b1r08.'"; ';
-            } else {
-                $output .= 'no mail: '.$contact->firstname.' '.$contact->lastname.' (id:'.$contact->id.')<br>';
+                 $output .= $contact->b1r08.'; ';
             }
-
         }
-        if(isset($current_mail)) 
-            $current_mail->send();
-        $output .= "last mail sent!!!\n<br>";
         $output .= '
+</code>
 </p>';
         return $output;
     }

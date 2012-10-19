@@ -28,6 +28,7 @@ require (MySB_ROOTPATH.'/modules/dbmf3/libraries/contact.php');
 require (MySB_ROOTPATH.'/modules/dbmf3/libraries/export.php');
 require (MySB_ROOTPATH.'/modules/dbmf3/libraries/export_display.php');
 require (MySB_ROOTPATH.'/modules/dbmf3/libraries/export_mailing.php');
+require (MySB_ROOTPATH.'/modules/dbmf3/libraries/export_mails.php');
 
 /*
 $pluginsExport = MySBPluginHelper::loadByType('DBMFExport');
