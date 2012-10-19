@@ -16,6 +16,10 @@ global $app;
 
 if( !MySBRoleHelper::checkAccess('dbmf_user') ) return;
 
+if(isset($_POST['contact_delete'])) {
+    MySBDBMFContactHelper::delete($_POST['contact_delete']);
+    $app->pushMessage(_G('DBMF_contact_deleted'));
+}
 
 if(isset($_GET['contact_id'])) {
     if($_GET['contact_id']==-1 and MySBRoleHelper::checkAccess('dbmf_editor',false)) {

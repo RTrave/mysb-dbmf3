@@ -17,6 +17,7 @@ global $app;
 
 $contact = $app->tpl_currentcontact;
 
+if(isset($_POST['contact_delete'])) return;
 
 echo '
 <h1>'._G("DBMF_contact_edition").'</h1>
@@ -26,7 +27,7 @@ echo '
 <form action="?mod=dbmf3&amp;tpl=editcontact&amp;contact_id='.$contact->id.'" method="post">
 
 <div class="table_support" align="center">
-<table width="90%"><tbody>
+<table width="95%"><tbody>
 ';
 
 _T('templates/common_edition.php','dbmf3');
@@ -69,6 +70,24 @@ if(MySBRoleHelper::checkAccess('dbmf_editor',false)) echo '
 </tr>';
 
 echo '
+</tbody></table>
+</div>
+</form>
+<br>
+';
+
+echo '
+<form   action="?mod=dbmf3&amp;tpl=editcontact" method="post"
+        OnSubmit="return mysb_confirm(\''.MySBUtil::str2strict(sprintf(_G('DBMF_confirm_contact_delete'),$contact->lastname, $contact->firstname )).'\')">
+
+<div class="table_support" align="center">
+<table width="95%"><tbody>
+<tr>
+    <td align="center">
+        <input type="hidden" name="contact_delete" value="'.$contact->id.'">
+        <input type="submit" value="'._G('DBMF_contact_delete_submit').'" class="submit">
+    </td>
+</tr>
 </tbody></table>
 </div>
 </form>
