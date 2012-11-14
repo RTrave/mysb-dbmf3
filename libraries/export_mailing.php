@@ -30,6 +30,22 @@ class MySBDBMFExportMailing extends MySBDBMFExport {
     }
 */
 
+    public function htmlConfigForm() {
+        if($this->config_array['modulo']!='') $modulo = $this->config_array['modulo'];
+        else $modulo = 300;
+        $str_res = '
+'._G('DBMF_exportmailing_config_modulo').': 
+    <input type="text" name="dbmf_exportmailing_config_modulo" value="'.$modulo.'"><br>';
+        return $str_res;
+    }
+
+    public function htmlConfigProcess() {
+        global $_POST;
+        $str_res = 
+            'modulo='.$_POST['dbmf_exportmailing_config_modulo'].';';
+        return $str_res;
+    }
+
     public function selectionProcess( $selection ) {
         
     }
@@ -69,7 +85,7 @@ class MySBDBMFExportMailing extends MySBDBMFExport {
         $modulo_index = 0;
         while($data_result = MySBDB::fetch_array($results)) {
 
-            if($modulo_index>=50) {
+            if($this->config_array['modulo']!='' and $modulo_index>=$this->config_array['modulo']) {
                 $modulo_index = 0;
                 $current_mail->send();
                 unset($current_mail);
@@ -80,6 +96,7 @@ class MySBDBMFExportMailing extends MySBDBMFExport {
                  $modulo_index++;
                 if(!isset($current_mail)) {
                     $current_mail = new MySBMail('mail_mailing','dbmf3');
+                    $current_mail->unset_footer();
                     $current_mail->data['body'] = $app->tpl_dbmfexportmailing_body;
                     $current_mail->data['subject'] = $app->tpl_dbmfexportmailing_subject;
                 }
