@@ -100,8 +100,7 @@ class MySBDBMFExportMailing extends MySBDBMFExport {
                     $current_mail->data['body'] = $app->tpl_dbmfexportmailing_body;
                     $current_mail->data['subject'] = $app->tpl_dbmfexportmailing_subject;
                 }
-                 $current_mail->addTO($contact->b1r08,$contact->firstname.' '.$contact->lastname);
-                 //$output .= '"'.$contact->b1r08.'"; ';
+                 $current_mail->addBCC($contact->b1r08,$contact->firstname.' '.$contact->lastname);
             } else {
                 $output .= 'no mail: '.$contact->firstname.' '.$contact->lastname.' (id:'.$contact->id.')<br>';
             }
