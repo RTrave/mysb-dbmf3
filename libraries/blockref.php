@@ -140,7 +140,7 @@ class MySBDBMFBlockRefHelper {
             return $app->cache_dbmfblockrefs;
         $app->cache_dbmfblockrefs = array();
         $req_blockrefs = MySBDB::query("SELECT * FROM ".MySB_DBPREFIX."dbmfblockrefs ".
-            "ORDER BY i_index",
+            "ORDER BY block_id,i_index",
             "MySBDBMFBlockRefHelper::load()",
             true, 'dbmf3');
         while($data_blockref = MySBDB::fetch_array($req_blockrefs)) {
