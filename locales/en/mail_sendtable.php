@@ -5,7 +5,8 @@
 
     $mail->body = 'Hi '.$mail->geckos.'
 
-here is the contacts table:
+here is the contacts table, with following informations:
+'.$mail->data['infos'].'
 ';
 
 ?>
