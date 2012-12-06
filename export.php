@@ -24,6 +24,7 @@ if( isset($_POST['dbmf_export_process'])
 <h2>'._G('DBMF_search_results').'</h2>';
 
     echo $app->dbmf_export_plugin->htmlResultOutput($app->dbmf_search_result);
+    return;
 }
 
 
