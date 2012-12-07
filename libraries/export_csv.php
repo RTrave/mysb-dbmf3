@@ -24,11 +24,6 @@ class MySBDBMFExportCSV extends MySBDBMFExport {
         parent::__construct($id,(array) ($data_export));
     }
 
-/*
-    public function update($data_export) {
-        parent::update( $data_export );
-    }
-*/
 
     public function selectionProcess( $selection ) {
         
@@ -52,12 +47,12 @@ class MySBDBMFExportCSV extends MySBDBMFExport {
 
     public function htmlParamProcess() {
         global $app;
-        $app->tpl_dbmfexportcsv_filename = $_POST['dbmf_exportcsv_filename'].'.csv';
-        $app->tpl_dbmfexportcsv_fileinfos = $_POST['dbmf_exportcsv_fileinfos'];
+        $this->csv_filename = $_POST['dbmf_exportcsv_filename'].'.csv';
+        $this->csv_fileinfos = $_POST['dbmf_exportcsv_fileinfos'];
     }
 
     public function requestOrderBy() {
-        return $_POST["dbmf_exportdisplay_orderby$this->id"];
+        return $_POST["dbmf_exportcsv_orderby$this->id"];
     }
 
     private function keyname2red($strdb) {
@@ -127,8 +122,10 @@ CSV output: '.MySBDB::num_rows($results).' results<br>
         fclose($ftable);
         $stmail = new MySBMail('mail_sendtable','dbmf3');
         $stmail->addTO($app->auth_user->mail,$app->auth_user->firstname.' '.$app->auth_user->lastname);
-        $stmail->addAttachment($path_file,$app->tpl_dbmfexportcsv_filename);
-        $stmail->data['infos'] = $app->tpl_dbmfexportcsv_fileinfos;
+        if($this->csv_filename=='.csv') $csv_filename = 'sendtable.csv';
+        else $csv_filename = $this->csv_filename;
+        $stmail->addAttachment($path_file,$csv_filename);
+        $stmail->data['infos'] = $this->csv_fileinfos;
         $stmail->send();
         unlink($path_file);
 

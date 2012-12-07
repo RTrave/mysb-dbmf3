@@ -24,12 +24,6 @@ class MySBDBMFExportMailing extends MySBDBMFExport {
         parent::__construct($id,(array) ($data_export));
     }
 
-/*
-    public function update($data_export) {
-        parent::update( $data_export );
-    }
-*/
-
     public function htmlConfigForm() {
         if($this->config_array['modulo']!='') $modulo = $this->config_array['modulo'];
         else $modulo = 300;
@@ -62,8 +56,8 @@ class MySBDBMFExportMailing extends MySBDBMFExport {
 
     public function htmlParamProcess() {
         global $app;
-        $app->tpl_dbmfexportmailing_subject = $_POST['dbmf_exportmailing_subject'];
-        $app->tpl_dbmfexportmailing_body = $_POST['dbmf_exportmailing_body'];
+        $this->mailing_subject = $_POST['dbmf_exportmailing_subject'];
+        $this->mailing_body = $_POST['dbmf_exportmailing_body'];
     }
 
     /**
@@ -72,15 +66,20 @@ class MySBDBMFExportMailing extends MySBDBMFExport {
      */
     public function htmlResultOutput($results) {
         global $app;
+        if( $this->mailing_subject=='' or $this->mailing_body=='' ) {
+            echo '<p>'._G('DBMF_exportmailing_emptyfield').'</p>';
+            return;
+        }
         $output = '
 <p>
 '.MySBDB::num_rows($results).' results<br>
 </p>
-<p>Sending mails:<br>
-<code style="width: 70%;">
-<b>'.$app->tpl_dbmfexportmailing_subject.'</b><br>
-'.$app->tpl_dbmfexportmailing_body.'
-</code><br><br>
+<h3>'._G('DBMF_exportmailing_sending').'</h3>
+<p>
+<b>'.$this->mailing_subject.'</b><br>
+'.$this->mailing_body.'
+<br>
+<br>
 ';
         $modulo_index = 0;
         while($data_result = MySBDB::fetch_array($results)) {
@@ -89,7 +88,7 @@ class MySBDBMFExportMailing extends MySBDBMFExport {
                 $modulo_index = 0;
                 $current_mail->send();
                 unset($current_mail);
-                $output .= "mail sent!!!\n<br>";
+                $output .= _G('DBMF_exportmailing_sendingnew')."!\n<br>";
             }
             $contact = new MySBDBMFContact(null,$data_result);
             if($contact->b1r08!='') {
@@ -97,18 +96,18 @@ class MySBDBMFExportMailing extends MySBDBMFExport {
                 if(!isset($current_mail)) {
                     $current_mail = new MySBMail('mail_mailing','dbmf3');
                     $current_mail->unset_footer();
-                    $current_mail->data['body'] = $app->tpl_dbmfexportmailing_body;
-                    $current_mail->data['subject'] = $app->tpl_dbmfexportmailing_subject;
+                    $current_mail->data['body'] = $this->mailing_body;
+                    $current_mail->data['subject'] = $this->mailing_subject;
                 }
                  $current_mail->addBCC($contact->b1r08,$contact->firstname.' '.$contact->lastname);
             } else {
-                $output .= 'no mail: '.$contact->firstname.' '.$contact->lastname.' (id:'.$contact->id.')<br>';
+                $output .= _G('DBMF_exportmailing_sendingnomail').': '.$contact->firstname.' '.$contact->lastname.' (id:'.$contact->id.')<br>';
             }
 
         }
         if(isset($current_mail)) 
             $current_mail->send();
-        $output .= "last mail sent!!!\n<br>";
+        $output .= _G('DBMF_exportmailing_sendinglast')."!\n<br>";
         $output .= '
 </p>';
         return $output;
