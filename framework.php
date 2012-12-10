@@ -30,6 +30,7 @@ require (MySB_ROOTPATH.'/modules/dbmf3/libraries/export_display.php');
 require (MySB_ROOTPATH.'/modules/dbmf3/libraries/export_mailing.php');
 require (MySB_ROOTPATH.'/modules/dbmf3/libraries/export_mails.php');
 require (MySB_ROOTPATH.'/modules/dbmf3/libraries/export_csv.php');
+require (MySB_ROOTPATH.'/modules/dbmf3/libraries/export_update.php');
 
 /*
 $pluginsExport = MySBPluginHelper::loadByType('DBMFExport');

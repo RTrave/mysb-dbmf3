@@ -81,6 +81,7 @@ if(isset($_POST['dbmf_export_process'])) {
     $clause_export = $app->dbmf_export_plugin->requestWhereClause();
     if($clause_export!='') $clause_a = '('.$clause_a.' and ('.$clause_export.'))';
 
+    $app->dbmf_export_whereclause = $clause_a;
     if($clause_a!='') $sql_a .= 'WHERE '.$clause_a.' ';
 
     $orderby_export = $app->dbmf_export_plugin->requestOrderBy();

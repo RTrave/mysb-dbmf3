@@ -14,7 +14,7 @@ defined('_MySBEXEC') or die;
 
 class MySBModule_dbmf3 {
 
-    public $version = 2;
+    public $version = 3;
 
     public function create() {
         global $app;
@@ -189,6 +189,14 @@ class MySBModule_dbmf3 {
             2,"dbmf_user",'dbmf3');
     }
 
+    public function init3() {
+        global $app;
+        MySBPluginHelper::create('dbmf_exportupdate','DBMFExport',
+            array("UPDATE", 'Update export', 'libraries/export_update.php',''),
+            array(0,0,0,0),
+            2,"dbmf_blockedit",'dbmf3');
+    }
+
     public function uninit() {
         global $app;
 
@@ -203,6 +211,7 @@ class MySBModule_dbmf3 {
         MySBPluginHelper::delete('dbmf_showorga','dbmf3');
         MySBPluginHelper::delete('dbmf_showtels','dbmf3');
 
+        MySBPluginHelper::delete('dbmf_exportupdate','dbmf3');
         MySBPluginHelper::delete('dbmf_exportcsv','dbmf3');
         MySBPluginHelper::delete('dbmf_exportmailscsv','dbmf3');
         MySBPluginHelper::delete('dbmf_exportmailing','dbmf3');
