@@ -54,7 +54,7 @@ class MySBDBMFGroupHelper {
         $req_groups = MySBDB::query("SELECT * FROM ".MySB_DBPREFIX."groups ".
                 "ORDER BY id",
                 "MySBDBMFGroupHelper::load()",
-                true, 'dbmf3' );
+                true, 'dbmf3', true );
         while($data_group = MySBDB::fetch_array($req_groups)) {
             $app->dbmfgroups[$data_group['id']] = new MySBDBMFGroup(-1, $data_group);
         }
