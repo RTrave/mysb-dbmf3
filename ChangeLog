@@ -1,4 +1,50 @@
+2012-12-29  Roman Trave <abadcafe@free.fr>
+
+	* __init.php: Infos frontpage priority change.
+
+	* locales/fr/dbmf3.ini, __init.php, infos.php, locales/en/dbmf3.ini:
+	New frontpage with base informations.
+
+	* libraries/group.php: New cache usage in SQL group query.
+
+2012-12-10  Roman Trave <abadcafe@free.fr>
+
+	* __init.php, export_process.php, framework.php, libraries/export_update.php, locales/en/dbmf3.ini, locales/fr/dbmf3.ini:
+	New multiple fields update plugin (Export plugin).
+
+2012-12-07  Roman Trave <abadcafe@free.fr>
+
+	* locales/en/dbmf3.ini, locales/fr/dbmf3.ini, libraries/export_csv.php, libraries/export_mailing.php:
+	Fix empty export parameters.
+	Mailing localisation.
+
+2012-12-06  Roman Trave <abadcafe@free.fr>
+
+	* export.php: Hide selection table in results of exports.
+
+2012-11-29  Roman Trave <abadcafe@free.fr>
+
+	* libraries/export_csv.php, locales/en/dbmf3.ini, locales/en/mail_sendtable.php, locales/fr/dbmf3.ini, locales/fr/mail_sendtable.php:
+	Improved CSV export support.
+
+2012-11-19  Roman Trave <abadcafe@free.fr>
+
+	* locales/en/mail_sendtable.php, locales/fr/mail_sendtable.php, __init.php, framework.php, libraries/export_csv.php, libraries/export_mailing.php:
+	New CSV export system, sending the complete contact table by mail.
+	Mailing export improved with new MySBMail API.
+
+	* libraries/blockref.php:
+	Blockrefs are now sorted by block_id, and by i_index.
+
+2012-11-14  Roman Trave <abadcafe@free.fr>
+
+	* libraries/export_mailing.php:
+	Mailing pluggin now have a config for his send size modulo.
+	Mails don't have the default footer anymore.
+
 2012-10-25  Roman Trave <abadcafe@free.fr>
+
+	* ChangeLog: Changelog update.
 
 	* ChangeLog: Ready to tag release: rel0b.
 
