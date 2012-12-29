@@ -1,5 +1,7 @@
 2012-12-29  Roman Trave <abadcafe@free.fr>
 
+	* ChangeLog: Ready to tag release: rel1a.
+
 	* __init.php: Infos frontpage priority change.
 
 	* locales/fr/dbmf3.ini, __init.php, infos.php, locales/en/dbmf3.ini:
