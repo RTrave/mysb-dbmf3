@@ -202,7 +202,7 @@ class MySBModule_dbmf3 {
         MySBPluginHelper::create('dbmf_infos','FrontPage',
             array("infos", '', '',''),
             array(0,0,0,0),
-            7,"dbmf_user",'dbmf3');
+            3,"dbmf_user",'dbmf3');
     }
 
     public function uninit() {
