@@ -14,7 +14,7 @@ defined('_MySBEXEC') or die;
 
 class MySBModule_dbmf3 {
 
-    public $version = 4;
+    public $version = 5;
 
     public function create() {
         global $app;
@@ -102,6 +102,9 @@ class MySBModule_dbmf3 {
             "__init.php",
             false, "dbmf3");
         $req = MySBDB::query('DROP TABLE '.MySB_DBPREFIX.'dbmfexports',
+            "__init.php",
+            false, "dbmf3");
+        $req = MySBDB::query('DROP TABLE '.MySB_DBPREFIX.'dbmfmementos',
             "__init.php",
             false, "dbmf3");
 
@@ -203,6 +206,24 @@ class MySBModule_dbmf3 {
             array("infos", '', '',''),
             array(0,0,0,0),
             3,"dbmf_user",'dbmf3');
+    }
+
+    public function init5() {
+        global $app;
+        $req = MySBDB::query('CREATE TABLE '.MySB_DBPREFIX.'dbmfmementos ( '.
+            'id int, '.
+            'user_id int, '.
+            'group_id int, '.
+            'contact_id int, '.
+            'type int, '.
+            'date_memento date, '.
+            'dayofmonth_memento int, '.
+            'monthofyear_memento int, '.
+            'date_process date, '.
+            'comments varchar(512) )',
+            "__init.php",
+            false, "dbmf3");
+
     }
 
     public function uninit() {

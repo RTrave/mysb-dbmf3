@@ -24,12 +24,12 @@ echo '
     <td colspan="2">'._G("DBMF_contact_contact_infos").'</td>
 </tr>
 <tr>
-    <td><b>'._G("DBMF_date_creat").':</b></td>
-    <td>'.$date_creat->strAEBY_l().'</td>
-</tr>
-<tr>
-    <td><b>'._G("DBMF_date_modif").':</b></td>
-    <td>'.$date_modif->strAEBY_l().'</td>
+    <td colspan="2" align="center">
+        <small>
+        <b>'._G("DBMF_date_creat").':</b>'.$date_creat->strAEBY_l().' / 
+        <b>'._G("DBMF_date_modif").':</b>'.$date_modif->strAEBY_l().'
+        </small>
+    </td>
 </tr>
 <tr>
     <td><b>'._G("DBMF_common_lastname").':</b></td>';
@@ -48,5 +48,35 @@ else echo '
 echo '
 </tr>
 ';
+echo '
+<tr class="title" >
+    <td colspan="2">'._G("DBMF_contact_mementos_infos").'</td>
+</tr>
+<tr>
+    <td colspan="2">
+    <table width="100%"><tbody>
+';
+
+$mementos = MySBDBMFMementoHelper::load($contact->id);
+foreach($mementos as $memento) {
+    $memento_date = new MySBDateTime($memento->date_memento);
+    echo '
+    <tr>
+        <td width="100px"><b><small>'.$memento_date->strEBY_l().'</small></b></td>
+        <td><small>'.$memento->comments.'</small></td>
+        <td width="70px" align="right"><small><a href="?mod=dbmf3&tpl=editmemento&amp;memento_id='.$memento->id.'" class="button">'._G("DBMF_contact_mementos_edit").'</a></small></td>
+    </tr>
+';
+}
+
+echo '
+    <tr>
+        <td colspan="3"><small><a href="?mod=dbmf3&tpl=editmemento&contact_id='.$contact->id.'" class="button">'._G("DBMF_contact_mementos_create").'</a></small></td>
+    </tr>
+    </tbody></table>
+    </td>
+</tr>
+';
+
 
 ?>

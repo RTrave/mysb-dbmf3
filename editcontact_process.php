@@ -58,4 +58,29 @@ if(isset($_POST['contact_edit']) and MySBRoleHelper::checkAccess('dbmf_editor',f
 }
 
 
+if(isset($_POST['memento_add'])) {
+    $new_memento = MySBDBMFMementoHelper::create($_POST['memento_user'],$_GET['contact_id'],$_POST['memento_type']);
+    $new_memento_date = MySBDateTime::html_formLoad('memento_date_');
+    $new_memento->update( array(
+        'date_memento' => $new_memento_date->date_string,
+        'comments' => $_POST['memento_comments'] ) );
+    $app->pushMessage(_G('DBMF_memento_added'));
+}
+
+if(isset($_POST['memento_delete'])) {
+    MySBDBMFMementoHelper::delete($_POST['memento_delete']);
+    $app->pushMessage(_G('DBMF_memento_deleted'));
+}
+
+if(isset($_POST['memento_modify'])) {
+    $memento = new MySBDBMFMemento($_POST['memento_modify']);
+    $memento_date = MySBDateTime::html_formLoad('memento_date_');
+    $memento->update( array(
+        'date_memento' => $memento_date->date_string,
+        'comments' => $_POST['memento_comments'] 
+        ) );
+    $app->pushMessage(_G('DBMF_memento_modified'));
+}
+
+
 ?>
