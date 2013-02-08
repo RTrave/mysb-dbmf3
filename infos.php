@@ -17,6 +17,20 @@ global $app;
 if(!MySBRoleHelper::checkAccess('dbmf_user')) return;
 
 
+$act_mementos = MySBDBMFMementoHelper::loadByUserID_Actives($app->auth_user->id);
+if(count($act_mementos)>=1) 
+    echo '
+<h2>'._G('DBMF_baseinfos_mementos').'</h2>
+<ul>
+<li>
+    <a href="?mod=dbmf3&amp;tpl=mementos">'._G('DBMF_baseinfos_mementos_actives').'</a>: <blink><b>'.count($act_mementos).'</b></blink>
+</li>
+</ul>
+';
+
+
+
+
 if(!isset($_SESSION['dbmf3_baseinfos_date'])) {
     $sql_r = 'SELECT id from '.MySB_DBPREFIX.'dbmfcontacts ';
     $blocks = MySBDBMFBlockHelper::load();

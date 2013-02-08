@@ -131,7 +131,7 @@ class MySBModule_dbmf3 {
         MySBPluginHelper::create('blockedit_menutext','MenuItem',
             array("DBMF_topmenu_blockedit", "blockedit", 'DBMF_topmenu_blockeditinfos',''),
             array(2,0,0,0),
-            8,"dbmf_blockedit",'dbmf3');
+            3,"dbmf_blockedit",'dbmf3');
 
         MySBPluginHelper::create('admindbmf_menutext','MenuItem',
             array("DBMF_adminmenu_dbmf", "admindbmf", 'DBMF_adminmenu_dbmfinfos',''),
@@ -223,6 +223,11 @@ class MySBModule_dbmf3 {
             'comments varchar(512) )',
             "__init.php",
             false, "dbmf3");
+
+        MySBPluginHelper::create('mementos_menutext','MenuItem',
+            array("DBMF_topmenu_mementos", "mementos", 'DBMF_topmenu_mementosinfos',''),
+            array(2,0,0,0),
+            7,"dbmf_user",'dbmf3');
 
     }
 

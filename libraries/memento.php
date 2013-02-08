@@ -13,7 +13,9 @@
 defined('_MySBEXEC') or die;
 
 
-define('MYSB_DBMF_MEMENTO_TYPE_UNIQUE', 0);
+define('MYSB_DBMF_MEMENTO_TYPE_PUNCTUAL', 0);
+define('MYSB_DBMF_MEMENTO_TYPE_MONTHOFYEAR', 1);
+define('MYSB_DBMF_MEMENTO_TYPE_DAYOFMONTH', 2);
 
 
 /**
@@ -39,6 +41,44 @@ class MySBDBMFMemento extends MySBObject {
     public function update( $data_memento ) {
         global $app;
         parent::update('dbmfmementos', (array) ($data_memento));
+    }
+
+    public function getDate() {
+        global $app;
+        switch($type) {
+            case MYSB_DBMF_MEMENTO_TYPE_PUNCTUAL:
+                return $this->date;
+            case MYSB_DBMF_MEMENTO_TYPE_MONTHOFYEAR:
+                ;
+            case MYSB_DBMF_MEMENTO_TYPE_DAYOFMONTH:
+                ;
+        }
+    }
+
+    public function isActive() {
+        global $app;
+        //$current_date = new MySBDateTime('now');
+        switch($type) {
+            case MYSB_DBMF_MEMENTO_TYPE_PUNCTUAL:
+                $memento_date = new MySBDateTime($this->date_memento);
+                if($memento_date->getRest()<=0) return false;
+                if($this->date_process=='') return true;
+                $process_date = new MySBDateTime($this->date_process);
+                //echo $memento_date->getRest($process_date);
+                if($memento_date->getRest($process_date)>0) return false;
+                return true;
+            case MYSB_DBMF_MEMENTO_TYPE_MONTHOFYEAR:
+                ;
+            case MYSB_DBMF_MEMENTO_TYPE_DAYOFMONTH:
+                ;
+        }
+    }
+
+    public function process() {
+        global $app;
+        $current_date = new MySBDateTime();
+        $this->update(array(
+            'date_process' => $current_date->date_string ));
     }
 
 }
@@ -87,6 +127,41 @@ class MySBDBMFMementoHelper {
             $mementos[$data_memento['id']] = new MySBDBMFMemento(null, $data_memento);
         }
         return $mementos;
+    }
+
+    public function loadByUserID_Punctuals($user_id) {
+        global $app;
+        $req_cond = '';
+        $req_mementos = MySBDB::query("SELECT * FROM ".MySB_DBPREFIX."dbmfmementos ".
+                "WHERE user_id=".$user_id." ".
+                "ORDER BY date_memento",
+                "MySBDBMFMementoHelper::loadByUserID($user_id)",
+                true, 'dbmf3' );
+        $mementos = array();
+        while($data_memento = MySBDB::fetch_array($req_mementos)) {
+            $mementos[$data_memento['id']] = new MySBDBMFMemento(null, $data_memento);
+        }
+        return $mementos;
+    }
+
+    public function loadByUserID_Actives($user_id) {
+        global $app;
+        $req_cond = '';
+        $req_mementos = MySBDB::query("SELECT * FROM ".MySB_DBPREFIX."dbmfmementos ".
+                "WHERE user_id=".$user_id." ".
+                "ORDER BY date_memento",
+                "MySBDBMFMementoHelper::loadByUserID_Actives($user_id)",
+                true, 'dbmf3' );
+        $mementos = array();
+        while($data_memento = MySBDB::fetch_array($req_mementos)) {
+            $mementos[$data_memento['id']] = new MySBDBMFMemento(null, $data_memento);
+        }
+        $act_mementos = array();
+        foreach($mementos as $memento) {
+            if($memento->isActive())
+                $act_mementos[] = $memento;
+        }
+        return $act_mementos;
     }
 
 }
