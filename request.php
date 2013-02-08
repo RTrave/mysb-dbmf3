@@ -22,6 +22,7 @@ echo '
 
 if( isset($_POST['dbmf_request']) 
     or isset($_POST['dbmf_request_advanced'])
+    or isset($_POST['dbmf_request_byid'])
     or isset($_POST['dbmf_contact_delete']) ) {
     echo '
 <h2>'._G('DBMF_search_results').'</h2>
@@ -50,6 +51,10 @@ echo '
 <li>
     '._G('DBMF_search_all_fields').': <br>
     <input type="text" name="search_all" size="24" maxlength="64" value="'.$_POST['search_all'].'">
+</li>
+<li>
+    '._G('DBMF_search_byid').': <br>
+    <input type="text" name="search_byid" size="8" maxlength="64" value="'.$_POST['search_byid'].'">
 </li>
 </ul>
 <p>

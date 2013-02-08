@@ -56,6 +56,8 @@ if(isset($_POST['dbmf_request'])) {
    	    $_POST['search_name'] = '';
     } elseif(!empty($_POST['search_name'])) {
         $clause_a = 'lastname RLIKE \''.MySBUtil::str2whereclause($_POST['search_name']).'\' ';
+    } elseif(!empty($_POST['search_byid'])) {
+        $clause_a = 'id='.$_POST['search_byid'].' ';
     } else {
         $clause_a = '';
     }
