@@ -45,11 +45,25 @@ class MySBDBMFMemento extends MySBObject {
 
     public function getDate() {
         global $app;
-        switch($type) {
+        switch($this->type) {
             case MYSB_DBMF_MEMENTO_TYPE_PUNCTUAL:
-                return $this->date;
+                $memento_date = new MySBDateTime($this->date_memento);
+                return $memento_date->strEBY_l();
             case MYSB_DBMF_MEMENTO_TYPE_MONTHOFYEAR:
-                ;
+                switch($this->monthofyear_memento) {
+                    case 1: return _G('DBMF_memento_moy_1');
+                    case 2: return _G('DBMF_memento_moy_2');
+                    case 3: return _G('DBMF_memento_moy_3');
+                    case 4: return _G('DBMF_memento_moy_4');
+                    case 5: return _G('DBMF_memento_moy_5');
+                    case 6: return _G('DBMF_memento_moy_6');
+                    case 7: return _G('DBMF_memento_moy_7');
+                    case 8: return _G('DBMF_memento_moy_8');
+                    case 9: return _G('DBMF_memento_moy_9');
+                    case 10: return _G('DBMF_memento_moy_10');
+                    case 11: return _G('DBMF_memento_moy_11');
+                    case 12: return _G('DBMF_memento_moy_12');
+                }
             case MYSB_DBMF_MEMENTO_TYPE_DAYOFMONTH:
                 ;
         }
@@ -58,7 +72,7 @@ class MySBDBMFMemento extends MySBObject {
     public function isActive() {
         global $app;
         //$current_date = new MySBDateTime('now');
-        switch($type) {
+        switch($this->type) {
             case MYSB_DBMF_MEMENTO_TYPE_PUNCTUAL:
                 $memento_date = new MySBDateTime($this->date_memento);
                 if($memento_date->getRest()<=0) return false;
@@ -68,7 +82,17 @@ class MySBDBMFMemento extends MySBObject {
                 if($memento_date->getRest($process_date)>0) return false;
                 return true;
             case MYSB_DBMF_MEMENTO_TYPE_MONTHOFYEAR:
-                ;
+                $current_date = new MySBDateTime('now');
+                $cmonth = (int) $current_date->str_get('%m');
+                $cyear = $current_date->str_get('%Y');
+                echo $cmonth.' '.$cyear;
+                $memento_date = new MySBDateTime($cyear.'-'.$this->monthofyear_memento.'-1');
+                echo $memento_date->strEBY_l();
+                if($memento_date->getRest()<=0) return false;
+                if($this->date_process=='') return true;
+                $process_date = new MySBDateTime($this->date_process);
+                if($memento_date->getRest($process_date)>0) return false;
+                return true;
             case MYSB_DBMF_MEMENTO_TYPE_DAYOFMONTH:
                 ;
         }
@@ -129,7 +153,7 @@ class MySBDBMFMementoHelper {
         return $mementos;
     }
 
-    public function loadByUserID_Punctuals($user_id) {
+    public function loadByUserID($user_id) {
         global $app;
         $req_cond = '';
         $req_mementos = MySBDB::query("SELECT * FROM ".MySB_DBPREFIX."dbmfmementos ".

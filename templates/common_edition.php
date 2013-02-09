@@ -59,12 +59,12 @@ echo '
 
 $mementos = MySBDBMFMementoHelper::load($contact->id);
 foreach($mementos as $memento) {
-    $memento_date = new MySBDateTime($memento->date_memento);
+    //$memento_date = new MySBDateTime($memento->date_memento);
     if($memento->isActive()) $Active='class="memento_active"';
     else $Active='';
     echo '
     <tr>
-        <td width="100px" '.$Active.'><b><small>'.$memento_date->strEBY_l().'</small></b></td>
+        <td width="100px" '.$Active.'><b><small>'.$memento->getDate().'</small></b></td>
         <td><small>'.$memento->comments.'</small></td>
         <td width="70px" align="right"><small><a href="?mod=dbmf3&tpl=editmemento&amp;memento_id='.$memento->id.'" class="button">'._G("DBMF_contact_mementos_edit").'</a></small></td>
     </tr>

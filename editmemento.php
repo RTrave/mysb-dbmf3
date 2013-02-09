@@ -40,11 +40,42 @@ $memento_date = new MySBDateTime($memento->date_memento);
 </tr>
 <tr>
     <td><b>'._G("DBMF_memento_type").':</b></td>
-    <td>'.MYSB_DBMF_MEMENTO_TYPE_UNIQUE.'<input type="hidden" name="memento_type" value="'.MYSB_DBMF_MEMENTO_TYPE_UNIQUE.'"></td>
+    <td>
+        <select name="memento_type" onChange="hide(\'memtype0\');hide(\'memtype1\');show(this.options[this.selectedIndex].value);">
+            <option value="memtype'.MYSB_DBMF_MEMENTO_TYPE_PUNCTUAL.'" '.MySBUtil::form_isselected($memento->type,MYSB_DBMF_MEMENTO_TYPE_PUNCTUAL).'>'._G("DBMF_memento_type_punctual").'</option>
+            <option value="memtype'.MYSB_DBMF_MEMENTO_TYPE_MONTHOFYEAR.'" '.MySBUtil::form_isselected($memento->type,MYSB_DBMF_MEMENTO_TYPE_MONTHOFYEAR).'>'._G("DBMF_memento_type_monthofyear").'</option>
+        </select>
+    </td>
 </tr>
 <tr>
-    <td><b>'._G("DBMF_memento_date").':</b></td>
-    <td>'.$memento_date->html_form('memento_date_',true).'</td>
+    <td><b>'._G("DBMF_memento_date").':</b></td>';
+    if($memento->type==MYSB_DBMF_MEMENTO_TYPE_PUNCTUAL) {
+        $style_t0 = '';
+        $style_t1 = 'style="display: none;"';
+    } elseif($memento->type==MYSB_DBMF_MEMENTO_TYPE_MONTHOFYEAR) {
+        $style_t0 = 'style="display: none;"';
+        $style_t1 = '';
+    }
+    echo '
+    <td>
+        <div id="memtype0" '.$style_t0.'>'.$memento_date->html_form('memento_date_',true).'</div>
+        <div id="memtype1" '.$style_t1.'>
+            <select name="memento_moy">
+                <option value="1" '.MySBUtil::form_isselected($memento->monthofyear_memento,1).'>'._G('DBMF_memento_moy_1').'</option>
+                <option value="2" '.MySBUtil::form_isselected($memento->monthofyear_memento,2).'>'._G('DBMF_memento_moy_2').'</option>
+                <option value="3" '.MySBUtil::form_isselected($memento->monthofyear_memento,3).'>'._G('DBMF_memento_moy_3').'</option>
+                <option value="4" '.MySBUtil::form_isselected($memento->monthofyear_memento,4).'>'._G('DBMF_memento_moy_4').'</option>
+                <option value="5" '.MySBUtil::form_isselected($memento->monthofyear_memento,5).'>'._G('DBMF_memento_moy_5').'</option>
+                <option value="6" '.MySBUtil::form_isselected($memento->monthofyear_memento,6).'>'._G('DBMF_memento_moy_6').'</option>
+                <option value="7" '.MySBUtil::form_isselected($memento->monthofyear_memento,7).'>'._G('DBMF_memento_moy_7').'</option>
+                <option value="8" '.MySBUtil::form_isselected($memento->monthofyear_memento,8).'>'._G('DBMF_memento_moy_8').'</option>
+                <option value="9" '.MySBUtil::form_isselected($memento->monthofyear_memento,9).'>'._G('DBMF_memento_moy_9').'</option>
+                <option value="10" '.MySBUtil::form_isselected($memento->monthofyear_memento,10).'>'._G('DBMF_memento_moy_10').'</option>
+                <option value="11" '.MySBUtil::form_isselected($memento->monthofyear_memento,11).'>'._G('DBMF_memento_moy_11').'</option>
+                <option value="12" '.MySBUtil::form_isselected($memento->monthofyear_memento,12).'>'._G('DBMF_memento_moy_12').'</option>
+            </select>
+        </div>
+    </td>
 </tr>
 <tr>
     <td><b>'._G("DBMF_memento_comments").':</b></td>

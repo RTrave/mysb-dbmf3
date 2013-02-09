@@ -59,10 +59,18 @@ if(isset($_POST['contact_edit']) and MySBRoleHelper::checkAccess('dbmf_editor',f
 
 
 if(isset($_POST['memento_add'])) {
-    $new_memento = MySBDBMFMementoHelper::create($_POST['memento_user'],$_GET['contact_id'],$_POST['memento_type']);
-    $new_memento_date = MySBDateTime::html_formLoad('memento_date_');
+    if($_POST['memento_type']=='memtype0') $memtype = 0;
+    elseif($_POST['memento_type']=='memtype1') $memtype = 1;
+    $new_memento = MySBDBMFMementoHelper::create($_POST['memento_user'],$_GET['contact_id'],$memtype);
+    if($memtype==MYSB_DBMF_MEMENTO_TYPE_PUNCTUAL) {
+        $new_memento_date = MySBDateTime::html_formLoad('memento_date_');
+        $new_memento->update( array(
+            'date_memento' => $new_memento_date->date_string ) );
+    } elseif($memtype==MYSB_DBMF_MEMENTO_TYPE_MONTHOFYEAR) {
+        $new_memento->update( array(
+            'monthofyear_memento' => $_POST['memento_moy'] ) );
+    }
     $new_memento->update( array(
-        'date_memento' => $new_memento_date->date_string,
         'comments' => $_POST['memento_comments'] ) );
     $app->pushMessage(_G('DBMF_memento_added'));
 }
@@ -73,12 +81,19 @@ if(isset($_POST['memento_delete'])) {
 }
 
 if(isset($_POST['memento_modify'])) {
+    if($_POST['memento_type']=='memtype0') $memtype = 0;
+    elseif($_POST['memento_type']=='memtype1') $memtype = 1;
     $memento = new MySBDBMFMemento($_POST['memento_modify']);
-    $memento_date = MySBDateTime::html_formLoad('memento_date_');
+    if($memtype==MYSB_DBMF_MEMENTO_TYPE_PUNCTUAL) {
+        $memento_date = MySBDateTime::html_formLoad('memento_date_');
+        $memento->update( array(
+            'date_memento' => $memento_date->date_string ) );
+    } elseif($memtype==MYSB_DBMF_MEMENTO_TYPE_MONTHOFYEAR) {
+        $memento->update( array(
+            'monthofyear_memento' => $_POST['memento_moy'] ) );
+    }
     $memento->update( array(
-        'date_memento' => $memento_date->date_string,
-        'comments' => $_POST['memento_comments'] 
-        ) );
+        'comments' => $_POST['memento_comments'] ) );
     $app->pushMessage(_G('DBMF_memento_modified'));
 }
 

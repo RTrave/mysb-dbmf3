@@ -20,13 +20,13 @@ echo '
 <h1>'._G('DBMF_mementos_summary').'</h1>
 ';
 
-$mementos_p = MySBDBMFMementoHelper::loadByUserID_Punctuals($app->auth_user->id);
+$mementos_p = MySBDBMFMementoHelper::loadByUserID($app->auth_user->id);
 
 echo '
-<h2>'._G('DBMF_mementos_punctuals').' ('.count($mementos_p).')</h2>
+<h2>'._G('DBMF_mementos_all').' ('.count($mementos_p).')</h2>
 <div class="table_support">
 <table width="100%" style="font-size: 85%;"><tbody>
-<tr>
+<tr class="title">
     <td width="120px">'._G("DBMF_memento_date").'</td>
     <td width="28px"></td>
     <td>'._G('DBMF_mementos_details').'</td>
@@ -40,7 +40,7 @@ foreach($mementos_p as $memento) {
     else $Active='';
     echo '
 <tr '.$Active.'>
-    <td><small>('.$memento->id.')</small> '.$memento_date->strEBY_l().'</td>
+    <td><small>('.$memento->id.')</small> '.$memento->getDate().'</td>
     <td>
         <a  name="contact'.$anchor_nb.'"
             href="javascript:editwinopen(\'index_wom.php?mod=dbmf3&amp;tpl=editcontact&amp;contact_id='.$contact->id.'&amp;mode=screen\',\'contactinfos\')">
