@@ -18,12 +18,26 @@ if(!MySBRoleHelper::checkAccess('dbmf_user')) return;
 
 echo '
 <h1>'._G('DBMF_mementos_summary').'</h1>
+
+<div id="mysb_topadmin">
+<div class="mysb_topadmin_menu">
+    <a href="index.php?mod=dbmf3&amp;tpl=mementos">'._G('DBMF_mementos_actives').'</a>
+    <a href="index.php?mod=dbmf3&amp;tpl=mementos&amp;filter=all">'._G('DBMF_mementos_all').'</a>
+</div>
+</div>
 ';
 
-$mementos_p = MySBDBMFMementoHelper::loadByUserID($app->auth_user->id);
+if($_GET['filter']=='all') {
+    $mementos_p = MySBDBMFMementoHelper::loadByUserID($app->auth_user->id);
+    echo '
+<h2>'._G('DBMF_mementos_all').' ('.count($mementos_p).')</h2>';
+} else {
+    $mementos_p = MySBDBMFMementoHelper::loadByUserID_Actives($app->auth_user->id);
+    echo '
+<h2>'._G('DBMF_mementos_actives').' ('.count($mementos_p).')</h2>';
+}
 
 echo '
-<h2>'._G('DBMF_mementos_all').' ('.count($mementos_p).')</h2>
 <div class="table_support">
 <table width="100%" style="font-size: 85%;"><tbody>
 <tr class="title">
@@ -36,16 +50,19 @@ echo '
 
 foreach($mementos_p as $memento) {
     $contact = new MySBDBMFContact($memento->contact_id);
-    $memento_date = new MySBDateTime($memento->date_memento);
-    if($memento->isActive()) $Active='class="memento_active"';
-    else $Active='';
+    //$memento_date = new MySBDateTime($memento->date_memento);
+    if($memento->isActive()) $Active = true;
+    else $Active = false;
+    if($Active) $memclass = 'class="mem_active"';
+    elseif(!$Active and $memento->date_process!='') $memclass = 'class="mem_processed"';
+    else $memclass='';
     echo '
-<tr '.$Active.'>
+<tr '.$memclass.'>
     <td><small>('.$memento->id.')</small> '.$memento->getDate().'</td>
     <td>
         <a  name="contact'.$anchor_nb.'"
-            href="javascript:editwinopen(\'index_wom.php?mod=dbmf3&amp;tpl=editcontact&amp;contact_id='.$contact->id.'&amp;mode=screen\',\'contactinfos\')">
-        <img src="modules/dbmf3/images/edit_icon24.png" alt="Edition '.$contact->id.'" title="'._G('DBMF_edit').' '.$contact->lastname.' '.$contact->firstname.' ('.$contact->id.')">
+            href="javascript:editwinopen(\'index_wom.php?mod=dbmf3&amp;tpl=editmemento&amp;memento_id='.$memento->id.'\',\'contactinfos\')">
+        <img src="modules/dbmf3/images/edit_icon24.png" alt="Edition '.$contact->id.'" title="'._G('DBMF_edit').' '.$contact->lastname.' '.$contact->firstname.' (memento '.$memento->id.')">
         </a>
     </td>
     <td>
@@ -61,15 +78,15 @@ foreach($mementos_p as $memento) {
     echo '
     </td>
     <td align="center">';
-    if($Active!='') {
+    if($Active) {
         echo '
-        <form action="?mod=dbmf3&amp;tpl=mementos" method="post">
+        <form action="" method="post">
             <input type="hidden" name="memento_process" value="'.$memento->id.'">
             <input type="submit" value="'._G('DBMF_memento_process_submit').'" class="submit">
         </form>';
-    } elseif($Active=='' and $memento->date_process!='') {
+    } elseif(!$Active and $memento->date_process!='') {
         echo '
-        <form action="?mod=dbmf3&amp;tpl=mementos" method="post">
+        <form action="" method="post">
             <input type="hidden" name="memento_unprocess" value="'.$memento->id.'">
             <input type="submit" value="'._G('DBMF_memento_unprocess_submit').'" class="submit">
         </form>';

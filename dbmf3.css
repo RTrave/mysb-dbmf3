@@ -12,11 +12,12 @@
 padding: 5px 5px 5px 20px;
 }
 
-#mysb_center tr.memento_active {
-background: red;
+#mysb_center .mem_active {
+background: #ff9292;
 }
 
-#mysb_center td.memento_active {
-background: red;
+#mysb_center .mem_processed {
+background: #c0ffba;
 }
+
 

@@ -60,11 +60,14 @@ echo '
 $mementos = MySBDBMFMementoHelper::load($contact->id);
 foreach($mementos as $memento) {
     //$memento_date = new MySBDateTime($memento->date_memento);
-    if($memento->isActive()) $Active='class="memento_active"';
-    else $Active='';
+    if($memento->isActive()) $Active = true;
+    else $Active = false;
+    if($Active) $memclass = 'class="mem_active"';
+    elseif(!$Active and $memento->date_process!='') $memclass = 'class="mem_processed"';
+    else $memclass='';
     echo '
     <tr>
-        <td width="100px" '.$Active.'><b><small>'.$memento->getDate().'</small></b></td>
+        <td width="100px" '.$memclass.'><b><small>'.$memento->getDate().'</small></b></td>
         <td><small>'.$memento->comments.'</small></td>
         <td width="70px" align="right"><small><a href="?mod=dbmf3&tpl=editmemento&amp;memento_id='.$memento->id.'" class="button">'._G("DBMF_contact_mementos_edit").'</a></small></td>
     </tr>
@@ -73,7 +76,7 @@ foreach($mementos as $memento) {
 
 echo '
     <tr>
-        <td colspan="3"><small><a href="?mod=dbmf3&tpl=editmemento&contact_id='.$contact->id.'" class="button">'._G("DBMF_contact_mementos_create").'</a></small></td>
+        <td colspan="3" align="center"><small><a href="?mod=dbmf3&tpl=editmemento&contact_id='.$contact->id.'" class="button">'._G("DBMF_contact_mementos_create").'</a></small></td>
     </tr>
     </tbody></table>
     </td>
