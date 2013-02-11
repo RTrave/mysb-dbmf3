@@ -42,25 +42,34 @@ echo '
 <h2>'._G('DBMF_search').'</h2>
 
 <h3>'._G('DBMF_search_keyword').'</h3>
+
 <form action="" method="post">
-<ul>
-<li>
-    '._G('DBMF_search_lastname').': <br>
-    <input type="text" name="search_name" size="24" maxlength="64" value="'.$_POST['search_name'].'">
-</li>
-<li>
-    '._G('DBMF_search_all_fields').': <br>
-    <input type="text" name="search_all" size="24" maxlength="64" value="'.$_POST['search_all'].'">
-</li>
-<li>
-    '._G('DBMF_search_byid').': <br>
-    <input type="text" name="search_byid" size="8" maxlength="64" value="'.$_POST['search_byid'].'">
-</li>
-</ul>
-<p>
-<input type="hidden" name="dbmf_request" value="1">
-<input type="submit" value="'._G('DBMF_search_submit').'" class="submit">
-</p>
+
+<div class="table_support" align="center">
+<table border="0" width="90%">
+<tr>
+    <td width="33%" class="lpadding">
+        '._G('DBMF_search_lastname').': <br>
+        <input type="text" name="search_name" size="24" maxlength="64" value="'.$_POST['search_name'].'">
+    </td>
+    <td width="33%" class="lpadding">
+        '._G('DBMF_search_all_fields').': <br>
+        <input type="text" name="search_all" size="24" maxlength="64" value="'.$_POST['search_all'].'">
+    </td>
+    <td width="33%" class="lpadding">
+        '._G('DBMF_search_byid').': <br>
+        <input type="text" name="search_byid" size="8" maxlength="64" value="'.$_POST['search_byid'].'">
+    </td>
+</tr>
+<tr>
+    <td colspan="3" align="center">
+        <input type="hidden" name="dbmf_request" value="1">
+        <input type="submit" value="'._G('DBMF_search_submit').'" class="submit">
+    </td>
+</tr>
+</table>
+</div>
+
 </form>
 ';
 

@@ -8,6 +8,10 @@
 ***************************************************************************/
 
 
+#mysb_center td.lpadding {
+padding: 5px 5px 5px 20px;
+}
+
 #mysb_center tr.memento_active {
 background: red;
 }
