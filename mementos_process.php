@@ -24,5 +24,12 @@ if(isset($_POST['memento_process'])) {
     $app->pushMessage(_G('DBMF_memento_processed'));
 }
 
+if(isset($_POST['memento_unprocess'])) {
+    //echo 'ID:'.$_POST['memento_process'].'<br>';
+    $memento = new MySBDBMFMemento($_POST['memento_unprocess']);
+    $memento->unprocess();
+    $app->pushMessage(_G('DBMF_memento_unprocessed'));
+}
+
 
 ?>

@@ -31,6 +31,7 @@ echo '
     <td width="28px"></td>
     <td>'._G('DBMF_mementos_details').'</td>
     <td width="150px"></td>
+    <td width="100px"></td>
 </tr>';
 
 foreach($mementos_p as $memento) {
@@ -51,6 +52,14 @@ foreach($mementos_p as $memento) {
         <b>'.$contact->lastname.'</b> '.$contact->firstname.'<br>
         '.$memento->comments.'
     </td>
+    <td>';
+    if($memento->date_process!='') {
+        $memento_process = new MySBDateTime($memento->date_process);
+        echo '
+        <small>'._G('DBMF_memento_process_last').':<br>'.$memento_process->strEBY_l().'</small>';
+    }
+    echo '
+    </td>
     <td align="center">';
     if($Active!='') {
         echo '
@@ -58,10 +67,12 @@ foreach($mementos_p as $memento) {
             <input type="hidden" name="memento_process" value="'.$memento->id.'">
             <input type="submit" value="'._G('DBMF_memento_process_submit').'" class="submit">
         </form>';
-    } elseif($memento->date_process!='') {
-        $memento_process = new MySBDateTime($memento->date_process);
+    } elseif($Active=='' and $memento->date_process!='') {
         echo '
-        <small>'._G('DBMF_memento_process_last').':<br>'.$memento_process->strEBY_l().'</small>';
+        <form action="?mod=dbmf3&amp;tpl=mementos" method="post">
+            <input type="hidden" name="memento_unprocess" value="'.$memento->id.'">
+            <input type="submit" value="'._G('DBMF_memento_unprocess_submit').'" class="submit">
+        </form>';
     }
     echo '
     </td>

@@ -85,9 +85,9 @@ class MySBDBMFMemento extends MySBObject {
                 $current_date = new MySBDateTime('now');
                 $cmonth = (int) $current_date->str_get('%m');
                 $cyear = $current_date->str_get('%Y');
-                echo $cmonth.' '.$cyear;
+                //echo $cmonth.' '.$cyear;
                 $memento_date = new MySBDateTime($cyear.'-'.$this->monthofyear_memento.'-1');
-                echo $memento_date->strEBY_l();
+                //echo $memento_date->strEBY_l();
                 if($memento_date->getRest()<=0) return false;
                 if($this->date_process=='') return true;
                 $process_date = new MySBDateTime($this->date_process);
@@ -103,6 +103,13 @@ class MySBDBMFMemento extends MySBObject {
         $current_date = new MySBDateTime();
         $this->update(array(
             'date_process' => $current_date->date_string ));
+    }
+
+    public function unprocess() {
+        global $app;
+        //$this->update(array('date_process' => '(null)' ));
+        MySBDB::query('UPDATE '.MySB_DBPREFIX.'dbmfmementos SET date_process=(null) WHERE id='.$this->id,
+            "MySBDBMFMemento::unprocess()", false, 'dbmf3' );
     }
 
 }
