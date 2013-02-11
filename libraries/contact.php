@@ -23,12 +23,18 @@ class MySBDBMFContact extends MySBObject {
 
     public function __construct($id=null, $data_contact = array()) {
         global $app;
+        if(!isset($app->dbmf_cache_contacts)) $app->dbmf_cache_contacts = array();
         if($id!=null) {
-            $req_contact = MySBDB::query("SELECT * FROM ".MySB_DBPREFIX.'dbmfcontacts '.
-                'WHERE id='.$id
-                ,"MySBDBMFContact::__construct($id)",
-                false, 'dbmf3');
-            $data_contact = MySBDB::fetch_array($req_contact);
+            if($app->dbmf_cache_contacts[$id]!='') {
+                $data_contact = $app->dbmf_cache_contacts[$id];
+            } else { 
+                $req_contact = MySBDB::query("SELECT * FROM ".MySB_DBPREFIX.'dbmfcontacts '.
+                    'WHERE id='.$id
+                    ,"MySBDBMFContact::__construct($id)",
+                    false, 'dbmf3');
+                $data_contact = MySBDB::fetch_array($req_contact);
+                $app->dbmf_cache_contacts[$id] = $data_contact;
+            }
         }
         parent::__construct((array) ($data_contact));
     }
