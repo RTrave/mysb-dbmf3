@@ -94,5 +94,8 @@ if(isset($_POST['block_orderdown'])) {
     $block->indexDOWN();
 }
 
+if(isset($_POST['block_del'])) {
+    MySBDBMFBlockHelper::delete($_POST['block_del']);
+}
 
 ?>

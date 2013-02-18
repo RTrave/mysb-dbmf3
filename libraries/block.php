@@ -177,9 +177,22 @@ class MySBDBMFBlockHelper {
         return $new_block;
     }
 
-    public function load() {
+    public function delete($id) {
+        $block = MySBDBMFBlockHelper::getByID($id);
+        MySBDB::query("DELETE FROM ".MySB_DBPREFIX.'dbmfblockrefs WHERE '.
+            "block_id=$id",
+            "MySBDBMFBlockHelper::delete($id)",
+            true, 'dbmf3');
+        MySBDB::query("DELETE FROM ".MySB_DBPREFIX.'dbmfblocks WHERE '.
+            "id=$id",
+            "MySBDBMFBlockHelper::delete($id)",
+            true, 'dbmf3');
+        MySBDBMFBlockHelper::load(true);
+    }
+
+    public function load($force=false) {
         global $app;
-        if(isset($app->cache_dbmfblocks)) 
+        if(isset($app->cache_dbmfblocks) and $force==false) 
             return $app->cache_dbmfblocks;
         $app->cache_dbmfblocks = array();
         $req_dbmfblocks = MySBDB::query("SELECT * FROM ".MySB_DBPREFIX."dbmfblocks ".
@@ -213,8 +226,7 @@ class MySBDBMFBlockHelper {
                 true, 'dbmf3');
             $index += 2;
         }
-        if(isset($app->cache_dbmfblocks)) 
-            unset($app->cache_dbmfblocks);
+        MySBDBMFBlockHelper::load(true);
     }
 
 }

@@ -176,8 +176,15 @@ foreach($blocks as $block) {
         <input type="submit" value="&uarr;" class="submit">
         </form>
     </td>
-    <td align="right" width="90px">
+    <td align="left" width="90px">
         <small>(index: '.$block->i_index.')</small>
+    </td>
+    <td align="center" width="30px">
+        <form action="?mod=dbmf3&amp;tpl=blockedit#a_block'.$block->id.'" method="post"
+        OnSubmit="return mysb_confirm(\''.MySBUtil::str2strict(sprintf(_G('DBMF_confirm_block_delete'), $block->lname, $group_edit->comments )).'\')">
+        <input type="hidden" name="block_del" value="'.$block->id.'">
+        <input type="submit" value="'._G('DBMF_block_delete').'" class="submit">
+        </form>
     </td>
 </tr>
 </tbody></table>
@@ -230,7 +237,8 @@ foreach($blocks as $block) {
         </form>
     </td>
     <td width="100px" align="center">
-        <form action="?mod=dbmf3&amp;tpl=blockedit#a_block'.$block->id.'" method="post">
+        <form action="?mod=dbmf3&amp;tpl=blockedit#a_block'.$block->id.'" method="post"
+        OnSubmit="return mysb_confirm(\''.MySBUtil::str2strict(sprintf(_G('DBMF_confirm_blockref_delete'), $blockref->lname, $blockref->keyname )).'\')">
         <input type="hidden" name="block_id" value="'.$block->id.'">
         <input type="hidden" name="blockref_del" value="'.$blockref->id.'">
         <input type="submit" value="'._G('DBMF_blockref_delete').'" class="submit">
