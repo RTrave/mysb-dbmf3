@@ -160,7 +160,28 @@ foreach($blocks as $block) {
 </tbody></table>
 </center>
 </form>
+
 <center>
+<table><tbody>
+<tr>
+    <td align="center" width="30px">
+        <form action="?mod=dbmf3&amp;tpl=blockedit#a_block'.$block->id.'" method="post">
+        <input type="hidden" name="block_orderdown" value="'.$block->id.'">
+        <input type="submit" value="&darr;" class="submit">
+        </form>
+    </td>
+    <td align="center" width="30px">
+        <form action="?mod=dbmf3&amp;tpl=blockedit#a_block'.$block->id.'" method="post">
+        <input type="hidden" name="block_orderup" value="'.$block->id.'">
+        <input type="submit" value="&uarr;" class="submit">
+        </form>
+    </td>
+    <td align="right" width="90px">
+        <small>(index: '.$block->i_index.')</small>
+    </td>
+</tr>
+</tbody></table>
+<br>
 <table width="70%"><tbody>
 ';
 

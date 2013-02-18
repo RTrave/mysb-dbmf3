@@ -136,6 +136,24 @@ class MySBDBMFBlock extends MySBObject {
                 $this->blockrefs[$blockref->id] = $blockref;
     }
 
+    public function indexUP() {
+        MySBDB::query("UPDATE ".MySB_DBPREFIX."dbmfblocks SET ".
+                "i_index=".($this->i_index-3)." ".
+                "WHERE id=".$this->id,
+                "MySBDBMFBlock::indexUP()",
+                true, 'dbmf3');
+        MySBDBMFBlockHelper::indexBlocks();
+    }
+
+    public function indexDOWN() {
+        MySBDB::query("UPDATE ".MySB_DBPREFIX."dbmfblocks SET ".
+                "i_index=".($this->i_index+3)." ".
+                "WHERE id=".$this->id,
+                "MySBDBMFBlock::indexUP()",
+                true, 'dbmf3');
+        MySBDBMFBlockHelper::indexBlocks();
+    }
+
 }
 
 class MySBDBMFBlockHelper {
@@ -165,7 +183,7 @@ class MySBDBMFBlockHelper {
             return $app->cache_dbmfblocks;
         $app->cache_dbmfblocks = array();
         $req_dbmfblocks = MySBDB::query("SELECT * FROM ".MySB_DBPREFIX."dbmfblocks ".
-                "ORDER BY id",
+                "ORDER BY i_index",
                 "MySBDBMFBlockHelper::load()",
                 true, 'dbmf3' );
         while($data_block = MySBDB::fetch_array($req_dbmfblocks)) {
@@ -178,6 +196,25 @@ class MySBDBMFBlockHelper {
         global $app;
         $blocks = MySBDBMFBlockHelper::load();
         return $blocks[$id];
+    }
+
+    public function indexBlocks() {
+        global $app;
+        $index = 1;
+        $req_blocks = MySBDB::query("SELECT * FROM ".MySB_DBPREFIX."dbmfblocks ".
+            "ORDER by i_index",
+            "MySBDBMFBlockHelper::indexBlocks()",
+            true, 'dbmf3');
+        while($data_block = MySBDB::fetch_array($req_blocks)) {
+            MySBDB::query("UPDATE ".MySB_DBPREFIX."dbmfblocks SET ".
+                "i_index=".$index." ".
+                "WHERE id=".$data_block['id'],
+                "MySBDBMFBlockHelper::indexBlocks()",
+                true, 'dbmf3');
+            $index += 2;
+        }
+        if(isset($app->cache_dbmfblocks)) 
+            unset($app->cache_dbmfblocks);
     }
 
 }
