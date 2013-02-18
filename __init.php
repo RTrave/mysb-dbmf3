@@ -14,7 +14,7 @@ defined('_MySBEXEC') or die;
 
 class MySBModule_dbmf3 {
 
-    public $version = 5;
+    public $version = 6;
 
     public function create() {
         global $app;
@@ -112,6 +112,7 @@ class MySBModule_dbmf3 {
                 "__init.php");
 
         //configs
+        MySBConfigHelper::delete('dbmf_showblocks_colsnb', 'dbmf3');
         MySBConfigHelper::delete('dbmf_showfields_colsnb', 'dbmf3');
     }
 
@@ -170,7 +171,7 @@ class MySBModule_dbmf3 {
 
         //configs
         MySBConfigHelper::create('dbmf_showfields_colsnb','6',MYSB_VALUE_TYPE_INT,
-            'How many columns to display blocks', 'dbmf3');
+            'How many columns (in display parameters)', 'dbmf3');
 
         //roles
         $blockeditrole = MySBRoleHelper::create('dbmf_blockedit','Can edit DB blocks');
@@ -229,6 +230,21 @@ class MySBModule_dbmf3 {
             array(2,0,0,0),
             7,"dbmf_user",'dbmf3');
 
+    }
+
+    public function init6() {
+        global $app;
+        $req = MySBDB::query('ALTER TABLE '.MySB_DBPREFIX.'dbmfblocks '.
+            'ADD i_index int',
+            "__init.php",
+            false, "dbmf3");
+        MySBDBMFBlockHelper::indexBlocks();
+        MySBConfigHelper::create('dbmf_showblocks_colsnb','1',MYSB_VALUE_TYPE_INT,
+            'How many columns (in export)', 'dbmf3');
+        $req = MySBDB::query('ALTER TABLE '.MySB_DBPREFIX.'dbmfblockrefs '.
+            'ADD display int',
+            "__init.php",
+            false, "dbmf3");
     }
 
     public function uninit() {
