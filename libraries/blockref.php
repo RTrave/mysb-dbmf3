@@ -76,6 +76,20 @@ class MySBDBMFBlockRef extends MySBValue {
         $block->indexCheck();
     }
 
+    public function getReducedName() {
+        $strdb = _G($this->lname);
+        if(strlen($strdb)<7) return $strdb;
+        $newstr = '';
+        $words = explode(' ',$strdb);
+        foreach($words as $word) {
+            if(strlen($word)>3) {
+                $newstr .= preg_replace('#^(?:[\x00-\x7F]|[\xC0-\xFF][\x80-\xBF]+){0,0}'.'((?:[\x00-\x7F]|[\xC0-\xFF][\x80-\xBF]+){0,3}).*#s','$1', $word);
+                $newstr .= '. ';
+            } else $newstr .= $word.' ';
+        }
+        return $newstr;
+    }
+
 }
 
 

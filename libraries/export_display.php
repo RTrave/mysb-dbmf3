@@ -35,7 +35,9 @@ class MySBDBMFExportDisplay extends MySBDBMFExport {
     }
 
     public function htmlParamForm() {
+        global $app;
         $showfields_colsnb = MySBConfigHelper::Value('dbmf_showfields_colsnb', 'dbmf3');
+        $showcols = new MySBCSValues($app->auth_user->dbmf_showcols);
         $output = '';
         $blocks = MySBDBMFBlockHelper::load();
         $output .= '
@@ -68,7 +70,9 @@ class MySBDBMFExportDisplay extends MySBDBMFExport {
 <tr>
     <td style="vertical-align: top; text-align: right;"><b>'._G($blockref->lname).':</b></td>
     <td>';
-                        $output .= '<input type="checkbox" name="display_'.$blockref->id.'">';
+                        if($showcols->have($blockref->id)) $colsshow_check = 'checked';
+                        else $colsshow_check = '';
+                        $output .= '<input type="checkbox" name="display_'.$blockref->id.'" '.$colsshow_check.'>';
                         $output .= '
     </td>
 </tr>';
@@ -100,17 +104,20 @@ class MySBDBMFExportDisplay extends MySBDBMFExport {
 
     public function htmlParamProcess() {
         global $app;
-        $app->tpl_display_columns = array();
+        //$app->tpl_display_columns = array();
+        $showcols = new MySBCSValues();
         $blocks = MySBDBMFBlockHelper::load();
         foreach($blocks as $block) {
             if($block->isViewable()) {
                 foreach($block->blockrefs as $blockref) {
                     if($blockref->isActive() and $_POST['display_'.$blockref->id]=='on') {
-                        $app->tpl_display_columns[] = $blockref;
+                        //$app->tpl_display_columns[] = $blockref;
+                        $showcols->add($blockref->id);
                     }
                 }
             }
         }
+        $app->auth_user->update( array( 'dbmf_showcols' => $showcols->csstring() ) );
     }
 
     public function requestOrderBy() {

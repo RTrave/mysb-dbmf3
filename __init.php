@@ -108,6 +108,10 @@ class MySBModule_dbmf3 {
             "__init.php",
             false, "dbmf3");
 
+        $req = MySBDB::query('ALTER TABLE '.MySB_DBPREFIX.'users DROP COLUMN dbmf_showcols',
+            "__init.php",
+            false, "dbmf3");
+
         MySBDB::query("DELETE FROM ".MySB_DBPREFIX."valueoptions WHERE value_keyname='dbmf3-b1r01'",
                 "__init.php");
 
@@ -241,8 +245,8 @@ class MySBModule_dbmf3 {
         MySBDBMFBlockHelper::indexBlocks();
         MySBConfigHelper::create('dbmf_showblocks_colsnb','1',MYSB_VALUE_TYPE_INT,
             'How many columns (in export)', 'dbmf3');
-        $req = MySBDB::query('ALTER TABLE '.MySB_DBPREFIX.'dbmfblockrefs '.
-            'ADD display int',
+        $req = MySBDB::query('ALTER TABLE '.MySB_DBPREFIX.'users '.
+            'ADD dbmf_showcols varchar(512)',
             "__init.php",
             false, "dbmf3");
     }
