@@ -37,4 +37,24 @@ if(isset($_POST['dbmf_addexport'])) {
         MySBDBMFExportHelper::create( $_POST['export_name'], $_POST['export_type'], $_POST['export_comments'], $_POST['export_config'], $_POST['export_groupid'] );
 }
 
+if(isset($_POST['dbmf_contact_delete'])) {
+    MySBDBMFContactHelper::delete($_POST['dbmf_contact_delete']);
+}
+
+if(isset($_POST['dbmf_orphans']) or isset($_POST['dbmf_contact_delete'])) {
+    $sql_r = 'SELECT * from '.MySB_DBPREFIX.'dbmfcontacts ';
+    $blockrefs = MySBDBMFBlockRefHelper::load();
+    $clause_owner = '';
+    foreach($blockrefs as $blockref) {
+        if($blockref->block_id!=1) {
+            if($clause_owner!='')  $clause_owner .= ' and ';
+            $clause_owner .= $blockref->keyname."=''";
+        }
+    }
+    $sql_r .= "WHERE (".$clause_owner.') ORDER BY date_modif';
+    $app->dbmf_search_result = MySBDB::query( $sql_r,
+	    "admindbmf_process.php",
+	    false, 'dbmf3');
+}
+
 ?>

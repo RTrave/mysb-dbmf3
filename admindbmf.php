@@ -228,4 +228,26 @@ echo '
 
 </form>';
 
+echo '
+<a name="orphans"></a>
+<h3>'._G('DBMF_orphans').'</h3>';
+
+if(!isset($app->dbmf_search_result)) echo '
+<form action="?mod=dbmf3&amp;tpl=admindbmf&amp;plg=admin#orphans" method="post">
+<p>Search orphans contacts:
+    <input type="hidden" name="dbmf_orphans" value="1">
+    <input type="submit" value="'._G('DBMF_orphans_search').'" class="submit">
+</p>
+</form>';
+else {
+
+    echo '
+<p>
+'.MySBDB::num_rows($app->dbmf_search_result).' results<br>
+</p>';
+    $app->tpl_dbmf_searchresult = $app->dbmf_search_result;
+    _T('templates/contacts_display.php','dbmf3');
+
+}
+
 ?>
