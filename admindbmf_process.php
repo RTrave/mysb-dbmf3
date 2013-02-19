@@ -48,7 +48,7 @@ if(isset($_POST['dbmf_orphans']) or isset($_POST['dbmf_contact_delete'])) {
     foreach($blockrefs as $blockref) {
         if($blockref->block_id!=1) {
             if($clause_owner!='')  $clause_owner .= ' and ';
-            $clause_owner .= $blockref->keyname."=''";
+            $clause_owner .= "(".$blockref->keyname." is null or ".$blockref->keyname."='' )";
         }
     }
     $sql_r .= "WHERE (".$clause_owner.') ORDER BY date_modif';
