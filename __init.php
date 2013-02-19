@@ -243,10 +243,12 @@ class MySBModule_dbmf3 {
             "__init.php",
             false, "dbmf3");
         MySBDBMFBlockHelper::indexBlocks();
-        MySBConfigHelper::create('dbmf_showblocks_colsnb','1',MYSB_VALUE_TYPE_INT,
-            'How many columns (in export)', 'dbmf3');
         $req = MySBDB::query('ALTER TABLE '.MySB_DBPREFIX.'users '.
             'ADD dbmf_showcols varchar(512)',
+            "__init.php",
+            false, "dbmf3");
+        $req = MySBDB::query('ALTER TABLE '.MySB_DBPREFIX.'dbmfblockrefs '.
+            'ADD orderby int',
             "__init.php",
             false, "dbmf3");
     }

@@ -84,6 +84,11 @@ if(isset($_POST['blockref_orderdown'])) {
     $blockref->indexDOWN();
 }
 
+if(isset($_POST['blockref_switchorderby'])) {
+    $blockref = MySBDBMFBlockRefHelper::getByID($_POST['blockref_edit']);
+    $blockref->switchOrderBy();
+}
+
 if(isset($_POST['block_orderup'])) {
     $block = MySBDBMFBlockHelper::getByID($_POST['block_orderup']);
     $block->indexUP();

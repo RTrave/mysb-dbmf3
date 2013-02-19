@@ -76,6 +76,13 @@ class MySBDBMFBlockRef extends MySBValue {
         $block->indexCheck();
     }
 
+    public function switchOrderBy() {
+        if($this->orderby==1) 
+            $this->update( array( 'orderby'=>0 ) );
+        else
+            $this->update( array( 'orderby'=>1 ) );
+    }
+
     public function getReducedName() {
         $strdb = _G($this->lname);
         if(strlen($strdb)<7) return $strdb;

@@ -45,8 +45,13 @@ class MySBDBMFExportDisplay extends MySBDBMFExport {
 '._G('DBMF_display_orderby').':
 <select name="dbmf_exportdisplay_orderby'.$this->id.'">
     <option value="lastname">'._G('DBMF_common_lastname').'</option>
-    <option value="b1r03">'._G('DBMF_common_organism').'</option>
-    <option value="date_modif">'._G('DBMF_date_modif').'</option>
+    <option value="date_modif">'._G('DBMF_date_modif').'</option>';
+        $blockref_orderby = MySBDBMFBlockRefHelper::load();
+        foreach($blockref_orderby as $oblockref) {
+            if($oblockref->orderby=='1') $output .= '
+    <option value="'.$oblockref->keyname.'">'._G($oblockref->lname).'</option>';
+        }
+        $output .= '
 </select><br>
 '._G('DBMF_display_showfield').':<br>
 <table style="border: 0px; font-size: 80%"><tbody>

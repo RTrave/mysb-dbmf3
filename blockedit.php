@@ -56,6 +56,20 @@ echo '
 <table width="50%"><tbody>
 <tr class="title">
     <td align="center" colspan="3">Options</td>
+</tr>
+<tr>
+    <td colspan="2">'._G('DBMF_blockref_option_orderby').'</td>
+    <td align="center">
+        <form action="?mod=dbmf3&amp;tpl=blockedit" method="post">
+        <input type="hidden" name="blockref_edit" value="'.$blockref->id.'">
+        <input type="hidden" name="blockref_switchorderby" value="1">';
+        if($blockref->orderby==1) echo '
+        <input type="submit" value="'._G('DBMF_blockref_orderby_ok').'" class="submit">';
+        else echo '
+        <input type="submit" value="'._G('DBMF_blockref_orderby_no').'" class="submit">';
+        echo '
+        </form>
+    </td>
 </tr>';
 
 if($blockref->type==MYSB_VALUE_TYPE_VARCHAR64_SELECT) {
