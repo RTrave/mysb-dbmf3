@@ -43,6 +43,21 @@ class MySBDBMFMemento extends MySBObject {
         parent::update('dbmfmementos', (array) ($data_memento));
     }
 
+    public function setOwner($group_id) {
+        global $app;
+        //$user_id = $app->auth_user->id;
+        if($group_id=='0' or $group_id==0) $group_id = '';
+        parent::update('dbmfmementos', array(
+            'group_id' => $group_id ));
+    }
+
+    public function isEditable() {
+        global $app;
+        if($this->user_id==$app->auth_user->id) return true;
+        if($app->auth_user->haveGroup($this->group_id) and $this->group_edition==1) return true;
+        return false;
+    }
+
     public function getDate() {
         global $app;
         switch($this->type) {
@@ -128,10 +143,11 @@ class MySBDBMFMementoHelper {
         if($mid==0) $mid = 1;
         MySBDB::query('INSERT INTO '.MySB_DBPREFIX.'dbmfmementos '.
             '(id, user_id, contact_id, type) VALUES '.
-            "(".$mid.", '".$owner_id."', '".$contact_id."', ".$type." ); ",
+            "(".$mid.", '".$app->auth_user->id."', '".$contact_id."', ".$type." ); ",
             "MySBDBMFMementoHelper::create($owner_id,$contact_id,$type)",
             true, 'dbmf3' );
         $new_memento = new MySBDBMFMemento($mid);
+        $new_memento->setOwner($owner_id);
         return $new_memento;
     }
 
@@ -143,24 +159,36 @@ class MySBDBMFMementoHelper {
             true, 'dbmf3' );
     }
 
+    private function req_cond() {
+        global $app;
+        $user = $app->auth_user;
+        $cond = '(user_id='.$user->id;
+        $groups = MySBDBMFGroupHelper::load();
+        foreach($groups as $group) 
+            if($user->haveGroup($group->id)) 
+                $cond .= ' or group_id='.$group->id;
+        return $cond .= ')';
+    }
 
     public function load($contact_id=null) {
         global $app;
-        $req_cond = '';
+        $req_cond = MySBDBMFMementoHelper::req_cond();
         if($contact_id!=null)
-            $req_cond = 'WHERE contact_id='.$contact_id.' '; 
+            $req_cond .= ' and contact_id='.$contact_id; 
         $req_mementos = MySBDB::query("SELECT * FROM ".MySB_DBPREFIX."dbmfmementos ".
-                $req_cond.
-                "ORDER BY id",
+                "WHERE (".$req_cond.") ".
+                "ORDER BY type,monthofyear_memento,date_memento,date_process",
                 "MySBDBMFMementoHelper::load($contact_id)",
                 true, 'dbmf3' );
         $mementos = array();
         while($data_memento = MySBDB::fetch_array($req_mementos)) {
-            $mementos[$data_memento['id']] = new MySBDBMFMemento(null, $data_memento);
+            //$mementos[$data_memento['id']] = new MySBDBMFMemento(null, $data_memento);
+            $mementos[] = new MySBDBMFMemento(null, $data_memento);
         }
         return $mementos;
     }
 
+/*
     public function loadByUserID($user_id) {
         global $app;
         $req_cond = '';
@@ -175,14 +203,15 @@ class MySBDBMFMementoHelper {
         }
         return $mementos;
     }
+*/
 
-    public function loadByUserID_Actives($user_id) {
+    public function loadActives() {
         global $app;
-        $req_cond = '';
+        $req_cond = MySBDBMFMementoHelper::req_cond();
         $req_mementos = MySBDB::query("SELECT * FROM ".MySB_DBPREFIX."dbmfmementos ".
-                "WHERE user_id=".$user_id." ".
-                "ORDER BY date_memento",
-                "MySBDBMFMementoHelper::loadByUserID_Actives($user_id)",
+                "WHERE (".$req_cond.") ".
+                "ORDER BY type,monthofyear_memento,date_memento,date_process",
+                "MySBDBMFMementoHelper::loadActives()",
                 true, 'dbmf3' );
         $mementos = array();
         while($data_memento = MySBDB::fetch_array($req_mementos)) {

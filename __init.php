@@ -14,7 +14,7 @@ defined('_MySBEXEC') or die;
 
 class MySBModule_dbmf3 {
 
-    public $version = 6;
+    public $version = 7;
 
     public function create() {
         global $app;
@@ -249,6 +249,18 @@ class MySBModule_dbmf3 {
             false, "dbmf3");
         $req = MySBDB::query('ALTER TABLE '.MySB_DBPREFIX.'dbmfblockrefs '.
             'ADD orderby int',
+            "__init.php",
+            false, "dbmf3");
+    }
+
+    public function init7() {
+        global $app;
+        $req = MySBDB::query('ALTER TABLE '.MySB_DBPREFIX.'dbmfmementos '.
+            'ADD comments2 varchar(512)',
+            "__init.php",
+            false, "dbmf3");
+        $req = MySBDB::query('ALTER TABLE '.MySB_DBPREFIX.'dbmfmementos '.
+            'ADD group_edition int',
             "__init.php",
             false, "dbmf3");
     }

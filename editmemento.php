@@ -30,13 +30,38 @@ echo '
 <h2>'.$contact->lastname.' '.$contact->firstname.' ('.$contact->id.')</h2>';
 
 $memento_date = new MySBDateTime($memento->date_memento);
-    echo '
+if($memento_id!=-1) $m_user = MySBUserHelper::getByID($memento->user_id);
+else $m_user = $app->auth_user;
+if($memento->group_id!=0) $m_group = MySBGroupHelper::getByID($memento->group_id);
+else $m_group = null;
+
+echo '
 <div class="table_support" align="center">
 <form action="?mod=dbmf3&amp;tpl=editcontact&amp;contact_id='.$contact->id.'" method="post">
 <table width="95%"><tbody>
 <tr>
     <td><b>'._G("DBMF_memento_owner").':</b></td>
-    <td>'.$app->auth_user->login.'<input type="hidden" name="memento_user" value="'.$app->auth_user->id.'"></td>
+    <td>';
+echo '
+        '.$m_user->lastname.' '.$m_user->firstname;
+echo '
+    </td>
+</tr>
+<tr>
+    <td><b>'._G("DBMF_group_access").':</b></td>
+    <td>
+        <select name="memento_owner">';
+echo '
+            <option value="0">'._G("DBMF_memento_onlyowner").'</option>';
+$mgroups = MySBDBMFGroupHelper::load();
+foreach($mgroups as $mgroup) {
+    if($app->auth_user->haveGroup($mgroup->id) and $mgroup->dbmf_priority!=0) echo '
+        <option value="'.$mgroup->id.'" '.MySBUtil::form_isselected($memento->group_id,$mgroup->id).'>group "'.$mgroup->comments.'"</option>';
+}
+echo '
+        </select>
+        <input type="checkbox" name="memento_group_edition" '.MySBUtil::form_ischecked($memento->group_edition,1).'>'._G("DBMF_memento_groupcanedit").'
+    </td>
 </tr>
 <tr>
     <td><b>'._G("DBMF_memento_type").':</b></td>
@@ -44,7 +69,13 @@ $memento_date = new MySBDateTime($memento->date_memento);
         <select name="memento_type" onChange="hide(\'memtype0\');hide(\'memtype1\');show(this.options[this.selectedIndex].value);">
             <option value="memtype'.MYSB_DBMF_MEMENTO_TYPE_PUNCTUAL.'" '.MySBUtil::form_isselected($memento->type,MYSB_DBMF_MEMENTO_TYPE_PUNCTUAL).'>'._G("DBMF_memento_type_punctual").'</option>
             <option value="memtype'.MYSB_DBMF_MEMENTO_TYPE_MONTHOFYEAR.'" '.MySBUtil::form_isselected($memento->type,MYSB_DBMF_MEMENTO_TYPE_MONTHOFYEAR).'>'._G("DBMF_memento_type_monthofyear").'</option>
-        </select>
+        </select>';
+    if($memento->date_process!='') {
+        $memento_process = new MySBDateTime($memento->date_process);
+        echo '
+        <small>'._G('DBMF_memento_process_last').': '.$memento_process->strEBY_l().'</small>';
+    }
+    echo '
     </td>
 </tr>
 <tr>
@@ -80,6 +111,10 @@ $memento_date = new MySBDateTime($memento->date_memento);
 <tr>
     <td><b>'._G("DBMF_memento_comments").':</b></td>
     <td><textarea name="memento_comments" cols="60" rows="3">'.$memento->comments.'</textarea></td>
+</tr>
+<tr>
+    <td><b>'._G("DBMF_memento_comments2").':</b></td>
+    <td><textarea name="memento_comments2" cols="60" rows="3">'.$memento->comments2.'</textarea></td>
 </tr>
 <tr>
     <td colspan="2" align="center">';

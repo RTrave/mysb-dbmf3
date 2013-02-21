@@ -65,11 +65,24 @@ foreach($mementos as $memento) {
     if($Active) $memclass = 'class="mem_active"';
     elseif(!$Active and $memento->date_process!='') $memclass = 'class="mem_processed"';
     else $memclass='';
+    $m_user = MySBUserHelper::getByID($memento->user_id);
+    if($memento->group_id!=0) $m_group = MySBGroupHelper::getByID($memento->group_id);
+    else $m_group = null;
     echo '
     <tr>
-        <td width="100px" '.$memclass.'><b><small>'.$memento->getDate().'</small></b></td>
-        <td><small>'.$memento->comments.'</small></td>
-        <td width="70px" align="right"><small><a href="?mod=dbmf3&tpl=editmemento&amp;memento_id='.$memento->id.'" class="button">'._G("DBMF_contact_mementos_edit").'</a></small></td>
+        <td width="130px" '.$memclass.'>
+            <small>';
+    if($memento->isEditable())
+        echo '
+            <a href="?mod=dbmf3&tpl=editmemento&amp;memento_id='.$memento->id.'"><b>'.$memento->getDate().'</b></a>';
+    else echo '
+            '.$memento->getDate().'';
+    echo '<br>
+            <small><i>'.$m_user->login.'('.$m_group->name.')</i></small>
+            </small>
+        </td>
+        <td><small>'.MySBUtil::str2html($memento->comments).'</small></td>
+        <td width="180px"><small>'.MySBUtil::str2html($memento->comments2).'</small></td>
     </tr>
 ';
 }

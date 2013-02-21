@@ -76,6 +76,10 @@ class MySBDBMFContactHelper {
             'WHERE id='.$id,
             "MySBDBMFContactHelper::delete($id)",
             true, 'dbmf3' );
+        MySBDB::query('DELETE FROM '.MySB_DBPREFIX.'dbmfmementos '.
+            'WHERE contact_id='.$id,
+            "MySBDBMFContactHelper::delete($id)",
+            true, 'dbmf3' );
     }
 
 }

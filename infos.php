@@ -17,7 +17,7 @@ global $app;
 if(!MySBRoleHelper::checkAccess('dbmf_user')) return;
 
 
-$act_mementos = MySBDBMFMementoHelper::loadByUserID_Actives($app->auth_user->id);
+$act_mementos = MySBDBMFMementoHelper::loadActives();
 if(count($act_mementos)>=1) 
     echo '
 <h2>'._G('DBMF_baseinfos_mementos').'</h2>

@@ -28,29 +28,47 @@ echo '
 ';
 
 if($_GET['filter']=='all') {
-    $mementos_p = MySBDBMFMementoHelper::loadByUserID($app->auth_user->id);
+    $mementos_p = MySBDBMFMementoHelper::load();
     echo '
 <h2>'._G('DBMF_mementos_all').' ('.count($mementos_p).')</h2>';
 } else {
-    $mementos_p = MySBDBMFMementoHelper::loadByUserID_Actives($app->auth_user->id);
+    $mementos_p = MySBDBMFMementoHelper::loadActives();
     echo '
 <h2>'._G('DBMF_mementos_actives').' ('.count($mementos_p).')</h2>';
 }
 
-echo '
+
+$memento_type = -1;
+
+foreach($mementos_p as $memento) {
+    if($memento->type!=$memento_type) {
+        if($memento_type!=-1) echo '
+</tbody></table>
+</div>';
+    $memento_type = $memento->type;
+    if($memento_type==0) $h3 = 'DBMF_memento_type_punctual';
+    elseif($memento_type==1) $h3 = 'DBMF_memento_type_monthofyear';
+    echo '
 <div class="table_support">
 <table width="100%" style="font-size: 85%;"><tbody>
+<tr class="title" align="center">
+    <td colspan="7"><big>'._G($h3).'</big></td>
+</tr>
 <tr class="title">
     <td width="120px">'._G("DBMF_memento_date").'</td>
     <td width="28px"></td>
-    <td>'._G('DBMF_mementos_details').'</td>
-    <td width="150px"></td>
-    <td width="100px"></td>
+    <td width="200px">'._G('DBMF_mementos_details').'</td>
+    <td>'._G('DBMF_memento_comments').'</td>
+    <td width="160px">'._G('DBMF_memento_comments2').'</td>
+    <td width="90px"></td>
+    <td width="90px"></td>
 </tr>';
-
-foreach($mementos_p as $memento) {
+    }
     $contact = new MySBDBMFContact($memento->contact_id);
     //$memento_date = new MySBDateTime($memento->date_memento);
+    $m_user = MySBUserHelper::getByID($memento->user_id);
+    if($memento->group_id!=0) $m_group = MySBGroupHelper::getByID($memento->group_id);
+    else $m_group = null;
     if($memento->isActive()) $Active = true;
     else $Active = false;
     if($Active) $memclass = 'class="mem_active"';
@@ -58,18 +76,31 @@ foreach($mementos_p as $memento) {
     else $memclass='';
     echo '
 <tr '.$memclass.'>
-    <td><small>('.$memento->id.')</small> '.$memento->getDate().'</td>
+    <td>';
+    if($memento->isEditable()) echo '
+        <a  name="contact'.$anchor_nb.'"
+            href="javascript:editwinopen(\'index_wom.php?mod=dbmf3&amp;tpl=editmemento&amp;memento_id='.$memento->id.'\',\'contactinfos\')"><b>'.$memento->getDate().'</b></a>';
+    else echo '
+        '.$memento->getDate().'';
+    echo '
+    </td>
     <td>
         <a  name="contact'.$anchor_nb.'"
-            href="javascript:editwinopen(\'index_wom.php?mod=dbmf3&amp;tpl=editmemento&amp;memento_id='.$memento->id.'\',\'contactinfos\')">
+            href="javascript:editwinopen(\'index_wom.php?mod=dbmf3&amp;tpl=editcontact&amp;contact_id='.$contact->id.'\',\'contactinfos\')">
         <img src="modules/dbmf3/images/edit_icon24.png" alt="Edition '.$contact->id.'" title="'._G('DBMF_edit').' '.$contact->lastname.' '.$contact->firstname.' (memento '.$memento->id.')">
         </a>
     </td>
     <td>
         <b>'.$contact->lastname.'</b> '.$contact->firstname.'<br>
+        <small><i>'.$m_user->login.'('.$m_group->name.')</i></small>
+    </td>
+    <td>
         '.$memento->comments.'
     </td>
-    <td>';
+    <td>
+        '.$memento->comments2.'
+    </td>
+    <td align="right">';
     if($memento->date_process!='') {
         $memento_process = new MySBDateTime($memento->date_process);
         echo '
