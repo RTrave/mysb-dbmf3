@@ -53,13 +53,15 @@ class MySBDBMFExportDisplay extends MySBDBMFExport {
         }
         $output .= '
 </select><br>
+
 '._G('DBMF_display_showfield').':<br>
 <table style="border: 0px; font-size: 80%"><tbody>
 <tr>';
 
-        $col_nb = 1;
+        $col_nb = 0;
         foreach($blocks as $block) {
             if($block->isViewable()) {
+                $col_nb++;
                 $output .= '
 <td style="vertical-align: top;">
 <table style="width: 100%;"><tbody>
@@ -83,20 +85,19 @@ class MySBDBMFExportDisplay extends MySBDBMFExport {
 </tr>';
                     }
                 }
-            }
             $output .= '
 </tbody></table>
 </td>';
+            }
             if($col_nb==$showfields_colsnb) {
                 $output .= '
 </tr><tr>';
                 $col_nb = 0;
             }
-            $col_nb++;
         }
-        if($col_nb!=1) {
-        while($col_nb!=($showfields_colsnb+1)) {
-            $output .= '<td>&nbsp;</td>';
+        if($col_nb!=0) {
+        while($col_nb<($showfields_colsnb)) {
+            $output .= '<td></td>';
             $col_nb++;
         }
         }
