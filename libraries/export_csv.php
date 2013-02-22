@@ -100,7 +100,7 @@ CSV output: '.MySBDB::num_rows($results).' results<br>
 ';
 
         $csv_char = ';';
-        $path_file = MySB_ROOTPATH.'/log/sendtable.csv';
+        $path_file = MySB_ROOTPATH.'/modules/dbmf3/files/sendtable.csv';
         $ftable = fopen($path_file, 'w');
 
         $titles = '"Name"'.$csv_char.'"Firstname"';

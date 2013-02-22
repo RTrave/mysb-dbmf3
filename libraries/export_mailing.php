@@ -49,7 +49,16 @@ class MySBDBMFExportMailing extends MySBDBMFExport {
 <p>'._G('DBMF_exportmailing_subject').':
     <input type="text" name="dbmf_exportmailing_subject" value="" size="24"><br>
     '._G('DBMF_exportmailing_body').':<br>
-    <textarea name="dbmf_exportmailing_body" cols="60" rows="8"></textarea>
+    <textarea name="dbmf_exportmailing_body" cols="60" rows="8"></textarea><br>
+    '._G('DBMF_exportmailing_attachment1').':
+    <input type="hidden" name="MAX_FILE_SIZE" value="2000000" />
+    <input name="dbmf_exportmailing_att1" type="file" /><br>
+    '._G('DBMF_exportmailing_attachment2').':
+    <input type="hidden" name="MAX_FILE_SIZE" value="2000000" />
+    <input name="dbmf_exportmailing_att2" type="file" /><br>
+    '._G('DBMF_exportmailing_attachment3').':
+    <input type="hidden" name="MAX_FILE_SIZE" value="2000000" />
+    <input name="dbmf_exportmailing_att3" type="file" />
 </p>';
         return $output;
     }
@@ -58,6 +67,22 @@ class MySBDBMFExportMailing extends MySBDBMFExport {
         global $app;
         $this->mailing_subject = $_POST['dbmf_exportmailing_subject'];
         $this->mailing_body = $_POST['dbmf_exportmailing_body'];
+        $uploaddir = MySB_ROOTPATH.'/modules/dbmf3/files/';
+        if( !empty($_FILES['dbmf_exportmailing_att1']['name']) and 
+            !empty($_FILES['dbmf_exportmailing_att1']['tmp_name']) ) {
+            move_uploaded_file($_FILES['dbmf_exportmailing_att1']['tmp_name'],$uploaddir.$_FILES['dbmf_exportmailing_att1']['name']);
+            $this->mailing_att1 = $uploaddir.$_FILES['dbmf_exportmailing_att1']['name'];
+        }
+        if( !empty($_FILES['dbmf_exportmailing_att2']['name']) and 
+            !empty($_FILES['dbmf_exportmailing_att2']['tmp_name']) ) {
+            move_uploaded_file($_FILES['dbmf_exportmailing_att2']['tmp_name'],$uploaddir.$_FILES['dbmf_exportmailing_att2']['name']);
+            $this->mailing_att2 = $uploaddir.$_FILES['dbmf_exportmailing_att2']['name'];
+        }
+        if( !empty($_FILES['dbmf_exportmailing_att3']['name']) and 
+            !empty($_FILES['dbmf_exportmailing_att3']['tmp_name']) ) {
+            move_uploaded_file($_FILES['dbmf_exportmailing_att3']['tmp_name'],$uploaddir.$_FILES['dbmf_exportmailing_att3']['name']);
+            $this->mailing_att3 = $uploaddir.$_FILES['dbmf_exportmailing_att3']['name'];
+        }
     }
 
     /**
@@ -98,6 +123,9 @@ class MySBDBMFExportMailing extends MySBDBMFExport {
                     $current_mail->unset_footer();
                     $current_mail->data['body'] = $this->mailing_body;
                     $current_mail->data['subject'] = $this->mailing_subject;
+                    if($this->mailing_att1!='') $current_mail->addAttachment($this->mailing_att1);
+                    if($this->mailing_att2!='') $current_mail->addAttachment($this->mailing_att2);
+                    if($this->mailing_att3!='') $current_mail->addAttachment($this->mailing_att3);
                 }
                  $current_mail->addBCC($contact->b1r08,$contact->firstname.' '.$contact->lastname);
             } else {
@@ -110,6 +138,9 @@ class MySBDBMFExportMailing extends MySBDBMFExport {
         $output .= _G('DBMF_exportmailing_sendinglast')."!\n<br>";
         $output .= '
 </p>';
+        if($this->mailing_att1!='') unlink($this->mailing_att1);
+        if($this->mailing_att2!='') unlink($this->mailing_att2);
+        if($this->mailing_att3!='') unlink($this->mailing_att3);
         return $output;
     }
 

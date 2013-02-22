@@ -29,7 +29,7 @@ if( isset($_POST['dbmf_export_process'])
 
 
 echo '
-<form action="" method="post">
+<form enctype="multipart/form-data" action="" method="post">
 
 <h2>'._G('DBMF_export_contacts').'</h2>
 
