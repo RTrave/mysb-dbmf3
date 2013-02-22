@@ -56,7 +56,7 @@ class MySBDBMFContactHelper {
         $today_date = $today['year'].'-'.$today['mon'].'-'.$today['mday'].' '.$today['hours'].':'.$today['minutes'].':'.$today['seconds'];
         MySBDB::query('INSERT INTO '.MySB_DBPREFIX.'dbmfcontacts '.
             '(id, lastname, firstname, date_creat, date_modif) VALUES '.
-            "(".$cid.", '".$lastname."', '".$firstname."', '".$today_date."', '".$today_date."' ); ",
+            "(".$cid.", '".MySBUtil::str2db($lastname)."', '".MySBUtil::str2db($firstname)."', '".$today_date."', '".$today_date."' ); ",
             "MySBDBMFContactHelper::create($lastname,$firstname)",
             true, 'dbmf3' );
         $new_contact = new MySBDBMFContact($cid);
