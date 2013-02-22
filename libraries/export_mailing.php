@@ -50,13 +50,13 @@ class MySBDBMFExportMailing extends MySBDBMFExport {
     <input type="text" name="dbmf_exportmailing_subject" value="" size="24"><br>
     '._G('DBMF_exportmailing_body').':<br>
     <textarea name="dbmf_exportmailing_body" cols="60" rows="8"></textarea><br>
-    '._G('DBMF_exportmailing_attachment1').':
+    '._G('DBMF_exportmailing_attachment').' 1:
     <input type="hidden" name="MAX_FILE_SIZE" value="2000000" />
     <input name="dbmf_exportmailing_att1" type="file" /><br>
-    '._G('DBMF_exportmailing_attachment2').':
+    '._G('DBMF_exportmailing_attachment').' 2:
     <input type="hidden" name="MAX_FILE_SIZE" value="2000000" />
     <input name="dbmf_exportmailing_att2" type="file" /><br>
-    '._G('DBMF_exportmailing_attachment3').':
+    '._G('DBMF_exportmailing_attachment').' 3:
     <input type="hidden" name="MAX_FILE_SIZE" value="2000000" />
     <input name="dbmf_exportmailing_att3" type="file" />
 </p>';
