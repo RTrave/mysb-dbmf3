@@ -92,8 +92,7 @@ if(isset($_POST['memento_modify'])) {
     $memento = new MySBDBMFMemento($_POST['memento_modify']);
     $memento->setOwner($_POST['memento_owner']);
     if($memtype==MYSB_DBMF_MEMENTO_TYPE_PUNCTUAL) {
-        $memento_date = 
-MySBDateTimeHelper::html_formLoad('memento_date_');
+        $memento_date = MySBDateTimeHelper::html_formLoad('memento_date_');
         $memento->update( array(
             'date_memento' => $memento_date->date_string ) );
     } elseif($memtype==MYSB_DBMF_MEMENTO_TYPE_MONTHOFYEAR) {
@@ -103,6 +102,7 @@ MySBDateTimeHelper::html_formLoad('memento_date_');
     if($_POST['memento_group_edition']=='on') $group_edition = 1;
     else $group_edition = 0;
     $memento->update( array(
+        'type' => $memtype,
         'group_edition' => $group_edition,
         'comments' => $_POST['memento_comments'],
         'comments2' => $_POST['memento_comments2'] ) );
