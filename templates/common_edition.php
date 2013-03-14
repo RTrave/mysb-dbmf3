@@ -74,7 +74,9 @@ foreach($mementos as $memento) {
             <small>';
     if($memento->isEditable())
         echo '
-            <a href="?mod=dbmf3&tpl=editmemento&amp;memento_id='.$memento->id.'"><b>'.$memento->getDate().'</b></a>';
+            <a  href="?mod=dbmf3&tpl=editmemento&amp;memento_id='.$memento->id.'"
+                OnClick="return mysb_confirm(\''.MySBUtil::str2strict(_G('DBMF_confirm_memento_edition')).'\')">
+                <b>'.$memento->getDate().'</b></a>';
     else echo '
             '.$memento->getDate().'';
     echo '<br>
@@ -89,7 +91,11 @@ foreach($mementos as $memento) {
 
 echo '
     <tr>
-        <td colspan="3" align="center"><small><a href="?mod=dbmf3&tpl=editmemento&contact_id='.$contact->id.'" class="button">'._G("DBMF_contact_mementos_create").'</a></small></td>
+        <td colspan="3" align="center"><small>
+            <a  href="?mod=dbmf3&tpl=editmemento&contact_id='.$contact->id.'" class="button"
+                OnClick="return mysb_confirm(\''.MySBUtil::str2strict(_G('DBMF_confirm_memento_edition')).'\')">
+                '._G("DBMF_contact_mementos_create").'</a></small>
+        </td>
     </tr>
     </tbody></table>
     </td>
