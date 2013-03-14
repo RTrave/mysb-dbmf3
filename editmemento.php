@@ -107,14 +107,19 @@ echo '
             </select>
         </div>
     </td>
-</tr>
+</tr>';
+
+MySBEditor::activate();
+echo MySBEditor::initCode('simple');
+
+echo '
 <tr>
     <td><b>'._G("DBMF_memento_comments").':</b></td>
-    <td><textarea name="memento_comments" cols="60" rows="3">'.$memento->comments.'</textarea></td>
+    <td><textarea name="memento_comments" cols="60" rows="3" class="mceEditor">'.$memento->comments.'</textarea></td>
 </tr>
 <tr>
     <td><b>'._G("DBMF_memento_comments2").':</b></td>
-    <td><textarea name="memento_comments2" cols="60" rows="3">'.$memento->comments2.'</textarea></td>
+    <td><textarea name="memento_comments2" cols="60" rows="3" class="mceRichText">'.$memento->comments2.'</textarea></td>
 </tr>
 <tr>
     <td colspan="2" align="center">';

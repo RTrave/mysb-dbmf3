@@ -81,8 +81,8 @@ foreach($mementos as $memento) {
             <small><i>'.$m_user->login.'('.$m_group->name.')</i></small>
             </small>
         </td>
-        <td><small>'.MySBUtil::str2html($memento->comments).'</small></td>
-        <td width="180px"><small>'.MySBUtil::str2html($memento->comments2).'</small></td>
+        <td><small>'.$memento->comments.'</small></td>
+        <td width="180px"><small>'.$memento->comments2.'</small></td>
     </tr>
 ';
 }
