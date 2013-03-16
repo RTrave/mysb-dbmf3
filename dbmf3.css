@@ -20,4 +20,19 @@ background: #ff9292;
 background: #c0ffba;
 }
 
+#rsvp_mailing_displaymail {
+font-size: 80%;
+background: grey;
+width: 400px;
+margin: 0px auto 0px auto;
+}
+
+#rsvp_mailing_displaymail p,
+#rsvp_mailing_displaymail h1,
+#rsvp_mailing_displaymail h2,
+#rsvp_mailing_displaymail h3,
+#rsvp_mailing_displaymail h4 {
+padding: 0px 5px 0px 5px;
+background: transparent;
+}
 

@@ -45,11 +45,12 @@ class MySBDBMFExportMailing extends MySBDBMFExport {
     }
 
     public function htmlParamForm() {
-        $output = '
+        MySBEditor::activate();
+$output = MySBEditor::initCode().'
 <p>'._G('DBMF_exportmailing_subject').':
     <input type="text" name="dbmf_exportmailing_subject" value="" size="24"><br>
     '._G('DBMF_exportmailing_body').':<br>
-    <textarea name="dbmf_exportmailing_body" cols="60" rows="8"></textarea><br>
+    <textarea name="dbmf_exportmailing_body" cols="60" rows="8" class="mceEditor"></textarea><br>
     '._G('DBMF_exportmailing_attachment').' 1:
     <input type="hidden" name="MAX_FILE_SIZE" value="2000000" />
     <input name="dbmf_exportmailing_att1" type="file" /><br>
@@ -100,12 +101,13 @@ class MySBDBMFExportMailing extends MySBDBMFExport {
 '.MySBDB::num_rows($results).' results<br>
 </p>
 <h3>'._G('DBMF_exportmailing_sending').'</h3>
-<p>
-<b>'.$this->mailing_subject.'</b><br>
-'.$this->mailing_body.'
+<div id="rsvp_mailing_displaymail">
+<p><b>'.$this->mailing_subject.'</b></p>
 <br>
+'.MySBUtil::str2html($this->mailing_body).'
 <br>
-';
+</div>
+<p>';
         $modulo_index = 0;
         while($data_result = MySBDB::fetch_array($results)) {
 
