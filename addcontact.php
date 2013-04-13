@@ -44,7 +44,7 @@ if($app->dbmf_req_wcheck!='') {
 <b>'._G('DBMF_common_firstname').':</b>
 <input type="text" name="firstname" size="24" maxlength="64" value="'.$data_x['firstname'].'"><br>
 <br>
-<input type="submit" value="'._G('DBMF_addcontact_verify').'" class="submit">
+<input type="submit" value="'._G('DBMF_addcontact_verify').'">
 </p>
 </form>';
 

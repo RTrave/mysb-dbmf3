@@ -8,15 +8,20 @@
 ***************************************************************************/
 
 
-#mysb_center td.lpadding {
+div#mysbMiddle {
+font-size: 95%;
+}
+
+#mysbMiddle td.lpadding {
+width: 33%;
 padding: 5px 5px 5px 20px;
 }
 
-#mysb_center .mem_active {
+#mysbMiddle .mem_active {
 background: #ff9292;
 }
 
-#mysb_center .mem_processed {
+#mysbMiddle .mem_processed {
 background: #c0ffba;
 }
 
@@ -35,4 +40,9 @@ margin: 0px auto 0px auto;
 padding: 0px 5px 0px 5px;
 background: transparent;
 }
+
+#rsvpCriteria table {
+font-size: 90%;
+}
+
 

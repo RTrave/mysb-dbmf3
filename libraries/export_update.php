@@ -44,7 +44,7 @@ class MySBDBMFExportUpdate extends MySBDBMFExport {
             if($block->isViewable()) {
                 $output .= '
 <td style="vertical-align: top;">
-<table style="width: 100%;"><tbody>
+<table style="width: 100%; font-size: 80%; margin-left: 0px;"><tbody>
 <tr class="title" >
     <td colspan="2">';
                 $output .= _G($block->lname).'
@@ -56,7 +56,7 @@ class MySBDBMFExportUpdate extends MySBDBMFExport {
                         $output .= '
 <tr>
     <td style="vertical-align: top; text-align: left;">
-        <b><input type="checkbox" name="upd_id_'.$blockref->id.'">'._G($blockref->lname).':</b>
+        <input type="checkbox" name="upd_id_'.$blockref->id.'">'._G($blockref->lname).':
     </td>
     <td>';
                         //$output .= '<input type="checkbox" name="display_'.$blockref->id.'">';

@@ -55,7 +55,7 @@ class MySBDBMFExportDisplay extends MySBDBMFExport {
 </select><br>
 
 '._G('DBMF_display_showfield').':<br>
-<table style="border: 0px; font-size: 80%"><tbody>
+<table style="border: 0px; font-size: 80%; margin-left: 0px;"><tbody>
 <tr>';
 
         $col_nb = 0;
@@ -64,7 +64,7 @@ class MySBDBMFExportDisplay extends MySBDBMFExport {
                 $col_nb++;
                 $output .= '
 <td style="vertical-align: top;">
-<table style="width: 100%;"><tbody>
+<table style="width: 100%; font-size: 90%;"><tbody>
 <tr class="title" >
     <td colspan="2">';
                 $output .= _G($block->lname).'
@@ -75,7 +75,7 @@ class MySBDBMFExportDisplay extends MySBDBMFExport {
                         $refname = $blockref->keyname;
                         $output .= '
 <tr>
-    <td style="vertical-align: top; text-align: right;"><b>'._G($blockref->lname).':</b></td>
+    <td style="vertical-align: top; text-align: right;">'._G($blockref->lname).':</td>
     <td>';
                         if($showcols->have($blockref->id)) $colsshow_check = 'checked';
                         else $colsshow_check = '';

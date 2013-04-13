@@ -63,7 +63,7 @@ foreach($dbmf_groups as $group) {
     echo '
         </select>
         <input type="hidden" name="group_id" value="'.$group->id.'">
-        <input type="submit" value="'._G('DBMF_group_modify').'" class="submit">
+        <input type="submit" value="'._G('DBMF_group_modify').'">
         </form>
     </td>
 </tr>
@@ -127,7 +127,7 @@ if(isset($_POST['dbmf_editexport'])) {
 <tr>
     <td colspan="2" style="text-align: center;">
         <input type="hidden" name="dbmf_editexport_process" value="'.$export->id.'">
-        <input type="submit" value="'._G('DBMF_editexport_submit').'" class="submit">
+        <input type="submit" value="'._G('DBMF_editexport_submit').'">
     </td>
 </tr>
 </tbody></table>
@@ -164,7 +164,7 @@ foreach($exports as $export) {
     <td>
     <form action="?mod=dbmf3&amp;tpl=admindbmf&amp;plg=admin" method="post">
         <input type="hidden" name="dbmf_editexport" value="'.$export->id.'">
-        <input type="submit" value="'._G('DBMF_editexport').'" class="submit">
+        <input type="submit" value="'._G('DBMF_editexport').'">
     </form>
     </td>
 </tr>';
@@ -219,7 +219,7 @@ echo '
 <tr>
     <td colspan="2" style="text-align: center;">
         <input type="hidden" name="dbmf_addexport" value="1">
-        <input type="submit" value="'._G('DBMF_addexports').'" class="submit">
+        <input type="submit" value="'._G('DBMF_addexports').'">
     </td>
 </tr>
 </tbody></table>
@@ -236,7 +236,7 @@ if(!isset($app->dbmf_search_result)) echo '
 <form action="?mod=dbmf3&amp;tpl=admindbmf&amp;plg=admin#orphans" method="post">
 <p>Search orphans contacts:
     <input type="hidden" name="dbmf_orphans" value="1">
-    <input type="submit" value="'._G('DBMF_orphans_search').'" class="submit">
+    <input type="submit" value="'._G('DBMF_orphans_search').'">
 </p>
 </form>';
 else {

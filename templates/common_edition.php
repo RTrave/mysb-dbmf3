@@ -24,7 +24,7 @@ echo '
     <td colspan="2">'._G("DBMF_contact_contact_infos").'</td>
 </tr>
 <tr>
-    <td colspan="2" align="center">
+    <td colspan="2" style="text-align: center;">
         <small>
         <b>'._G("DBMF_date_creat").':</b>'.$date_creat->strAEBY_l().' / 
         <b>'._G("DBMF_date_modif").':</b>'.$date_modif->strAEBY_l().'
@@ -54,7 +54,7 @@ echo '
 </tr>
 <tr>
     <td colspan="2">
-    <table width="100%"><tbody>
+    <table style="width: 95%;"><tbody>
 ';
 
 $mementos = MySBDBMFMementoHelper::load($contact->id);
@@ -69,30 +69,28 @@ foreach($mementos as $memento) {
     if($memento->group_id!=0) $m_group = MySBGroupHelper::getByID($memento->group_id);
     else $m_group = null;
     echo '
-    <tr>
-        <td width="130px" '.$memclass.'>
-            <small>';
+    <tr style="font-size: 90%;">
+        <td style="width: 130px;" '.$memclass.'>';
     if($memento->isEditable())
         echo '
-            <a  href="?mod=dbmf3&tpl=editmemento&amp;memento_id='.$memento->id.'"
+            <a  href="?mod=dbmf3&amp;tpl=editmemento&amp;memento_id='.$memento->id.'"
                 OnClick="return mysb_confirm(\''.MySBUtil::str2strict(_G('DBMF_confirm_memento_edition')).'\')">
                 <b>'.$memento->getDate().'</b></a>';
     else echo '
             '.$memento->getDate().'';
     echo '<br>
-            <small><i>'.$m_user->login.'('.$m_group->name.')</i></small>
-            </small>
+            <i>'.$m_user->login.'('.$m_group->name.')</i>
         </td>
-        <td><small>'.$memento->comments.'</small></td>
-        <td width="180px"><small>'.$memento->comments2.'</small></td>
+        <td>'.$memento->comments.'</td>
+        <td style="width: 180px;">'.$memento->comments2.'</td>
     </tr>
 ';
 }
 
 echo '
     <tr>
-        <td colspan="3" align="center"><small>
-            <a  href="?mod=dbmf3&tpl=editmemento&contact_id='.$contact->id.'" class="button"
+        <td colspan="3" style="text-align: center; padding: 2px;"><small>
+            <a  href="?mod=dbmf3&amp;tpl=editmemento&amp;contact_id='.$contact->id.'" class="button"
                 OnClick="return mysb_confirm(\''.MySBUtil::str2strict(_G('DBMF_confirm_memento_edition')).'\')">
                 '._G("DBMF_contact_mementos_create").'</a></small>
         </td>

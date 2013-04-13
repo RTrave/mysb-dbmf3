@@ -106,7 +106,7 @@ class MySBPluginDBMFDisplay extends MySBPlugin {
 
 class DBMFPluginsDisplayOrganism {
     public function header($plugin) {
-        $output = '<td width="280px"><i>'._G("DBMF_common_function").'</i><br>'._G("DBMF_common_organism").'</td>';
+        $output = '<td style="width: 280px;"><i>'._G("DBMF_common_function").'</i><br>'._G("DBMF_common_organism").'</td>';
         return $output;
     }
     public function td($contact) {
@@ -117,7 +117,7 @@ class DBMFPluginsDisplayOrganism {
 
 class DBMFPluginsDisplayTel {
     public function header($plugin) {
-        $output = '<td width="160px">Tel</td>';
+        $output = '<td style="width: 160px;">Tel</td>';
         return $output;
     }
     public function td($contact) {
@@ -128,7 +128,7 @@ class DBMFPluginsDisplayTel {
 
 class DBMFPluginsDisplayMail {
     public function header($plugin) {
-        $output = '<td width="24px"></td>';
+        $output = '<td style="width: 24px;"></td>';
         return $output;
     }
     public function td($contact) {

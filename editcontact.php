@@ -26,8 +26,8 @@ echo '
 echo '
 <form action="?mod=dbmf3&amp;tpl=editcontact&amp;contact_id='.$contact->id.'" method="post">
 
-<div class="table_support" align="center">
-<table width="95%"><tbody>
+<div class="table_support">
+<table style="width: 95%; font-size: 90%;"><tbody>
 ';
 
 _T('templates/common_edition.php','dbmf3');
@@ -48,7 +48,7 @@ foreach($blocks as $block) {
             $refname = $blockref->keyname;
             echo '
 <tr style="'.$class_edit.'">
-    <td style="vertical-align: top; text-align: right;"><b>'._G($blockref->lname).':</b></td>
+    <td style="vertical-align: top; text-align: right;">'._G($blockref->lname).':</td>
     <td>';
             if($block->isEditable()) 
                 echo $blockref->htmlForm('blockref',$contact->$refname);
@@ -63,9 +63,9 @@ foreach($blocks as $block) {
 
 if(MySBRoleHelper::checkAccess('dbmf_editor',false)) echo '
 <tr>
-    <td colspan="2" align="center">
+    <td colspan="2" style="text-align: center;">
         <input type="hidden" name="contact_edit" value="1">
-        <input type="submit" value="'._G('DBMF_contact_edition_submit').'" class="submit">
+        <input type="submit" value="'._G('DBMF_contact_edition_submit').'">
     </td>
 </tr>';
 
@@ -80,18 +80,17 @@ echo '
 <form   action="?mod=dbmf3&amp;tpl=editcontact" method="post"
         OnSubmit="return mysb_confirm(\''.MySBUtil::str2strict(sprintf(_G('DBMF_confirm_contact_delete'),$contact->lastname, $contact->firstname )).'\')">
 
-<div class="table_support" align="center">
-<table width="95%"><tbody>
+<div class="table_support">
+<table style="width: 95%;"><tbody>
 <tr>
-    <td align="center">
+    <td style="text-align: center;">
         <input type="hidden" name="contact_delete" value="'.$contact->id.'">
-        <input type="submit" value="'._G('DBMF_contact_delete_submit').'" class="submit">
+        <input type="submit" value="'._G('DBMF_contact_delete_submit').'">
     </td>
 </tr>
 </tbody></table>
 </div>
 </form>
-<br>
 ';
 
 ?>

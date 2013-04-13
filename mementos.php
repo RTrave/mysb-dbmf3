@@ -19,11 +19,9 @@ if(!MySBRoleHelper::checkAccess('dbmf_user')) return;
 echo '
 <h1>'._G('DBMF_mementos_summary').'</h1>
 
-<div id="mysb_topadmin">
-<div class="mysb_topadmin_menu">
+<div id="mysbMenuLevel">
     <a href="index.php?mod=dbmf3&amp;tpl=mementos">'._G('DBMF_mementos_actives').'</a>
     <a href="index.php?mod=dbmf3&amp;tpl=mementos&amp;filter=all">'._G('DBMF_mementos_all').'</a>
-</div>
 </div>
 ';
 
@@ -50,18 +48,18 @@ foreach($mementos_p as $memento) {
     elseif($memento_type==1) $h3 = 'DBMF_memento_type_monthofyear';
     echo '
 <div class="table_support">
-<table width="100%" style="font-size: 85%;"><tbody>
-<tr class="title" align="center">
-    <td colspan="7"><big>'._G($h3).'</big></td>
+<table style="font-size: 85%; width: 95%;"><tbody>
+<tr class="title" style="text-align: center;">
+    <td colspan="7" style="font-size: 120%;">'._G($h3).'</td>
 </tr>
 <tr class="title">
-    <td width="120px">'._G("DBMF_memento_date").'</td>
-    <td width="28px"></td>
-    <td width="200px">'._G('DBMF_mementos_details').'</td>
+    <td style="width: 120px;">'._G("DBMF_memento_date").'</td>
+    <td style="width: 28px;"></td>
+    <td style="width: 200px;">'._G('DBMF_mementos_details').'</td>
     <td>'._G('DBMF_memento_comments').'</td>
-    <td width="160px">'._G('DBMF_memento_comments2').'</td>
-    <td width="90px"></td>
-    <td width="90px"></td>
+    <td style="width: 160px;">'._G('DBMF_memento_comments2').'</td>
+    <td style="width: 90px;"></td>
+    <td style="width: 90px;"></td>
 </tr>';
     }
     $contact = new MySBDBMFContact($memento->contact_id);
@@ -100,7 +98,7 @@ foreach($mementos_p as $memento) {
     <td>
         '.$memento->comments2.'
     </td>
-    <td align="right">';
+    <td style="text-align: right;">';
     if($memento->date_process!='') {
         $memento_process = new MySBDateTime($memento->date_process);
         echo '
@@ -108,18 +106,18 @@ foreach($mementos_p as $memento) {
     }
     echo '
     </td>
-    <td align="center">';
+    <td style="text-align: center;">';
     if($Active) {
         echo '
-        <form action="" method="post">
+        <form action="index.php?mod=dbmf3&amp;tpl=mementos&amp;filter='.$_GET['filter'].'" method="post">
             <input type="hidden" name="memento_process" value="'.$memento->id.'">
-            <input type="submit" value="'._G('DBMF_memento_process_submit').'" class="submit">
+            <input type="submit" value="'._G('DBMF_memento_process_submit').'">
         </form>';
     } elseif(!$Active and $memento->date_process!='') {
         echo '
-        <form action="" method="post">
+        <form action="index.php?mod=dbmf3&amp;tpl=mementos&amp;filter='.$_GET['filter'].'" method="post">
             <input type="hidden" name="memento_unprocess" value="'.$memento->id.'">
-            <input type="submit" value="'._G('DBMF_memento_unprocess_submit').'" class="submit">
+            <input type="submit" value="'._G('DBMF_memento_unprocess_submit').'">
         </form>';
     }
     echo '

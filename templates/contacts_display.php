@@ -19,11 +19,11 @@ $search_result = $app->tpl_dbmf_searchresult;
 
 echo '
 <div class="table_support">
-<table width="100%" style="font-size: 85%;"><tbody>';
+<table style="font-size: 85%; width: 100%;"><tbody>';
 
 echo '
 <tr class="title">
-    <td width="24px" class="title"></td>';
+    <td style="width: 24px;" class="title"></td>';
 
 $pluginsDisplay = MySBPluginHelper::loadByType('DBMFDisplay');
 $showcols_blockrefs = array();
@@ -46,11 +46,11 @@ foreach($showcols_blockrefs as $sblockref) {
             $disp_px = '120';
         else $disp_px = '40';
         echo '
-    <td width="'.$disp_px.'px"><small>'.$sblockref->getReducedName().'</small></td>';
+    <td style="width: '.$disp_px.'px;"><small>'.$sblockref->getReducedName().'</small></td>';
 }
 
 echo '
-<td width="24px" class="title"></td>
+<td style="width: 24px;" class="title"></td>
 </tr>';
 
 $odd = 'odd';
@@ -90,13 +90,13 @@ while($data_print = MySBDB::fetch_array($search_result)) {
     }
 
     echo '
-    <td>
+    <td style="vertical-align: middle;">
     <form   action="#contact'.($anchor_nb-1).'" method="post" 
             OnSubmit="return mysb_confirm(\''.MySBUtil::str2strict(sprintf(_G('DBMF_confirm_contact_delete'),$contact->lastname, $contact->firstname )).'\')">
         <input  type="hidden" name="dbmf_contact_delete" value="'.$contact->id.'">
         <input  type="hidden" name="dbmf_request_reuse" value="1">
         <input  border="0" src="modules/dbmf3/images/delete_icon24.png"
-                type="image" value="submit" align="middle">
+                type="image">
     </form>
     </td>
 </tr>';

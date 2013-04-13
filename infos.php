@@ -23,7 +23,7 @@ if(count($act_mementos)>=1)
 <h2>'._G('DBMF_baseinfos_mementos').'</h2>
 <ul>
 <li>
-    <a href="?mod=dbmf3&amp;tpl=mementos">'._G('DBMF_baseinfos_mementos_actives').'</a>: <blink><b>'.count($act_mementos).'</b></blink>
+    <a href="?mod=dbmf3&amp;tpl=mementos">'._G('DBMF_baseinfos_mementos_actives').'</a>: <b style="text-decoration: blink">'.count($act_mementos).'</b>
 </li>
 </ul>
 ';

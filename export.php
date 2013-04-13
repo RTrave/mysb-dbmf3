@@ -29,7 +29,7 @@ if( isset($_POST['dbmf_export_process'])
 
 
 echo '
-<form enctype="multipart/form-data" action="" method="post">
+<form enctype="multipart/form-data" action="index.php?mod=dbmf3&amp;tpl=export" method="post">
 
 <h2>'._G('DBMF_export_contacts').'</h2>
 
@@ -68,7 +68,7 @@ foreach($exports as $export) {
 echo '
 </div>
 <h3>'._G('DBMF_export_blockscriteria').'</h3>
-<div class="table_support" align="center">
+<div class="table_support" id="rsvpCriteria">
 <table><tbody>
 
 ';
@@ -111,7 +111,7 @@ foreach($blocks as $block) {
                 $refname = $blockref->keyname;
                 echo '
 <tr style="'.$class_edit.'">
-    <td style="vertical-align: top; text-align: right;"><b>'._G($blockref->lname).':</b></td>
+    <td style="vertical-align: top; text-align: right;">'._G($blockref->lname).':</td>
     <td>';
                 echo $blockref->htmlFormWhereClause('br',$contact->$refname);
                 echo '
@@ -127,7 +127,7 @@ echo '
 </div>
 <p style="text-align: center;">
     <input type="hidden" name="dbmf_export_process" value="1">
-    <input type="submit" value="'._G('DBMF_search_submit').'" class="submit">
+    <input type="submit" value="'._G('DBMF_search_submit').'">
 </p>
 </form>';
 
