@@ -89,8 +89,8 @@ class MySBDBMFBlockRef extends MySBValue {
         $newstr = '';
         $words = explode(' ',$strdb);
         foreach($words as $word) {
-            if(strlen($word)>3) {
-                $newstr .= preg_replace('#^(?:[\x00-\x7F]|[\xC0-\xFF][\x80-\xBF]+){0,0}'.'((?:[\x00-\x7F]|[\xC0-\xFF][\x80-\xBF]+){0,3}).*#s','$1', $word);
+            if(strlen($word)>4) {
+                $newstr .= preg_replace('#^(?:[\x00-\x7F]|[\xC0-\xFF][\x80-\xBF]+){0,0}'.'((?:[\x00-\x7F]|[\xC0-\xFF][\x80-\xBF]+){0,4}).*#s','$1', $word);
                 $newstr .= '. ';
             } else $newstr .= $word.' ';
         }

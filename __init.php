@@ -292,6 +292,7 @@ class MySBModule_dbmf3 {
         MySBPluginHelper::delete('addcontact_menutext','dbmf3');
         MySBPluginHelper::delete('export_menutext','dbmf3');
         MySBPluginHelper::delete('blockedit_menutext','dbmf3');
+        MySBPluginHelper::delete('mementos_menutext','dbmf3');
         
     }
 
