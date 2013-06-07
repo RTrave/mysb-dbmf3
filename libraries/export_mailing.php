@@ -47,7 +47,10 @@ class MySBDBMFExportMailing extends MySBDBMFExport {
     public function htmlParamForm() {
         MySBEditor::activate();
 $output = MySBEditor::initCode().'
-<p>'._G('DBMF_exportmailing_subject').':
+<p>
+    '._G('DBMF_exportmailing_firstid').':
+    <input type="text" name="dbmf_exportmailing_firstid" value="" size="8"><br>
+    '._G('DBMF_exportmailing_subject').':
     <input type="text" name="dbmf_exportmailing_subject" value="" size="24"><br>
     '._G('DBMF_exportmailing_body').':<br>
     <textarea name="dbmf_exportmailing_body" cols="60" rows="8" class="mceEditor"></textarea><br>
@@ -66,6 +69,7 @@ $output = MySBEditor::initCode().'
 
     public function htmlParamProcess() {
         global $app;
+        $this->mailing_firstid = $_POST['dbmf_exportmailing_firstid'];
         $this->mailing_subject = $_POST['dbmf_exportmailing_subject'];
         $this->mailing_body = $_POST['dbmf_exportmailing_body'];
         $uploaddir = MySB_ROOTPATH.'/modules/dbmf3/files/';
@@ -108,19 +112,37 @@ $output = MySBEditor::initCode().'
 <br>
 </div>
 <p>';
+        if( $this->mailing_firstid!='' )
+            $recup_flag = true;
+        else 
+             $recup_flag = false;
         $modulo_index = 0;
+        $firstid = 0;
         while($data_result = MySBDB::fetch_array($results)) {
+
+            $contact = new MySBDBMFContact(null,$data_result);
+
+            if( $recup_flag==true and $contact->id!=$this->mailing_firstid )
+                continue;
+            if( $recup_flag==true and $contact->id==$this->mailing_firstid )
+                $recup_flag = false;
 
             if($this->config_array['modulo']!='' and $modulo_index>=$this->config_array['modulo']) {
                 $modulo_index = 0;
-                $current_mail->send();
+                if( !$current_mail->send() ) {
+                    echo $current_mail->getError().'<br>';
+                    echo 'Last ID tried: <b>'.$firstid.'</b><br>';
+                    unset($current_mail);
+                    return;
+                }
                 unset($current_mail);
                 $output .= _G('DBMF_exportmailing_sendingnew')."!\n<br>";
             }
-            $contact = new MySBDBMFContact(null,$data_result);
+
             if($contact->b1r08!='') {
                  $modulo_index++;
                 if(!isset($current_mail)) {
+                    $firstid = $contact->id;
                     $current_mail = new MySBMail('mail_mailing','dbmf3');
                     $current_mail->unset_footer();
                     $current_mail->data['body'] = $this->mailing_body;
@@ -136,7 +158,10 @@ $output = MySBEditor::initCode().'
 
         }
         if(isset($current_mail)) 
-            $current_mail->send();
+            if( !$current_mail->send() ) {
+                echo $current_mail->getError().'<br>';
+                echo 'Last ID tried: <b>'.$firstid.'</b><br>';
+            }
         $output .= _G('DBMF_exportmailing_sendinglast')."!\n<br>";
         $output .= '
 </p>';
