@@ -28,6 +28,7 @@ class MySBDBMFExportMailing extends MySBDBMFExport {
     }
 
     public function htmlConfigForm() {
+        global $app;
         if($this->config_array['modulo']!='') $modulo = $this->config_array['modulo'];
         else $modulo = MODULO_DEFAULT;
         $str_res = '
@@ -42,6 +43,7 @@ class MySBDBMFExportMailing extends MySBDBMFExport {
     }
 
     public function htmlConfigProcess() {
+        global $app;
         global $_POST;
         $str_res = 
             'modulo='.$_POST['dbmf_exportmailing_config_modulo'].';'.
@@ -54,11 +56,18 @@ class MySBDBMFExportMailing extends MySBDBMFExport {
     }
 
     public function htmlParamForm() {
+        global $app;
         MySBEditor::activate();
 $output = MySBEditor::initCode().'
 <p>
     '._G('DBMF_exportmailing_sendaslist').':
     <input type="checkbox" name="dbmf_exportmailing_sendaslist" checked="checked"><br>
+    '._G('DBMF_exportmailing_replyto').':
+    <select name="dbmf_exportmailing_replyto">
+        <option value="base">'._G("DBMF_exportmailing_replyto_base").'</option>
+        <option value="tech">'.MySBConfigHelper::Value('website_name').' ('.MySBConfigHelper::Value('technical_contact').')</option>
+        <option value="self">'.$app->auth_user->lastname.' '.$app->auth_user->firstname.' ('.$app->auth_user->mail.')</option>
+    </select><br>
     '._G('DBMF_exportmailing_firstid').':
     <input type="text" name="dbmf_exportmailing_firstid" value="" size="8"><br>
     '._G('DBMF_exportmailing_subject').':
@@ -80,6 +89,16 @@ $output = MySBEditor::initCode().'
 
     public function htmlParamProcess() {
         global $app;
+        if( $_POST['dbmf_exportmailing_replyto']=='tech' ) {
+            $this->replyto_addr = MySBConfigHelper::Value('technical_contact');
+            $this->replyto_geck = MySBConfigHelper::Value('website_name');
+        } elseif( $_POST['dbmf_exportmailing_replyto']=='self' ) {
+            $this->replyto_addr = $app->auth_user->mail;
+            $this->replyto_geck = $app->auth_user->lastname.' '.$app->auth_user->firstname;
+        } else {
+            $this->replyto_addr = MySBConfigHelper::Value('technical_contact');
+            $this->replyto_geck = '';
+        }
         if( $_POST['dbmf_exportmailing_sendaslist']!='' ) $this->mailing_sendaslist = true;
         else $this->mailing_sendaslist = false;
         $this->mailing_firstid = $_POST['dbmf_exportmailing_firstid'];
@@ -141,12 +160,22 @@ $output = MySBEditor::initCode().'
         $modulo_index = 0;
         $mails_index = 0;
         $firstid = null;
+
         $current_mail = new MySBMail('mail_mailing','dbmf3');
+        if( $this->replyto_geck!='' ) $current_mail->setReplyTo($this->replyto_addr,$this->replyto_geck);
+        if( $this->mailing_att1!='' ) $current_mail->addAttachment($this->mailing_att1);
+        if( $this->mailing_att2!='' ) $current_mail->addAttachment($this->mailing_att2);
+        if( $this->mailing_att3!='' ) $current_mail->addAttachment($this->mailing_att3);
+        if( true ) {
+            $current_mail->addHeader('List-Unsubscribe: <mailto:'.$this->replyto_addr.'?subject=Unsubscribe>');
+            $this->mailing_body .= '
+<p></p>
+<p style="text-align: center;"><small>'._G('DBMF_exportmailing_unsubscribe').
+': <a href="mailto:'.$this->replyto_addr.'?subject=Unsubscribe">'.
+$this->replyto_addr.'?subject=Unsubscribe</a></small></p>';
+        }
         $current_mail->data['body'] = $this->mailing_body;
         $current_mail->data['subject'] = $this->mailing_subject;
-        if($this->mailing_att1!='') $current_mail->addAttachment($this->mailing_att1);
-        if($this->mailing_att2!='') $current_mail->addAttachment($this->mailing_att2);
-        if($this->mailing_att3!='') $current_mail->addAttachment($this->mailing_att3);
 
         while($mails_index<=$maxbysend) {
 
