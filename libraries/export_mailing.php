@@ -13,6 +13,9 @@
 defined('_MySBEXEC') or die;
 
 
+define('MODULO_DEFAULT',50);
+define('MAXBYSEND_DEFAULT',150);
+
 /**
  * DBMF Mailing Export class
  * 
@@ -26,17 +29,23 @@ class MySBDBMFExportMailing extends MySBDBMFExport {
 
     public function htmlConfigForm() {
         if($this->config_array['modulo']!='') $modulo = $this->config_array['modulo'];
-        else $modulo = 300;
+        else $modulo = MODULO_DEFAULT;
         $str_res = '
 '._G('DBMF_exportmailing_config_modulo').': 
     <input type="text" name="dbmf_exportmailing_config_modulo" value="'.$modulo.'"><br>';
+        if($this->config_array['maxbysend']!='') $maxbysend = $this->config_array['maxbysend'];
+        else $maxbysend = MAXBYSEND_DEFAULT;
+        $str_res .= '
+'._G('DBMF_exportmailing_config_maxbysend').': 
+    <input type="text" name="dbmf_exportmailing_config_maxbysend" value="'.$maxbysend.'"><br>';
         return $str_res;
     }
 
     public function htmlConfigProcess() {
         global $_POST;
         $str_res = 
-            'modulo='.$_POST['dbmf_exportmailing_config_modulo'].';';
+            'modulo='.$_POST['dbmf_exportmailing_config_modulo'].';'.
+            'maxbysend='.$_POST['dbmf_exportmailing_config_maxbysend'].';';
         return $str_res;
     }
 
@@ -48,6 +57,8 @@ class MySBDBMFExportMailing extends MySBDBMFExport {
         MySBEditor::activate();
 $output = MySBEditor::initCode().'
 <p>
+    '._G('DBMF_exportmailing_sendaslist').':
+    <input type="checkbox" name="dbmf_exportmailing_sendaslist" checked="checked"><br>
     '._G('DBMF_exportmailing_firstid').':
     <input type="text" name="dbmf_exportmailing_firstid" value="" size="8"><br>
     '._G('DBMF_exportmailing_subject').':
@@ -69,6 +80,8 @@ $output = MySBEditor::initCode().'
 
     public function htmlParamProcess() {
         global $app;
+        if( $_POST['dbmf_exportmailing_sendaslist']!='' ) $this->mailing_sendaslist = true;
+        else $this->mailing_sendaslist = false;
         $this->mailing_firstid = $_POST['dbmf_exportmailing_firstid'];
         $this->mailing_subject = $_POST['dbmf_exportmailing_subject'];
         $this->mailing_body = $_POST['dbmf_exportmailing_body'];
@@ -96,13 +109,23 @@ $output = MySBEditor::initCode().'
      */
     public function htmlResultOutput($results) {
         global $app;
+
         if( $this->mailing_subject=='' or $this->mailing_body=='' ) {
             echo '<p>'._G('DBMF_exportmailing_emptyfield').'</p>';
             return;
         }
+
+        if( $this->config_array['modulo']!='' ) $modulo = $this->config_array['modulo'];
+        else $modulo = MODULO_DEFAULT;
+        if( $this->config_array['maxbysend']!='' ) $maxbysend = $this->config_array['maxbysend'];
+        else $maxbysend = MAXBYSEND_DEFAULT;
+
         $output = '
 <p>
-'.MySBDB::num_rows($results).' results<br>
+'.MySBDB::num_rows($results).' contacts<br>';
+        if( $this->mailing_sendaslist )
+            $output .= '(send as list)';
+        $output .= '
 </p>
 <h3>'._G('DBMF_exportmailing_sending').'</h3>
 <div id="rsvp_mailing_displaymail">
@@ -112,59 +135,72 @@ $output = MySBEditor::initCode().'
 <br>
 </div>
 <p>';
-        if( $this->mailing_firstid!='' )
-            $recup_flag = true;
-        else 
-             $recup_flag = false;
+
+        if( $this->mailing_firstid!='' ) $recup_flag = true;
+        else $recup_flag = false;
         $modulo_index = 0;
-        $firstid = 0;
-        while($data_result = MySBDB::fetch_array($results)) {
+        $mails_index = 0;
+        $firstid = null;
+        $current_mail = new MySBMail('mail_mailing','dbmf3');
+        $current_mail->data['body'] = $this->mailing_body;
+        $current_mail->data['subject'] = $this->mailing_subject;
+        if($this->mailing_att1!='') $current_mail->addAttachment($this->mailing_att1);
+        if($this->mailing_att2!='') $current_mail->addAttachment($this->mailing_att2);
+        if($this->mailing_att3!='') $current_mail->addAttachment($this->mailing_att3);
 
+        while($mails_index<=$maxbysend) {
+
+            if( !$data_result=MySBDB::fetch_array($results) ) {
+                break;
+            }
             $contact = new MySBDBMFContact(null,$data_result);
-
             if( $recup_flag==true and $contact->id!=$this->mailing_firstid )
                 continue;
             if( $recup_flag==true and $contact->id==$this->mailing_firstid )
                 $recup_flag = false;
-
-            if($this->config_array['modulo']!='' and $modulo_index>=$this->config_array['modulo']) {
+            if( $modulo_index>=$modulo ) {
                 $modulo_index = 0;
-                if( !$current_mail->send() ) {
-                    echo $current_mail->getError().'<br>';
-                    echo 'Last ID tried: <b>'.$firstid.'</b><br>';
-                    unset($current_mail);
-                    return;
+                if( $this->mailing_sendaslist ) {
+                    $current_mail->sendBCCIndividually();
+                } elseif( !$current_mail->send(false) ) {
+                    $output .= '<samp>'.$current_mail->getError().'</samp>';
+                    $output .= 'Last ID tried: <b>'.$firstid.'</b></p>';
+                    return $output;
                 }
-                unset($current_mail);
+                $current_mail->clearRecipients();
+                $firstid = null;
                 $output .= _G('DBMF_exportmailing_sendingnew')."!\n<br>";
             }
 
             if($contact->b1r08!='') {
-                 $modulo_index++;
-                if(!isset($current_mail)) {
+                $modulo_index++;
+                $mails_index++;
+                if( $firstid==null ) 
                     $firstid = $contact->id;
-                    $current_mail = new MySBMail('mail_mailing','dbmf3');
-                    $current_mail->unset_footer();
-                    $current_mail->data['body'] = $this->mailing_body;
-                    $current_mail->data['subject'] = $this->mailing_subject;
-                    if($this->mailing_att1!='') $current_mail->addAttachment($this->mailing_att1);
-                    if($this->mailing_att2!='') $current_mail->addAttachment($this->mailing_att2);
-                    if($this->mailing_att3!='') $current_mail->addAttachment($this->mailing_att3);
-                }
-                 $current_mail->addBCC($contact->b1r08,$contact->firstname.' '.$contact->lastname);
+                $current_mail->addBCC($contact->b1r08,$contact->firstname.' '.$contact->lastname);
             } else {
-                $output .= _G('DBMF_exportmailing_sendingnomail').': '.$contact->firstname.' '.$contact->lastname.' (id:'.$contact->id.')<br>';
+                $output .=  _G('DBMF_exportmailing_sendingnomail').': '.
+                            $contact->firstname.' '.$contact->lastname.' (id:'.$contact->id.')<br>';
             }
 
         }
-        if(isset($current_mail)) 
-            if( !$current_mail->send() ) {
-                echo $current_mail->getError().'<br>';
-                echo 'Last ID tried: <b>'.$firstid.'</b><br>';
+        if( $firstid!=null ) {
+            if( $this->mailing_sendaslist ) {
+                $current_mail->sendBCCIndividually();
+            } elseif( !$current_mail->send(false) ) {
+                $output .= '<samp>'.$current_mail->getError().'</samp>';
+                $output .= 'Last ID tried: <b>'.$firstid.'</b></p>';
+                return $output;
             }
-        $output .= _G('DBMF_exportmailing_sendinglast')."!\n<br>";
+            $output .= _G('DBMF_exportmailing_sendinglast')."!\n<br>";
+        }
+        if( $this->mailing_sendaslist )
+            $output .= '<samp>'.$current_mail->getError().'</samp>';
+        $current_mail->close();
         $output .= '
+mails sent: '.$mails_index.'<br>
 </p>';
+
         if($this->mailing_att1!='') unlink($this->mailing_att1);
         if($this->mailing_att2!='') unlink($this->mailing_att2);
         if($this->mailing_att3!='') unlink($this->mailing_att3);
