@@ -58,18 +58,8 @@ class MySBDBMFExportMailing extends MySBDBMFExport {
     public function htmlParamForm() {
         global $app;
         MySBEditor::activate();
-$output = MySBEditor::initCode().'
+        $output = MySBEditor::initCode().'
 <p>
-    '._G('DBMF_exportmailing_sendaslist').':
-    <input type="checkbox" name="dbmf_exportmailing_sendaslist" checked="checked"><br>
-    '._G('DBMF_exportmailing_replyto').':
-    <select name="dbmf_exportmailing_replyto">
-        <option value="base">'._G("DBMF_exportmailing_replyto_base").'</option>
-        <option value="tech">'.MySBConfigHelper::Value('website_name').' ('.MySBConfigHelper::Value('technical_contact').')</option>
-        <option value="self">'.$app->auth_user->lastname.' '.$app->auth_user->firstname.' ('.$app->auth_user->mail.')</option>
-    </select><br>
-    '._G('DBMF_exportmailing_firstid').':
-    <input type="text" name="dbmf_exportmailing_firstid" value="" size="8"><br>
     '._G('DBMF_exportmailing_subject').':
     <input type="text" name="dbmf_exportmailing_subject" value="" size="24"><br>
     '._G('DBMF_exportmailing_body').':<br>
@@ -84,6 +74,23 @@ $output = MySBEditor::initCode().'
     <input type="hidden" name="MAX_FILE_SIZE" value="2000000" />
     <input name="dbmf_exportmailing_att3" type="file" />
 </p>';
+        $output .= '
+<h4>'._G('DBMF_exportmailing_advancedparams').'</h4>
+<p>
+    '._G('DBMF_exportmailing_sendaslist').':
+    <input type="checkbox" name="dbmf_exportmailing_sendaslist"><br>
+    '._G('DBMF_exportmailing_unsubscribefields').':
+    <input type="checkbox" name="dbmf_exportmailing_unsubscribefields"><br>
+    '._G('DBMF_exportmailing_replyto').':
+    <select name="dbmf_exportmailing_replyto">
+        <option value="base">'._G("DBMF_exportmailing_replyto_base").'</option>
+        <option value="tech">'.MySBConfigHelper::Value('website_name').' ('.MySBConfigHelper::Value('technical_contact').')</option>
+        <option value="self">'.$app->auth_user->lastname.' '.$app->auth_user->firstname.' ('.$app->auth_user->mail.')</option>
+    </select><br>
+    '._G('DBMF_exportmailing_firstid').':
+    <input type="text" name="dbmf_exportmailing_firstid" value="" size="8">
+</p>
+    ';
         return $output;
     }
 
@@ -101,6 +108,8 @@ $output = MySBEditor::initCode().'
         }
         if( $_POST['dbmf_exportmailing_sendaslist']!='' ) $this->mailing_sendaslist = true;
         else $this->mailing_sendaslist = false;
+        if( $_POST['dbmf_exportmailing_unsubscribefields']!='' ) $this->mailing_unsubscribefields = true;
+        else $this->mailing_unsubscribefields = false;
         $this->mailing_firstid = $_POST['dbmf_exportmailing_firstid'];
         $this->mailing_subject = $_POST['dbmf_exportmailing_subject'];
         $this->mailing_body = $_POST['dbmf_exportmailing_body'];
@@ -166,13 +175,13 @@ $output = MySBEditor::initCode().'
         if( $this->mailing_att1!='' ) $current_mail->addAttachment($this->mailing_att1);
         if( $this->mailing_att2!='' ) $current_mail->addAttachment($this->mailing_att2);
         if( $this->mailing_att3!='' ) $current_mail->addAttachment($this->mailing_att3);
-        if( true ) {
+        if( $this->mailing_unsubscribefields ) {
             $current_mail->addHeader('List-Unsubscribe: <mailto:'.$this->replyto_addr.'?subject=Unsubscribe>');
-            $this->mailing_body .= '
+            $current_mail->addFooter('
 <p></p>
-<p style="text-align: center;"><small>'._G('DBMF_exportmailing_unsubscribe').
+<p style="text-align: center; background-color: #cccccc;"><small>'._G('DBMF_exportmailing_unsubscribe').
 ': <a href="mailto:'.$this->replyto_addr.'?subject=Unsubscribe">'.
-$this->replyto_addr.'?subject=Unsubscribe</a></small></p>';
+$this->replyto_addr.'?subject=Unsubscribe</a></small></p>');
         }
         $current_mail->data['body'] = $this->mailing_body;
         $current_mail->data['subject'] = $this->mailing_subject;
