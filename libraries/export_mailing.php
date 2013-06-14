@@ -167,7 +167,7 @@ class MySBDBMFExportMailing extends MySBDBMFExport {
         if( $this->mailing_firstid!='' ) $recup_flag = true;
         else $recup_flag = false;
         $modulo_index = 0;
-        $mails_index = 0;
+        $mails_index = 1;
         $firstid = null;
 
         $current_mail = new MySBMail('mail_mailing','dbmf3');
@@ -223,6 +223,7 @@ $this->replyto_addr.'?subject=Unsubscribe</a></small></p>');
 
         }
         if( $firstid!=null ) {
+            $current_mail->addBCC($app->auth_user->mail,$app->auth_user->lastname.' '.$app->auth_user->firstname);
             if( $this->mailing_sendaslist ) {
                 $current_mail->sendBCCIndividually();
             } elseif( !$current_mail->send(false) ) {
@@ -235,8 +236,19 @@ $this->replyto_addr.'?subject=Unsubscribe</a></small></p>');
         if( $this->mailing_sendaslist )
             $output .= '<samp>'.$current_mail->getError().'</samp>';
         $current_mail->close();
+        if( $mails_index>$maxbysend ) {
+            if( $data_result=MySBDB::fetch_array($results) ) {
+                $contact = new MySBDBMFContact(null,$data_result);
+                $rescue_mail = new MySBMail('mail_blank');
+                $rescue_mail->addTO($app->auth_user->mail,$app->auth_user->lastname.' '.$app->auth_user->firstname);
+                $rescue_mail->data['body'] = _G('DBMF_exportmailing_rescueid').': <b>'.$contact->id.'</b><br><br>';
+                $rescue_mail->data['subject'] = 'Rescue ID: '.$contact->id.' / '.$this->mailing_subject;
+                $rescue_mail->send();
+                $output .= _G('DBMF_exportmailing_nextid').': '.$contact->id.'<br>';
+            }
+        }
         $output .= '
-mails sent: '.$mails_index.'<br>
+'._G('DBMF_exportmailing_nbmail').': '.($mails_index-1).'<br>
 </p>';
 
         if($this->mailing_att1!='') unlink($this->mailing_att1);
