@@ -20,8 +20,18 @@ $contact = $app->tpl_currentcontact;
 if(isset($_POST['contact_delete'])) return;
 
 echo '
-<h1>'._G("DBMF_contact_edition").'</h1>
-<h2>'.$contact->lastname.' '.$contact->firstname.' ('.$contact->id.')</h2>';
+<h1 style="vertical-align: top; padding-top: 5px;">';
+    if( $contact->mail!='' ) 
+        echo '
+        <a href="mailto:'.$contact->mail.'">
+            <img    src="modules/dbmf3/images/mail_icon24.png" 
+                    alt="'._G('DBMF_mailto').' '.$contact->id.'" 
+                    title="'._G('DBMF_mailto').' '.$contact->lastname.' '.$contact->firstname.' ('.$contact->id.')"
+                    style="width: 18px; margin: 0px;"></a>';
+
+echo '
+    '.$contact->lastname.' '.$contact->firstname.' ('.$contact->id.')
+</h1>';
 
 echo '
 <form action="?mod=dbmf3&amp;tpl=editcontact&amp;contact_id='.$contact->id.'" method="post">

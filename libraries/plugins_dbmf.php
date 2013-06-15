@@ -126,24 +126,5 @@ class DBMFPluginsDisplayTel {
     }
 }
 
-class DBMFPluginsDisplayMail {
-    public function header($plugin) {
-        $output = '<td style="width: 24px;"></td>';
-        return $output;
-    }
-    public function td($contact) {
-        $output = '';
-        if($contact->b1r08!='') 
-            $output .= '
-        <a href="mailto:'.$contact->b1r08.'">
-            <img src="modules/dbmf3/images/mail_icon24.png" 
-                 alt="'._G('DBMF_mailto').' '.$contact->id.'" 
-                 title="'._G('DBMF_mailto').' '.$contact->lastname.' '.$contact->firstname.' ('.$contact->id.')">
-        </a>';
-        return '<td>'.$output.'</td>';
-    }
-
-}
-
 
 ?>

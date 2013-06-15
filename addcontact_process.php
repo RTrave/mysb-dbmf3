@@ -16,19 +16,29 @@ global $app;
 
 if(!MySBRoleHelper::checkAccess('dbmf_editor')) return;
 
-if(isset($_POST['lastname'])) {
-if(empty($_POST['lastname'])) {
+if( isset($_POST['lastname']) ) {
+if( empty($_POST['lastname']) and empty($_POST['firstname']) and empty($_POST['mail']) ) {
     $app->pushMessage(_G("DBMF_addcontact_lastname_required"));
 } else {
     $sql_wcheck = 'SELECT * from '.MySB_DBPREFIX.'dbmfcontacts '.
-        'WHERE lastname RLIKE \''.MySBUtil::str2whereclause($_POST['lastname']).'\' ';
-	if($_POST['firstname']!='') 
-	    $sql_wcheck = $sql_wcheck.' OR '.
-	        'firstname RLIKE \''.MySBUtil::str2whereclause($_POST['firstname']).'\' ';
-	$sql_wcheck = $sql_wcheck.' ORDER by lastname;';
-	$app->dbmf_req_wcheck = MySBDB::query($sql_wcheck,
-	    "addcontact_process.php",
-	    true, "dbmf3");
+        'WHERE ';
+    $sql_wcheck_cond = '';
+    if( $_POST['lastname']!='' ) 
+        $sql_wcheck_cond = 'lastname RLIKE \''.MySBUtil::str2whereclause($_POST['lastname']).'\' ';
+    if( $_POST['firstname']!='' ) {
+        if( $sql_wcheck_cond!= '' )
+            $sql_wcheck_cond .= ' OR ';
+        $sql_wcheck_cond .= 'firstname RLIKE \''.MySBUtil::str2whereclause($_POST['firstname']).'\' ';
+    }
+    if( $_POST['mail']!='' ) {
+        if( $sql_wcheck_cond!='' ) 
+            $sql_wcheck_cond .= ' OR ';
+        $sql_wcheck_cond .= 'mail RLIKE \''.MySBUtil::str2whereclause($_POST['mail']).'\' ';
+    }
+    $app->dbmf_req_wcheck = MySBDB::query($sql_wcheck.$sql_wcheck_cond.
+        ' ORDER by lastname;',
+        "addcontact_process.php",
+        true, "dbmf3");
 }
 }
 

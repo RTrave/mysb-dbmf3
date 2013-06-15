@@ -34,6 +34,7 @@ foreach($showcols->values as $br_id)
 foreach($pluginsDisplay as $plugin) 
     echo $plugin->displayTDHeader(1);
 echo '
+    <td style="width: 24px;"></td>
     <td><b>'._G("DBMF_common_lastname").'</b> '._G("DBMF_common_firstname").'</td>';
 foreach($pluginsDisplay as $plugin) 
     echo $plugin->displayTDHeader(2);
@@ -72,6 +73,16 @@ while($data_print = MySBDB::fetch_array($search_result)) {
     foreach($pluginsDisplay as $plugin) 
         echo $plugin->displayTD(1,$contact);
     echo '
+    <td>';
+    if( $contact->mail!='' ) 
+        echo '
+        <a href="mailto:'.$contact->mail.'">
+            <img src="modules/dbmf3/images/mail_icon24.png" 
+                 alt="'._G('DBMF_mailto').' '.$contact->id.'" 
+                 title="'._G('DBMF_mailto').' '.$contact->lastname.' '.$contact->firstname.' ('.$contact->id.')">
+        </a>';
+    echo '
+    </td>
     <td>
         <b>'.$contact->lastname.'</b> '.$contact->firstname;
     $date_modif = new MySBDateTime($contact->date_modif);

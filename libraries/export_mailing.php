@@ -210,12 +210,12 @@ $this->replyto_addr.'?subject=Unsubscribe</a></small></p>');
                 $output .= _G('DBMF_exportmailing_sendingnew')."!\n<br>";
             }
 
-            if($contact->b1r08!='') {
+            if($contact->mail!='') {
                 $modulo_index++;
                 $mails_index++;
                 if( $firstid==null ) 
                     $firstid = $contact->id;
-                $current_mail->addBCC($contact->b1r08,$contact->firstname.' '.$contact->lastname);
+                $current_mail->addBCC($contact->mail,$contact->firstname.' '.$contact->lastname);
             } else {
                 $output .=  _G('DBMF_exportmailing_sendingnomail').': '.
                             $contact->firstname.' '.$contact->lastname.' (id:'.$contact->id.')<br>';

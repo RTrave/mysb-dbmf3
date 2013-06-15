@@ -68,9 +68,9 @@ class MySBDBMFExportMailsCSV extends MySBDBMFExport {
                 $output .= "<br><br>\n";
             }
             $contact = new MySBDBMFContact(null,$data_result);
-            if($contact->b1r08!='') {
+            if($contact->mail!='') {
                  $modulo_index++;
-                 $output .= $contact->b1r08.'; ';
+                 $output .= $contact->mail.'; ';
             }
         }
         $output .= '

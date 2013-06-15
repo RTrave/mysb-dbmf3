@@ -14,7 +14,7 @@ defined('_MySBEXEC') or die;
 
 class MySBModule_dbmf3 {
 
-    public $version = 7;
+    public $version = 8;
 
     public function create() {
         global $app;
@@ -265,6 +265,19 @@ class MySBModule_dbmf3 {
             false, "dbmf3");
     }
 
+    public function init8() {
+        global $app;
+        MySBPluginHelper::delete('dbmf_showmail','dbmf3');
+        $req = MySBDB::query('ALTER TABLE '.MySB_DBPREFIX.'dbmfcontacts '.
+            'CHANGE COLUMN b1r08 mail varchar(512)',
+            "__init.php",
+            false, "dbmf3");
+        $req = MySBDB::query('DELETE FROM '.MySB_DBPREFIX.'dbmfblockrefs '.
+            'WHERE keyname=\'b1r08\'',
+            "__init.php",
+            false, "dbmf3");
+    }
+
     public function uninit() {
         global $app;
 
@@ -275,7 +288,6 @@ class MySBModule_dbmf3 {
         MySBDBMFExportHelper::delete(MySBDBMFExportHelper::getByName('DBMF_display')->id);
 
         //plugins
-        MySBPluginHelper::delete('dbmf_showmail','dbmf3');
         MySBPluginHelper::delete('dbmf_showorga','dbmf3');
         MySBPluginHelper::delete('dbmf_showtels','dbmf3');
 

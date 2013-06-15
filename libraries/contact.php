@@ -48,16 +48,16 @@ class MySBDBMFContact extends MySBObject {
 
 class MySBDBMFContactHelper {
 
-    public function create($lastname,$firstname) {
+    public function create($lastname,$firstname,$mail) {
         global $app;
         $cid = MySBDB::lastID('dbmfcontacts')+1;
         if($cid==0) $cid = 1;
         $today = getdate();
         $today_date = $today['year'].'-'.$today['mon'].'-'.$today['mday'].' '.$today['hours'].':'.$today['minutes'].':'.$today['seconds'];
         MySBDB::query('INSERT INTO '.MySB_DBPREFIX.'dbmfcontacts '.
-            '(id, lastname, firstname, date_creat, date_modif) VALUES '.
-            "(".$cid.", '".MySBUtil::str2db($lastname)."', '".MySBUtil::str2db($firstname)."', '".$today_date."', '".$today_date."' ); ",
-            "MySBDBMFContactHelper::create($lastname,$firstname)",
+            '(id, lastname, firstname, mail, date_creat, date_modif) VALUES '.
+            "(".$cid.", '".MySBUtil::str2db($lastname)."', '".MySBUtil::str2db($firstname)."', '".$mail."', '".$today_date."', '".$today_date."' ); ",
+            "MySBDBMFContactHelper::create($lastname,$firstname,$mail)",
             true, 'dbmf3' );
         $new_contact = new MySBDBMFContact($cid);
         $pluginsEvent = MySBPluginHelper::loadByType('DBMFEvent');

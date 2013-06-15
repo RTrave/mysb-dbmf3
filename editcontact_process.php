@@ -23,7 +23,7 @@ if(isset($_POST['contact_delete'])) {
 
 if(isset($_GET['contact_id'])) {
     if($_GET['contact_id']==-1 and MySBRoleHelper::checkAccess('dbmf_editor',false)) {
-        $contact = MySBDBMFContactHelper::create($_GET['lastname'], $_GET['firstname']);
+        $contact = MySBDBMFContactHelper::create($_POST['lastname'], $_POST['firstname'], $_POST['mail']);
         $app->pushMessage(_G('DBMF_contact_added'));
     } else {
         $contact = new MySBDBMFContact($_GET['contact_id']);
@@ -45,6 +45,7 @@ if(isset($_POST['contact_edit']) and MySBRoleHelper::checkAccess('dbmf_editor',f
     $contact_datas = array(
         'lastname' => $_POST['lastname'],
         'firstname' => $_POST['firstname'],
+        'mail' => $_POST['mail'],
         'date_modif' => $today_date );
     $blocks = MySBDBMFBlockHelper::load();
     foreach($blocks as $block) {

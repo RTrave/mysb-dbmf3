@@ -32,7 +32,7 @@ echo '
     </td>
 </tr>
 <tr>
-    <td><b>'._G("DBMF_common_lastname").':</b></td>';
+    <td style="text-align: right;"><b>'._G("DBMF_common_lastname").':</b></td>';
 if(MySBRoleHelper::checkAccess('dbmf_editor',false)) echo '
     <td><input type="text" name="lastname" size="24" maxlength="64" value="'.$contact->lastname.'"></td>';
 else echo '
@@ -40,11 +40,27 @@ else echo '
 echo '
 </tr>
 <tr>
-    <td><b>'._G("DBMF_common_firstname").':</b></td>';
+    <td style="text-align: right;"><b>'._G("DBMF_common_firstname").':</b></td>';
 if(MySBRoleHelper::checkAccess('dbmf_editor',false)) echo '
     <td><input type="text" name="firstname" size="24" maxlength="64" value="'.$contact->firstname.'"></td>';
 else echo '
     <td>'.$contact->firstname.'</td>';
+echo '
+</tr>
+';
+echo '
+<tr>
+    <td style="text-align: right;"><b>'._G("DBMF_common_mail").':</b></td>';
+if(MySBRoleHelper::checkAccess('dbmf_editor',false)) {
+    echo '
+    <td>';
+    echo '
+        <input type="text" name="mail" size="48" maxlength="64" value="'.$contact->mail.'">
+    </td>';
+} else {
+    echo '
+    <td>'.$contact->mail.'</td>';
+}
 echo '
 </tr>
 ';
