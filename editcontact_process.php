@@ -72,7 +72,7 @@ MySBDateTimeHelper::html_formLoad('memento_date_');
         $new_memento->update( array(
             'monthofyear_memento' => $_POST['memento_moy'] ) );
     }
-    if($_POST['memento_group_edition']=='OK') $group_edition = 1;
+    if($_POST['memento_group_edition']=='on') $group_edition = 1;
     else $group_edition = 0;
     $new_memento->update( array(
         'group_edition' => $group_edition,
