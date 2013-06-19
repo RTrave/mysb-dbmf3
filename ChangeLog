@@ -1,4 +1,157 @@
+2013-06-15  Roman Trave <abadcafe@free.fr>
+
+	* __init.php, addcontact.php, addcontact_process.php, editcontact.php, editcontact_process.php, libraries/contact.php, libraries/export_mailing.php, libraries/export_mails.php, libraries/plugins_dbmf.php, request_process.php, templates/common_edition.php, templates/contacts_display.php:
+	Mail is now a static field for contacts, no more a blockref (b1r08).
+
+	* editcontact_process.php: Fix memento_group_edition checkbox value.
+
+2013-06-14  Roman Trave <abadcafe@free.fr>
+
+	* libraries/export_mailing.php, locales/en/dbmf3.ini, locales/fr/dbmf3.ini:
+	Fixed and improved "rescue" process.
+
+2013-06-13  Roman Trave <abadcafe@free.fr>
+
+	* locales/en/dbmf3.ini, locales/fr/dbmf3.ini, libraries/export_mailing.php:
+	Few changes in parameters dislplay and list/unsubscribe handling.
+
+2013-06-12  Roman Trave <abadcafe@free.fr>
+
+	* libraries/export_mailing.php, locales/en/dbmf3.ini, locales/fr/dbmf3.ini:
+	Add unsubscribe process to mailing.
+
+	* locales/en/dbmf3.ini, locales/fr/dbmf3.ini, libraries/export_mailing.php:
+	Completly rewrited mailing export, with "as-list" options.
+
+2013-06-10  Roman Trave <abadcafe@free.fr>
+
+	* locales/en/dbmf3.ini, locales/fr/dbmf3.ini: Update locales.
+
+2013-06-07  Roman Trave <abadcafe@free.fr>
+
+	* libraries/export_mailing.php:
+	Added first ID sending entry to rescue mass mail fail.
+	When mass mail failed, output gives rescue ID.
+
+2013-05-05  Roman Trave <abadcafe@free.fr>
+
+	* __init.php, libraries/blockref.php: Fixes undelete plugin and typo.
+
+2013-04-16  Roman Trave <abadcafe@free.fr>
+
+	* locales/en/mail_sendtable.php, locales/fr/mail_sendtable.php:
+	Update mail templates to html.
+
+2013-04-13  Roman Trave <abadcafe@free.fr>
+
+	* libraries/export_display.php, libraries/export_update.php, libraries/plugins_dbmf.php, templates/common_edition.php, templates/contacts_display.php, addcontact.php, admindbmf.php, blockedit.php, dbmf3.css, editcontact.php, editmemento.php, export.php, infos.php, mementos.php, request.php:
+	HTML5 compliance changes.
+
+2013-03-16  Roman Trave <abadcafe@free.fr>
+
+	* libraries/export_mailing.php, dbmf3.css:
+	TinyMCE support added in mailing export.
+
+2013-03-14  Roman Trave <abadcafe@free.fr>
+
+	* locales/fr/dbmf3.ini, templates/common_edition.php, locales/en/dbmf3.ini:
+	Warning displayed before editing a memento, to prevent modified data loss.
+
+	* editmemento.php, templates/common_edition.php:
+	tinyEditor support added for mementos.
+
+	* editcontact_process.php: Fix missing memento type update.
+
+2013-03-10  Roman Trave <abadcafe@free.fr>
+
+	* editcontact_process.php: Fix DateTime typo.
+
+2013-02-22  Roman Trave <abadcafe@free.fr>
+
+	* addcontact.php, libraries/contact.php:
+	Fix a bug when " or ' are present in last or first name.
+
+	* libraries/export_mailing.php, locales/en/dbmf3.ini, locales/fr/dbmf3.ini:
+	Fix locales for ExportMailing attachments.
+
+	* export.php, files/index.html, libraries/export_csv.php, libraries/export_mailing.php:
+	New files/ repository to put in temporary files.
+	ExportCSV now use it.
+	ExportMailing now handle file attachments.
+
+	* libraries/export_display.php:
+	Fix block display in Display Parameters.
+
+2013-02-21  Roman Trave <abadcafe@free.fr>
+
+	* locales/fr/dbmf3.ini, templates/common_edition.php, __init.php, editcontact_process.php, editmemento.php, infos.php, libraries/contact.php, libraries/memento.php, locales/en/dbmf3.ini, mementos.php:
+	New group_edition and comments2 fields in mementos table.
+	New group access system, and few changes in display and access mementos
+	in regards with this.
+
+2013-02-19  Roman Trave <abadcafe@free.fr>
+
+	* admindbmf_process.php: Fix orphan search.
+
+	* admindbmf.php, admindbmf_process.php, locales/en/dbmf3.ini, locales/fr/dbmf3.ini:
+	Add orphans handling in DBMF administration.
+
+	* __init.php, blockedit.php, blockedit_process.php, libraries/blockref.php, libraries/export_display.php, locales/en/dbmf3.ini, locales/fr/dbmf3.ini:
+	Each BlockRef have now an OrderBy value, to be usable by request.
+
+	* __init.php, libraries/blockref.php, libraries/export_display.php, templates/contacts_display.php:
+	Add a custom user field in DB, handling columns shown.
+	Custom column display in results implemented.
+
+2013-02-18  Roman Trave <abadcafe@free.fr>
+
+	* locales/en/dbmf3.ini, locales/fr/dbmf3.ini, blockedit.php, blockedit_process.php, libraries/block.php:
+	Deleting blockref now have cofirmation.
+	Deleting block added.
+
+	* blockedit.php, blockedit_process.php, libraries/block.php:
+	Block indexation added, to handle display order.
+
+	* __init.php: Add block and blockref display table modifs and config.
+
+2013-02-11  Roman Trave <abadcafe@free.fr>
+
+	* libraries/memento.php, locales/en/dbmf3.ini, locales/fr/dbmf3.ini, templates/common_edition.php, dbmf3.css, mementos.php:
+	Optimized display of mementos summary.
+	Edition link directly edit the memento.
+
+	* libraries/contact.php: Caching contact fetched array.
+
+	* locales/en/dbmf3.ini, locales/fr/dbmf3.ini, libraries/memento.php, mementos.php, mementos_process.php:
+	Unprocessing feature added to mementos usage.
+
+	* dbmf3.css, request.php: Refocused display of frontpage.
+
+2013-02-09  Roman Trave <abadcafe@free.fr>
+
+	* locales/fr/dbmf3.ini, templates/common_edition.php, editcontact_process.php, editmemento.php, libraries/memento.php, locales/en/dbmf3.ini, mementos.php:
+	"MONTHOFDAY" mementos type added.
+
+2013-02-08  Roman Trave <abadcafe@free.fr>
+
+	* locales/en/dbmf3.ini, locales/fr/dbmf3.ini, request.php, request_process.php:
+	Request by ID added on frontpage.
+
+	* dbmf3.css: New CSS added, automaticly loaded.
+
+	* infos.php, libraries/memento.php, locales/en/dbmf3.ini, locales/fr/dbmf3.ini, mementos.php, mementos_process.php, templates/common_edition.php, __init.php:
+	New mementos resume page, with processing functionality.
+	Actives mementos check added in infos frontpage.
+
+2013-01-28  Roman Trave <abadcafe@free.fr>
+
+	* libraries/memento.php, locales/en/dbmf3.ini, locales/fr/dbmf3.ini, templates/common_edition.php, __init.php, editcontact_process.php, editmemento.php, editmemento_process.php, framework.php:
+	New MySBDBMFMemento class and implementation added, handling an
+	advanced contact alert system.
+
 2012-12-29  Roman Trave <abadcafe@free.fr>
+
+	* ChangeLog: Updated ChangeLog.
 
 	* ChangeLog: Ready to tag release: rel1a.
 
