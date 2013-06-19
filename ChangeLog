@@ -1,3 +1,7 @@
+2013-06-19  Roman Trave <abadcafe@free.fr>
+
+	* ChangeLog: Ready to tag: rel1b.
+
 2013-06-15  Roman Trave <abadcafe@free.fr>
 
 	* __init.php, addcontact.php, addcontact_process.php, editcontact.php, editcontact_process.php, libraries/contact.php, libraries/export_mailing.php, libraries/export_mails.php, libraries/plugins_dbmf.php, request_process.php, templates/common_edition.php, templates/contacts_display.php:
