@@ -38,6 +38,13 @@ if( isset($_POST['dbmf_request'])
 ';
 }
 
+if( isset($_POST['search_name']) ) $search_name = $_POST['search_name'];
+else $search_name = '';
+if( isset($_POST['search_all']) ) $search_all = $_POST['search_all'];
+else $search_all = '';
+if( isset($_POST['search_byid']) ) $search_byid = $_POST['search_byid'];
+else $search_byid = '';
+
 echo '
 <h2>'._G('DBMF_search').'</h2>
 
@@ -50,15 +57,15 @@ echo '
 <tr>
     <td class="lpadding">
         '._G('DBMF_search_lastname').': <br>
-        <input type="text" name="search_name" size="24" maxlength="64" value="'.$_POST['search_name'].'">
+        <input type="text" name="search_name" size="24" maxlength="64" value="'.$search_name.'">
     </td>
     <td class="lpadding">
         '._G('DBMF_search_all_fields').': <br>
-        <input type="text" name="search_all" size="24" maxlength="64" value="'.$_POST['search_all'].'">
+        <input type="text" name="search_all" size="24" maxlength="64" value="'.$search_all.'">
     </td>
     <td class="lpadding">
         '._G('DBMF_search_byid').': <br>
-        <input type="text" name="search_byid" size="8" maxlength="64" value="'.$_POST['search_byid'].'">
+        <input type="text" name="search_byid" size="8" maxlength="64" value="'.$search_byid.'">
     </td>
 </tr>
 <tr>

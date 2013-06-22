@@ -52,7 +52,9 @@ class MySBDBMFExportCSV extends MySBDBMFExport {
     }
 
     public function requestOrderBy() {
-        return $_POST["dbmf_exportcsv_orderby$this->id"];
+        if( isset($_POST["dbmf_exportcsv_orderby$this->id"]) ) 
+            return $_POST["dbmf_exportcsv_orderby$this->id"];
+        return '';
     }
 
     private function keyname2red($strdb) {
@@ -120,11 +122,12 @@ CSV output: '.MySBDB::num_rows($results).' results<br>
             fputcsv($ftable,$tablin,';','"');
         }
         fclose($ftable);
-        $stmail = new MySBMail('mail_sendtable','dbmf3');
+        $stmail = new MySBMail('sendtable','dbmf3');
         $stmail->addTO($app->auth_user->mail,$app->auth_user->firstname.' '.$app->auth_user->lastname);
         if($this->csv_filename=='.csv') $csv_filename = 'sendtable.csv';
         else $csv_filename = $this->csv_filename;
         $stmail->addAttachment($path_file,$csv_filename);
+        $stmail->data['geckos'] = $app->auth_user->firstname.' '.$app->auth_user->lastname;
         $stmail->data['infos'] = $this->csv_fileinfos;
         $stmail->send();
         unlink($path_file);

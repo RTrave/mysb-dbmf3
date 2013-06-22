@@ -25,7 +25,7 @@ echo '
 </div>
 ';
 
-if($_GET['filter']=='all') {
+if( isset($_GET['filter']) and $_GET['filter']=='all' ) {
     $mementos_p = MySBDBMFMementoHelper::load();
     echo '
 <h2>'._G('DBMF_mementos_all').' ('.count($mementos_p).')</h2>';
@@ -37,6 +37,7 @@ if($_GET['filter']=='all') {
 
 
 $memento_type = -1;
+$anchor_nb = 0;
 
 foreach($mementos_p as $memento) {
     if($memento->type!=$memento_type) {
@@ -72,18 +73,19 @@ foreach($mementos_p as $memento) {
     if($Active) $memclass = 'class="mem_active"';
     elseif(!$Active and $memento->date_process!='') $memclass = 'class="mem_processed"';
     else $memclass='';
+    $anchor_nb++;
     echo '
 <tr '.$memclass.'>
     <td>';
     if($memento->isEditable()) echo '
-        <a  name="contact'.$anchor_nb.'"
+        <a  name="memento'.$anchor_nb.'"
             href="javascript:editwinopen(\'index_wom.php?mod=dbmf3&amp;tpl=editmemento&amp;memento_id='.$memento->id.'\',\'contactinfos\')"><b>'.$memento->getDate().'</b></a>';
     else echo '
         '.$memento->getDate().'';
     echo '
     </td>
     <td>
-        <a  name="contact'.$anchor_nb.'"
+        <a  name="memento'.$anchor_nb.'"
             href="javascript:editwinopen(\'index_wom.php?mod=dbmf3&amp;tpl=editcontact&amp;contact_id='.$contact->id.'\',\'contactinfos\')">
         <img src="modules/dbmf3/images/edit_icon24.png" alt="Edition '.$contact->id.'" title="'._G('DBMF_edit').' '.$contact->lastname.' '.$contact->firstname.' (memento '.$memento->id.')">
         </a>
@@ -109,13 +111,13 @@ foreach($mementos_p as $memento) {
     <td style="text-align: center;">';
     if($Active) {
         echo '
-        <form action="index.php?mod=dbmf3&amp;tpl=mementos&amp;filter='.$_GET['filter'].'" method="post">
+        <form action="" method="post">
             <input type="hidden" name="memento_process" value="'.$memento->id.'">
             <input type="submit" value="'._G('DBMF_memento_process_submit').'">
         </form>';
     } elseif(!$Active and $memento->date_process!='') {
         echo '
-        <form action="index.php?mod=dbmf3&amp;tpl=mementos&amp;filter='.$_GET['filter'].'" method="post">
+        <form action="" method="post">
             <input type="hidden" name="memento_unprocess" value="'.$memento->id.'">
             <input type="submit" value="'._G('DBMF_memento_unprocess_submit').'">
         </form>';

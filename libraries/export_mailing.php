@@ -106,9 +106,11 @@ class MySBDBMFExportMailing extends MySBDBMFExport {
             $this->replyto_addr = MySBConfigHelper::Value('technical_contact');
             $this->replyto_geck = '';
         }
-        if( $_POST['dbmf_exportmailing_sendaslist']!='' ) $this->mailing_sendaslist = true;
+        if( isset($_POST['dbmf_exportmailing_sendaslist']) and $_POST['dbmf_exportmailing_sendaslist']!='' ) 
+            $this->mailing_sendaslist = true;
         else $this->mailing_sendaslist = false;
-        if( $_POST['dbmf_exportmailing_unsubscribefields']!='' ) $this->mailing_unsubscribefields = true;
+        if( isset($_POST['dbmf_exportmailing_unsubscribefields']) and $_POST['dbmf_exportmailing_unsubscribefields']!='' ) 
+            $this->mailing_unsubscribefields = true;
         else $this->mailing_unsubscribefields = false;
         $this->mailing_firstid = $_POST['dbmf_exportmailing_firstid'];
         $this->mailing_subject = $_POST['dbmf_exportmailing_subject'];
@@ -119,16 +121,19 @@ class MySBDBMFExportMailing extends MySBDBMFExport {
             move_uploaded_file($_FILES['dbmf_exportmailing_att1']['tmp_name'],$uploaddir.$_FILES['dbmf_exportmailing_att1']['name']);
             $this->mailing_att1 = $uploaddir.$_FILES['dbmf_exportmailing_att1']['name'];
         }
+        else $this->mailing_att1 = "";
         if( !empty($_FILES['dbmf_exportmailing_att2']['name']) and 
             !empty($_FILES['dbmf_exportmailing_att2']['tmp_name']) ) {
             move_uploaded_file($_FILES['dbmf_exportmailing_att2']['tmp_name'],$uploaddir.$_FILES['dbmf_exportmailing_att2']['name']);
             $this->mailing_att2 = $uploaddir.$_FILES['dbmf_exportmailing_att2']['name'];
         }
+        else $this->mailing_att2 = "";
         if( !empty($_FILES['dbmf_exportmailing_att3']['name']) and 
             !empty($_FILES['dbmf_exportmailing_att3']['tmp_name']) ) {
             move_uploaded_file($_FILES['dbmf_exportmailing_att3']['tmp_name'],$uploaddir.$_FILES['dbmf_exportmailing_att3']['name']);
             $this->mailing_att3 = $uploaddir.$_FILES['dbmf_exportmailing_att3']['name'];
         }
+        else $this->mailing_att3 = "";
     }
 
     /**
@@ -170,13 +175,13 @@ class MySBDBMFExportMailing extends MySBDBMFExport {
         $mails_index = 1;
         $firstid = null;
 
-        $current_mail = new MySBMail('mail_mailing','dbmf3');
+        $current_mail = new MySBMail('mailing','dbmf3');
         if( $this->replyto_geck!='' ) $current_mail->setReplyTo($this->replyto_addr,$this->replyto_geck);
         if( $this->mailing_att1!='' ) $current_mail->addAttachment($this->mailing_att1);
         if( $this->mailing_att2!='' ) $current_mail->addAttachment($this->mailing_att2);
         if( $this->mailing_att3!='' ) $current_mail->addAttachment($this->mailing_att3);
         if( $this->mailing_unsubscribefields ) {
-            $current_mail->addHeader('List-Unsubscribe: <mailto:'.$this->replyto_addr.'?subject=Unsubscribe>');
+            //$current_mail->addHeader('List-Unsubscribe: <mailto:'.$this->replyto_addr.'?subject=Unsubscribe>');
             $current_mail->addFooter('
 <p></p>
 <p style="text-align: center; background-color: #cccccc;"><small>'._G('DBMF_exportmailing_unsubscribe').
@@ -239,7 +244,7 @@ $this->replyto_addr.'?subject=Unsubscribe</a></small></p>');
         if( $mails_index>$maxbysend ) {
             if( $data_result=MySBDB::fetch_array($results) ) {
                 $contact = new MySBDBMFContact(null,$data_result);
-                $rescue_mail = new MySBMail('mail_blank');
+                $rescue_mail = new MySBMail('blank');
                 $rescue_mail->addTO($app->auth_user->mail,$app->auth_user->lastname.' '.$app->auth_user->firstname);
                 $rescue_mail->data['body'] = _G('DBMF_exportmailing_rescueid').': <b>'.$contact->id.'</b><br><br>';
                 $rescue_mail->data['subject'] = 'Rescue ID: '.$contact->id.' / '.$this->mailing_subject;

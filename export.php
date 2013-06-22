@@ -108,12 +108,11 @@ foreach($blocks as $block) {
 </tr>';
         foreach($block->blockrefs as $blockref) {
             if($blockref->isActive()) {
-                $refname = $blockref->keyname;
                 echo '
-<tr style="'.$class_edit.'">
+<tr>
     <td style="vertical-align: top; text-align: right;">'._G($blockref->lname).':</td>
     <td>';
-                echo $blockref->htmlFormWhereClause('br',$contact->$refname);
+                echo $blockref->htmlFormWhereClause('br');
                 echo '
     </td>
 </tr>';

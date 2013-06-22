@@ -47,10 +47,9 @@ if(!isset($_SESSION['dbmf3_baseinfos_date'])) {
     if($clause_owner=='') {
         $app->pushAlert(_G('DBMF_no_rights'));
     }
-    $clause_t .= '('.$clause_owner.')';
+    $clause_t = '('.$clause_owner.')';
     if($clause_t!='()') $sql_r .= 'WHERE '.$clause_t.' ';
-    //$sql_r .= 'ORDER by lastname';
-	//$_SESSION['dbmf_search_query'] = $sql_r;
+
 	$infosava_result = MySBDB::query( $sql_r,
 	    "infos.php",
 	    false, 'dbmf3');

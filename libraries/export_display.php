@@ -116,7 +116,7 @@ class MySBDBMFExportDisplay extends MySBDBMFExport {
         foreach($blocks as $block) {
             if($block->isViewable()) {
                 foreach($block->blockrefs as $blockref) {
-                    if($blockref->isActive() and $_POST['display_'.$blockref->id]=='on') {
+                    if($blockref->isActive() and isset($_POST['display_'.$blockref->id]) and $_POST['display_'.$blockref->id]=='on') {
                         //$app->tpl_display_columns[] = $blockref;
                         $showcols->add($blockref->id);
                     }

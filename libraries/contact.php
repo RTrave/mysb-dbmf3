@@ -25,7 +25,7 @@ class MySBDBMFContact extends MySBObject {
         global $app;
         if(!isset($app->dbmf_cache_contacts)) $app->dbmf_cache_contacts = array();
         if($id!=null) {
-            if($app->dbmf_cache_contacts[$id]!='') {
+            if( isset($app->dbmf_cache_contacts[$id]) and $app->dbmf_cache_contacts[$id]!='' ) {
                 $data_contact = $app->dbmf_cache_contacts[$id];
             } else { 
                 $req_contact = MySBDB::query("SELECT * FROM ".MySB_DBPREFIX.'dbmfcontacts '.

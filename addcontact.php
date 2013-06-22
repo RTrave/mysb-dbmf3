@@ -18,7 +18,7 @@ echo '
 <h1>'._G('DBMF_addcontact').'</h1>
 <p>';
 
-if($app->dbmf_req_wcheck!='') {
+if( isset($app->dbmf_req_wcheck) and $app->dbmf_req_wcheck!='' ) {
 
     while($data_wcheck = MySBDB::fetch_array($app->dbmf_req_wcheck)) {
         echo '
@@ -47,11 +47,11 @@ if($app->dbmf_req_wcheck!='') {
 <p>
 <input type="hidden" name="add_status" value="1">
 <b>'._G('DBMF_common_lastname').':</b>
-<input type="text" name="lastname" size="24" maxlength="64" value="'.$data_x['lastname'].'"><br>
+<input type="text" name="lastname" size="24" maxlength="64" value=""><br>
 <b>'._G('DBMF_common_firstname').':</b>
-<input type="text" name="firstname" size="24" maxlength="64" value="'.$data_x['firstname'].'"><br>
+<input type="text" name="firstname" size="24" maxlength="64" value=""><br>
 <b>'._G('DBMF_common_mail').':</b>
-<input type="text" name="mail" size="24" maxlength="64" value="'.$data_x['mail'].'"><br>
+<input type="text" name="mail" size="24" maxlength="64" value=""><br>
 <br>
 <input type="submit" value="'._G('DBMF_addcontact_verify').'">
 </p>
