@@ -44,6 +44,18 @@ class MySBDBMFContact extends MySBObject {
         parent::update('dbmfcontacts', (array) ($data_contact));
     }
 
+    public function addMementoSimple($message) {
+        global $app;
+        $memento = MySBDBMFMementoHelper::create($app->auth_user->id,$this->id,MYSB_DBMF_MEMENTO_TYPE_PUNCTUAL);
+        $today = getdate();
+        $today_date =   $today['year'].'-'.$today['mon'].'-'.$today['mday'].' '.
+                        $today['hours'].':'.$today['minutes'].':'.$today['seconds'];
+        $memento->update( array(
+            'date_memento' => $today_date,
+            'comments' => $message,
+            'group_edition' => 1 ) );
+    }
+
 }
 
 class MySBDBMFContactHelper {

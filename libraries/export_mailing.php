@@ -169,12 +169,6 @@ class MySBDBMFExportMailing extends MySBDBMFExport {
 </div>
 <p>';
 
-        if( $this->mailing_firstid!='' ) $recup_flag = true;
-        else $recup_flag = false;
-        $modulo_index = 0;
-        $mails_index = 1;
-        $firstid = null;
-
         $current_mail = new MySBMail('mailing','dbmf3');
         if( $this->replyto_geck!='' ) $current_mail->setReplyTo($this->replyto_addr,$this->replyto_geck);
         if( $this->mailing_att1!='' ) $current_mail->addAttachment($this->mailing_att1);
@@ -191,75 +185,135 @@ $this->replyto_addr.'?subject=Unsubscribe</a></small></p>');
         $current_mail->data['body'] = $this->mailing_body;
         $current_mail->data['subject'] = $this->mailing_subject;
 
-        while($mails_index<=$maxbysend) {
+        if( $this->mailing_firstid!='' ) $recup_flag = true;
+        else $recup_flag = false;
 
-            if( !$data_result=MySBDB::fetch_array($results) ) {
-                break;
-            }
-            $contact = new MySBDBMFContact(null,$data_result);
-            if( $recup_flag==true and $contact->id!=$this->mailing_firstid )
-                continue;
-            if( $recup_flag==true and $contact->id==$this->mailing_firstid )
-                $recup_flag = false;
-            if( $modulo_index>=$modulo ) {
-                $modulo_index = 0;
-                if( $this->mailing_sendaslist ) {
-                    $current_mail->sendBCCIndividually();
-                } elseif( !$current_mail->send(false) ) {
-                    $output .= '<samp>'.$current_mail->getError().'</samp>';
-                    $output .= 'Last ID tried: <b>'.$firstid.'</b></p>';
-                    return $output;
-                }
-                $current_mail->clearRecipients();
-                $firstid = null;
-                $output .= _G('DBMF_exportmailing_sendingnew')."!\n<br>";
-            }
+        $this->bad_adresses = array();
+        $this->mailing_flag = true;
+        $mails_index = 0;
+        $this->firstid = null;
+        $this->count = 0;
 
-            if($contact->mail!='') {
-                $modulo_index++;
-                $mails_index++;
-                if( $firstid==null ) 
-                    $firstid = $contact->id;
-                $current_mail->addBCC($contact->mail,$contact->firstname.' '.$contact->lastname);
-            } else {
-                $output .=  _G('DBMF_exportmailing_sendingnomail').': '.
-                            $contact->firstname.' '.$contact->lastname.' (id:'.$contact->id.')<br>';
-            }
+        while($this->mailing_flag) {
 
-        }
-        if( $firstid!=null ) {
-            $current_mail->addBCC($app->auth_user->mail,$app->auth_user->lastname.' '.$app->auth_user->firstname);
-            if( $this->mailing_sendaslist ) {
-                $current_mail->sendBCCIndividually();
-            } elseif( !$current_mail->send(false) ) {
-                $output .= '<samp>'.$current_mail->getError().'</samp>';
-                $output .= 'Last ID tried: <b>'.$firstid.'</b></p>';
-                return $output;
-            }
-            $output .= _G('DBMF_exportmailing_sendinglast')."!\n<br>";
-        }
-        if( $this->mailing_sendaslist )
-            $output .= '<samp>'.$current_mail->getError().'</samp>';
-        $current_mail->close();
-        if( $mails_index>$maxbysend ) {
-            if( $data_result=MySBDB::fetch_array($results) ) {
+            $modulo_index = 0;
+            $this->mailinglist = array();
+            while(  $data_result=MySBDB::fetch_array($results) ) {
                 $contact = new MySBDBMFContact(null,$data_result);
-                $rescue_mail = new MySBMail('blank');
-                $rescue_mail->addTO($app->auth_user->mail,$app->auth_user->lastname.' '.$app->auth_user->firstname);
-                $rescue_mail->data['body'] = _G('DBMF_exportmailing_rescueid').': <b>'.$contact->id.'</b><br><br>';
-                $rescue_mail->data['subject'] = 'Rescue ID: '.$contact->id.' / '.$this->mailing_subject;
-                $rescue_mail->send();
-                $output .= _G('DBMF_exportmailing_nextid').': '.$contact->id.'<br>';
+                if( $recup_flag==true and $contact->id!=$this->mailing_firstid )
+                    continue;
+                if( $recup_flag==true and $contact->id==$this->mailing_firstid )
+                    $recup_flag = false;
+                if( $contact->mail!='' ) {
+                    $multiaddress = explode( ',', $contact->mail );
+                    foreach( $multiaddress as $singaddress )
+                        $this->mailinglist[$singaddress] = $contact;
+                    if( $this->firstid==null )
+                        $this->firstid = $contact->id;
+                    $mails_index++;
+                    $modulo_index++;
+                } else {
+                    $output .=  '<small>'._G('DBMF_exportmailing_sendingnomail').': '.
+                    $contact->firstname.' '.$contact->lastname.' (id:'.$contact->id.')</small><br>';
+                }
+                if( $mails_index>=$maxbysend or
+                    $modulo_index>=$modulo )
+                    break;
             }
+            if( $mails_index==$maxbysend or !$data_result )
+                $this->mailing_flag = false;
+
+            $output .= $this->sendMail($current_mail);
+
         }
+
+        $current_mail->close();
+        
         $output .= '
-'._G('DBMF_exportmailing_nbmail').': '.($mails_index-1).'<br>
+'._G('DBMF_exportmailing_nbmail').': '.($mails_index).'<br>
 </p>';
+
+        if( $mails_index==$maxbysend and ($data_result=MySBDB::fetch_array($results)) ) {
+            $contact = new MySBDBMFContact(null,$data_result);
+            $output .= _G('DBMF_exportmailing_nextid').': '.$contact->id.'<br>';
+            $rescue_mail = new MySBMail('blank');
+            $rescue_mail->addTO($app->auth_user->mail,$app->auth_user->lastname.' '.$app->auth_user->firstname);
+            $rescue_mail->data['body'] = _G('DBMF_exportmailing_nextid').': <b>'.$contact->id.'</b><br><br>';
+            $rescue_mail->data['subject'] = 'Next ID: '.$contact->id.' / '.$this->mailing_subject;
+            $rescue_mail->send();
+        }
+
+        if( $this->firstid!=null ) {
+            $output .= _G('DBMF_exportmailing_errorid').': '.$this->firstid.'<br>';
+            $rescue_mail = new MySBMail('blank');
+            $rescue_mail->addTO($app->auth_user->mail,$app->auth_user->lastname.' '.$app->auth_user->firstname);
+            $rescue_mail->data['body'] = _G('DBMF_exportmailing_errorid').': <b>'.$this->firstid.'</b><br><br>';
+            $rescue_mail->data['subject'] = 'Rescue ID: '.$this->firstid.' / '.$this->mailing_subject;
+            $rescue_mail->send();
+        }
 
         if($this->mailing_att1!='') unlink($this->mailing_att1);
         if($this->mailing_att2!='') unlink($this->mailing_att2);
         if($this->mailing_att3!='') unlink($this->mailing_att3);
         return $output;
+    }
+
+    public function sendMail($smail) {
+        global $app;
+        $this->count++;
+        $output .= _G('DBMF_exportmailing_sendingnew')." ".$this->count."<br>";
+        $mail_sent = false;
+        $this->previous_error = '';
+        while( !$mail_sent ) {
+            $tmp_mail = clone $smail;
+            $tmp_mail->clearRecipients();
+            foreach( $this->mailinglist as $address=>$contact ) 
+                if( $contact!=null ) {
+                    $tmp_mail->addBCC( $address, $contact->firstname.' '.$contact->lastname );
+                }
+            if( $this->mailing_sendaslist ) {
+                $tmp_mail->sendBCCIndividually();
+                $mail_sent = true;
+            } else {
+                if( !$tmp_mail->send(false) ) {
+                    $output .= '<samp>'.$tmp_mail->getError().'</samp>';
+                    if( !$this->checkMailError($tmp_mail->getError()) ) {
+                        $output .= 'Last ID tried: <b>'.$this->firstid.'</b></p>';
+                        return $output;
+                    } else {
+                        foreach($this->bad_adresses as $badaddress)
+                            if( isset($this->mailinglist[$badaddress]) ) {
+                                $output .= '<small><i>'.$badaddress.' removed!</i></small><br>';
+                                if( $this->mailinglist[$badaddress]!=null ) {
+                                    $this->mailinglist[$badaddress]->addMementoSimple(
+                                            'bad address: '.$this->mailinglist[$badaddress]->mail.'<br>'.
+                                            $tmp_mail->getError() );
+                                    $this->mailinglist[$badaddress]->update( array('mail' => '' ) );
+                                }
+                                $this->mailinglist[$badaddress] = null;
+                            }
+                    }
+                } else $mail_sent = true;
+            }
+        }
+        $this->firstid = null;
+        return $output;
+    }
+
+    public function checkMailError($error) {
+        global $app;
+        if( $this->previous_error==$error )
+            return false;
+        $this->previous_error = $error;
+        $check = false;
+        $badmails = MySBUtil::extractEmails($error);
+        foreach($badmails as $badmail) {
+            if( $badmail!=$app->auth_user->mail and $badmail!=MySBConfigHelper::Value('technical_contact') ) {
+                $this->bad_adresses[$badmail] = $badmail;
+                $check = true;
+            }
+        }
+        return $check;
     }
 
 }
