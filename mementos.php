@@ -78,14 +78,13 @@ foreach($mementos_p as $memento) {
 <tr '.$memclass.'>
     <td>';
     if($memento->isEditable()) echo '
-        <a  name="memento'.$anchor_nb.'"
-            href="javascript:editwinopen(\'index_wom.php?mod=dbmf3&amp;tpl=editmemento&amp;memento_id='.$memento->id.'\',\'contactinfos\')"><b>'.$memento->getDate().'</b></a>';
+        <a  href="javascript:editwinopen(\'index_wom.php?mod=dbmf3&amp;tpl=editmemento&amp;memento_id='.$memento->id.'\',\'contactinfos\')"><b>'.$memento->getDate().'</b></a>';
     else echo '
         '.$memento->getDate().'';
     echo '
     </td>
     <td>
-        <a  name="memento'.$anchor_nb.'"
+        <a  id="memento'.$anchor_nb.'"
             href="javascript:editwinopen(\'index_wom.php?mod=dbmf3&amp;tpl=editcontact&amp;contact_id='.$contact->id.'\',\'contactinfos\')">
         <img src="modules/dbmf3/images/edit_icon24.png" alt="Edition '.$contact->id.'" title="'._G('DBMF_edit').' '.$contact->lastname.' '.$contact->firstname.' (memento '.$memento->id.')">
         </a>
@@ -111,13 +110,13 @@ foreach($mementos_p as $memento) {
     <td style="text-align: center;">';
     if($Active) {
         echo '
-        <form action="" method="post">
+        <form action="#memento'.($anchor_nb-1).'" method="post">
             <input type="hidden" name="memento_process" value="'.$memento->id.'">
             <input type="submit" value="'._G('DBMF_memento_process_submit').'">
         </form>';
     } elseif(!$Active and $memento->date_process!='') {
         echo '
-        <form action="" method="post">
+        <form action="#memento'.($anchor_nb-1).'" method="post">
             <input type="hidden" name="memento_unprocess" value="'.$memento->id.'">
             <input type="submit" value="'._G('DBMF_memento_unprocess_submit').'">
         </form>';
