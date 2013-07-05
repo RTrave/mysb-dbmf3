@@ -221,10 +221,10 @@ class MySBModule_dbmf3 {
             'group_id int, '.
             'contact_id int, '.
             'type int, '.
-            'date_memento date, '.
+            'date_memento datetime, '.
             'dayofmonth_memento int, '.
             'monthofyear_memento int, '.
-            'date_process date, '.
+            'date_process datetime, '.
             'comments varchar(512) )',
             "__init.php",
             false, "dbmf3");

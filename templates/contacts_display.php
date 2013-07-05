@@ -86,7 +86,7 @@ while($data_print = MySBDB::fetch_array($search_result)) {
     <td>
         <b>'.$contact->lastname.'</b> '.$contact->firstname;
     $date_modif = new MySBDateTime($contact->date_modif);
-    $daysold = $date_modif->getRest();
+    $daysold = $date_modif->absDiff();
     echo '<br><small>'.sprintf(_G('DBMF_days_old'),$daysold).'</small>';
     echo '
     </td>';

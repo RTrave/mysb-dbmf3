@@ -90,11 +90,12 @@ class MySBDBMFMemento extends MySBObject {
         switch($this->type) {
             case MYSB_DBMF_MEMENTO_TYPE_PUNCTUAL:
                 $memento_date = new MySBDateTime($this->date_memento);
-                if($memento_date->getRest()<0) return false;
+                if($memento_date->absDiff('h')<0) return false;
                 if($this->date_process=='') return true;
                 $process_date = new MySBDateTime($this->date_process);
                 //echo $memento_date->getRest($process_date);
-                if($memento_date->getRest($process_date)>=0) return false;
+                //if($memento_date->getRest($process_date)>=0) return false;
+                if($memento_date->absDiff('h',$process_date)>=0) return false;
                 return true;
             case MYSB_DBMF_MEMENTO_TYPE_MONTHOFYEAR:
                 $current_date = new MySBDateTime('now');
@@ -104,10 +105,11 @@ class MySBDBMFMemento extends MySBObject {
                 $memento_date = new MySBDateTime($cyear.'-'.$this->monthofyear_memento.'-1');
                 //echo $memento_date->strEBY_l();
                 //echo '/'.$memento_date->getRest();
-                if($memento_date->getRest()<0) return false;
+                //if($memento_date->getRest()<0) return false;
+                if($memento_date->absDiff('h')<0) return false;
                 if($this->date_process=='') return true;
                 $process_date = new MySBDateTime($this->date_process);
-                if($memento_date->getRest($process_date)>=0) return false;
+                if($memento_date->absDiff('h',$process_date)>=0) return false;
                 return true;
             case MYSB_DBMF_MEMENTO_TYPE_DAYOFMONTH:
                 ;
