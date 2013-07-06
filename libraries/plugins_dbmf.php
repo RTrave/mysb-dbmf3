@@ -77,7 +77,8 @@ class MySBPluginDBMFDisplay extends MySBPlugin {
     public function __construct($plugin = array()) {
         parent::__construct((array) ($plugin));
         $PlugHelper = $this->value0;
-        $this->plugref = new $PlugHelper();
+        if( class_exists($PlugHelper) )
+            $this->plugref = new $PlugHelper();
     }
 
     /**
