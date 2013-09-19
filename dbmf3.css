@@ -82,12 +82,17 @@ vertical-align: middle;
 div#dbmfMemento {
 font-size: 90%;
 }
+
+#dbmfMemento table {
+margin: 0px;
+}
+
 #dbmfMemento tr {
 background-color: transparent;
 }
 
 #dbmfMemento td.infos {
-width: 240px;
+width: 200px;
 }
 #dbmfMemento div.floatingcell{
 float: left;
@@ -98,13 +103,17 @@ width: 80px;
 #dbmfMemento div.name{
 text-align: left;
 font-size: 90%;
-width: 160px
+width: 120px;
 }
 
 #dbmfMemento td.comments{
 vertical-align: top;
 text-align: left;
 font-size: 90%;
+}
+
+#dbmfMemento p.rteditor {
+padding: 2px 3px;
 }
 
 #dbmfMemento td.actions{

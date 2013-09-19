@@ -67,7 +67,7 @@ foreach($mementos_p as $memento) {
 
     echo '
 <div class="cell roundtop roundbottom '.$memclass.'" id="dbmfMemento">
-<table style="width: 98%; background-color: transparent;"><tbody>
+<table style="width: 100%; background-color: transparent;"><tbody>
 <tr>
     <td class="infos">
         <div class="date floatingcell">';
