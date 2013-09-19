@@ -38,43 +38,38 @@ if( isset($_POST['dbmf_request'])
 ';
 }
 
+/*
 if( isset($_POST['search_name']) ) $search_name = $_POST['search_name'];
 else $search_name = '';
 if( isset($_POST['search_all']) ) $search_all = $_POST['search_all'];
 else $search_all = '';
 if( isset($_POST['search_byid']) ) $search_byid = $_POST['search_byid'];
 else $search_byid = '';
+*/
+
+if( !isset($_POST['search_type']) ) $_POST['search_type'] = 'lastname';
+if( !isset($_POST['search_name']) ) $_POST['search_name'] = '';
 
 echo '
 <h2>'._G('DBMF_search').'</h2>
 
-<h3>'._G('DBMF_search_keyword').'</h3>
-
 <form action="index.php" method="post">
 
-<div class="table_support">
-<table style="border: 0px; width: 90%;">
-<tr>
-    <td class="lpadding">
-        '._G('DBMF_search_lastname').': <br>
-        <input type="text" name="search_name" size="24" maxlength="64" value="'.$search_name.'">
-    </td>
-    <td class="lpadding">
-        '._G('DBMF_search_all_fields').': <br>
-        <input type="text" name="search_all" size="24" maxlength="64" value="'.$search_all.'">
-    </td>
-    <td class="lpadding">
-        '._G('DBMF_search_byid').': <br>
-        <input type="text" name="search_byid" size="8" maxlength="64" value="'.$search_byid.'">
-    </td>
-</tr>
-<tr>
-    <td colspan="3" style="text-align: center;">
-        <input type="hidden" name="dbmf_request" value="1">
-        <input type="submit" value="'._G('DBMF_search_submit').'">
-    </td>
-</tr>
-</table>
+<div class="paragraph">
+
+<input type="radio" name="search_type" id="search_bylastname" value="lastname" '.MySBUtil::form_ischecked($_POST['search_type'],'lastname').'>
+<label for="search_bylastname">'._G('DBMF_search_lastname').'</label>
+<input type="radio" name="search_type" id="search_all_fields" value="all_fields" '.MySBUtil::form_ischecked($_POST['search_type'],'all_fields').'>
+<label for="search_all_fields">'._G('DBMF_search_all_fields').'</label>
+<input type="radio" name="search_type" id="search_byid" value="byid" '.MySBUtil::form_ischecked($_POST['search_type'],'byid').'>
+<label for="search_byid">'._G('DBMF_search_byid').'</label>
+<br><br>
+<input type="text" name="search_name" value="'.$_POST['search_name'].'" class="smart">
+<br><br>
+<input type="hidden" name="dbmf_request" value="1">
+<input type="submit" value="'._G('DBMF_search_submit').'">
+<br>
+
 </div>
 
 </form>

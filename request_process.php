@@ -45,8 +45,9 @@ if(isset($_POST['dbmf_request'])) {
     if($clause_owner=='') {
         $app->pushAlert(_G('DBMF_no_rights'));
     }
-    if (!empty($_POST['search_all'])) {
-        $str_search_all = MySBUtil::str2whereclause($_POST['search_all']);
+
+    if( $_POST['search_type']=='all_fields' ) {
+        $str_search_all = MySBUtil::str2whereclause($_POST['search_name']);
    	    $clause_a = 'lastname RLIKE \''.$str_search_all.'\' OR '.
    	        'firstname RLIKE \''.$str_search_all.'\' OR '.
    	        'mail RLIKE \''.$str_search_all.'\' ';
@@ -54,14 +55,15 @@ if(isset($_POST['dbmf_request'])) {
         foreach($block_common->blockrefs as $blockref) {
             $clause_a .= ' OR '.$blockref->keyname.' RLIKE \''.$str_search_all.'\'';
         }
-   	    $_POST['search_name'] = '';
-    } elseif(!empty($_POST['search_name'])) {
+   	    //$_POST['search_name'] = '';
+    } elseif( $_POST['search_type']=='lastname' ) {
         $clause_a = 'lastname RLIKE \''.MySBUtil::str2whereclause($_POST['search_name']).'\' ';
-    } elseif(!empty($_POST['search_byid'])) {
-        $clause_a = 'id='.$_POST['search_byid'].' ';
+    } elseif( $_POST['search_type']=='byid' ) {
+        $clause_a = 'id='.$_POST['search_name'].' ';
     } else {
         $clause_a = '';
     }
+
     if($clause_owner!='' and $clause_a!='') $clause_a .= ' and ('.$clause_owner.')';
     elseif($clause_owner!='') $clause_a .= '('.$clause_owner.')';
     if($clause_a!='') $sql_r .= 'WHERE '.$clause_a.' ';

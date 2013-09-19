@@ -50,8 +50,8 @@ foreach($exports as $export)
 echo '
 </select>
 <br><br>
-<a id="params_show" onClick="show(\'params\');hide(\'params_show\');" class="button">'._G('DBMF_export_showparams').'</a>
-</p>
+<a id="params_show" onClick="show(\'params\');hide(\'params_show\');" class="button">'._G('DBMF_export_showparams').'</a><br>
+<br></p>
 <div id="params" style="display: none;">';
 
 $hide_flag = '';
@@ -110,7 +110,7 @@ foreach($blocks as $block) {
             if($blockref->isActive()) {
                 echo '
 <tr>
-    <td style="vertical-align: top; text-align: right;">'._G($blockref->lname).':</td>
+    <td style="text-align: right;">'._G($blockref->lname).':</td>
     <td>';
                 echo $blockref->htmlFormWhereClause('br');
                 echo '

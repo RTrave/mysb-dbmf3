@@ -12,6 +12,31 @@ div#mysbMiddle {
 font-size: 95%;
 }
 
+#mysbMiddle td.cell_names {
+width: 180px;
+}
+#mysbMiddle td.cell_plugins {
+vertical-align: top;
+text-align: right;
+}
+#mysbMiddle div.cell_plug {
+float: left;
+text-align: center;
+padding: 1px;
+}
+
+#mysbMiddle table.cell {
+width: 98%;
+background: transparent;
+vertical-align: middle;
+}
+#mysbMiddle tr.cell {
+background: transparent;
+}
+#mysbMiddle td {
+border: 0px solid black;
+}
+
 #mysbMiddle td.lpadding {
 width: 33%;
 padding: 5px 5px 5px 20px;
@@ -41,8 +66,48 @@ padding: 0px 5px 0px 5px;
 background: transparent;
 }
 
+table#rsvpContact {
+width: 90%;
+font-size: 90%;
+}
+
 #rsvpCriteria table {
 font-size: 90%;
 }
 
+#rsvpCriteria table,tr,td {
+vertical-align: middle;
+}
+
+div#dbmfMemento {
+font-size: 90%;
+}
+#dbmfMemento tr {
+background-color: transparent;
+}
+
+#dbmfMemento td.infos {
+width: 240px;
+}
+#dbmfMemento div.floatingcell{
+float: left;
+}
+#dbmfMemento div.date{
+width: 80px;
+}
+#dbmfMemento div.name{
+text-align: left;
+font-size: 90%;
+width: 160px
+}
+
+#dbmfMemento td.comments{
+vertical-align: top;
+text-align: left;
+font-size: 90%;
+}
+
+#dbmfMemento td.actions{
+width: 80px;
+}
 

@@ -26,15 +26,15 @@ echo '
 <tr>
     <td colspan="2" style="text-align: center;">
         <small>
-        <b>'._G("DBMF_date_creat").':</b>'.$date_creat->strAEBY_l().' / 
-        <b>'._G("DBMF_date_modif").':</b>'.$date_modif->strAEBY_l().'
+        <b>'._G("DBMF_date_creat").': </b>'.$date_creat->strAEBY_l().' / 
+        <b>'._G("DBMF_date_modif").': </b>'.$date_modif->strAEBY_l().'
         </small>
     </td>
 </tr>
 <tr>
     <td style="text-align: right;"><b>'._G("DBMF_common_lastname").':</b></td>';
 if(MySBRoleHelper::checkAccess('dbmf_editor',false)) echo '
-    <td><input type="text" name="lastname" size="24" maxlength="64" value="'.$contact->lastname.'"></td>';
+    <td><input type="text" name="lastname" size="28" maxlength="64" value="'.$contact->lastname.'"></td>';
 else echo '
     <td>'.$contact->lastname.'</td>';
 echo '
@@ -42,7 +42,7 @@ echo '
 <tr>
     <td style="text-align: right;"><b>'._G("DBMF_common_firstname").':</b></td>';
 if(MySBRoleHelper::checkAccess('dbmf_editor',false)) echo '
-    <td><input type="text" name="firstname" size="24" maxlength="64" value="'.$contact->firstname.'"></td>';
+    <td><input type="text" name="firstname" size="28" maxlength="64" value="'.$contact->firstname.'"></td>';
 else echo '
     <td>'.$contact->firstname.'</td>';
 echo '
@@ -55,7 +55,7 @@ if(MySBRoleHelper::checkAccess('dbmf_editor',false)) {
     echo '
     <td>';
     echo '
-        <input type="text" name="mail" size="48" maxlength="64" value="'.$contact->mail.'">
+        <input type="text" name="mail" size="28" maxlength="64" value="'.$contact->mail.'">
     </td>';
 } else {
     echo '
@@ -105,7 +105,7 @@ foreach($mementos as $memento) {
 
 echo '
     <tr>
-        <td colspan="3" style="text-align: center; padding: 2px;"><small>
+        <td colspan="3" style="text-align: center; padding: 10px;"><small>
             <a  href="?mod=dbmf3&amp;tpl=editmemento&amp;contact_id='.$contact->id.'" class="button"
                 OnClick="return mysb_confirm(\''.MySBUtil::str2strict(_G('DBMF_confirm_memento_edition')).'\')">
                 '._G("DBMF_contact_mementos_create").'</a></small>

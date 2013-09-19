@@ -69,7 +69,7 @@ class MySBDBMFGroupHelper {
         foreach($groups as $group) {
             $groupname = 'g'.$group->id;
             //echo $groupname.'/'.$user->$groupname.'/'.$group->dbmf_priority.'/'.$priority.'<br>';
-            if($group->dbmf_priority>=1 and $user->$groupname==1) {
+            if( $groupname!='g0' and $group->dbmf_priority>=1 and $user->$groupname==1) {
                 if($group->dbmf_priority<$priority) {
                     $priority = $group->dbmf_priority;
                     $primary = $group;

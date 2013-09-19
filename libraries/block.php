@@ -100,7 +100,8 @@ class MySBDBMFBlock extends MySBObject {
         } else {
             if( isset($_POST[$prefix.$this->name]) ) $check_flag = $_POST[$prefix.$this->name];
             else $check_flag = '';
-            $andor_flag = $_POST['blockref_andorflag_'.$this->id];
+            if( isset($_POST['blockref_andorflag_'.$this->id]) ) $andor_flag = $_POST['blockref_andorflag_'.$this->id];
+            else $andor_flag = 'or';
         }
         $clause = '';
         if($check_flag=='on') {

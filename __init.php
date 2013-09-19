@@ -14,7 +14,7 @@ defined('_MySBEXEC') or die;
 
 class MySBModule_dbmf3 {
 
-    public $version = 8;
+    public $version = 9;
 
     public function create() {
         global $app;
@@ -276,6 +276,12 @@ class MySBModule_dbmf3 {
             'WHERE keyname=\'b1r08\'',
             "__init.php",
             false, "dbmf3");
+    }
+
+    public function init9() {
+        global $app;
+        MySBPluginHelper::delete('dbmf_showorga','dbmf3');
+        MySBPluginHelper::delete('dbmf_showtels','dbmf3');
     }
 
     public function uninit() {

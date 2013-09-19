@@ -37,7 +37,7 @@ echo '
 <form action="?mod=dbmf3&amp;tpl=editcontact&amp;contact_id='.$contact->id.'" method="post">
 
 <div class="table_support">
-<table style="width: 95%; font-size: 90%;"><tbody>
+<table id="rsvpContact"><tbody>
 ';
 
 _T('templates/common_edition.php','dbmf3');

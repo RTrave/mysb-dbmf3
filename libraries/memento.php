@@ -106,7 +106,7 @@ class MySBDBMFMemento extends MySBObject {
                 //echo $memento_date->strEBY_l();
                 //echo '/'.$memento_date->getRest();
                 //if($memento_date->getRest()<0) return false;
-                if($memento_date->absDiff('m')<0) return false;
+                if($memento_date->absDiff('h')<0) return false;
                 if($this->date_process=='') return true;
                 $process_date = new MySBDateTime($this->date_process);
                 if($memento_date->absDiff('h',$process_date)>=0) return false;

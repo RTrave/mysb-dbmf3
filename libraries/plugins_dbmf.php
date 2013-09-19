@@ -85,26 +85,36 @@ class MySBPluginDBMFDisplay extends MySBPlugin {
      * Table header cell code.
      * @param   
      */
+/*
     public function displayTDheader($placement) {
         global $app;
-        if($placement!=$this->ivalue0) return;
+        if( $this->plugref==null or $placement!=$this->ivalue0 ) return;
         return $this->plugref->header($this);
     }
+*/
 
     /**
      * Table bobdy cell code.
      * @param   
      */
+/*
     public function displayTD($placement,$contact) {
         global $app;
-        if($this->ivalue0!=$placement) return;
+        if( $this->plugref==null or $this->ivalue0!=$placement ) return;
         return $this->plugref->td($contact);
+    }
+*/
+
+    public function displayIcons($placement,$contact) {
+        global $app;
+        if( !isset($this->plugref) or $this->plugref==null or $this->ivalue0!=$placement ) return;
+        return $this->plugref->icons($this,$contact);
     }
 
 }
 
 
-
+/*
 class DBMFPluginsDisplayOrganism {
     public function header($plugin) {
         $output = '<td style="width: 280px;"><i>'._G("DBMF_common_function").'</i><br>'._G("DBMF_common_organism").'</td>';
@@ -126,6 +136,6 @@ class DBMFPluginsDisplayTel {
         return $output;
     }
 }
-
+*/
 
 ?>
