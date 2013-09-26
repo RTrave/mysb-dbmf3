@@ -30,7 +30,9 @@ $odd = 'odd';
 $anchor_nb = 0;
 while($data_print = MySBDB::fetch_array($search_result)) {
 
-$contact = new MySBDBMFContact(null,$data_print);
+    $contact = new MySBDBMFContact(null,$data_print);
+    $date_modif = new MySBDateTime($contact->date_modif);
+    $daysold = $date_modif->absDiff();
 
     $anchor_nb++;
     echo '
@@ -99,9 +101,16 @@ $contact = new MySBDBMFContact(null,$data_print);
 <tr class="cell">
     <td colspan="3" rowspan="2" style="text-align: left; vertical-align: top;">
         <div class="cell_hide">
-            <i>'.$contact->b1r02.'</i><br>
-            '.$contact->b1r03.'<br>
-            <i><a href="tel:'.$contact->b1r05.'">'.$contact->b1r05.'</a></i><br>
+            <small><i>'.sprintf(_G('DBMF_days_old'),$daysold).'</i></small><br>';
+    if( $contact->b1r02!='' ) echo '
+            <i>'.$contact->b1r02.'</i><br>';
+    echo '
+            '.$contact->b1r03.'<br>';
+    if( $contact->b1r05!='' ) echo '
+            <i><a href="tel:'.$contact->b1r05.'">'.$contact->b1r05.'</a></i><br>';
+    if( $contact->b1r06!='' ) echo '
+            <i><a href="tel:'.$contact->b1r06.'">'.$contact->b1r06.'</a></i><br>';
+    echo '
         </div>
     </td>
 </tr>
