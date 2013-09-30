@@ -105,7 +105,7 @@ CSV output: '.MySBDB::num_rows($results).' results<br>
         $path_file = MySB_ROOTPATH.'/modules/dbmf3/files/sendtable.csv';
         $ftable = fopen($path_file, 'w');
 
-        $titles = '"Name"'.$csv_char.'"Firstname"';
+        $titles = '"Name"'.$csv_char.'"Firstname"'.$csv_char.'"Mail"';
         $blockrefs = MySBDBMFBlockRefHelper::load();
         foreach($blockrefs as $blockref) {
             $titles .= $csv_char.$this->keyname2red(_G($blockref->lname));
@@ -116,6 +116,7 @@ CSV output: '.MySBDB::num_rows($results).' results<br>
             $tablin = array();
             $tablin[] = $contact->lastname;
             $tablin[] = $contact->firstname;
+            $tablin[] = $contact->mail;
             foreach($blockrefs as $blockref) {
                 $tablin[] = $this->db2csv(_G($contact_data[$blockref->keyname]));
             }
