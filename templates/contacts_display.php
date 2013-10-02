@@ -45,11 +45,13 @@ while($data_print = MySBDB::fetch_array($search_result)) {
             href="javascript:editwinopen(\'index_wom.php?mod=dbmf3&amp;tpl=editcontact&amp;contact_id='.$contact->id.'&amp;mode=screen\',\'contactinfos\')">
         <img src="modules/dbmf3/images/edit_icon24.png" alt="Edition '.$contact->id.'" title="'._G('DBMF_edit').' '.$contact->lastname.' '.$contact->firstname.' ('.$contact->id.')"></a>
     </td>
-    <td style="width: 20px; text-align: right;">
+    <td style="width: 20px; text-align: right;">';
+    if( $contact->mail!='' ) echo '
             <a href="mailto:'.$contact->mail.'">
             <img src="modules/dbmf3/images/mail_icon24.png" 
                  alt="'._G('DBMF_mailto').' '.$contact->id.'" 
-                 title="'._G('DBMF_mailto').' '.$contact->lastname.' '.$contact->firstname.' ('.$contact->id.')"></a>
+                 title="'._G('DBMF_mailto').' '.$contact->lastname.' '.$contact->firstname.' ('.$contact->id.')"></a>';
+    echo '
     </td>
     <td class="cell_names" style="text-align: left;">
         <b>'.$contact->lastname.'</b> '.$contact->firstname.'
