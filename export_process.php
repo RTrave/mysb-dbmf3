@@ -29,7 +29,7 @@ if(isset($_POST['dbmf_request_reuse'])) {
     $app->dbmf_search_result = MySBDB::query( $_SESSION['dbmf_search_query'],
 	    "request_process.php(reuse)",
 	    false, 'dbmf3');
-	$app->dbmf_export_plugin = $_SESSION['dbmf_export_plugin'];
+	$app->dbmf_export_plugin = MySBDBMFExportHelper::getByID($_SESSION['dbmf_export_plugin']);
 }
 
 if(isset($_POST['dbmf_export_process'])) {
@@ -38,7 +38,7 @@ if(isset($_POST['dbmf_export_process'])) {
     $plug_id = intval($strp[1]);
     //$app->dbmf_export_plugin = MySBDBMFExportHelper::getByID($_POST['export_plug'][11]);
     $app->dbmf_export_plugin = MySBDBMFExportHelper::getByID($plug_id);
-    $_SESSION['dbmf_export_plugin'] = $app->dbmf_export_plugin;
+    $_SESSION['dbmf_export_plugin'] = $app->dbmf_export_plugin->id;
     //echo $app->dbmf_export_plugin->name.'<br>';
     $app->dbmf_export_plugin->htmlParamProcess();
 
