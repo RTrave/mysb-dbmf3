@@ -55,7 +55,7 @@ if(MySBRoleHelper::checkAccess('dbmf_editor',false)) {
     echo '
     <td>';
     echo '
-        <input type="text" name="mail" size="28" maxlength="64" value="'.$contact->mail.'">
+        <input type="email" name="mail" size="28" maxlength="64" value="'.$contact->mail.'">
     </td>';
 } else {
     echo '

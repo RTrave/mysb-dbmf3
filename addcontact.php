@@ -51,7 +51,7 @@ if( isset($app->dbmf_req_wcheck) and $app->dbmf_req_wcheck!='' ) {
 <b>'._G('DBMF_common_firstname').':</b>
 <input type="text" name="firstname" size="24" maxlength="64" value=""><br>
 <b>'._G('DBMF_common_mail').':</b>
-<input type="text" name="mail" size="24" maxlength="64" value=""><br>
+<input type="email" name="mail" size="24" maxlength="64" value=""><br>
 <br>
 <input type="submit" value="'._G('DBMF_addcontact_verify').'">
 </p>

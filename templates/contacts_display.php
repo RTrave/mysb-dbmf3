@@ -43,12 +43,12 @@ while($data_print = MySBDB::fetch_array($search_result)) {
     <td style="width: 20px; text-align: right;">
         <a  name="contact'.$anchor_nb.'"
             href="javascript:editwinopen(\'index_wom.php?mod=dbmf3&amp;tpl=editcontact&amp;contact_id='.$contact->id.'&amp;mode=screen\',\'contactinfos\')">
-        <img src="modules/dbmf3/images/edit_icon24.png" alt="Edition '.$contact->id.'" title="'._G('DBMF_edit').' '.$contact->lastname.' '.$contact->firstname.' ('.$contact->id.')"></a>
+        <img src="modules/dbmf3/images/text-editor.png" alt="Edition '.$contact->id.'" title="'._G('DBMF_edit').' '.$contact->lastname.' '.$contact->firstname.' ('.$contact->id.')"></a>
     </td>
     <td style="width: 20px; text-align: right;">';
     if( $contact->mail!='' ) echo '
             <a href="mailto:'.$contact->mail.'">
-            <img src="modules/dbmf3/images/mail_icon24.png" 
+            <img src="modules/dbmf3/images/mail-unread.png" 
                  alt="'._G('DBMF_mailto').' '.$contact->id.'" 
                  title="'._G('DBMF_mailto').' '.$contact->lastname.' '.$contact->firstname.' ('.$contact->id.')"></a>';
     echo '
@@ -76,6 +76,8 @@ while($data_print = MySBDB::fetch_array($search_result)) {
         <small><small>'.$sblockref->getReducedName().'</small><br>';
     $column_name = $sblockref->keyname;
             if($sblockref->type==MYSB_VALUE_TYPE_VARCHAR64_SELECT) $column_value = _G($contact->$column_name);
+            elseif($sblockref->type==MYSB_VALUE_TYPE_TEL or
+                   $sblockref->type==MYSB_VALUE_TYPE_URL ) $column_value = '<div style="vertical-align: middle;">'.$sblockref->htmlFormNonEditable('',$contact->$column_name).'</div>';
             else $column_value = MySBUtil::str2html($contact->$column_name);
             echo '
     <b>'.$column_value.'</b>';
@@ -94,7 +96,7 @@ while($data_print = MySBDB::fetch_array($search_result)) {
                 OnSubmit="return mysb_confirm(\''.MySBUtil::str2strict(sprintf(_G('DBMF_confirm_contact_delete'),$contact->lastname, $contact->firstname )).'\')">
             <input  type="hidden" name="dbmf_contact_delete" value="'.$contact->id.'">
             <input  type="hidden" name="dbmf_request_reuse" value="1">
-            <input  border="0" src="modules/dbmf3/images/delete_icon24.png"
+            <input  border="0" src="modules/dbmf3/images/user-trash.png"
                     type="image">
         </form>
     </td>
@@ -111,7 +113,7 @@ while($data_print = MySBDB::fetch_array($search_result)) {
     if( $contact->b1r05!='' ) echo '
             <i><a href="tel:'.$contact->b1r05.'">'.$contact->b1r05.'</a></i><br>';
     if( $contact->b1r06!='' ) echo '
-            <i><a href="tel:'.$contact->b1r06.'">'.$contact->b1r06.'</a></i><br>';
+            <i><a href="tel:'.$contact->b1r06.'">'.$contact->b1r06.'</a></i>';
     echo '
         </div>
     </td>

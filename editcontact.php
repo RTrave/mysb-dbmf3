@@ -24,7 +24,7 @@ echo '
     if( $contact->mail!='' ) 
         echo '
         <a href="mailto:'.$contact->mail.'">
-            <img    src="modules/dbmf3/images/mail_icon24.png" 
+            <img    src="images/icons/mail-unread.png" 
                     alt="'._G('DBMF_mailto').' '.$contact->id.'" 
                     title="'._G('DBMF_mailto').' '.$contact->lastname.' '.$contact->firstname.' ('.$contact->id.')"
                     style="width: 18px; margin: 0px;"></a>';

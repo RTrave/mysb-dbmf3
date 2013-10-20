@@ -272,6 +272,8 @@ foreach($blocks as $block) {
             <option value="'.MYSB_VALUE_TYPE_VARCHAR512.'" >varchar(512)</option>
             <option value="'.MYSB_VALUE_TYPE_TEXT.'" >text/varchar(512)</option>
             <option value="'.MYSB_VALUE_TYPE_VARCHAR64_SELECT.'" >select/varchar(64)</option>
+            <option value="'.MYSB_VALUE_TYPE_TEL.'" >tel/varchar(64)</option>
+            <option value="'.MYSB_VALUE_TYPE_URL.'" >url/varchar(128)</option>
         </select><br>
         <input type="hidden" name="blockref_add" value="'.$block->id.'">
         <input type="submit" value="'._G('DBMF_blockref_add').'">

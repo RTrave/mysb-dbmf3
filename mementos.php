@@ -82,7 +82,7 @@ foreach($mementos_p as $memento) {
         <div style="float: left;">
         <a  id="memento'.$anchor_nb.'"
             href="javascript:editwinopen(\'index_wom.php?mod=dbmf3&amp;tpl=editcontact&amp;contact_id='.$contact->id.'\',\'contactinfos\')">
-        <img src="modules/dbmf3/images/edit_icon24.png" alt="Edition '.$contact->id.'" title="'._G('DBMF_edit').' '.$contact->lastname.' '.$contact->firstname.' (memento '.$memento->id.')">
+        <img src="images/icons/text-editor.png" alt="Edition '.$contact->id.'" title="'._G('DBMF_edit').' '.$contact->lastname.' '.$contact->firstname.' (memento '.$memento->id.')">
         </a>
         </div>
         <b>'.MySBUtil::str2abbrv($contact->lastname,10,10).'</b><br>
