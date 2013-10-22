@@ -55,8 +55,12 @@ while($data_print = MySBDB::fetch_array($search_result)) {
     </td>
     <td class="cell_names" style="text-align: left;">
         <b>'.$contact->lastname.'</b> '.$contact->firstname.'
-        <div class="cell_show" style="text-align: right;">
-        <i><a href="tel:'.$contact->b1r05.'">'.$contact->b1r05.'</a></i>
+        <div class="cell_show" style="text-align: right;">';
+    if( $contact->b1r05!='' ) echo '
+        <i><a href="tel:'.$contact->b1r05.'"><img src="images/icons/phone.png">Tel1 </a></i>';
+    if( $contact->b1r06!='' ) echo '
+        <i><a href="tel:'.$contact->b1r06.'"><img src="images/icons/phone.png">Tel2 </a></i>';
+    echo '
         </div>
     </td>
     <td rowspan="2" class="cell_plugins" style="text-align: right;">
@@ -97,7 +101,8 @@ while($data_print = MySBDB::fetch_array($search_result)) {
             <input  type="hidden" name="dbmf_contact_delete" value="'.$contact->id.'">
             <input  type="hidden" name="dbmf_request_reuse" value="1">
             <input  border="0" src="images/icons/user-trash.png"
-                    type="image">
+                    type="image"
+                    title="'.sprintf(_G('DBMF_contact_delete'),$contact->lastname, $contact->firstname ).'">
         </form>
     </td>
 </tr>

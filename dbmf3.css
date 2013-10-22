@@ -18,13 +18,18 @@ width: 180px;
 #mysbMiddle td.cell_plugins {
 vertical-align: top;
 text-align: right;
+height: 100%;
 }
 #mysbMiddle div.cell_plug {
 float: left;
 text-align: center;
 padding: 1px;
+height: 50px;
 }
 
+#mysbMiddle div.cell_plug div {
+height: 100%;
+}
 #mysbMiddle table.cell {
 width: 98%;
 background: transparent;
