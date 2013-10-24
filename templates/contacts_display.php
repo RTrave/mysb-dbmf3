@@ -28,18 +28,24 @@ function ContactDisplayPlugins( $sblockref,$contact,$class_string ) {
         echo '
     <div    class="cell_plug '.$class_string.' '.$disp_class.'" 
             style="display: inline-block;">
-        <div class="title">
-        '.$sblockref->getReducedName().'</div>
-        <div class="text">';
+    <table>
+        <tr><td class="title">
+            '.$sblockref->getReducedName().'
+        </td></tr>
+        <tr><td class="text">';
     $column_name = $sblockref->keyname;
-            if($sblockref->type==MYSB_VALUE_TYPE_VARCHAR64_SELECT) $column_value = _G($contact->$column_name);
-            elseif($sblockref->type==MYSB_VALUE_TYPE_TEL or
-                   $sblockref->type==MYSB_VALUE_TYPE_URL ) $column_value = '<div style="vertical-align: middle;">'.$sblockref->htmlFormNonEditable('',$contact->$column_name,MySBUtil::str2abbrv(_G($sblockref->lname),3,3)).'</div>';
+            if( $sblockref->type==MYSB_VALUE_TYPE_VARCHAR64_SELECT ) 
+                $column_value = _G($contact->$column_name);
+            elseif( $sblockref->type==MYSB_VALUE_TYPE_TEL or
+                    $sblockref->type==MYSB_VALUE_TYPE_URL ) 
+                $column_value = '<div style="vertical-align: middle;">'.$sblockref->htmlFormNonEditable('',$contact->$column_name,MySBUtil::str2abbrv(_G($sblockref->lname),3,3)).'</div>';
             else $column_value = MySBUtil::str2html($contact->$column_name);
             echo '
-        <div style="display: inline-block;">'.$column_value.'</div>';
+        '.$column_value.'
+        
+        </td></tr>
+    </table>';
         echo '
-    </div>
     </div>';
 
 }

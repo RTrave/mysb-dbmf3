@@ -47,26 +47,43 @@ vertical-align: bottom;
 float: left;
 text-align: center;
 padding: 1px;
-height: 64px;
+margin: 0px;
+height: 56px;
+background: transparent;
 }
 
 #mysbMiddle div.incell_floatshow {
 display: none;
 }
-#mysbMiddle div.cell_plug div.title {
-background: #777777;
-font-size: 85%;
+
+#mysbMiddle div.cell_plug table {
+width: 100%; 
+height: 100%; 
+background: transparent;
+padding: 0px;
+border-collapse: collapse;
 }
-#mysbMiddle div.cell_plug div.text {
+#mysbMiddle div.cell_plug table tr {
+padding: 0px;
+background: transparent;
+}
+#mysbMiddle div.cell_plug table td.title {
+background: #888888;
+font-size: 80%;
+height: 6px;
+padding: 0px;
+font-weight: bold;
+}
+#mysbMiddle div.cell_plug table td.text {
 vertical-align: bottom;
-min-height: 40px;
-font-size: 75%;
-position: relative;
-background: #999999;
+font-size: 70%;
+padding: 0px 0px 2px;
+background: #a0a0a0;
 }
-#mysbMiddle div.cell_plug div.text p {
+#mysbMiddle div.cell_plug table td.text p {
 padding: 1px;
 }
+
 #mysbMiddle .w60    { width: 40px; }
 #mysbMiddle .w80    { width: 74px; }
 #mysbMiddle .w120   { width: 80px; }

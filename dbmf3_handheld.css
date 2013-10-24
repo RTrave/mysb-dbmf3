@@ -36,9 +36,7 @@ height: 40px;
 display: inline-block;
 float: left;
 }
-#mysbMiddle div.cell_plug div.text {
-min-height: 28px;
-}
+
 #mysbMiddle .w60    { width: 48px; }
 #mysbMiddle .w80    { width: 48px; }
 #mysbMiddle .w120   { width: 48px; }
