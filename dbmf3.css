@@ -13,11 +13,11 @@ font-size: 95%;
 }
 
 #mysbMiddle td.cell_names {
-overflowM: auto;
-widthM: 100px;
+overflowM: visible;
 }
 #mysbMiddle td.cell_names b {
-overflowM: auto;
+overflowf: scroll;
+position: absolute;
 }
 #mysbMiddle td.cell_plugins {
 vertical-align: top;
@@ -31,7 +31,7 @@ width: 1px;
 }
 
 #mysbMiddle td.cell_infos {
-max-width: 200px;
+max-width: 80px;
 min-widthM: 120px;
 min-width: 180px;
 text-align: left;
