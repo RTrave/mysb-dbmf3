@@ -36,24 +36,36 @@ min-widthM: 120px;
 min-width: 180px;
 text-align: left;
 vertical-align: top;
+font-size: 90%;
 }
 #mysbMiddle td.cell_infos img{
 width: 12px;
 }
 
 #mysbMiddle div.cell_plug {
+vertical-align: bottom;
 float: left;
 text-align: center;
 padding: 1px;
-height: 60px;
+height: 64px;
 }
 
 #mysbMiddle div.incell_floatshow {
 display: none;
 }
-
-#mysbMiddle div.cell_plug div {
-height: 100%;
+#mysbMiddle div.cell_plug div.title {
+background: #777777;
+font-size: 85%;
+}
+#mysbMiddle div.cell_plug div.text {
+vertical-align: bottom;
+min-height: 40px;
+font-size: 75%;
+position: relative;
+background: #999999;
+}
+#mysbMiddle div.cell_plug div.text p {
+padding: 1px;
 }
 #mysbMiddle .w60    { width: 40px; }
 #mysbMiddle .w80    { width: 74px; }
