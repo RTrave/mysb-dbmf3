@@ -89,6 +89,11 @@ if(isset($_POST['blockref_switchorderby'])) {
     $blockref->switchOrderBy();
 }
 
+if(isset($_POST['blockref_setalwaysshown'])) {
+    $blockref = MySBDBMFBlockRefHelper::getByID($_POST['blockref_edit']);
+    $blockref->setAlwaysShown($_POST['blockref_alwaysshown']);
+}
+
 if(isset($_POST['block_orderup'])) {
     $block = MySBDBMFBlockHelper::getByID($_POST['block_orderup']);
     $block->indexUP();

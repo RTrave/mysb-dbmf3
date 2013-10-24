@@ -12,12 +12,34 @@ div#mysbMiddle {
 font-size: 95%;
 }
 
+#mysbMiddle div.cell {
+min-height: 44px;
+}
 #mysbMiddle td.cell_names {
-width: auto;
+min-width: 60px;
 }
 #mysbMiddle td.cell_plugins {
-width: 0px;
+width: auto;
 }
+#mysbMiddle td.cell_infos {
+min-width: 0px;
+font-size: 80%;
+}
+#mysbMiddle td.cell_ext {
+width: auto;
+}
+
+#mysbMiddle div.cell_plug {
+height: 40px;
+}
+#mysbMiddle div.incell_floatshow {
+display: inline-block;
+float: left;
+}
+#mysbMiddle .w60    { width: 48px; }
+#mysbMiddle .w80    { width: 48px; }
+#mysbMiddle .w120   { width: 48px; }
+#mysbMiddle .w180   { width: 48px; }
 
 table#rsvpContact {
 font-size: 80%;

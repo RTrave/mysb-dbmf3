@@ -69,6 +69,28 @@ echo '
         echo '
         </form>
     </td>
+</tr>
+<tr>
+    <td colspan="2">'._G('DBMF_blockref_option_alwaysshown').'</td>
+    <td style="text-align: center;">
+        <form action="?mod=dbmf3&amp;tpl=blockedit" method="post">
+        <input type="hidden" name="blockref_edit" value="'.$blockref->id.'">
+        <input type="hidden" name="blockref_setalwaysshown" value="1">';
+        echo '
+        <select name="blockref_alwaysshown">
+            <option value="'.MYSB_DBMF_BLOCKREF_ALWAYSSHOWN_NO.'" 
+                    '.MySBUtil::form_isselected($blockref->alwaysshown,MYSB_DBMF_BLOCKREF_ALWAYSSHOWN_NO).'>'._G('DBMF_blockref_alwaysshown_no').'</option>
+            <option value="'.MYSB_DBMF_BLOCKREF_ALWAYSSHOWN_ASTEXT.'" 
+                    '.MySBUtil::form_isselected($blockref->alwaysshown,MYSB_DBMF_BLOCKREF_ALWAYSSHOWN_ASTEXT).'>'._G('DBMF_blockref_alwaysshown_bottom').'</option>
+            <option value="'.MYSB_DBMF_BLOCKREF_ALWAYSSHOWN_ASPLUG.'" 
+                    '.MySBUtil::form_isselected($blockref->alwaysshown,MYSB_DBMF_BLOCKREF_ALWAYSSHOWN_ASPLUG).'>'._G('DBMF_blockref_alwaysshown_plugins').'</option>
+            <option value="'.MYSB_DBMF_BLOCKREF_ALWAYSSHOWN_ASTEXTONLY.'" 
+                    '.MySBUtil::form_isselected($blockref->alwaysshown,MYSB_DBMF_BLOCKREF_ALWAYSSHOWN_ASTEXTONLY).'>'._G('DBMF_blockref_alwaysshown_txtonly').'</option>
+        </select>
+        <input type="submit" value="'._G('DBMF_blockref_alwaysshown_submit').'">';
+        echo '
+        </form>
+    </td>
 </tr>';
 
 if($blockref->type==MYSB_VALUE_TYPE_VARCHAR64_SELECT) {

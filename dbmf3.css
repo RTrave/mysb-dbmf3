@@ -13,23 +13,60 @@ font-size: 95%;
 }
 
 #mysbMiddle td.cell_names {
-width: 180px;
+overflowM: auto;
+widthM: 100px;
+}
+#mysbMiddle td.cell_names b {
+overflowM: auto;
 }
 #mysbMiddle td.cell_plugins {
 vertical-align: top;
 text-align: right;
 height: 100%;
+widthM: 80%;
 }
+
+#mysbMiddle td.cell_ext {
+width: 1px;
+}
+
+#mysbMiddle td.cell_infos {
+max-width: 200px;
+min-widthM: 120px;
+min-width: 180px;
+text-align: left;
+vertical-align: top;
+}
+#mysbMiddle td.cell_infos img{
+width: 12px;
+}
+
 #mysbMiddle div.cell_plug {
 float: left;
 text-align: center;
 padding: 1px;
-height: 50px;
+height: 60px;
+}
+
+#mysbMiddle div.incell_floatshow {
+display: none;
 }
 
 #mysbMiddle div.cell_plug div {
 height: 100%;
 }
+#mysbMiddle .w60    { width: 40px; }
+#mysbMiddle .w80    { width: 74px; }
+#mysbMiddle .w120   { width: 80px; }
+#mysbMiddle .w180   { width: 160px; }
+
+#mysbMiddle td.cell_icons {
+max-height: 20px;
+text-align: right;
+vertical-align: bottom;
+width: auto;
+}
+
 #mysbMiddle table.cell {
 width: 98%;
 background: transparent;

@@ -61,9 +61,9 @@ foreach($blocks as $block) {
     <td style="vertical-align: top; text-align: right;">'._G($blockref->lname).':</td>
     <td>';
             if($block->isEditable()) 
-                echo $blockref->htmlForm('blockref',$contact->$refname);
+                echo $blockref->htmlForm('blockref',$contact->$refname,'('.$contact->lastname.' '.$contact->firstname.')');
             else 
-                echo $blockref->htmlFormNonEditable('blockref',$contact->$refname);
+                echo $blockref->htmlFormNonEditable('blockref',$contact->$refname,'('.$contact->lastname.' '.$contact->firstname.')');
             echo '
     </td>
 </tr>';

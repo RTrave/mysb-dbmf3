@@ -16,6 +16,11 @@ defined('_MySBEXEC') or die;
 define('MYSB_DBMF_BLOCKREF_STATUS_INACTIVE', 0);
 define('MYSB_DBMF_BLOCKREF_STATUS_ACTIVE', 1);
 
+define('MYSB_DBMF_BLOCKREF_ALWAYSSHOWN_NO', 0);
+define('MYSB_DBMF_BLOCKREF_ALWAYSSHOWN_ASTEXT', 1);
+define('MYSB_DBMF_BLOCKREF_ALWAYSSHOWN_ASPLUG', 2);
+define('MYSB_DBMF_BLOCKREF_ALWAYSSHOWN_ASTEXTONLY', 3);
+
 
 /**
  * DBMF Block References class
@@ -26,6 +31,7 @@ class MySBDBMFBlockRef extends MySBValue {
     public $keyname = null;
     public $lname = null;
     public $disabled = null;
+    
 
     public function __construct( $id=-1, $data_blockref=array() ) {
         global $app;
@@ -81,6 +87,10 @@ class MySBDBMFBlockRef extends MySBValue {
             $this->update( array( 'orderby'=>0 ) );
         else
             $this->update( array( 'orderby'=>1 ) );
+    }
+
+    public function setAlwaysShown($asvalue) {
+        $this->update( array( 'alwaysshown'=>$asvalue ) );
     }
 
     public function getReducedName() {
@@ -172,10 +182,36 @@ class MySBDBMFBlockRefHelper {
         return $app->cache_dbmfblockrefs;
     }
 
+    public function loadAlwaysShown($value=0) {
+        global $app;
+        $blockrefs = MySBDBMFBlockRefHelper::load();
+        $as_array = array();
+        foreach( $blockrefs as $blockref ) {
+            if( $value==0 and 
+                (   $blockref->alwaysshown==MYSB_DBMF_BLOCKREF_ALWAYSSHOWN_ASTEXT or 
+                    $blockref->alwaysshown==MYSB_DBMF_BLOCKREF_ALWAYSSHOWN_ASPLUG or
+                    $blockref->alwaysshown==MYSB_DBMF_BLOCKREF_ALWAYSSHOWN_ASTEXTONLY ) ) {
+                $as_array[] = $blockref;
+            } elseif( $blockref->alwaysshown==$value ) {
+                $as_array[] = $blockref;
+            }
+        }
+        return $as_array;
+    }
+
     public function getByID($id) {
         global $app;
         $blockrefs = MySBDBMFBlockRefHelper::load();
         return $blockrefs[$id];
+    }
+
+    public function getByKeyname($keyname) {
+        global $app;
+        $blockrefs = MySBDBMFBlockRefHelper::load();
+        foreach( $blockrefs as $blockref ) 
+            if( $blockref->keyname==$keyname )
+                return $blockref;
+        return null;
     }
 
 }

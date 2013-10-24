@@ -14,7 +14,7 @@ defined('_MySBEXEC') or die;
 
 class MySBModule_dbmf3 {
 
-    public $version = 9;
+    public $version = 10;
 
     public function create() {
         global $app;
@@ -282,6 +282,14 @@ class MySBModule_dbmf3 {
         global $app;
         MySBPluginHelper::delete('dbmf_showorga','dbmf3');
         MySBPluginHelper::delete('dbmf_showtels','dbmf3');
+    }
+
+    public function init10() {
+        global $app;
+        $req = MySBDB::query('ALTER TABLE '.MySB_DBPREFIX.'dbmfblockrefs '.
+            'ADD alwaysshown int',
+            "__init.php",
+            false, "dbmf3");
     }
 
     public function uninit() {
