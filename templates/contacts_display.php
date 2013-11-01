@@ -38,7 +38,11 @@ function ContactDisplayPlugins( $sblockref,$contact,$class_string ) {
                 $column_value = _G($contact->$column_name);
             elseif( $sblockref->type==MYSB_VALUE_TYPE_TEL or
                     $sblockref->type==MYSB_VALUE_TYPE_URL ) 
-                $column_value = '<div style="vertical-align: middle;">'.$sblockref->htmlFormNonEditable('',$contact->$column_name,MySBUtil::str2abbrv(_G($sblockref->lname),3,3)).'</div>';
+                $column_value = '<div style="vertical-align: middle; display: inline-block;">'.$sblockref->htmlFormNonEditable('',$contact->$column_name,MySBUtil::str2abbrv(_G($sblockref->lname),4,4)).'</div>';
+            elseif( $sblockref->type==MYSB_VALUE_TYPE_INT ) 
+                { $column_value = $contact->$column_name; if( $column_value=='' ) $column_value = '0'; }
+            elseif( $sblockref->type==MYSB_VALUE_TYPE_BOOL )
+                $column_value = $sblockref->htmlFormNonEditable('',$contact->$column_name );
             else $column_value = MySBUtil::str2html($contact->$column_name);
             echo '
         '.$column_value.'
@@ -76,8 +80,8 @@ while($data_print = MySBDB::fetch_array($search_result)) {
 
 <tr class="cell">
     <td style="width: 20px; text-align: left;">
-        <a  name="contact'.$anchor_nb.'"
-            href="javascript:editwinopen(\'index_wom.php?mod=dbmf3&amp;tpl=editcontact&amp;contact_id='.$contact->id.'&amp;mode=screen\',\'contactinfos\')">
+        <a  id="contact'.$anchor_nb.'"
+            href="javascript:editwinopen(\'index_wom.php?mod=dbmf3&amp;tpl=editcontact&amp;contact_id='.$contact->id.'\',\'contactinfos\')">
         <img    src="images/icons/text-editor.png" 
                 alt="Edition '.$contact->id.'" 
                 title="'._G('DBMF_edit').' '.$contact->lastname.' '.$contact->firstname.' ('.$contact->id.')"
@@ -113,8 +117,9 @@ while($data_print = MySBDB::fetch_array($search_result)) {
                 OnSubmit="return mysb_confirm(\''.MySBUtil::str2strict(sprintf(_G('DBMF_confirm_contact_delete'),$contact->lastname, $contact->firstname )).'\')">
             <input  type="hidden" name="dbmf_contact_delete" value="'.$contact->id.'">
             <input  type="hidden" name="dbmf_request_reuse" value="1">
-            <input  border="0" src="images/icons/user-trash.png"
+            <input  src="images/icons/user-trash.png"
                     type="image"
+                    alt="'._G('DBMF_contact_delete').'"
                     title="'.sprintf(_G('DBMF_contact_delete'),$contact->lastname, $contact->firstname ).'">
         </form>
     </td>
@@ -130,7 +135,7 @@ while($data_print = MySBDB::fetch_array($search_result)) {
         $column_name = $sblockref->keyname;
         if( $contact->$column_name!='' )
             echo '
-            '.$sblockref->htmlFormNonEditable('',$contact->$column_name,MySBUtil::str2abbrv(_G($sblockref->lname),3,3)).'<br>';
+            '.$sblockref->htmlFormNonEditable('',$contact->$column_name,_G($sblockref->lname)).'<br>';
     }
     echo '
         <div class="cell_hide">';

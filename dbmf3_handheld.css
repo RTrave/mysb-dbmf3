@@ -19,7 +19,7 @@ min-height: 44px;
 min-width: 60px;
 }
 #mysbMiddle td.cell_plugins {
-width: auto;
+width: 100%;
 }
 #mysbMiddle td.cell_infos {
 min-width: 0px;

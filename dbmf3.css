@@ -14,6 +14,7 @@ font-size: 95%;
 
 #mysbMiddle td.cell_names {
 overflowM: visible;
+width: 30%;
 }
 #mysbMiddle td.cell_names b {
 overflowf: scroll;
@@ -24,6 +25,7 @@ vertical-align: top;
 text-align: right;
 height: 100%;
 widthM: 80%;
+width: 100%;
 }
 
 #mysbMiddle td.cell_ext {
@@ -142,11 +144,17 @@ width: 90%;
 font-size: 90%;
 }
 
+#rsvpContact img.mysbIcons_valueok {
+width: 18px;
+}
+
 #rsvpCriteria table {
 font-size: 90%;
 }
 
-#rsvpCriteria table,tr,td {
+#rsvpCriteria table,
+#rsvpCriteria tr,
+#rsvpCriteria td {
 vertical-align: middle;
 }
 

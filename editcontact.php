@@ -58,12 +58,16 @@ foreach($blocks as $block) {
             $refname = $blockref->keyname;
             echo '
 <tr style="'.$class_edit.'">
-    <td style="vertical-align: top; text-align: right;">'._G($blockref->lname).':</td>
+    <td style="height: 18px; vertical-align: top; text-align: right;">'._G($blockref->lname).':</td>
     <td>';
             if($block->isEditable()) 
                 echo $blockref->htmlForm('blockref',$contact->$refname,'('.$contact->lastname.' '.$contact->firstname.')');
-            else 
-                echo $blockref->htmlFormNonEditable('blockref',$contact->$refname,'('.$contact->lastname.' '.$contact->firstname.')');
+            else {
+                if( $blockref->getType()=='tel' or $blockref->getType()=='url' ) 
+                    echo $blockref->htmlFormNonEditable('blockref',$contact->$refname,'('.$contact->lastname.' '.$contact->firstname.')');
+                else
+                    echo $blockref->htmlFormNonEditable('blockref',$contact->$refname);
+            }
             echo '
     </td>
 </tr>';
