@@ -42,10 +42,19 @@ if(isset($_POST['contact_edit']) and MySBRoleHelper::checkAccess('dbmf_editor',f
     $today = getdate();
     $today_date = $today['year'].'-'.$today['mon'].'-'.$today['mday'].' '.
                   $today['hours'].':'.$today['minutes'].':'.$today['seconds'];
+    $i_mail = 1;
+    $cmails = '';
+    while( isset($_POST['mail'.$i_mail]) ) {
+        if( $_POST['mail'.$i_mail]!='' ) {
+            if( $cmails!='' ) $cmails .= ',';
+            $cmails .= $_POST['mail'.$i_mail];
+        }
+        $i_mail++;
+    }
     $contact_datas = array(
         'lastname' => $_POST['lastname'],
         'firstname' => $_POST['firstname'],
-        'mail' => $_POST['mail'],
+        'mail' => $cmails,
         'date_modif' => $today_date );
     $blocks = MySBDBMFBlockHelper::load();
     foreach($blocks as $block) {

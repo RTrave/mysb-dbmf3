@@ -54,8 +54,29 @@ echo '
 if(MySBRoleHelper::checkAccess('dbmf_editor',false)) {
     echo '
     <td>';
+
+    $cmail = explode(',',$contact->mail);
+    $i_mail = 0;
+    foreach($cmail as $email) {
+        if( $i_mail>0 ) echo '
+        </div>';
+        $i_mail++;
+        echo '
+        <div>
+            <input type="email" name="mail'.$i_mail.'" size="28" maxlength="64" value="'.$email.'">';
+    }
     echo '
-        <input type="email" name="mail" size="28" maxlength="64" value="'.$contact->mail.'">
+            <img    src="images/icons/list-add.png" 
+                    alt="add a email" 
+                    id="dbmfmailaddicon"
+                    style="height: 20px; vertical-align: middle;"
+                    onClick="show(\'dbmfmailadd\');hide(\'dbmfmailaddicon\')">
+        </div>
+        <div>
+            <input type="email" name="mail'.($i_mail+1).'" size="28" maxlength="64" value="" style="display: none;" id="dbmfmailadd">
+        </div>
+    ';
+    echo '
     </td>';
 } else {
     echo '
