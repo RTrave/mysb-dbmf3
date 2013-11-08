@@ -20,24 +20,38 @@ $contact = $app->tpl_currentcontact;
 if(isset($_POST['contact_delete'])) return;
 
 echo '
-<h1 style="vertical-align: top; padding-top: 5px;">';
-    if( $contact->mail!='' ) 
-        echo '
-        <a href="mailto:'.$contact->mail.'">
-            <img    src="images/icons/mail-unread.png" 
-                    alt="'._G('DBMF_mailto').' '.$contact->id.'" 
-                    title="'._G('DBMF_mailto').' '.$contact->lastname.' '.$contact->firstname.' ('.$contact->id.')"
-                    style="width: 18px; margin: 0px;"></a>';
+<div class="overlayWidth" data-overwidth="400" data-overheight="5"></div>
+<div id="dbmfContact">
+
+<h1 style="vertical-align: top; padding-top: 5px;" class="roundtop">
+
+<div style="float: right; margin-right: 15px;">
+        <form   action="blank.php?mod=dbmf3&amp;tpl=delcontact&amp;contact_id='.$contact->id.'" 
+                method="post" 
+                class="overlayed"
+                data-overconfirm="'.MySBUtil::str2strict(sprintf(_G('DBMF_confirm_contact_delete'),$contact->lastname, $contact->firstname )).'">
+            <input  type="hidden" name="dbmf_contact_delete" value="'.$contact->id.'">
+            <input  type="hidden" name="dbmf_request_reuse" value="1">
+            <input  src="images/icons/user-trash.png"
+                    type="image"
+                    alt="'._G('DBMF_contact_delete').'"
+                    title="'.sprintf(_G('DBMF_contact_delete'),$contact->lastname, $contact->firstname ).'">
+        </form>
+</div>
+    '.$contact->lastname.' '.$contact->firstname.'
+</h1>
+';
 
 echo '
-    '.$contact->lastname.' '.$contact->firstname.' ('.$contact->id.')
-</h1>';
+<form   action="blank.php?mod=dbmf3&amp;tpl=editcontact&amp;contact_id='.$contact->id.'"
+        method="post"
+        class="overlayed">
 
-echo '
-<form action="?mod=dbmf3&amp;tpl=editcontact&amp;contact_id='.$contact->id.'" method="post">
 
-<div class="table_support">
-<table id="rsvpContact"><tbody>
+<div class="cform">
+
+<div class="table_support1">
+<table class="cform"><tbody>
 ';
 
 _T('templates/common_edition.php','dbmf3');
@@ -76,35 +90,39 @@ foreach($blocks as $block) {
 }
 
 if(MySBRoleHelper::checkAccess('dbmf_editor',false)) echo '
-<tr>
-    <td colspan="2" style="text-align: center;">
+</tbody></table>
+</div>
+</div>
+
+
+<div class="foot roundbottom">
         <input type="hidden" name="contact_edit" value="1">
         <input type="submit" value="'._G('DBMF_contact_edition_submit').'">
-    </td>
-</tr>';
-
-echo '
-</tbody></table>
 </div>
+
+
 </form>
-<br>
+
+</div>
 ';
 
 echo '
-<form   action="?mod=dbmf3&amp;tpl=editcontact" method="post"
-        OnSubmit="return mysb_confirm(\''.MySBUtil::str2strict(sprintf(_G('DBMF_confirm_contact_delete'),$contact->lastname, $contact->firstname )).'\')">
-
-<div class="table_support">
-<table style="width: 95%;"><tbody>
-<tr>
-    <td style="text-align: center;">
-        <input type="hidden" name="contact_delete" value="'.$contact->id.'">
-        <input type="submit" value="'._G('DBMF_contact_delete_submit').'">
-    </td>
-</tr>
-</tbody></table>
 </div>
-</form>
 ';
 
+if(isset($_POST['memento_delete'])) {
+    echo '
+<script>
+$("#memento'.$_POST['memento_delete'].'").fadeOut(1000,"swing");
+</script>';
+}
+if($_GET['contact_id']==-1) {
+    echo '
+<script>
+$("#newcontactselection").fadeOut(500);
+$("#newcontactselection").promise().done(function(){
+    $("#newcontactok").fadeIn(500);
+});
+</script>';
+}
 ?>

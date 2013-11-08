@@ -55,23 +55,33 @@ margin: 3px;
 padding-right: 0px;
 }
 
-#dbmfMemento td.infos {
+#dbmfMementoList td.infos {
 width: 80px;
 }
-#dbmfMemento div.floatingcell{
+#dbmfMementoList div.floatingcell{
 clear: both;
 width: 100%;
 }
-#dbmfMemento div.date{
+#dbmfMementoList div.date{
 text-align: left;
 }
-#dbmfMemento div.name{
+#dbmfMementoList div.name{
 width: 100%;
 }
-#dbmfMemento td.comments{
+#dbmfMementoList td.comments{
 font-size: 80%;
 }
-#dbmfMemento td.actions{
+#dbmfMementoList td.actions{
 width: 40px;
+}
+
+#dbmfContact div.cform,
+#dbmfMemento div.cform {
+    font-size: 80%;
+    bottom: 35px;
+}
+#dbmfContact div.foot,
+#dbmfMemento div.foot {
+    height: 32px;
 }
 

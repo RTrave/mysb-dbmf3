@@ -139,9 +139,47 @@ padding: 0px 5px 0px 5px;
 background: transparent;
 }
 
+div#dbmfContact {}
+
+#dbmfContact h1 {
+    display: inline-block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 26px;
+    font-size: 90%;
+}
+
+#dbmfContact div.cform {
+    position: absolute;
+    top: 36px;
+    bottom: 28px;
+    left: 0;
+    right: 0;
+    overflow-y:auto;
+    padding: 3px 0px;
+    font-size: 90%;
+}
+
+#dbmfContact div.foot {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 24px;
+    text-align: center;
+    padding-top: 3px;
+    background: #bbbbbb;
+}
+
+#dbmfContact table.cform {
+    width: 100%;
+}
+
 table#rsvpContact {
 width: 90%;
-font-size: 90%;
+font-size: 80%;
 }
 
 #rsvpContact img.mysbIcons_valueok {
@@ -158,44 +196,84 @@ font-size: 90%;
 vertical-align: middle;
 }
 
-div#dbmfMemento {
+div#dbmfMementoList {
 font-size: 90%;
 }
 
-#dbmfMemento table {
+#dbmfMementoList table {
 margin: 0px;
 }
 
-#dbmfMemento tr {
+#dbmfMementoList tr {
 background-color: transparent;
 }
 
-#dbmfMemento td.infos {
+#dbmfMementoList td.infos {
 width: 200px;
 }
-#dbmfMemento div.floatingcell{
+#dbmfMementoList div.floatingcell{
 float: left;
 }
-#dbmfMemento div.date{
+#dbmfMementoList div.date{
 width: 80px;
 }
-#dbmfMemento div.name{
+#dbmfMementoList div.name{
 text-align: left;
 font-size: 90%;
 width: 120px;
 }
 
-#dbmfMemento td.comments{
+#dbmfMementoList td.comments{
 vertical-align: top;
 text-align: left;
 font-size: 90%;
 }
 
-#dbmfMemento p.rteditor {
+#dbmfMementoList p.rteditor {
 padding: 2px 3px;
 }
 
-#dbmfMemento td.actions{
+#dbmfMementoList td.actions{
 width: 80px;
+}
+
+div#dbmfMemento {
+    min-height: 320px;
+}
+
+#dbmfMemento h1 {
+    display: inline-block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 26px;
+    font-size: 90%;
+}
+
+#dbmfMemento div.cform {
+    position: absolute;
+    top: 36px;
+    bottom: 28px;
+    left: 0;
+    right: 0;
+    overflow-y:auto;
+    padding: 3px 0px;
+    background: white;
+}
+
+#dbmfMemento div.foot {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 24px;
+    text-align: center;
+    padding-top: 3px;
+    background: #bbbbbb;
+}
+
+#dbmfMemento table.cform {
+    width: 100%;
 }
 

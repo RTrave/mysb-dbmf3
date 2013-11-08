@@ -75,13 +75,22 @@ while($data_print = MySBDB::fetch_array($search_result)) {
 
     $anchor_nb++;
     echo '
-<div class="cell roundtop roundbottom">
+<div class="cell roundtop roundbottom" id="contact'.$contact->id.'">
 <table class="cell"><tbody>
 
 <tr class="cell">
     <td style="width: 20px; text-align: left;">
+<!--
         <a  id="contact'.$anchor_nb.'"
             href="javascript:editwinopen(\'index_wom.php?mod=dbmf3&amp;tpl=editcontact&amp;contact_id='.$contact->id.'\',\'contactinfos\')">
+        <img    src="images/icons/text-editor.png" 
+                alt="Edition '.$contact->id.'" 
+                title="'._G('DBMF_edit').' '.$contact->lastname.' '.$contact->firstname.' ('.$contact->id.')"
+                style="width: 24px"></a>
+-->
+        <a  id="contact'.$anchor_nb.'"
+            class="overlayed"
+            href="blank.php?mod=dbmf3&amp;tpl=editcontact&amp;contact_id='.$contact->id.'">
         <img    src="images/icons/text-editor.png" 
                 alt="Edition '.$contact->id.'" 
                 title="'._G('DBMF_edit').' '.$contact->lastname.' '.$contact->firstname.' ('.$contact->id.')"
@@ -113,8 +122,10 @@ while($data_print = MySBDB::fetch_array($search_result)) {
         </div>
     </td>
     <td style="width: 20px; height: 20px; text-align: right; vertical-align: top;">
-        <form   action="#contact'.($anchor_nb-1).'" method="post" 
-                OnSubmit="return mysb_confirm(\''.MySBUtil::str2strict(sprintf(_G('DBMF_confirm_contact_delete'),$contact->lastname, $contact->firstname )).'\')">
+        <form   action="blank.php?mod=dbmf3&amp;tpl=delcontact&amp;contact_id='.$contact->id.'" 
+                method="post" 
+                class="overlayed"
+                data-overconfirm="'.MySBUtil::str2strict(sprintf(_G('DBMF_confirm_contact_delete'),$contact->lastname, $contact->firstname )).'">
             <input  type="hidden" name="dbmf_contact_delete" value="'.$contact->id.'">
             <input  type="hidden" name="dbmf_request_reuse" value="1">
             <input  src="images/icons/user-trash.png"

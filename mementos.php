@@ -36,6 +36,8 @@ if( isset($_GET['filter']) and $_GET['filter']=='all' ) {
 ';
 }
 
+echo '
+<div id="dbmfMementoList">';
 
 $memento_type = -1;
 $anchor_nb = 0;
@@ -66,23 +68,29 @@ foreach($mementos_p as $memento) {
     $anchor_nb++;
 
     echo '
-<div class="cell roundtop roundbottom '.$memclass.'" id="dbmfMemento">
+<div class="cell roundtop roundbottom '.$memclass.'" id="memento'.$memento->id.'">
 <table style="width: 100%; background-color: transparent;"><tbody>
 <tr>
     <td class="infos">
         <div class="date floatingcell">';
     if($memento->isEditable()) echo '
-        <a  href="javascript:editwinopen(\'index_wom.php?mod=dbmf3&amp;tpl=editmemento&amp;memento_id='.$memento->id.'\',\'contactinfos\')"><b>'.$memento->getDate().'</b></a>';
+        <a  href="blank.php?mod=dbmf3&amp;tpl=editmemento&amp;memento_id='.$memento->id.'"
+            class="overlayed"><b>'.$memento->getDate().'</b></a>';
     else echo '
         '.$memento->getDate().'';
+    if($m_group!=null) $m_groupname = $m_group->name;
+    else $m_groupname = '';
     echo '<br>
-        <span class="cell_hide"><small><i>'.$m_user->login.'('.$m_group->name.')</i></small></span>
+        <span class="cell_hide"><small><i>'.$m_user->login.'('.$m_groupname.')</i></small></span>
         </div>
         <div class="name floatingcell">
         <div style="float: left;">
         <a  id="memento'.$anchor_nb.'"
-            href="javascript:editwinopen(\'index_wom.php?mod=dbmf3&amp;tpl=editcontact&amp;contact_id='.$contact->id.'\',\'contactinfos\')">
-        <img src="images/icons/text-editor.png" alt="Edition '.$contact->id.'" title="'._G('DBMF_edit').' '.$contact->lastname.' '.$contact->firstname.' (memento '.$memento->id.')">
+            href="blank.php?mod=dbmf3&amp;tpl=editcontact&amp;contact_id='.$contact->id.'"
+            class="overlayed">
+            <img    src="images/icons/text-editor.png" 
+                    alt="Edition '.$contact->id.'" 
+                    title="'._G('DBMF_edit').' '.$contact->lastname.' '.$contact->firstname.' (memento '.$memento->id.')">
         </a>
         </div>
         <b>'.MySBUtil::str2abbrv($contact->lastname,10,10).'</b><br>
@@ -119,6 +127,8 @@ foreach($mementos_p as $memento) {
 }
 
 echo '
+</div>
+
 </div>
 ';
 

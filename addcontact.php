@@ -16,21 +16,28 @@ global $app;
 
 echo '
 <h1>'._G('DBMF_addcontact').'</h1>
-<p>';
+<p>
+<div id="newcontactselection">';
 
 if( isset($app->dbmf_req_wcheck) and $app->dbmf_req_wcheck!='' ) {
 
     while($data_wcheck = MySBDB::fetch_array($app->dbmf_req_wcheck)) {
         echo '
+    <div id="contact'.$data_wcheck['id'].'">
     '._G('DBMF_addcontact_editentry').$data_wcheck['id'].': 
-    <a href="javascript:editwinopen(\'index_wom.php?mod=dbmf3&amp;tpl=editcontact&amp;contact_id='.$data_wcheck['id'].'\',\'contactinfos\')"><b>'.$data_wcheck['lastname'].'</b> '.$data_wcheck['firstname'].' &lt;'.$data_wcheck['mail'].'&gt;</a><br>';
+    <a href="blank.php?mod=dbmf3&amp;tpl=editcontact&amp;contact_id='.$data_wcheck['id'].'"
+       class="overlayed">
+        <b>'.$data_wcheck['lastname'].'</b> '.$data_wcheck['firstname'].' &lt;'.$data_wcheck['mail'].'&gt;</a>
+    </div>';
     }
     $lastname = str_replace('"', '\'', $_POST['lastname']);
     $firstname = str_replace('"', '\'', $_POST['firstname']);
     $mail = str_replace('"', '\'', $_POST['mail']);
     echo '
     <br>
-    <form action="index.php?mod=dbmf3&amp;tpl=editcontact&amp;contact_id=-1" method="post">
+    <form action="blank.php?mod=dbmf3&amp;tpl=editcontact&amp;contact_id=-1" 
+          method="post"
+          class="overlayed">
         <input type="hidden" name="lastname" value="'.$lastname.'">
         <input type="hidden" name="firstname" value="'.$firstname.'">
         <input type="hidden" name="mail" value="'.$mail.'">
@@ -38,6 +45,10 @@ if( isset($app->dbmf_req_wcheck) and $app->dbmf_req_wcheck!='' ) {
                 value="'._G('DBMF_addcontact_newentry').': '.$lastname.' '.$firstname.' <'.$mail.'>"
                 style="font-size: 130%;">
     </form>
+</div>
+<div id="newcontactok" style="display: none;">
+    '._G('DBMF_addcontact_newentry').' OK!
+</div>
 </p>';
 
 } else {
@@ -55,7 +66,8 @@ if( isset($app->dbmf_req_wcheck) and $app->dbmf_req_wcheck!='' ) {
 <br>
 <input type="submit" value="'._G('DBMF_addcontact_verify').'">
 </p>
-</form>';
+</form>
+</div>';
 
 }
 ?>

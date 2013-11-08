@@ -110,13 +110,16 @@ foreach($mementos as $memento) {
         <td style="width: 130px;" '.$memclass.'>';
     if($memento->isEditable())
         echo '
-            <a  href="?mod=dbmf3&amp;tpl=editmemento&amp;memento_id='.$memento->id.'"
-                OnClick="return mysb_confirm(\''.MySBUtil::str2strict(_G('DBMF_confirm_memento_edition')).'\')">
+            <a  href="blank.php?mod=dbmf3&amp;tpl=editmemento&amp;memento_id='.$memento->id.'"
+                class="overlayed"
+                data-overconfirm="'.MySBUtil::str2strict(_G("DBMF_confirm_memento_edition")).'">
                 <b>'.$memento->getDate().'</b></a>';
     else echo '
             '.$memento->getDate().'';
+    if($m_group!=null) $m_groupname = $m_group->name;
+    else $m_groupname = '';
     echo '<br>
-            <i>'.$m_user->login.'('.$m_group->name.')</i>
+            <i>'.$m_user->login.'('.$m_groupname.')</i>
         </td>
         <td>'.$memento->comments.'</td>
         <td style="width: 180px;">'.$memento->comments2.'</td>
@@ -127,9 +130,16 @@ foreach($mementos as $memento) {
 echo '
     <tr>
         <td colspan="3" style="text-align: center; padding: 10px;"><small>
+<!--
             <a  href="?mod=dbmf3&amp;tpl=editmemento&amp;contact_id='.$contact->id.'" class="button"
                 OnClick="return mysb_confirm(\''.MySBUtil::str2strict(_G('DBMF_confirm_memento_edition')).'\')">
-                '._G("DBMF_contact_mementos_create").'</a></small>
+                '._G("DBMF_contact_mementos_create").'</a>
+-->
+            <a  href="blank.php?mod=dbmf3&amp;tpl=editmemento&amp;contact_id='.$contact->id.'"
+                class="button overlayed"
+                data-overconfirm="'.MySBUtil::str2strict(_G('DBMF_confirm_memento_edition')).'">
+                '._G("DBMF_contact_mementos_create").'</a>
+            </small>
         </td>
     </tr>
     </tbody></table>

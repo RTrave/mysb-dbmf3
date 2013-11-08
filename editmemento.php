@@ -26,8 +26,40 @@ if(isset($_GET['memento_id'])) {
 }
 
 echo '
-<h1>'._G("DBMF_memento_edition").'</h1>
-<h2>'.$contact->lastname.' '.$contact->firstname.' ('.$contact->id.')</h2>';
+<div class="overlayWidth" data-overwidth="460"></div>
+
+<div id="dbmfMemento">
+<h1 class="roundtop">
+<div style="float: left;">
+    <a  href="blank.php?mod=dbmf3&amp;tpl=editcontact&amp;contact_id='.$contact->id.'" 
+        class="overlayed">
+        <img    src="images/icons/text-editor.png" 
+                alt="'._G("DBMF_memento_edition_return").'" 
+                title="'._G('DBMF_edit').' '.$contact->lastname.' '.$contact->firstname.' ('.$contact->id.')"
+                style="width: 24px">
+    </a>
+</div>';
+
+if($memento_id!=-1) echo '
+    <div style="float: right; margin-right: 15px;">
+        <form action="blank.php?mod=dbmf3&amp;tpl=editcontact&amp;contact_id='.$contact->id.'" 
+              method="post"
+              class="overlayed"
+              data-overconfirm="'.MySBUtil::str2strict(_G('DBMF_confirm_memento_delete')).'">
+            <input type="hidden" name="memento_delete" value="'.$memento_id.'">
+            <input src="images/icons/user-trash.png"
+                   type="image"
+                   alt="'._G('DBMF_memento_edition_delete').'"
+                   title="'._G('DBMF_memento_edition_delete').'">
+        </form>
+    </div>';
+
+echo _G("DBMF_memento").': '.$contact->lastname.' '.$contact->firstname.'</h1>
+
+<form   action="blank.php?mod=dbmf3&amp;tpl=editcontact&amp;contact_id='.$contact->id.'" 
+        method="post"
+        class="overlayed">
+<div class="cform">';
 
 $memento_date = new MySBDateTime($memento->date_memento);
 if($memento_id!=-1) $m_user = MySBUserHelper::getByID($memento->user_id);
@@ -36,9 +68,8 @@ if($memento->group_id!=0) $m_group = MySBGroupHelper::getByID($memento->group_id
 else $m_group = null;
 
 echo '
-<div class="table_support">
-<form action="?mod=dbmf3&amp;tpl=editcontact&amp;contact_id='.$contact->id.'" method="post">
-<table style="width: 95%; font-size: 90%;"><tbody>
+<div class="table_support1">
+<table class="cform roundtop roundbottom"><tbody>
 <tr>
     <td><b>'._G("DBMF_memento_owner").':</b></td>
     <td>';
@@ -59,7 +90,7 @@ foreach($mgroups as $mgroup) {
         <option value="'.$mgroup->id.'" '.MySBUtil::form_isselected($memento->group_id,$mgroup->id).'>group "'.$mgroup->comments.'"</option>';
 }
 echo '
-        </select>
+        </select><br>
         <input type="checkbox" name="memento_group_edition" '.MySBUtil::form_ischecked($memento->group_edition,1).'>'._G("DBMF_memento_groupcanedit").'
     </td>
 </tr>
@@ -114,47 +145,28 @@ echo MySBEditor::initCode('simple');
 
 echo '
 <tr>
-    <td><b>'._G("DBMF_memento_comments").':</b></td>
-    <td><textarea name="memento_comments" cols="60" rows="3" class="mceEditor">'.$memento->comments.'</textarea></td>
+    <td colspan="2"><b>'._G("DBMF_memento_comments").':</b>
+    <textarea name="memento_comments" cols="40" rows="3" class="mceEditor" style="float: right">'.$memento->comments.'</textarea></td>
 </tr>
 <tr>
-    <td><b>'._G("DBMF_memento_comments2").':</b></td>
-    <td><textarea name="memento_comments2" cols="60" rows="3" class="mceRichText">'.$memento->comments2.'</textarea></td>
-</tr>
-<tr>
-    <td colspan="2" style="text-align: center;">';
-    if($memento_id!=-1) echo '
-        <input type="hidden" name="memento_modify" value="'.$memento_id.'">';
-    else echo '
-        <input type="hidden" name="memento_add" value="1">';
-    echo '
-        <input type="submit" value="'._G('DBMF_memento_edition_submit').'">
-    </td>
+    <td colspan="2"><b>'._G("DBMF_memento_comments2").':</b>
+    <textarea name="memento_comments2" cols="40" rows="3" style="float: right">'.$memento->comments2.'</textarea></td>
 </tr>
 </tbody></table>
-</form>';
-    if($memento_id!=-1) echo '
-<br>
-<form   action="?mod=dbmf3&amp;tpl=editcontact&amp;contact_id='.$contact->id.'" method="post"
-        OnSubmit="return mysb_confirm(\''.MySBUtil::str2strict(_G('DBMF_confirm_memento_delete')).'\')">
-<table style="width: 95%;"><tbody>
-<tr>
-    <td colspan="2" style="text-align: center;">
-        <input type="hidden" name="memento_delete" value="'.$memento_id.'">
-        <input type="submit" value="'._G('DBMF_memento_edition_delete').'">
-    </td>
-</tr>
-</tbody></table>
+</div>
+</div>
+
+<div class="foot roundbottom">';
+if($memento_id!=-1) echo '
+    <input type="hidden" name="memento_modify" value="'.$memento_id.'">';
+else echo '
+    <input type="hidden" name="memento_add" value="1">';
+echo '
+    <input type="submit" value="'._G('DBMF_memento_edition_submit').'">';
+echo '
+</div>
 </form>';
     echo '
-<br>
-<table style="width: 95%;"><tbody>
-<tr>
-    <td colspan="2" style="text-align: center; padding: 2px;">
-        <a href="?mod=dbmf3&amp;tpl=editcontact&amp;contact_id='.$contact->id.'" class="button">'._G("DBMF_memento_edition_return").'</a>
-    </td>
-</tr>
-</tbody></table>
 </div>
 ';
 
