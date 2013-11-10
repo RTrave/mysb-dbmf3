@@ -276,4 +276,10 @@ div#dbmfMemento {
 #dbmfMemento table.cform {
     width: 100%;
 }
+#dbmfMemento td {
+    vertical-align: top;
+}
 
+table.cform {
+    border-collapse: collapse;
+}

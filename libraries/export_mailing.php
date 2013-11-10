@@ -63,7 +63,7 @@ class MySBDBMFExportMailing extends MySBDBMFExport {
     '._G('DBMF_exportmailing_subject').':
     <input type="text" name="dbmf_exportmailing_subject" value="" size="24"><br>
     '._G('DBMF_exportmailing_body').':<br>
-    <textarea name="dbmf_exportmailing_body" cols="60" rows="8" class="mceEditor"></textarea><br>
+    <div style="max-width: 640px"><textarea name="dbmf_exportmailing_body" cols="60" rows="8" class="mceEditor"></textarea></div>
     '._G('DBMF_exportmailing_attachment').' 1:
     <input type="hidden" name="MAX_FILE_SIZE" value="2000000" />
     <input name="dbmf_exportmailing_att1" type="file" /><br>

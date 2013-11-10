@@ -69,7 +69,7 @@ else $m_group = null;
 
 echo '
 <div class="table_support1">
-<table class="cform roundtop roundbottom"><tbody>
+<table class="cform"><tbody>
 <tr>
     <td><b>'._G("DBMF_memento_owner").':</b></td>
     <td>';
@@ -146,7 +146,8 @@ echo MySBEditor::initCode('simple');
 echo '
 <tr>
     <td colspan="2"><b>'._G("DBMF_memento_comments").':</b>
-    <textarea name="memento_comments" cols="40" rows="3" class="mceEditor" style="float: right">'.$memento->comments.'</textarea></td>
+    <div style="float: right;padding: 3px;"><textarea name="memento_comments" cols="40" rows="3" class="mceEditor">'.$memento->comments.'</textarea></div>
+    </td>
 </tr>
 <tr>
     <td colspan="2"><b>'._G("DBMF_memento_comments2").':</b>
