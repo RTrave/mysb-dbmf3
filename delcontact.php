@@ -19,11 +19,12 @@ if(isset($_POST['dbmf_contact_delete'])) {
 
     echo '
 <script>
-$("#contact'.$_POST['dbmf_contact_delete'].'").fadeOut(1000,"swing");';
+    desactiveOverlay();
+    $("#contact'.$_POST['dbmf_contact_delete'].'").fadeOut(1000,"swing");';
 
     foreach($app->dbmf_hidemementos as $memento) {
         echo '
-$("#memento'.$memento->id.'").fadeOut(1000,"swing");';
+    $("#memento'.$memento->id.'").fadeOut(1000,"swing");';
     }
 
     echo '

@@ -124,7 +124,7 @@ while($data_print = MySBDB::fetch_array($search_result)) {
     <td style="width: 20px; height: 20px; text-align: right; vertical-align: top;">
         <form   action="blank.php?mod=dbmf3&amp;tpl=delcontact&amp;contact_id='.$contact->id.'" 
                 method="post" 
-                class="overlayed"
+                class="hidelayed"
                 data-overconfirm="'.MySBUtil::str2strict(sprintf(_G('DBMF_confirm_contact_delete'),$contact->lastname, $contact->firstname )).'">
             <input  type="hidden" name="dbmf_contact_delete" value="'.$contact->id.'">
             <input  type="hidden" name="dbmf_request_reuse" value="1">
