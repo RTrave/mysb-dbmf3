@@ -27,6 +27,7 @@ if(isset($_GET['memento_id'])) {
 
 echo '
 <div class="overlayWidth" data-overwidth="460"></div>
+<div class="overlayHeight" data-overheight="500"></div>
 
 <div id="dbmfMemento">
 <h1 class="roundtop">
