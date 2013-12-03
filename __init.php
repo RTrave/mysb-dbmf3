@@ -14,7 +14,7 @@ defined('_MySBEXEC') or die;
 
 class MySBModule_dbmf3 {
 
-    public $version = 10;
+    public $version = 11;
 
     public function create() {
         global $app;
@@ -290,6 +290,12 @@ class MySBModule_dbmf3 {
             'ADD alwaysshown int',
             "__init.php",
             false, "dbmf3");
+    }
+
+    public function init11() {
+        global $app;
+        MySBConfigHelper::create('dbmf_globalaccess','0',MYSB_VALUE_TYPE_BOOL,
+            'Users have global access on all contacts', 'dbmf3');
     }
 
     public function uninit() {

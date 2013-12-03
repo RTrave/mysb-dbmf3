@@ -22,37 +22,42 @@ if(count($act_mementos)>=1)
     echo '
 <h2>'._G('DBMF_baseinfos_mementos').'</h2>
 <ul>
-<li>
-    <a href="?mod=dbmf3&amp;tpl=mementos">'._G('DBMF_baseinfos_mementos_actives').'</a>: <b style="text-decoration: blink">'.count($act_mementos).'</b>
-</li>
+    <li>
+        <a href="?mod=dbmf3&amp;tpl=mementos">'._G('DBMF_baseinfos_mementos_actives').'</a>: <b>'.count($act_mementos).'</b>
+    </li>
 </ul>
 ';
 
-
-
+$norights_flag = false;
 
 if(!isset($_SESSION['dbmf3_baseinfos_date'])) {
     $sql_r = 'SELECT id from '.MySB_DBPREFIX.'dbmfcontacts ';
     $blocks = MySBDBMFBlockHelper::load();
     $clause_owner = '';
-    foreach($blocks as $block) {
-        $clause_owner_part = '';
-        if($block->id!=1 and $block->isViewable()) {
-            if($clause_owner_part!='')  $clause_owner_part .= ' or ';
-            $clause_owner_part .= $block->htmlProcessWhereClause();
+    if( !MySBConfigHelper::Value('dbmf_globalaccess','dbmf3') ) {
+        foreach($blocks as $block) {
+            $clause_owner_part = '';
+            if($block->id!=1 and $block->isViewable()) {
+                if($clause_owner_part!='')  $clause_owner_part .= ' or ';
+                $clause_owner_part .= $block->htmlProcessWhereClause();
+            }
+            if($clause_owner!='' and $clause_owner_part!='') $clause_owner .= ' or ';
+            if($clause_owner_part!='') $clause_owner .= $clause_owner_part;
         }
-        if($clause_owner!='' and $clause_owner_part!='') $clause_owner .= ' or ';
-        if($clause_owner_part!='') $clause_owner .= $clause_owner_part;
-    }
-    if($clause_owner=='') {
-        $app->pushAlert(_G('DBMF_no_rights'));
+        if($clause_owner=='') {
+            //$app->pushMessage(_G('DBMF_no_rights'));
+            $norights_flag = true;
+        }
     }
     $clause_t = '('.$clause_owner.')';
     if($clause_t!='()') $sql_r .= 'WHERE '.$clause_t.' ';
 
-	$infosava_result = MySBDB::query( $sql_r,
-	    "infos.php",
-	    false, 'dbmf3');
+	if($norights_flag) 
+	    $infosava_result = array();
+    else 
+        $infosava_result = MySBDB::query( $sql_r,
+            "infos.php",
+            false, 'dbmf3');
 
 	$infostot_result = MySBDB::query( 'SELECT id from '.MySB_DBPREFIX.'dbmfcontacts',
 	    "infos.php",
@@ -64,20 +69,21 @@ if(!isset($_SESSION['dbmf3_baseinfos_date'])) {
 
 }
 
+if( MySBConfigHelper::Value('dbmf_globalaccess','dbmf3') ) 
+    $globalaccess_info = ' <small><i>(GLOBAL ACCESS)</i></small>';
+else 
+    $globalaccess_info = '';
+
 echo '
 <h2>'._G('DBMF_baseinfos').'</h2>
-
 <ul>
-<li>
-    '._G('DBMF_baseinfos_complete').': '.$_SESSION['dbmf3_baseinfos_tot'].'
-    
-</li>
-<li>
-    '._G('DBMF_baseinfos_avaible').': '.$_SESSION['dbmf3_baseinfos_ava'].'
-    
-</li>
-</ul>
-';
-
+    <li>'._G('DBMF_baseinfos_complete').': '.$_SESSION['dbmf3_baseinfos_tot'].'</li>
+    <li>
+        '._G('DBMF_baseinfos_avaible').': '.$_SESSION['dbmf3_baseinfos_ava'].' '.$globalaccess_info;
+if( $norights_flag ) 
+    echo '<br><i>'._G('DBMF_no_rights').'</i>';
+echo '
+    </li>
+</ul>';
 
 ?>

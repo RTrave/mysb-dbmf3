@@ -33,19 +33,20 @@ if(isset($_POST['dbmf_request'])) {
     $clause_a = '';
     $blocks = MySBDBMFBlockHelper::load();
     $clause_owner = '';
-    foreach($blocks as $block) {
-        $clause_owner_part = '';
-        if($block->id!=1 and $block->isViewable()) {
-            if($clause_owner_part!='')  $clause_owner_part .= ' or ';
-            $clause_owner_part .= $block->htmlProcessWhereClause();
+    if( !MySBConfigHelper::Value('dbmf_globalaccess','dbmf3') ) {
+        foreach($blocks as $block) {
+            $clause_owner_part = '';
+            if($block->id!=1 and $block->isViewable()) {
+                if($clause_owner_part!='')  $clause_owner_part .= ' or ';
+                $clause_owner_part .= $block->htmlProcessWhereClause();
+            }
+            if($clause_owner!='' and $clause_owner_part!='') $clause_owner .= ' or ';
+            if($clause_owner_part!='') $clause_owner .= $clause_owner_part;
         }
-        if($clause_owner!='' and $clause_owner_part!='') $clause_owner .= ' or ';
-        if($clause_owner_part!='') $clause_owner .= $clause_owner_part;
+        if($clause_owner=='') {
+            $app->pushAlert(_G('DBMF_no_rights'));
+        }
     }
-    if($clause_owner=='') {
-        $app->pushAlert(_G('DBMF_no_rights'));
-    }
-
     if( $_POST['search_type']=='all_fields' ) {
         $str_search_all = MySBUtil::str2whereclause($_POST['search_name']);
    	    $clause_a = 'lastname RLIKE \''.$str_search_all.'\' OR '.
