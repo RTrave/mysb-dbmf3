@@ -20,14 +20,14 @@ $contact = $app->tpl_currentcontact;
 if(isset($_POST['contact_delete'])) return;
 
 echo '
-<div class="overlayWidth" data-overwidth="400"></div>
+<div class="overlayWidth" data-overwidth="440"></div>
 <div class="overlayHeight" data-overheight="600"></div>
 
 <div id="dbmfContact">
 
-<h1 style="vertical-align: top; padding-top: 5px;" class="roundtop">
+<div class="overHead">
 
-<div style="float: right; margin-right: 15px;">
+    <div style="float: right; margin-right: 15px;">
         <form   action="blank.php?mod=dbmf3&amp;tpl=delcontact&amp;contact_id='.$contact->id.'" 
                 method="post" 
                 class="hidelayed"
@@ -39,9 +39,9 @@ echo '
                     alt="'._G('DBMF_contact_delete').'"
                     title="'.sprintf(_G('DBMF_contact_delete'),$contact->lastname, $contact->firstname ).'">
         </form>
-</div>
+    </div>
     '.$contact->lastname.' '.$contact->firstname.'
-</h1>
+</div>
 ';
 
 echo '
@@ -49,10 +49,8 @@ echo '
         method="post"
         class="overlayed">
 
+<div class="overBody">
 
-<div class="cform">
-
-<div class="table_support1">
 <table class="cform"><tbody>
 ';
 
@@ -90,27 +88,25 @@ foreach($blocks as $block) {
         }
     }
 }
+echo '
+</tbody></table>
+
+</div>
+
+
+<div class="overFoot">
+ ';
 
 if(MySBRoleHelper::checkAccess('dbmf_editor',false)) echo '
-</tbody></table>
-</div>
-</div>
-
-
-<div class="foot roundbottom">
-        <input type="hidden" name="contact_edit" value="1">
-        <input type="submit" value="'._G('DBMF_contact_edition_submit').'">
-</div>
-
-
-</form>
-
-</div>
-';
+    <input type="hidden" name="contact_edit" value="1">
+    <input type="submit" value="'._G('DBMF_contact_edition_submit').'">';
 
 echo '
 </div>
-';
+
+</form>
+
+</div>';
 
 if(isset($_POST['memento_delete'])) {
     echo '

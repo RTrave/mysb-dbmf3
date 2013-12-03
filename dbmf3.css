@@ -12,6 +12,15 @@ div#mysbMiddle {
 font-size: 95%;
 }
 
+#overlay div.contentWrap div.overBody {
+background: #eeeeee;
+}
+
+#mysbMiddle table,
+#mysbMiddle tr  {
+background: transparent;
+}
+
 #mysbMiddle td.cell_names {
 overflowM: visible;
 width: 30%;
@@ -141,36 +150,18 @@ background: transparent;
 
 div#dbmfContact {}
 
-#dbmfContact h1 {
-    display: inline-block;
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 26px;
-    font-size: 90%;
+#overlay div.contentWrap #dbmfContact div.overHead {
+    height: 32px;
+    font-size: 110%;
+    padding: 3px 5px 0px;
 }
-
-#dbmfContact div.cform {
-    position: absolute;
-    top: 36px;
+#overlay div.contentWrap #dbmfContact div.overBody {
+    top: 35px;
     bottom: 28px;
-    left: 0;
-    right: 0;
-    overflow-y:auto;
-    padding: 3px 0px;
-    font-size: 90%;
 }
-
-#dbmfContact div.foot {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
+#overlay div.contentWrap #dbmfContact div.overFoot {
     height: 24px;
-    text-align: center;
-    padding-top: 3px;
-    background: #bbbbbb;
+    padding: 4px 5px 0px;
 }
 
 #dbmfContact table.cform {
@@ -238,39 +229,20 @@ width: 80px;
 }
 
 div#dbmfMemento {
-    min-height: 320px;
 }
 
-#dbmfMemento h1 {
-    display: inline-block;
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 26px;
-    font-size: 90%;
+#overlay div.contentWrap #dbmfMemento div.overHead {
+    height: 36px;
+    font-size: 110%;
+    padding: 3px 5px 0px;
 }
-
-#dbmfMemento div.cform {
-    position: absolute;
-    top: 36px;
-    bottom: 28px;
-    left: 0;
-    right: 0;
-    overflow-y:auto;
-    padding: 3px 0px;
-    background: white;
+#overlay div.contentWrap #dbmfMemento div.overBody {
+    top: 39px;
+    bottom: 27px;
 }
-
-#dbmfMemento div.foot {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 24px;
-    text-align: center;
-    padding-top: 3px;
-    background: #bbbbbb;
+#overlay div.contentWrap #dbmfMemento div.overFoot {
+    height: 23px;
+    padding: 4px 5px 0px;
 }
 
 #dbmfMemento table.cform {

@@ -20,8 +20,10 @@ echo '
 <h1>'._G('DBMF_mementos_summary').'</h1>
 
 <div id="mysbMenuLevel">
-    <a href="index.php?mod=dbmf3&amp;tpl=mementos">'._G('DBMF_mementos_actives').'</a>
-    <a href="index.php?mod=dbmf3&amp;tpl=mementos&amp;filter=all">'._G('DBMF_mementos_all').'</a>
+<ul>
+    <li><a href="index.php?mod=dbmf3&amp;tpl=mementos">'._G('DBMF_mementos_actives').'</a></li>
+    <li><a href="index.php?mod=dbmf3&amp;tpl=mementos&amp;filter=all">'._G('DBMF_mementos_all').'</a></li>
+</ul>
 </div>
 ';
 
@@ -126,11 +128,12 @@ foreach($mementos_p as $memento) {
 
 }
 
-echo '
-</div>
+if( count($mementos_p)!=0 )
+    echo '
+</div>';
 
-</div>
-';
+echo '
+</div>';
 
 
 

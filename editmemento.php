@@ -30,7 +30,8 @@ echo '
 <div class="overlayHeight" data-overheight="500"></div>
 
 <div id="dbmfMemento">
-<h1 class="roundtop">
+
+<div class="overHead">
 <div style="float: left;">
     <a  href="blank.php?mod=dbmf3&amp;tpl=editcontact&amp;contact_id='.$contact->id.'" 
         class="overlayed">
@@ -55,12 +56,14 @@ if($memento_id!=-1) echo '
         </form>
     </div>';
 
-echo _G("DBMF_memento").': '.$contact->lastname.' '.$contact->firstname.'</h1>
+echo _G("DBMF_memento").': '.$contact->lastname.' '.$contact->firstname.'
+</div>
 
 <form   action="blank.php?mod=dbmf3&amp;tpl=editcontact&amp;contact_id='.$contact->id.'" 
         method="post"
         class="overlayed">
-<div class="cform">';
+
+<div class="overBody">';
 
 $memento_date = new MySBDateTime($memento->date_memento);
 if($memento_id!=-1) $m_user = MySBUserHelper::getByID($memento->user_id);
@@ -158,7 +161,7 @@ echo '
 </div>
 </div>
 
-<div class="foot roundbottom">';
+<div class="overFoot">';
 if($memento_id!=-1) echo '
     <input type="hidden" name="memento_modify" value="'.$memento_id.'">';
 else echo '
@@ -167,12 +170,9 @@ echo '
     <input type="submit" value="'._G('DBMF_memento_edition_submit').'">';
 echo '
 </div>
-</form>';
-    echo '
-</div>
-';
 
+</form>
 
-
+</div>';
 
 ?>
