@@ -58,8 +58,11 @@ $search_result = $app->tpl_dbmf_searchresult;
 $pluginsDisplay = MySBPluginHelper::loadByType('DBMFDisplay');
 $showcols_blockrefs = array();
 $showcols = new MySBCSValues($app->auth_user->dbmf_showcols);
-foreach($showcols->values as $br_id)
-    $showcols_blockrefs[] = MySBDBMFBlockRefHelper::getByID($br_id);
+foreach($showcols->values as $br_id) {
+    $showblockref = MySBDBMFBlockRefHelper::getByID($br_id);
+    if( isset($showblockref) and $showblockref->isActive() )
+        $showcols_blockrefs[] = $showblockref;
+}
 
 echo '
 <div class="list_support">';

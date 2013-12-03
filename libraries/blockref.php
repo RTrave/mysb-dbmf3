@@ -202,7 +202,9 @@ class MySBDBMFBlockRefHelper {
     public function getByID($id) {
         global $app;
         $blockrefs = MySBDBMFBlockRefHelper::load();
-        return $blockrefs[$id];
+        if( isset($blockrefs[$id]) )
+            return $blockrefs[$id];
+        return null;
     }
 
     public function getByKeyname($keyname) {
