@@ -144,13 +144,14 @@ echo '
     </td>
 </tr>';
 
-MySBEditor::activate();
-echo MySBEditor::initCode('simple');
-
+//MySBEditor::activate();
+//echo MySBEditor::initCode('simple');
+$area_id = 'editor_id_'.rand(1,999999);
 echo '
 <tr>
     <td colspan="2"><b>'._G("DBMF_memento_comments").':</b>
-    <div style="float: right;padding: 3px;"><textarea name="memento_comments" cols="40" rows="3" class="mceEditor">'.$memento->comments.'</textarea></div>
+    <div style="float: right;padding: 3px;"><textarea name="memento_comments" cols="40" rows="3" class="mceEditor" id="'.$area_id.'">'.$memento->comments.'</textarea></div>
+'.MySBEditor::active($area_id).'
     </td>
 </tr>
 <tr>
