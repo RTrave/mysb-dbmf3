@@ -243,6 +243,7 @@ else {
 
     echo '
 <p>
+'.MySBEditor::init("simple").'
 '.MySBDB::num_rows($app->dbmf_search_result).' results<br>
 </p>';
     $app->tpl_dbmf_searchresult = $app->dbmf_search_result;

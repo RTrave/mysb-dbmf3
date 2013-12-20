@@ -138,6 +138,7 @@ class MySBDBMFExportDisplay extends MySBDBMFExport {
     public function htmlResultOutput($results) {
         global $app;
         echo '
+'.MySBEditor::init("simple").'
 <p>
 '.MySBDB::num_rows($results).' results<br>
 </p>

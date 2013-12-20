@@ -145,7 +145,7 @@ echo '
 </tr>';
 
 //MySBEditor::activate();
-//echo MySBEditor::initCode('simple');
+//echo MySBEditor::init('simple');
 $area_id = 'editor_id_'.rand(1,999999);
 echo '
 <tr>
