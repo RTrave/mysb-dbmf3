@@ -33,7 +33,7 @@ if( isset($_POST['dbmf_request'])
 ';
 
     $app->tpl_dbmf_searchresult = $app->dbmf_search_result;
-    _T('templates/contacts_display.php','dbmf3');
+    _incT('contacts_display','dbmf3');
 
     echo '
 ';

@@ -14,6 +14,9 @@ defined('_MySBEXEC') or die;
 
 global $app;
 
+
+if( !MySBRoleHelper::checkAccess('dbmf_user') ) return;
+
 $contact = $app->tpl_currentcontact;
 $date_creat = new MySBDateTime($contact->date_creat);
 $date_modif = new MySBDateTime($contact->date_modif);
@@ -110,7 +113,7 @@ foreach($mementos as $memento) {
         <td style="width: 130px;" '.$memclass.'>';
     if($memento->isEditable())
         echo '
-            <a  href="blank.php?mod=dbmf3&amp;tpl=editmemento&amp;memento_id='.$memento->id.'"
+            <a  href="index.php?mod=dbmf3&amp;tpl=memento_edit&amp;memento_id='.$memento->id.'"
                 class="overlayed"
                 data-overconfirm="'.MySBUtil::str2strict(_G("DBMF_confirm_memento_edition")).'">
                 <b>'.$memento->getDate().'</b></a>';
@@ -131,11 +134,11 @@ echo '
     <tr>
         <td colspan="3" style="text-align: center; padding: 10px;"><small>
 <!--
-            <a  href="?mod=dbmf3&amp;tpl=editmemento&amp;contact_id='.$contact->id.'" class="button"
+            <a  href="index.php?mod=dbmf3&amp;tpl=memento_edit&amp;contact_id='.$contact->id.'" class="button"
                 OnClick="return mysb_confirm(\''.MySBUtil::str2strict(_G('DBMF_confirm_memento_edition')).'\')">
                 '._G("DBMF_contact_mementos_create").'</a>
 -->
-            <a  href="blank.php?mod=dbmf3&amp;tpl=editmemento&amp;contact_id='.$contact->id.'"
+            <a  href="index.php?mod=dbmf3&amp;tpl=memento_edit&amp;contact_id='.$contact->id.'"
                 class="button overlayed"
                 data-overconfirm="'.MySBUtil::str2strict(_G('DBMF_confirm_memento_edition')).'">
                 '._G("DBMF_contact_mementos_create").'</a>

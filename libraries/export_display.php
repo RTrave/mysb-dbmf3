@@ -144,7 +144,7 @@ class MySBDBMFExportDisplay extends MySBDBMFExport {
 </p>
 ';
         $app->tpl_dbmf_searchresult = $results;
-        _T('templates/contacts_display.php','dbmf3');
+        _incT('contacts_display','dbmf3');
 
     }
 

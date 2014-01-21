@@ -22,10 +22,10 @@ if(isset($_POST['dbmf_contact_delete'])) {
     desactiveOverlay();
     $("#contact'.$_POST['dbmf_contact_delete'].'").fadeOut(1000,"swing");';
 
-    foreach($app->dbmf_hidemementos as $memento) {
-        echo '
+    if( isset($app->dbmf_hidemementos) ) 
+        foreach($app->dbmf_hidemementos as $memento)
+            echo '
     $("#memento'.$memento->id.'").fadeOut(1000,"swing");';
-    }
 
     echo '
 </script>';

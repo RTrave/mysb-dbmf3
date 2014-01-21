@@ -24,7 +24,28 @@ define('MYSB_DBMF_MEMENTO_TYPE_DAYOFMONTH', 2);
  */
 class MySBDBMFMemento extends MySBObject {
 
+    public $user_id = null;
+
     public $contact_id = null;
+
+    public $group_id = null;
+
+    public $type = MYSB_DBMF_MEMENTO_TYPE_PUNCTUAL;
+
+    public $date_memento = '';
+
+    public $dayofmonth_memento = 0;
+
+    public $monthofyear_memento = 0;
+
+    public $date_process = '';
+
+    public $comments = '';
+
+    public $comments2 = '';
+
+    public $group_edition = 0;
+
 
     public function __construct( $id=null, $data_memento=array() ) {
         global $app;

@@ -14,7 +14,7 @@ defined('_MySBEXEC') or die;
 
 class MySBModule_dbmf3 {
 
-    public $version = 11;
+    public $version = 12;
 
     public function create() {
         global $app;
@@ -296,6 +296,35 @@ class MySBModule_dbmf3 {
         global $app;
         MySBConfigHelper::create('dbmf_globalaccess','0',MYSB_VALUE_TYPE_BOOL,
             'Users have global access on all contacts', 'dbmf3');
+    }
+
+    public function init12() {
+        global $app;
+        MySBPluginHelper::create('dbmf_request','FrontPage',
+            array("fprequest", '', '',''),
+            array(0,0,0,0),
+            5,"dbmf_user",'dbmf3');
+        MySBPluginHelper::create('dbmf_infos','FrontPage',
+            array("fpinfos", '', '',''),
+            array(0,0,0,0),
+            3,"dbmf_user",'dbmf3');
+        MySBPluginHelper::create('export_menutext','MenuItem',
+            array("DBMF_topmenu_export", "export", 'DBMF_topmenu_exportinfos',''),
+            array(2,0,0,0),
+            5,"dbmf_user",'dbmf3');
+        MySBPluginHelper::create('addcontact_menutext','MenuItem',
+            array("DBMF_topmenu_addcontact", "contact_add", 'DBMF_topmenu_addcontactinfos',''),
+            array(1,0,0,0),
+            4,"dbmf_editor",'dbmf3');
+        MySBPluginHelper::create('blockedit_menutext','MenuItem',
+            array("DBMF_topmenu_blockedit", "admin/structure", 'DBMF_topmenu_blockeditinfos',''),
+            array(2,0,0,0),
+            3,"dbmf_blockedit",'dbmf3');
+        MySBPluginHelper::create('admindbmf_menutext','MenuItem',
+            array("DBMF_adminmenu_dbmf", "admin/dbmf", 'DBMF_adminmenu_dbmfinfos',''),
+            array(3,0,0,0),
+            6,"admin",'dbmf3');
+
     }
 
     public function uninit() {

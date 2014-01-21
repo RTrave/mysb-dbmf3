@@ -16,13 +16,15 @@ global $app;
 
 if( !MySBRoleHelper::checkAccess('dbmf_editor') ) return;
 
-if(isset($_GET['memento_id'])) {
+
+if( isset($_GET['memento_id']) ) {
     $memento = new MySBDBMFMemento($_GET['memento_id']);
     $contact = new MySBDBMFContact($memento->contact_id);
     $memento_id = $memento->id;
-} elseif(isset($_GET['contact_id'])) {
+} elseif( isset($_GET['contact_id']) ) {
     $contact = new MySBDBMFContact($_GET['contact_id']);
     $memento_id = -1;
+    $memento = new MySBDBMFMemento(null,array("user_id"=>$contact->id));
 }
 
 echo '
@@ -33,7 +35,7 @@ echo '
 
 <div class="overHead">
 <div style="float: left;">
-    <a  href="blank.php?mod=dbmf3&amp;tpl=editcontact&amp;contact_id='.$contact->id.'" 
+    <a  href="index.php?mod=dbmf3&amp;tpl=contact_edit&amp;contact_id='.$contact->id.'" 
         class="overlayed">
         <img    src="images/icons/text-editor.png" 
                 alt="'._G("DBMF_memento_edition_return").'" 
@@ -44,7 +46,7 @@ echo '
 
 if($memento_id!=-1) echo '
     <div style="float: right; margin-right: 15px;">
-        <form action="blank.php?mod=dbmf3&amp;tpl=editcontact&amp;contact_id='.$contact->id.'" 
+        <form action="index.php?mod=dbmf3&amp;tpl=contact_edit&amp;contact_id='.$contact->id.'" 
               method="post"
               class="overlayed"
               data-overconfirm="'.MySBUtil::str2strict(_G('DBMF_confirm_memento_delete')).'">
@@ -59,7 +61,7 @@ if($memento_id!=-1) echo '
 echo _G("DBMF_memento").': '.$contact->lastname.' '.$contact->firstname.'
 </div>
 
-<form   action="blank.php?mod=dbmf3&amp;tpl=editcontact&amp;contact_id='.$contact->id.'" 
+<form   action="index.php?mod=dbmf3&amp;tpl=contact_edit&amp;contact_id='.$contact->id.'" 
         method="post"
         class="overlayed">
 

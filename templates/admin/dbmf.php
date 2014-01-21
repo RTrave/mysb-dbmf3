@@ -14,6 +14,9 @@ defined('_MySBEXEC') or die;
 
 global $app;
 
+
+_incI('admin_menu');
+
 echo '
 <h1>'._G('DBMF_admin_dbmf').'</h1>';
 
@@ -51,7 +54,7 @@ foreach($dbmf_groups as $group) {
     <td>'.$group->name.'</td>
     <td>'.$group->comments.'</td>
     <td align="center">
-        <form action="index.php?mod=dbmf3&amp;tpl=admindbmf&amp;plg=admin" method="post">
+        <form action="index.php?mod=dbmf3&amp;tpl=admin/dbmf" method="post">
         <select name="dbmf_priority">
             <option value="">'._G('DBMF_groups_unused').'</option>';
     $i = 1;
@@ -83,7 +86,7 @@ if(isset($_POST['dbmf_editexport'])) {
     echo '
 <h3>'._G('DBMF_editexport').'</h3>
 
-<form action="?mod=dbmf3&amp;tpl=admindbmf&amp;plg=admin" method="post">
+<form action="index.php?mod=dbmf3&amp;tpl=admin/dbmf" method="post">
 
 <div class="table_support">
 <center>
@@ -162,7 +165,7 @@ foreach($exports as $export) {
     <td>'.$group->comments.'</td>
     <td>'.$export->displayConfig().'</td>
     <td>
-    <form action="?mod=dbmf3&amp;tpl=admindbmf&amp;plg=admin" method="post">
+    <form action="index.php?mod=dbmf3&amp;tpl=admin/dbmf" method="post">
         <input type="hidden" name="dbmf_editexport" value="'.$export->id.'">
         <input type="submit" value="'._G('DBMF_editexport').'">
     </form>
@@ -177,7 +180,7 @@ echo '
 
 <h3>'._G('DBMF_addexports').'</h3>
 
-<form action="?mod=dbmf3&amp;tpl=admindbmf&amp;plg=admin" method="post">
+<form action="index.php?mod=dbmf3&amp;tpl=admin/dbmf" method="post">
 
 <div class="table_support">
 <center>
@@ -233,7 +236,7 @@ echo '
 <h3>'._G('DBMF_orphans').'</h3>';
 
 if(!isset($app->dbmf_search_result)) echo '
-<form action="?mod=dbmf3&amp;tpl=admindbmf&amp;plg=admin#orphans" method="post">
+<form action="index.php?mod=dbmf3&amp;tpl=admin/dbmf#orphans" method="post">
 <p>Search orphans contacts:
     <input type="hidden" name="dbmf_orphans" value="1">
     <input type="submit" value="'._G('DBMF_orphans_search').'">
@@ -247,7 +250,7 @@ else {
 '.MySBDB::num_rows($app->dbmf_search_result).' results<br>
 </p>';
     $app->tpl_dbmf_searchresult = $app->dbmf_search_result;
-    _T('templates/contacts_display.php','dbmf3');
+    _incT('contacts_display','dbmf3');
 
 }
 

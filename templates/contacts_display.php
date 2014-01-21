@@ -83,17 +83,9 @@ while($data_print = MySBDB::fetch_array($search_result)) {
 
 <tr class="cell">
     <td style="width: 20px; text-align: left;">
-<!--
-        <a  id="contact'.$anchor_nb.'"
-            href="javascript:editwinopen(\'index_wom.php?mod=dbmf3&amp;tpl=editcontact&amp;contact_id='.$contact->id.'\',\'contactinfos\')">
-        <img    src="images/icons/text-editor.png" 
-                alt="Edition '.$contact->id.'" 
-                title="'._G('DBMF_edit').' '.$contact->lastname.' '.$contact->firstname.' ('.$contact->id.')"
-                style="width: 24px"></a>
--->
         <a  id="contact'.$anchor_nb.'"
             class="overlayed"
-            href="blank.php?mod=dbmf3&amp;tpl=editcontact&amp;contact_id='.$contact->id.'">
+            href="index.php?mod=dbmf3&amp;tpl=contact_edit&amp;contact_id='.$contact->id.'">
         <img    src="images/icons/text-editor.png" 
                 alt="Edition '.$contact->id.'" 
                 title="'._G('DBMF_edit').' '.$contact->lastname.' '.$contact->firstname.' ('.$contact->id.')"
@@ -125,7 +117,7 @@ while($data_print = MySBDB::fetch_array($search_result)) {
         </div>
     </td>
     <td style="width: 20px; height: 20px; text-align: right; vertical-align: top;">
-        <form   action="blank.php?mod=dbmf3&amp;tpl=delcontact&amp;contact_id='.$contact->id.'" 
+        <form   action="index.php?mod=dbmf3&amp;tpl=contact_del&amp;contact_id='.$contact->id.'" 
                 method="post" 
                 class="hidelayed"
                 data-overconfirm="'.MySBUtil::str2strict(sprintf(_G('DBMF_confirm_contact_delete'),$contact->lastname, $contact->firstname )).'">

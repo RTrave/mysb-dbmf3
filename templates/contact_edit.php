@@ -28,7 +28,7 @@ echo '
 <div class="overHead">
 
     <div style="float: right; margin-right: 15px;">
-        <form   action="blank.php?mod=dbmf3&amp;tpl=delcontact&amp;contact_id='.$contact->id.'" 
+        <form   action="index.php?mod=dbmf3&amp;tpl=contact_del&amp;contact_id='.$contact->id.'" 
                 method="post" 
                 class="hidelayed"
                 data-overconfirm="'.MySBUtil::str2strict(sprintf(_G('DBMF_confirm_contact_delete'),$contact->lastname, $contact->firstname )).'">
@@ -45,7 +45,7 @@ echo '
 ';
 
 echo '
-<form   action="blank.php?mod=dbmf3&amp;tpl=editcontact&amp;contact_id='.$contact->id.'"
+<form   action="index.php?mod=dbmf3&amp;tpl=contact_edit&amp;contact_id='.$contact->id.'"
         method="post"
         class="overlayed">
 
@@ -54,7 +54,7 @@ echo '
 <table class="cform"><tbody>
 ';
 
-_T('templates/common_edition.php','dbmf3');
+_incI('common_edition','dbmf3');
 
 $blocks = MySBDBMFBlockHelper::load();
 foreach($blocks as $block) {

@@ -78,7 +78,7 @@ foreach($mementos_p as $memento) {
     <td class="infos">
         <div class="date floatingcell">';
     if($memento->isEditable()) echo '
-        <a  href="blank.php?mod=dbmf3&amp;tpl=editmemento&amp;memento_id='.$memento->id.'"
+        <a  href="index.php?mod=dbmf3&amp;tpl=memento_edit&amp;memento_id='.$memento->id.'"
             class="overlayed"><b>'.$memento->getDate().'</b></a>';
     else echo '
         '.$memento->getDate().'';
@@ -90,7 +90,7 @@ foreach($mementos_p as $memento) {
         <div class="name floatingcell">
         <div style="float: left;">
         <a  id="memento'.$anchor_nb.'"
-            href="blank.php?mod=dbmf3&amp;tpl=editcontact&amp;contact_id='.$contact->id.'"
+            href="index.php?mod=dbmf3&amp;tpl=contact_edit&amp;contact_id='.$contact->id.'"
             class="overlayed">
             <img    src="images/icons/text-editor.png" 
                     alt="Edition '.$contact->id.'" 

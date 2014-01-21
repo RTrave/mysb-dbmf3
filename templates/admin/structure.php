@@ -28,7 +28,7 @@ echo '
 <h2>'._G('DBMF_blockref_edition').'</h2>
 
 <div class="table_support">
-<form action="?mod=dbmf3&amp;tpl=blockedit" method="post">
+<form action="index.php?mod=dbmf3&amp;tpl=admin/structure" method="post">
 <table style="width: 50%;"><tbody>
 <tr class="title">
     <td style="text-align: center;" colspan="2">'._G($blockref->lname).'('.$blockref->keyname.')</td>
@@ -59,7 +59,7 @@ echo '
 <tr>
     <td colspan="2">'._G('DBMF_blockref_option_orderby').'</td>
     <td style="text-align: center;">
-        <form action="?mod=dbmf3&amp;tpl=blockedit" method="post">
+        <form action="index.php?mod=dbmf3&amp;tpl=admin/structure" method="post">
         <input type="hidden" name="blockref_edit" value="'.$blockref->id.'">
         <input type="hidden" name="blockref_switchorderby" value="1">';
         if($blockref->orderby==1) echo '
@@ -73,7 +73,7 @@ echo '
 <tr>
     <td colspan="2">'._G('DBMF_blockref_option_alwaysshown').'</td>
     <td style="text-align: center;">
-        <form action="?mod=dbmf3&amp;tpl=blockedit" method="post">
+        <form action="index.php?mod=dbmf3&amp;tpl=admin/structure" method="post">
         <input type="hidden" name="blockref_edit" value="'.$blockref->id.'">
         <input type="hidden" name="blockref_setalwaysshown" value="1">';
         echo '
@@ -103,7 +103,7 @@ if($blockref->type==MYSB_VALUE_TYPE_VARCHAR64_SELECT) {
 <tr>
     <td>Option '.$option['value0'].'</td>
     <td>
-        <form action="?mod=dbmf3&amp;tpl=blockedit" method="post">
+        <form action="index.php?mod=dbmf3&amp;tpl=admin/structure" method="post">
         <input type="text" name="blockref_mod_option" value="'.$option['value1'].'">
         <input type="hidden" name="blockref_option_id" value="'.$option['value0'].'">
         <input type="hidden" name="blockref_edit" value="'.$blockref->id.'">
@@ -111,7 +111,7 @@ if($blockref->type==MYSB_VALUE_TYPE_VARCHAR64_SELECT) {
         </form>
     </td>
     <td style="width: 50px;">
-        <form action="?mod=dbmf3&amp;tpl=blockedit" method="post">
+        <form action="index.php?mod=dbmf3&amp;tpl=admin/structure" method="post">
         <input type="hidden" name="blockref_del_option" value="'.$option['value1'].'">
         <input type="hidden" name="blockref_edit" value="'.$blockref->id.'">
         <input type="hidden" name="blockref_option_id" value="'.$option['value0'].'">
@@ -124,7 +124,7 @@ if($blockref->type==MYSB_VALUE_TYPE_VARCHAR64_SELECT) {
 <tr>
     <td>'._G('DBMF_blockref_newoption').'</td>
     <td colspan="2">
-        <form action="?mod=dbmf3&amp;tpl=blockedit" method="post">
+        <form action="index.php?mod=dbmf3&amp;tpl=admin/structure" method="post">
         <input type="text" name="blockref_new_option" value="">
         <input type="hidden" name="blockref_edit" value="'.$blockref->id.'">
         <input type="submit" value="'._G('DBMF_blockref_add_option').'">
@@ -156,7 +156,7 @@ foreach($blocks as $block) {
     
         echo '
 <div class="table_support">
-<form action="?mod=dbmf3&amp;tpl=blockedit" method="post">
+<form action="index.php?mod=dbmf3&amp;tpl=admin/structure" method="post">
 <table style="width: 40%;"><tbody>
 <tr class="title">
     <td style="text-align: center;" colspan="2">'._G($block->lname).'</td>
@@ -186,8 +186,8 @@ foreach($blocks as $block) {
 </tr>
 <tr>
     <td colspan="2" style="text-align: center;">
-        <input type="hidden" name="block_edit" value="'.$block->id.'">
-        <input type="submit" value="'._G('DBMF_block_edition').'">
+        <input type="hidden" name="admin/structure" value="'.$block->id.'">
+        <input type="submit" value="'._G('DBMF_admin/structureion').'">
     </td>
 </tr>
 </tbody></table>
@@ -197,13 +197,13 @@ foreach($blocks as $block) {
 <table><tbody>
 <tr>
     <td style="text-align: center; width: 30px;">
-        <form action="?mod=dbmf3&amp;tpl=blockedit#a_block'.$block->id.'" method="post">
+        <form action="index.php?mod=dbmf3&amp;tpl=admin/structure#a_block'.$block->id.'" method="post">
         <input type="hidden" name="block_orderdown" value="'.$block->id.'">
         <input type="submit" value="&darr;">
         </form>
     </td>
     <td style="text-align: center; width: 30px;">
-        <form action="?mod=dbmf3&amp;tpl=blockedit#a_block'.$block->id.'" method="post">
+        <form action="index.php?mod=dbmf3&amp;tpl=admin/structure#a_block'.$block->id.'" method="post">
         <input type="hidden" name="block_orderup" value="'.$block->id.'">
         <input type="submit" value="&uarr;">
         </form>
@@ -212,7 +212,7 @@ foreach($blocks as $block) {
         <small>(index: '.$block->i_index.')</small>
     </td>
     <td style="text-align: center; width: 30px;">
-        <form action="?mod=dbmf3&amp;tpl=blockedit#a_block'.$block->id.'" method="post"
+        <form action="index.php?mod=dbmf3&amp;tpl=admin/structure#a_block'.$block->id.'" method="post"
         OnSubmit="return mysb_confirm(\''.MySBUtil::str2strict(sprintf(_G('DBMF_confirm_block_delete'), $block->lname, $group_edit->comments )).'\')">
         <input type="hidden" name="block_del" value="'.$block->id.'">
         <input type="submit" value="'._G('DBMF_block_delete').'">
@@ -236,26 +236,26 @@ foreach($blocks as $block) {
         <b>'._G($blockref->lname).'</b>
     </td>
     <td style="width: 100px; text-align: center;">
-        <form action="?mod=dbmf3&amp;tpl=blockedit" method="post">
+        <form action="index.php?mod=dbmf3&amp;tpl=admin/structure" method="post">
         <input type="hidden" name="blockref_edit" value="'.$blockref->id.'">
         <input type="submit" value="'._G('DBMF_blockref_edition').'">
         </form>
     </td>
     <td style="width: 100px; text-align: center;">'.$blockref->getType().'</td>
     <td style="width: 50px; text-align: center;">
-        <form action="?mod=dbmf3&amp;tpl=blockedit#a_block'.$block->id.'" method="post">
+        <form action="index.php?mod=dbmf3&amp;tpl=admin/structure#a_block'.$block->id.'" method="post">
         <input type="hidden" name="blockref_orderdown" value="'.$blockref->id.'">
         <input type="submit" value="&darr;">
         </form>
     </td>
     <td style="width: 50px; text-align: center;">
-        <form action="?mod=dbmf3&amp;tpl=blockedit#a_block'.$block->id.'" method="post">
+        <form action="index.php?mod=dbmf3&amp;tpl=admin/structure#a_block'.$block->id.'" method="post">
         <input type="hidden" name="blockref_orderup" value="'.$blockref->id.'">
         <input type="submit" value="&uarr;">
         </form>
     </td>
     <td style="width: 100px; text-align: center;">
-        <form action="?mod=dbmf3&amp;tpl=blockedit#a_block'.$block->id.'" method="post">
+        <form action="index.php?mod=dbmf3&amp;tpl=admin/structure#a_block'.$block->id.'" method="post">
         <input type="hidden" name="blockref_switchactive" value="'.$blockref->id.'">';
 
             if($blockref->status==MYSB_DBMF_BLOCKREF_STATUS_ACTIVE) 
@@ -269,7 +269,7 @@ foreach($blocks as $block) {
         </form>
     </td>
     <td style="width: 100px; text-align: center;">
-        <form action="?mod=dbmf3&amp;tpl=blockedit#a_block'.$block->id.'" method="post"
+        <form action="index.php?mod=dbmf3&amp;tpl=admin/structure#a_block'.$block->id.'" method="post"
         OnSubmit="return mysb_confirm(\''.MySBUtil::str2strict(sprintf(_G('DBMF_confirm_blockref_delete'), $blockref->lname, $blockref->keyname )).'\')">
         <input type="hidden" name="block_id" value="'.$block->id.'">
         <input type="hidden" name="blockref_del" value="'.$blockref->id.'">
@@ -284,7 +284,7 @@ foreach($blocks as $block) {
 <tr>
     <td colspan="8" style="text-align: center;">
         <br>
-        <form action="?mod=dbmf3&amp;tpl=blockedit" method="post">
+        <form action="index.php?mod=dbmf3&amp;tpl=admin/structure" method="post">
         '._G('DBMF_blockref_name').': <input type="text" name="lname" value="">
         '._G('DBMF_blockref_type').': 
         <select name="type">
