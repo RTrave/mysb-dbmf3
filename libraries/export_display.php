@@ -41,7 +41,9 @@ class MySBDBMFExportDisplay extends MySBDBMFExport {
         $output = '';
         $blocks = MySBDBMFBlockHelper::load();
         $output .= '
-<div class="table_support">
+<div class="table_support">';
+/*
+        $output .= '
 '._G('DBMF_display_orderby').':
 <select name="dbmf_exportdisplay_orderby'.$this->id.'">
     <option value="lastname">'._G('DBMF_common_lastname').'</option>
@@ -52,8 +54,9 @@ class MySBDBMFExportDisplay extends MySBDBMFExport {
     <option value="'.$oblockref->keyname.'">'._G($oblockref->lname).'</option>';
         }
         $output .= '
-</select><br>
-
+</select><br>';
+*/
+        $output .= '
 '._G('DBMF_display_showfield').':<br>
 <table style="border: 0px; font-size: 80%; margin-left: 0px;"><tbody>
 <tr>';
@@ -127,7 +130,8 @@ class MySBDBMFExportDisplay extends MySBDBMFExport {
     }
 
     public function requestOrderBy() {
-        return $_POST["dbmf_exportdisplay_orderby$this->id"];
+        //return $_POST["dbmf_exportdisplay_orderby$this->id"];
+        return '';
     }
 
 
@@ -135,16 +139,21 @@ class MySBDBMFExportDisplay extends MySBDBMFExport {
      * Search result output
      * @param   
      */
-    public function htmlResultOutput($results) {
+    public function htmlResultOutput() {
         global $app;
         echo '
 '.MySBEditor::init("simple").'
+<div id="results">';
+/*
+        echo '
 <p>
 '.MySBDB::num_rows($results).' results<br>
-</p>
-';
+</p>';
         $app->tpl_dbmf_searchresult = $results;
-        _incT('contacts_display','dbmf3');
+*/
+        _incI('contacts_sort','dbmf3');
+        echo '
+</div>';
 
     }
 

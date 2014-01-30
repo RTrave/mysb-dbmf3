@@ -92,22 +92,21 @@ class MySBDBMFExportUpdate extends MySBDBMFExport {
 
     public function htmlParamProcess() {
         global $app;
-        //$app->tpl_display_columns = array();
         $this->update_sql = '';
         $blocks = MySBDBMFBlockHelper::load();
         foreach($blocks as $block) {
             if($block->isViewable()) {
                 foreach($block->blockrefs as $blockref) {
-                    if($blockref->isActive() and $_POST['upd_id_'.$blockref->id]=='on') {
-                        //$app->tpl_display_columns[] = $blockref;
+                    if( $blockref->isActive() and 
+                        isset($_POST['upd_id_'.$blockref->id]) and 
+                        $_POST['upd_id_'.$blockref->id]=='on') {
+
                         if($this->update_sql!='') $this->update_sql .= ', ';
-                        //$this->update_sql .= $blockref->keyname.'='.$_POST['upd_val_'.$blockref->keyname];
                         $this->update_sql .= $blockref->keyname.'=\''.$blockref->htmlProcessValue('upd_val_').'\'';
                     }
                 }
             }
         }
-        //echo $this->update_sql;
     }
 
     public function requestOrderBy() {
@@ -119,15 +118,22 @@ class MySBDBMFExportUpdate extends MySBDBMFExport {
      * Search result output
      * @param   
      */
-    public function htmlResultOutput($results) {
+    public function htmlResultOutput() {
         global $app;
         if($this->update_sql=='') {
             echo '<p>'._G('DBMF_exportupdate_noselection').'</p>';
             return;
         }
+
+        $sql_all =  'SELECT id from '.MySB_DBPREFIX.'dbmfcontacts WHERE '.$_SESSION['dbmf_query_where'];
+        $results = MySBDB::query( $sql_all,
+            "MySBDBMFExportCSV::htmlResultOutput()",
+            false, 'dbmf3');
+
         $export_upd_sql =   "UPDATE ".MySB_DBPREFIX."dbmfcontacts ".
                             "SET ".$this->update_sql." ".
-                            "WHERE ".$app->dbmf_export_whereclause;
+                            "WHERE ".$_SESSION['dbmf_query_where'];
+                            //"WHERE ".$app->dbmf_export_whereclause;
         echo '
 <p>
 '._G('DBMF_exportupdate_results').': '.MySBDB::num_rows($results).'<br>

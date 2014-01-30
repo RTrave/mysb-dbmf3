@@ -231,6 +231,27 @@ class MySBDBMFBlockHelper {
         MySBDBMFBlockHelper::load(true);
     }
 
+    public function sqlWhereClauseOwner() {
+        global $app;
+        $blocks = MySBDBMFBlockHelper::load();
+        $clause_owner = '';
+        if( !MySBConfigHelper::Value('dbmf_globalaccess','dbmf3') ) {
+            foreach($blocks as $block) {
+                $clause_owner_part = '';
+                if($block->id!=1 and $block->isViewable()) {
+                    if($clause_owner_part!='')  $clause_owner_part .= ' or ';
+                    $clause_owner_part .= $block->htmlProcessWhereClause();
+                }
+                if($clause_owner!='' and $clause_owner_part!='') $clause_owner .= ' or ';
+                if($clause_owner_part!='') $clause_owner .= $clause_owner_part;
+            }
+            if($clause_owner=='') {
+                $app->pushAlert(_G('DBMF_no_rights'));
+            }
+        }
+        return $clause_owner;
+    }
+
 }
 
 ?>

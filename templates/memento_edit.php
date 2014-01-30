@@ -33,19 +33,10 @@ echo '
 
 <div id="dbmfMemento">
 
-<div class="overHead">
-<div style="float: left;">
-    <a  href="index.php?mod=dbmf3&amp;tpl=contact_edit&amp;contact_id='.$contact->id.'" 
-        class="overlayed">
-        <img    src="images/icons/text-editor.png" 
-                alt="'._G("DBMF_memento_edition_return").'" 
-                title="'._G('DBMF_edit').' '.$contact->lastname.' '.$contact->firstname.' ('.$contact->id.')"
-                style="width: 24px">
-    </a>
-</div>';
+<div class="overHead">';
 
 if($memento_id!=-1) echo '
-    <div style="float: right; margin-right: 15px;">
+    <div style="float: left; margin-left: 5px;">
         <form action="index.php?mod=dbmf3&amp;tpl=contact_edit&amp;contact_id='.$contact->id.'" 
               method="post"
               class="overlayed"
@@ -58,7 +49,17 @@ if($memento_id!=-1) echo '
         </form>
     </div>';
 
-echo _G("DBMF_memento").': '.$contact->lastname.' '.$contact->firstname.'
+echo '
+<div style="float: right; margin-right: 20px;">
+    <a  href="index.php?mod=dbmf3&amp;tpl=contact_edit&amp;contact_id='.$contact->id.'" 
+        class="overlayed">
+        <img    src="images/icons/text-editor.png" 
+                alt="'._G("DBMF_memento_edition_return").'" 
+                title="'._G('DBMF_edit').' '.$contact->lastname.' '.$contact->firstname.' ('.$contact->id.')"
+                style="width: 24px">
+    </a>
+</div>
+'._G("DBMF_memento").'<br>'.$contact->lastname.' '.$contact->firstname.'
 </div>
 
 <form   action="index.php?mod=dbmf3&amp;tpl=contact_edit&amp;contact_id='.$contact->id.'" 

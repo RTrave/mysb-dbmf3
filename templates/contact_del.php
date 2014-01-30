@@ -23,9 +23,9 @@ if(isset($_POST['dbmf_contact_delete'])) {
     $("#contact'.$_POST['dbmf_contact_delete'].'").fadeOut(1000,"swing");';
 
     if( isset($app->dbmf_hidemementos) ) 
-        foreach($app->dbmf_hidemementos as $memento)
+        foreach($app->dbmf_hidemementos as $memento_id)
             echo '
-    $("#memento'.$memento->id.'").fadeOut(1000,"swing");';
+    $("#memento'.$memento_id.'").fadeOut(1000,"swing");';
 
     echo '
 </script>';

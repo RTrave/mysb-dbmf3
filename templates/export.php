@@ -18,12 +18,11 @@ global $app;
 echo '
 <h1>'._G('DBMF_export').'</h1>';
 
-if( isset($_POST['dbmf_export_process'])
-    or isset($_POST['dbmf_contact_delete'])) {
+if( isset($_POST['dbmf_export_process']) ) {
     echo '
 <h2>'._G('DBMF_search_results').'</h2>';
 
-    echo $app->dbmf_export_plugin->htmlResultOutput($app->dbmf_search_result);
+    echo $app->dbmf_export_plugin->htmlResultOutput();
     return;
 }
 

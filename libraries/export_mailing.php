@@ -140,7 +140,7 @@ class MySBDBMFExportMailing extends MySBDBMFExport {
      * Search result output
      * @param   
      */
-    public function htmlResultOutput($results) {
+    public function htmlResultOutput() {
         global $app;
 
         if( $this->mailing_subject=='' or $this->mailing_body=='' ) {
@@ -152,6 +152,12 @@ class MySBDBMFExportMailing extends MySBDBMFExport {
         else $modulo = MODULO_DEFAULT;
         if( $this->config_array['maxbysend']!='' ) $maxbysend = $this->config_array['maxbysend'];
         else $maxbysend = MAXBYSEND_DEFAULT;
+
+        $sql_all =  'SELECT * from '.MySB_DBPREFIX.'dbmfcontacts WHERE '.$_SESSION['dbmf_query_where'].
+            ' ORDER by id';
+        $results = MySBDB::query( $sql_all,
+            "MySBDBMFExportCSV::htmlResultOutput()",
+            false, 'dbmf3');
 
         $output = '
 <p>
@@ -261,7 +267,7 @@ $this->replyto_addr.'?subject=Unsubscribe</a></small></p>');
     public function sendMail($smail) {
         global $app;
         $this->count++;
-        $output .= _G('DBMF_exportmailing_sendingnew')." ".$this->count."<br>";
+        $output = _G('DBMF_exportmailing_sendingnew')." ".$this->count."<br>";
         $mail_sent = false;
         $this->previous_error = '';
         while( !$mail_sent ) {

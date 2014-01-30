@@ -27,7 +27,7 @@ echo '
 
 <div class="overHead">
 
-    <div style="float: right; margin-right: 15px;">
+    <div style="float: left; margin-left: 5px;">
         <form   action="index.php?mod=dbmf3&amp;tpl=contact_del&amp;contact_id='.$contact->id.'" 
                 method="post" 
                 class="hidelayed"
@@ -108,6 +108,13 @@ echo '
 
 </div>';
 
+if(isset($_POST['contact_edit'])) {
+    echo '
+<script>
+loadItem("contact'.$contact->id.'","index.php?mod=dbmf3&inc=contact_display&id='.$contact->id.'");
+//$("#memento'.$_POST['memento_delete'].'").fadeOut(1000,"swing");
+</script>';
+}
 if(isset($_POST['memento_delete'])) {
     echo '
 <script>

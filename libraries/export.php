@@ -116,7 +116,7 @@ class MySBDBMFExport extends MySBObject {
      * Search result output
      * @param   
      */
-    public function htmlResultOutput($results) {
+    public function htmlResultOutput() {
         return '<p>No export output</p>';
     }
 

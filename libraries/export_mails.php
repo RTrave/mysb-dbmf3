@@ -54,6 +54,12 @@ class MySBDBMFExportMailsCSV extends MySBDBMFExport {
      */
     public function htmlResultOutput($results) {
         global $app;
+        $sql_all =  'SELECT mail from '.MySB_DBPREFIX.'dbmfcontacts WHERE '.$_SESSION['dbmf_query_where'].
+            ' ORDER by id';
+        $results = MySBDB::query( $sql_all,
+            "MySBDBMFExportCSV::htmlResultOutput()",
+            false, 'dbmf3');
+
         $output = '
 <p>
 '.MySBDB::num_rows($results).' results<br>
@@ -62,6 +68,7 @@ class MySBDBMFExportMailsCSV extends MySBDBMFExport {
 <code style="width: 70%;">
 ';
         $modulo_index = 0;
+        $count = 0;
         while($data_result = MySBDB::fetch_array($results)) {
             if($modulo_index>=$app->tpl_dbmfexportmailscsv_modulo) {
                 $modulo_index = 0;
@@ -69,12 +76,17 @@ class MySBDBMFExportMailsCSV extends MySBDBMFExport {
             }
             $contact = new MySBDBMFContact(null,$data_result);
             if($contact->mail!='') {
-                 $modulo_index++;
-                 $output .= $contact->mail.'; ';
+                $modulo_index++;
+                $output .= $contact->mail.'; ';
+                $count++;
             }
         }
         $output .= '
 </code>
+</p>';
+        $output .= '
+<p>
+'.$count.' valids<br>
 </p>';
         return $output;
     }

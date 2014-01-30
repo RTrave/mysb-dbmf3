@@ -59,7 +59,7 @@ float: left;
 text-align: center;
 padding: 1px;
 margin: 0px;
-height: 56px;
+height: 68px;
 background: transparent;
 }
 
@@ -122,6 +122,18 @@ border: 0px solid black;
 #mysbMiddle td.lpadding {
 width: 33%;
 padding: 5px 5px 5px 20px;
+}
+
+#mysbMiddle div.sort_actions{
+background: #bbbbbb;
+float: right; 
+text-align: right;
+margin: 5px 5px;
+}
+
+#mysbMiddle img.linked {
+cursor: pointer;
+margin: 0px 5px;
 }
 
 #mysbMiddle .mem_active {

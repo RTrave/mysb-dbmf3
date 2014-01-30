@@ -36,29 +36,15 @@ if(isset($_POST['dbmf_export_process'])) {
 
     $strp = explode('export_plug',$_POST['export_plug'] );
     $plug_id = intval($strp[1]);
-    //$app->dbmf_export_plugin = MySBDBMFExportHelper::getByID($_POST['export_plug'][11]);
     $app->dbmf_export_plugin = MySBDBMFExportHelper::getByID($plug_id);
     $_SESSION['dbmf_export_plugin'] = $app->dbmf_export_plugin->id;
     //echo $app->dbmf_export_plugin->name.'<br>';
     $app->dbmf_export_plugin->htmlParamProcess();
 
     $blocks = MySBDBMFBlockHelper::load();
-    $clause_owner = '';
-    if( !MySBConfigHelper::Value('dbmf_globalaccess','dbmf3') ) {
-        foreach($blocks as $block) {
-            $clause_owner_part = '';
-            if($block->id!=1 and $block->isViewable()) {
-                if($clause_owner_part!='')  $clause_owner_part .= ' or ';
-                $clause_owner_part .= $block->htmlProcessWhereClause();
-            }
-            if($clause_owner!='' and $clause_owner_part!='') $clause_owner .= ' or ';
-            if($clause_owner_part!='') $clause_owner .= $clause_owner_part;
-        }
-        if($clause_owner=='') {
-            $app->pushAlert(_G('DBMF_no_rights'));
-        }
-    }
-    $sql_a = 'SELECT * from '.MySB_DBPREFIX.'dbmfcontacts ';
+    $clause_owner = MySBDBMFBlockHelper::sqlWhereClauseOwner();
+
+    $sql_select = 'SELECT id from '.MySB_DBPREFIX.'dbmfcontacts ';
     $clause_a = '';
     foreach($blocks as $block) {
         $group_edit = MySBGroupHelper::getByID($block->groupedit_id);
@@ -82,17 +68,8 @@ if(isset($_POST['dbmf_export_process'])) {
     $clause_export = $app->dbmf_export_plugin->requestWhereClause();
     if($clause_export!='') $clause_a = '('.$clause_a.' and ('.$clause_export.'))';
 
-    $app->dbmf_export_whereclause = $clause_a;
-    if($clause_a!='') $sql_a .= 'WHERE '.$clause_a.' ';
-
-    $orderby_export = $app->dbmf_export_plugin->requestOrderBy();
-    if($orderby_export!='') $sql_a .= 'ORDER BY '.$orderby_export;
-    else $sql_a .= 'ORDER BY lastname';
-	$_SESSION['dbmf_search_query'] = $sql_a;
-	$app->dbmf_search_result = MySBDB::query( $sql_a,
-	    "request_process.php",
-	    false, 'dbmf3');
-
+	$_SESSION['dbmf_query_where'] = $clause_a;
+	$_SESSION['dbmf_query_select'] = $sql_select;
 }
 
 ?>

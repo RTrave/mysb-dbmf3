@@ -17,10 +17,10 @@ global $app;
 if( !MySBRoleHelper::checkAccess('dbmf_user') ) return;
 
 if(isset($_POST['dbmf_contact_delete'])) {
-    $app->dbmf_hidemementos[] = array();
+    $app->dbmf_hidemementos = array();
     $mementos = MySBDBMFMementoHelper::load($_POST['dbmf_contact_delete']);
     foreach($mementos as $memento) 
-        $app->dbmf_hidemementos[] = $memento;
+        $app->dbmf_hidemementos[] = $memento->id;
     MySBDBMFContactHelper::delete($_POST['dbmf_contact_delete']);
     $app->pushMessage(_G('DBMF_contact_deleted'));
 }

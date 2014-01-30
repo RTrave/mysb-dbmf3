@@ -27,16 +27,13 @@ if( isset($_POST['dbmf_request'])
     echo MySBEditor::init("simple");
     echo '
 <h2>'._G('DBMF_search_results').'</h2>
-<p>
-'.MySBDB::num_rows($app->dbmf_search_result).' results<br>
-</p>
-';
+<div id="results">';
 
-    $app->tpl_dbmf_searchresult = $app->dbmf_search_result;
-    _incT('contacts_display','dbmf3');
+    //$app->tpl_dbmf_searchresult = $app->dbmf_search_result;
+    _incI('contacts_sort','dbmf3');
 
     echo '
-';
+</div>';
 }
 
 /*

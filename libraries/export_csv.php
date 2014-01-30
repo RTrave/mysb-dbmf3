@@ -24,7 +24,6 @@ class MySBDBMFExportCSV extends MySBDBMFExport {
         parent::__construct($id,(array) ($data_export));
     }
 
-
     public function selectionProcess( $selection ) {
         
     }
@@ -95,11 +94,12 @@ class MySBDBMFExportCSV extends MySBDBMFExport {
      */
     public function htmlResultOutput($results) {
         global $app;
-        echo '
-<p>
-CSV output: '.MySBDB::num_rows($results).' results<br>
-</p>
-';
+
+        $sql_all =  'SELECT * from '.MySB_DBPREFIX.'dbmfcontacts WHERE '.$_SESSION['dbmf_query_where'].
+            ' ORDER by id';
+        $results = MySBDB::query( $sql_all,
+            "MySBDBMFExportCSV::htmlResultOutput()",
+            false, 'dbmf3');
 
         $csv_char = ';';
         $path_file = MySB_ROOTPATH.'/modules/dbmf3/files/sendtable.csv';
@@ -111,6 +111,7 @@ CSV output: '.MySBDB::num_rows($results).' results<br>
             $titles .= $csv_char.$this->keyname2red(_G($blockref->lname));
         }
         fwrite($ftable,$titles."\n");
+        $count = 0;
         while($contact_data=MySBDB::fetch_array($results)) {
             $contact = new MySBDBMFContact(null,$contact_data);
             $tablin = array();
@@ -121,8 +122,13 @@ CSV output: '.MySBDB::num_rows($results).' results<br>
                 $tablin[] = $this->db2csv(_G($contact_data[$blockref->keyname]));
             }
             fputcsv($ftable,$tablin,';','"');
+            $count++;
         }
         fclose($ftable);
+        echo '
+<p>
+CSV output: '.$count.' results<br>
+</p>';
         $stmail = new MySBMail('sendtable','dbmf3');
         $stmail->addTO($app->auth_user->mail,$app->auth_user->firstname.' '.$app->auth_user->lastname);
         if($this->csv_filename=='.csv') $csv_filename = 'sendtable.csv';

@@ -107,6 +107,48 @@ class MySBDBMFBlockRef extends MySBValue {
         return $newstr;
     }
 
+    function displayPlugin($contact,$class_string='') {
+        $output = "";
+        $disp_class = 'w60';
+        if( $this->type==MYSB_VALUE_TYPE_TEXT or 
+            $this->type==MYSB_VALUE_TYPE_VARCHAR512 ) 
+            $disp_class = 'w180';
+        elseif( $this->type==MYSB_VALUE_TYPE_VARCHAR64 or 
+                $this->type==MYSB_VALUE_TYPE_VARCHAR64_SELECT ) 
+            $disp_class = 'w120';
+        elseif( $this->type==MYSB_VALUE_TYPE_TEL or 
+                $this->type==MYSB_VALUE_TYPE_URL ) 
+            $disp_class = 'w80';
+        $output .= '
+<div    class="cell_plug '.$class_string.' '.$disp_class.'" 
+        style="display: inline-block;">
+<table><tr>
+    <td class="title">
+        '.$this->getReducedName().'
+    </td>
+</tr><tr>
+    <td class="text">';
+        $column_name = $this->keyname;
+        if( $this->type==MYSB_VALUE_TYPE_VARCHAR64_SELECT ) 
+            $column_value = _G($contact->$column_name);
+        elseif( $this->type==MYSB_VALUE_TYPE_TEL or
+                $this->type==MYSB_VALUE_TYPE_URL ) 
+            $column_value = '
+        <div style="vertical-align: middle; display: inline-block;">'.$this->htmlFormNonEditable('',$contact->$column_name,MySBUtil::str2abbrv(_G($this->lname),4,4)).'</div>';
+        elseif( $this->type==MYSB_VALUE_TYPE_INT ) { 
+            $column_value = $contact->$column_name;
+            if( $column_value=='' ) $column_value = '0';
+        } elseif( $this->type==MYSB_VALUE_TYPE_BOOL )
+            $column_value = $this->htmlFormNonEditable('',$contact->$column_name );
+        else $column_value = MySBUtil::str2html($contact->$column_name);
+        $output .= '
+        '.$column_value.'
+    </td>
+</tr></table>
+</div>';
+        return $output;
+    }
+
 }
 
 

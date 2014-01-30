@@ -232,10 +232,9 @@ echo '
 </form>';
 
 echo '
-<a name="orphans"></a>
-<h3>'._G('DBMF_orphans').'</h3>';
+<h3 id="orphans">'._G('DBMF_orphans').'</h3>';
 
-if(!isset($app->dbmf_search_result)) echo '
+if( !isset($_POST['dbmf_orphans']) ) echo '
 <form action="index.php?mod=dbmf3&amp;tpl=admin/dbmf#orphans" method="post">
 <p>Search orphans contacts:
     <input type="hidden" name="dbmf_orphans" value="1">
@@ -245,13 +244,12 @@ if(!isset($app->dbmf_search_result)) echo '
 else {
 
     echo '
-<p>
 '.MySBEditor::init("simple").'
-'.MySBDB::num_rows($app->dbmf_search_result).' results<br>
-</p>';
-    $app->tpl_dbmf_searchresult = $app->dbmf_search_result;
-    _incT('contacts_display','dbmf3');
-
+<div id="results">';
+    //$app->tpl_dbmf_searchresult = $app->dbmf_search_result;
+    _incI('contacts_sort','dbmf3');
+    echo '
+</div>';
 }
 
 ?>

@@ -29,24 +29,11 @@ if(isset($_POST['dbmf_request_reuse'])) {
 
 if(isset($_POST['dbmf_request'])) {
 
-    $sql_r = 'SELECT * from '.MySB_DBPREFIX.'dbmfcontacts ';
+    $sql_r = 'SELECT id from '.MySB_DBPREFIX.'dbmfcontacts ';
     $clause_a = '';
     $blocks = MySBDBMFBlockHelper::load();
-    $clause_owner = '';
-    if( !MySBConfigHelper::Value('dbmf_globalaccess','dbmf3') ) {
-        foreach($blocks as $block) {
-            $clause_owner_part = '';
-            if($block->id!=1 and $block->isViewable()) {
-                if($clause_owner_part!='')  $clause_owner_part .= ' or ';
-                $clause_owner_part .= $block->htmlProcessWhereClause();
-            }
-            if($clause_owner!='' and $clause_owner_part!='') $clause_owner .= ' or ';
-            if($clause_owner_part!='') $clause_owner .= $clause_owner_part;
-        }
-        if($clause_owner=='') {
-            $app->pushAlert(_G('DBMF_no_rights'));
-        }
-    }
+    $clause_owner = MySBDBMFBlockHelper::sqlWhereClauseOwner();
+
     if( $_POST['search_type']=='all_fields' ) {
         $str_search_all = MySBUtil::str2whereclause($_POST['search_name']);
    	    $clause_a = 'lastname RLIKE \''.$str_search_all.'\' OR '.
@@ -56,7 +43,6 @@ if(isset($_POST['dbmf_request'])) {
         foreach($block_common->blockrefs as $blockref) {
             $clause_a .= ' OR '.$blockref->keyname.' RLIKE \''.$str_search_all.'\'';
         }
-   	    //$_POST['search_name'] = '';
     } elseif( $_POST['search_type']=='lastname' ) {
         $clause_a = 'lastname RLIKE \''.MySBUtil::str2whereclause($_POST['search_name']).'\' ';
     } elseif( $_POST['search_type']=='byid' ) {
@@ -67,13 +53,10 @@ if(isset($_POST['dbmf_request'])) {
 
     if($clause_owner!='' and $clause_a!='') $clause_a .= ' and ('.$clause_owner.')';
     elseif($clause_owner!='') $clause_a .= '('.$clause_owner.')';
-    if($clause_a!='') $sql_r .= 'WHERE '.$clause_a.' ';
-    $sql_r .= 'ORDER by lastname';
-	$_SESSION['dbmf_search_query'] = $sql_r;
-	$app->dbmf_search_result = MySBDB::query( $sql_r,
-	    "request_process.php",
-	    false, 'dbmf3');
-    
+
+	$_SESSION['dbmf_query_select'] = $sql_r;
+	$_SESSION['dbmf_query_where'] = $clause_a;
+
 }
 
 ?>
