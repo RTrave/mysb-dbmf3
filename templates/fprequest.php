@@ -24,7 +24,9 @@ if( isset($_POST['dbmf_request'])
     or isset($_POST['dbmf_request_advanced'])
     or isset($_POST['dbmf_request_byid'])
     or isset($_POST['dbmf_contact_delete']) ) {
-    echo MySBEditor::init("simple");
+
+    $editor = new MySBEditor();
+    echo $editor->init("simple");
     echo '
 <h2>'._G('DBMF_search_results').'</h2>
 <div id="results">';

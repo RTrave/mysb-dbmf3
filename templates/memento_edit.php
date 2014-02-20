@@ -150,11 +150,13 @@ echo '
 //MySBEditor::activate();
 //echo MySBEditor::init('simple');
 $area_id = 'editor_id_'.rand(1,999999);
+$editor = new MySBEditor();
+
 echo '
 <tr>
     <td colspan="2"><b>'._G("DBMF_memento_comments").':</b>
     <div style="float: right;padding: 3px;"><textarea name="memento_comments" cols="40" rows="3" class="mceEditor" id="'.$area_id.'">'.$memento->comments.'</textarea></div>
-'.MySBEditor::active($area_id).'
+'.$editor->active($area_id).'
     </td>
 </tr>
 <tr>

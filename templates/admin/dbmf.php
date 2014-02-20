@@ -242,9 +242,9 @@ if( !isset($_POST['dbmf_orphans']) ) echo '
 </p>
 </form>';
 else {
-
+    $editor = new MySBEditor();
     echo '
-'.MySBEditor::init("simple").'
+'.$editor->init("simple").'
 <div id="results">';
     //$app->tpl_dbmf_searchresult = $app->dbmf_search_result;
     _incI('contacts_sort','dbmf3');

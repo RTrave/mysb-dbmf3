@@ -16,7 +16,8 @@ global $app;
 
 if(!MySBRoleHelper::checkAccess('dbmf_user')) return;
 
-echo MySBEditor::init("simple");
+$editor = new MySBEditor();
+echo $editor->init("simple");
 
 echo '
 <h1>'._G('DBMF_mementos_summary').'</h1>

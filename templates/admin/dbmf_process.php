@@ -51,13 +51,8 @@ if(isset($_POST['dbmf_orphans']) or isset($_POST['dbmf_contact_delete'])) {
             $clause_owner .= "(".$blockref->keyname." is null or ".$blockref->keyname."='' )";
         }
     }
-    $sql_r .= "WHERE (".$clause_owner.')';
-	$_SESSION['dbmf_search_query'] = $sql_r;
-/*
-    $app->dbmf_search_result = MySBDB::query( $sql_r,
-	    "admindbmf_process.php",
-	    false, 'dbmf3');
-*/
+	$_SESSION['dbmf_query_select'] = $sql_r;
+	$_SESSION['dbmf_query_where'] = $clause_owner;
 }
 
 ?>

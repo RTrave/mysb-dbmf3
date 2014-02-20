@@ -57,8 +57,9 @@ class MySBDBMFExportMailing extends MySBDBMFExport {
 
     public function htmlParamForm() {
         global $app;
-        $output = MySBEditor::init();
-        $output .= MySBEditor::active("exportmailing_body").'
+        $editor = new MySBEditor();
+        $output = $editor->init();
+        $output .= $editor->active("exportmailing_body").'
 <p>
     '._G('DBMF_exportmailing_subject').':
     <input type="text" name="dbmf_exportmailing_subject" value="" size="24"><br>

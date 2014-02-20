@@ -15,8 +15,6 @@ defined('_MySBEXEC') or die;
 global $app;
 
 
-echo MySBEditor::init("simple");
-
 echo '
 <h1>'._G('DBMF_addcontact').'</h1>
 <p>
@@ -24,6 +22,8 @@ echo '
 
 if( isset($app->dbmf_req_wcheck) and $app->dbmf_req_wcheck!='' ) {
 
+    $editor = new MySBEditor();
+    echo $editor->init("simple");
     while($data_wcheck = MySBDB::fetch_array($app->dbmf_req_wcheck)) {
         echo '
     <div id="contact'.$data_wcheck['id'].'">
