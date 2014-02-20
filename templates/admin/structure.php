@@ -187,7 +187,7 @@ foreach($blocks as $block) {
 <tr>
     <td colspan="2" style="text-align: center;">
         <input type="hidden" name="admin/structure" value="'.$block->id.'">
-        <input type="submit" value="'._G('DBMF_admin/structureion').'">
+        <input type="submit" value="'._G('DBMF_block_edition').'">
     </td>
 </tr>
 </tbody></table>
