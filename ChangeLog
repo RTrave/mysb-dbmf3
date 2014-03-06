@@ -1,3 +1,167 @@
+2014-02-20  Roman Trave <abadcafe@free.fr>
+
+	* libraries/export_mailing.php, templates/admin/dbmf.php, templates/admin/dbmf_process.php, templates/contact_add.php, templates/fprequest.php, templates/memento_edit.php, templates/mementos.php:
+	New MySBEditor support.
+
+	* templates/admin/structure.php: Typo fix.
+
+2014-01-30  Roman Trave <abadcafe@free.fr>
+
+	* templates/contacts_display.php: Useless file removed.
+
+	* dbmf3.css, includes/contact_display.php, includes/contacts_sort.php, libraries/block.php, libraries/blockref.php, libraries/contact.php, libraries/export.php, libraries/export_csv.php, libraries/export_display.php, libraries/export_mailing.php, libraries/export_mails.php, libraries/export_update.php, templates/admin/dbmf.php, templates/admin/dbmf_process.php, templates/contact_del.php, templates/contact_del_process.php, templates/contact_edit.php, templates/export.php, templates/export_process.php, templates/fprequest.php, templates/fprequest_process.php, templates/memento_edit.php:
+	Lot of minor bug fixes.
+	New contact dynamic display, splitted in includes/
+
+2014-01-22  Roman Trave <abadcafe@free.fr>
+
+	* templates/export.php, templates/export_process.php:
+	Re-introducing missing export*.php in templates.
+
+2014-01-21  Roman Trave <abadcafe@free.fr>
+
+	* __init.php, addcontact.php, addcontact_process.php, admindbmf.php, admindbmf_process.php, blockedit.php, blockedit_process.php, delcontact.php, delcontact_process.php, editcontact.php, editcontact_process.php, editmemento.php, editmemento_process.php, export.php, export_process.php, includes/common_edition.php, includes/index.html, infos.php, libraries/export_display.php, libraries/memento.php, mementos.php, mementos_process.php, request.php, request_process.php, templates/admin/dbmf.php, templates/admin/dbmf_process.php, templates/admin/index.html, templates/admin/structure.php, templates/admin/structure_process.php, templates/common_edition.php, templates/contact_add.php, templates/contact_add_process.php, templates/contact_del.php, templates/contact_del_process.php, templates/contact_edit.php, templates/contact_edit_process.php, templates/contacts_display.php, templates/fpinfos.php, templates/fprequest.php, templates/fprequest_process.php, templates/memento_edit.php, templates/memento_edit_process.php, templates/mementos.php, templates/mementos_process.php:
+	Hard code rewrite to follow new PHPMySandBox framework arch.
+	Few fixes and code cleaning.
+
+2013-12-20  Roman Trave <abadcafe@free.fr>
+
+	* admindbmf.php, editmemento.php, libraries/export_display.php, request.php:
+	MySBEditor:: active() used in all memento edition access.
+
+2013-12-18  Roman Trave <abadcafe@free.fr>
+
+	* editmemento.php, libraries/export_mailing.php, mementos.php:
+	New MySBEditor init() and active() usage.
+
+2013-12-03  Roman Trave <abadcafe@free.fr>
+
+	* __init.php, dbmf3.css, export_process.php, infos.php, request_process.php:
+	New GLOBAL_ACCESS config value, handling query restrictions.
+	Single user can now have complete access to select contacts (but not edition).
+
+	* libraries/blockref.php, templates/contacts_display.php:
+	Fix: inactive and deleted blockrefs aren't shown anymore in showcols view.
+
+	* dbmf3.css, dbmf3_handheld.css, editcontact.php, editmemento.php, mementos.php:
+	Few fixes around overlay API.
+
+2013-11-30  Roman Trave <abadcafe@free.fr>
+
+	* editcontact.php, editmemento.php: Overlay windows API fix.
+
+2013-11-11  Roman Trave <abadcafe@free.fr>
+
+	* delcontact.php, editcontact.php, templates/contacts_display.php:
+	Updated hidelayer and tooltip usage.
+
+2013-11-10  Roman Trave <abadcafe@free.fr>
+
+	* dbmf3.css, editmemento.php, libraries/export_mailing.php:
+	TinyMCE v4 support update.
+
+2013-11-08  Roman Trave <abadcafe@free.fr>
+
+	* addcontact.php, dbmf3.css, dbmf3_handheld.css, delcontact.php, delcontact_process.php, editcontact.php, editmemento.php, locales/en/dbmf3.ini, locales/fr/dbmf3.ini, mementos.php, templates/common_edition.php, templates/contacts_display.php:
+	Major update, switching to HTML5/JQuery overlay window usage.
+	Few bugs and typo fixes.
+
+2013-11-01  Roman Trave <abadcafe@free.fr>
+
+	* editcontact_process.php, templates/common_edition.php:
+	New contact mail, dealing with coma-separated multi-mails.
+
+	* dbmf3.css, dbmf3_handheld.css, editcontact.php, templates/contacts_display.php:
+	Updated contact display.
+
+2013-10-24  Roman Trave <abadcafe@free.fr>
+
+	* dbmf3.css: Fix field display position.
+
+	* dbmf3.css, dbmf3_handheld.css, templates/contacts_display.php:
+	Fix bad presentation in contact_display.
+
+	* dbmf3.css, dbmf3_handheld.css, templates/contacts_display.php:
+	Cleaning BlockRef display plugin code.
+
+	* __init.php, blockedit.php, blockedit_process.php, dbmf3.css, dbmf3_handheld.css, editcontact.php, libraries/blockref.php, locales/en/dbmf3.ini, locales/fr/dbmf3.ini, templates/contacts_display.php:
+	Cleaned and rewrite code for contact display.
+	Display configuration enhanced.
+
+2013-10-22  Roman Trave <abadcafe@free.fr>
+
+	* dbmf3.css, locales/en/dbmf3.ini, locales/fr/dbmf3.ini, templates/contacts_display.php:
+	Update display.
+
+2013-10-20  Roman Trave <abadcafe@free.fr>
+
+	* templates/contacts_display.php: Fix icons path.
+
+	* addcontact.php, blockedit.php, editcontact.php, images/delete_icon24.png, images/edit_icon24.png, images/mail_icon24.png, images/sortasc_icon24.png, images/sortdesc_icon24.png, mementos.php, templates/common_edition.php, templates/contacts_display.php:
+	Switch to new core icons.
+	New support for tel and url values types.
+	Mail common field is now an email type.
+
+2013-10-02  Roman Trave <abadcafe@free.fr>
+
+	* export_process.php:
+	Fix inconsistance for Display object save in _SESSION.
+
+	* templates/contacts_display.php:
+	Mail icon is shown if contact have mail.
+
+2013-09-30  Roman Trave <abadcafe@free.fr>
+
+	* libraries/export_csv.php: Fix mail missing in CSV export.
+
+2013-09-26  Roman Trave <abadcafe@free.fr>
+
+	* templates/contacts_display.php:
+	Add modification age and tel2 in contact display.
+
+2013-09-19  Roman Trave <abadcafe@free.fr>
+
+	* dbmf3.css, mementos.php: Mementos CSS display fixes.
+
+	* __init.php, dbmf3.css, dbmf3_handheld.css, editcontact.php, export.php, libraries/block.php, libraries/group.php, libraries/memento.php, libraries/plugins_dbmf.php, locales/fr/dbmf3.ini, mementos.php, request.php, request_process.php, templates/common_edition.php, templates/contacts_display.php:
+	Major display modifications for handheld devices.
+	MONTHOFYEAR memento bug fixed: next month mementos are no more activated.
+
+2013-07-06  Roman Trave <abadcafe@free.fr>
+
+	* libraries/plugins_dbmf.php:
+	Check class existence before create dbmf plugins.
+
+	* libraries/memento.php:
+	Fix sign in absDiff(), which must be positive or negative!
+
+2013-07-05  Roman Trave <abadcafe@free.fr>
+
+	* __init.php, libraries/memento.php, templates/contacts_display.php:
+	Usage of MySBDateTime::absRest(), instead of deprecated getRest().
+
+2013-07-04  Roman Trave <abadcafe@free.fr>
+
+	* mementos.php: Fix html5 obsolete name usage in anchors (use id).
+
+2013-06-28  Roman Trave <abadcafe@free.fr>
+
+	* libraries/contact.php, libraries/export_mailing.php, locales/en/dbmf3.ini, locales/fr/dbmf3.ini:
+	New MySBDBMFContact::addMementoSimple() function.
+	More POO style mailing export rewrite, handling direct SMTP errors.
+
+2013-06-22  Roman Trave <abadcafe@free.fr>
+
+	* addcontact.php, export.php, infos.php, libraries/block.php, libraries/contact.php, libraries/export_csv.php, libraries/export_display.php, libraries/export_mailing.php, locales/en/mail_sendtable.php, locales/fr/mail_sendtable.php, mementos.php, request.php:
+	Fix mail API usage.
+	Few isset() verifications added, avoiding PHP notices.
+
+2013-06-19  Roman Trave <abadcafe@free.fr>
+
+	* ChangeLog: Updated Changelog.
+
+	* ChangeLog: Ready to tag: rel1b.
+
 2013-06-19  Roman Trave <abadcafe@free.fr>
 
 	* ChangeLog: Ready to tag: rel1b.
