@@ -52,7 +52,7 @@ class MySBDBMFExportMailsCSV extends MySBDBMFExport {
      * Search result output
      * @param   
      */
-    public function htmlResultOutput($results) {
+    public function htmlResultOutput() {
         global $app;
         $sql_all =  'SELECT mail from '.MySB_DBPREFIX.'dbmfcontacts WHERE '.$_SESSION['dbmf_query_where'].
             ' ORDER by id';
