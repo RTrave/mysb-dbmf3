@@ -195,6 +195,7 @@ echo sortActions($packF);
 
 echo '
 <p>
+<br>
 <b>'.$first_packid.'-'.$last_packid.'</b><br>
 ('.$counter.' results)<br>
 </p>
