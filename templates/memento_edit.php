@@ -59,7 +59,14 @@ echo '
                 style="width: 24px">
     </a>
 </div>
-'._G("DBMF_memento").'<br>'.$contact->lastname.' '.$contact->firstname.'
+'._G("DBMF_memento").'';
+if($memento->date_process!='') {
+    $memento_process = new MySBDateTime($memento->date_process);
+    echo '
+    <span class="help">'._G('DBMF_memento_process_last').': '.$memento_process->strEBY_l().'</span>';
+}
+echo '<br>
+'.$contact->lastname.' '.$contact->firstname.'
 </div>
 
 <form   action="index.php?mod=dbmf3&amp;tpl=contact_edit&amp;contact_id='.$contact->id.'" 
@@ -74,50 +81,42 @@ else $m_user = $app->auth_user;
 if($memento->group_id!=0) $m_group = MySBGroupHelper::getByID($memento->group_id);
 else $m_group = null;
 
+$area_id = 'editor_id_'.rand(1,999999);
+$editor = new MySBEditor();
+
 echo '
-<div class="table_support1">
-<table class="cform"><tbody>
-<tr>
-    <td><b>'._G("DBMF_memento_owner").':</b></td>
-    <td>';
-echo '
-        '.$m_user->lastname.' '.$m_user->firstname;
-echo '
-    </td>
-</tr>
-<tr>
-    <td><b>'._G("DBMF_group_access").':</b></td>
-    <td>
-        <select name="memento_owner">';
+<div class="list_support" style="">
+
+<div class="row" style="">
+    <div class="right" style="">'.$m_user->lastname.' '.$m_user->firstname.'</div>
+    <b>'._G("DBMF_memento_owner").':</b>
+</div>
+
+<div class="row" style="">
+    <div class="right" style=""><select name="memento_owner">';
 echo '
             <option value="0">'._G("DBMF_memento_onlyowner").'</option>';
 $mgroups = MySBDBMFGroupHelper::load();
 foreach($mgroups as $mgroup) {
     if($app->auth_user->haveGroup($mgroup->id) and $mgroup->dbmf_priority!=0) echo '
-        <option value="'.$mgroup->id.'" '.MySBUtil::form_isselected($memento->group_id,$mgroup->id).'>group "'.$mgroup->comments.'"</option>';
+        <option value="'.$mgroup->id.'" '.MySBUtil::form_isselected($memento->group_id,$mgroup->id).'>'.$mgroup->comments.'</option>';
 }
 echo '
-        </select><br>
-        <input type="checkbox" name="memento_group_edition" '.MySBUtil::form_ischecked($memento->group_edition,1).'>'._G("DBMF_memento_groupcanedit").'
-    </td>
-</tr>
-<tr>
-    <td><b>'._G("DBMF_memento_type").':</b></td>
-    <td>
-        <select name="memento_type" onChange="hide(\'memtype0\');hide(\'memtype1\');show(this.options[this.selectedIndex].value);">
+        </select>
+        <input type="checkbox" name="memento_group_edition" '.MySBUtil::form_ischecked($memento->group_edition,1).'>'._G("DBMF_memento_groupcanedit").'</div>
+    <b>'._G("DBMF_group_access").':</b>
+</div>
+
+<div class="row" style="">
+    <div class="right" style=""><select name="memento_type" onChange="hide_instant(\'memtype0\');hide_instant(\'memtype1\');show(this.options[this.selectedIndex].value);">
             <option value="memtype'.MYSB_DBMF_MEMENTO_TYPE_PUNCTUAL.'" '.MySBUtil::form_isselected($memento->type,MYSB_DBMF_MEMENTO_TYPE_PUNCTUAL).'>'._G("DBMF_memento_type_punctual").'</option>
             <option value="memtype'.MYSB_DBMF_MEMENTO_TYPE_MONTHOFYEAR.'" '.MySBUtil::form_isselected($memento->type,MYSB_DBMF_MEMENTO_TYPE_MONTHOFYEAR).'>'._G("DBMF_memento_type_monthofyear").'</option>
-        </select>';
-    if($memento->date_process!='') {
-        $memento_process = new MySBDateTime($memento->date_process);
-        echo '
-        <small>'._G('DBMF_memento_process_last').': '.$memento_process->strEBY_l().'</small>';
-    }
-    echo '
-    </td>
-</tr>
-<tr>
-    <td><b>'._G("DBMF_memento_date").':</b></td>';
+        </select></div>
+    <b>'._G("DBMF_memento_type").':</b>';
+
+echo '
+</div>';
+
     if($memento->type==MYSB_DBMF_MEMENTO_TYPE_PUNCTUAL) {
         $style_t0 = '';
         $style_t1 = 'style="display: none;"';
@@ -125,8 +124,8 @@ echo '
         $style_t0 = 'style="display: none;"';
         $style_t1 = '';
     }
-    echo '
-    <td>
+    echo '<div class="row" style="">
+    <div class="right" style="">
         <div id="memtype0" '.$style_t0.'>'.$memento_date->html_form('memento_date_',true).'</div>
         <div id="memtype1" '.$style_t1.'>
             <select name="memento_moy">
@@ -144,27 +143,23 @@ echo '
                 <option value="12" '.MySBUtil::form_isselected($memento->monthofyear_memento,12).'>'._G('DBMF_memento_moy_12').'</option>
             </select>
         </div>
-    </td>
-</tr>';
-
-//MySBEditor::activate();
-//echo MySBEditor::init('simple');
-$area_id = 'editor_id_'.rand(1,999999);
-$editor = new MySBEditor();
-
-echo '
-<tr>
-    <td colspan="2"><b>'._G("DBMF_memento_comments").':</b>
-    <div style="float: right;padding: 3px;"><textarea name="memento_comments" cols="40" rows="3" class="mceEditor" id="'.$area_id.'">'.$memento->comments.'</textarea></div>
-'.$editor->active($area_id).'
-    </td>
-</tr>
-<tr>
-    <td colspan="2"><b>'._G("DBMF_memento_comments2").':</b>
-    <textarea name="memento_comments2" cols="40" rows="3" style="float: right">'.$memento->comments2.'</textarea></td>
-</tr>
-</tbody></table>
+    </div>
+    <b>'._G("DBMF_memento_date").':</b>
 </div>
+
+<div class="row" style="">
+    <b>'._G("DBMF_memento_comments").':</b>
+    <div><textarea name="memento_comments" cols="40" rows="3" class="mceEditor" id="'.$area_id.'">'.$memento->comments.'</textarea></div>
+'.$editor->active($area_id).'
+</div>
+
+<div class="row" style="">
+    <b>'._G("DBMF_memento_comments2").':</b>
+    <div><textarea name="memento_comments2" cols="40" rows="3">'.$memento->comments2.'</textarea></div>
+</div>
+
+</div>
+
 </div>
 
 <div class="overFoot">';
