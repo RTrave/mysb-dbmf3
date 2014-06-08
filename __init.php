@@ -14,7 +14,7 @@ defined('_MySBEXEC') or die;
 
 class MySBModule_dbmf3 {
 
-    public $version = 12;
+    public $version = 13;
 
     public function create() {
         global $app;
@@ -105,6 +105,9 @@ class MySBModule_dbmf3 {
             "__init.php",
             false, "dbmf3");
         $req = MySBDB::query('DROP TABLE '.MySB_DBPREFIX.'dbmfmementos',
+            "__init.php",
+            false, "dbmf3");
+        $req = MySBDB::query('DROP TABLE '.MySB_DBPREFIX.'dbmfmementocatgs',
             "__init.php",
             false, "dbmf3");
 
@@ -324,7 +327,37 @@ class MySBModule_dbmf3 {
             array("DBMF_adminmenu_dbmf", "admin/dbmf", 'DBMF_adminmenu_dbmfinfos',''),
             array(3,0,0,0),
             6,"admin",'dbmf3');
+    }
 
+    public function init13() {
+        global $app;
+        $req = MySBDB::query('CREATE TABLE '.MySB_DBPREFIX.'dbmfmementocatgs ( '.
+            'id int not null primary key, '.
+            'name varchar(64), '.
+            'group_ids varchar(64) )',
+            "__init.php",
+            false, "dbmf3");
+        MySBDB::query('ALTER TABLE '.MySB_DBPREFIX.'dbmfmementos '.
+            'DROP COLUMN group_id',
+            "__init.php",
+            false, "dbmf3");
+        MySBDB::query('ALTER TABLE '.MySB_DBPREFIX.'dbmfmementos '.
+            'ADD COLUMN memcatg_id int',
+            "__init.php",
+            false, "dbmf3");
+        MySBDB::query('UPDATE '.MySB_DBPREFIX.'dbmfmementos '.
+            'SET memcatg_id=1',
+            "__init.php",
+            false, "dbmf3");
+        MySBDBMFMementoCatgHelper::create("");
+        MySBRoleHelper::delete('dbmf_blockedit');
+        $configrole = MySBRoleHelper::create('dbmf_config','Can configure DBMF3');
+        $configrole->assignToGroup('admin',true);
+        MySBPluginHelper::delete('blockedit_menutext','dbmf3');
+        MySBPluginHelper::create('config_menutext','MenuItem',
+            array("DBMF_topmenu_config", "admin/structure", 'DBMF_topmenu_configinfos',''),
+            array(2,0,0,0),
+            3,"dbmf_config",'dbmf3');
     }
 
     public function uninit() {
@@ -332,7 +365,7 @@ class MySBModule_dbmf3 {
 
         MySBRoleHelper::delete('dbmf_user');
         MySBRoleHelper::delete('dbmf_editor');
-        MySBRoleHelper::delete('dbmf_blockedit');
+        MySBRoleHelper::delete('dbmf_config');
 
         MySBDBMFExportHelper::delete(MySBDBMFExportHelper::getByName('DBMF_display')->id);
 
@@ -352,7 +385,7 @@ class MySBModule_dbmf3 {
         MySBPluginHelper::delete('admindbmf_menutext','dbmf3');
         MySBPluginHelper::delete('addcontact_menutext','dbmf3');
         MySBPluginHelper::delete('export_menutext','dbmf3');
-        MySBPluginHelper::delete('blockedit_menutext','dbmf3');
+        MySBPluginHelper::delete('config_menutext','dbmf3');
         MySBPluginHelper::delete('mementos_menutext','dbmf3');
         
     }

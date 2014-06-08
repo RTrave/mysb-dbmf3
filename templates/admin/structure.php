@@ -15,7 +15,14 @@ defined('_MySBEXEC') or die;
 global $app;
 
 echo '
-<h1>'._G('DBMF_blocks_edit').'</h1>';
+<div id="mysbMenuLevel">
+<ul>
+    <li><a href="index.php?mod=dbmf3&amp;tpl=admin/structure">'._G('DBMF_blocks_config').'</a></li>
+    <li><a href="index.php?mod=dbmf3&amp;tpl=admin/memento">'._G('DBMF_mementos_config').'</a></li>
+</ul>
+</div>
+
+<h1>'._G('DBMF_config').': '._G('DBMF_contacts_config').'</h1>';
 
 
 if( isset($_POST['blockref_edit']) or 

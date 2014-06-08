@@ -63,8 +63,8 @@ foreach($mementos_p as $memento) {
 
     $contact = new MySBDBMFContact($memento->contact_id);
     $m_user = MySBUserHelper::getByID($memento->user_id);
-    if($memento->group_id!=0) $m_group = MySBGroupHelper::getByID($memento->group_id);
-    else $m_group = null;
+    if($memento->memcatg_id!=0) $memcatg = MySBDBMFMementoCatgHelper::getByID($memento->memcatg_id);
+    else $memcatg = null;
     if($memento->isActive()) $Active = true;
     else $Active = false;
     if($Active) $memclass = 'mem_active';
@@ -82,11 +82,11 @@ foreach($mementos_p as $memento) {
         <a  href="index.php?mod=dbmf3&amp;tpl=memento_edit&amp;memento_id='.$memento->id.'"
             class="overlayed"><b>'.$memento->getDate().'</b></a>';
     else echo '
-        '.$memento->getDate().'';
-    if($m_group!=null) $m_groupname = $m_group->name;
-    else $m_groupname = '';
+        <b>'.$memento->getDate().'</b>';
+    if($memcatg!=null) $m_catgname = $memcatg->name;
+    else $m_catgname = '<i>'.$m_user->login.'</i>';
     echo '<br>
-        <span class="cell_hide"><small><i>'.$m_user->login.'('.$m_groupname.')</i></small></span>
+        <span class="cell_hidem"><small>'.$m_catgname.'</small></span>
         </div>
         <div class="name floatingcell">
         <div style="float: left;">

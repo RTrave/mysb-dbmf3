@@ -93,24 +93,29 @@ echo '
     <td colspan="2">'._G("DBMF_contact_mementos_infos").'</td>
 </tr>
 <tr>
-    <td colspan="2">
-    <table style="width: 95%;"><tbody>
-';
+    <td colspan="2">';
+
+//echo '<table style="width: 95%;"><tbody>';
 
 $mementos = MySBDBMFMementoHelper::load($contact->id);
 foreach($mementos as $memento) {
     //$memento_date = new MySBDateTime($memento->date_memento);
     if($memento->isActive()) $Active = true;
     else $Active = false;
-    if($Active) $memclass = 'class="mem_active"';
-    elseif(!$Active and $memento->date_process!='') $memclass = 'class="mem_processed"';
+    if($Active) $memclass = 'mem_active';
+    elseif(!$Active and $memento->date_process!='') $memclass = 'mem_processed';
     else $memclass='';
     $m_user = MySBUserHelper::getByID($memento->user_id);
-    if($memento->group_id!=0) $m_group = MySBGroupHelper::getByID($memento->group_id);
-    else $m_group = null;
+    if($memento->memcatg_id!=0) $memcatg = MySBDBMFMementoCatgHelper::getByID($memento->memcatg_id);
+    else $memcatg = null;
+/*
     echo '
     <tr style="font-size: 90%;">
         <td style="width: 130px;" '.$memclass.'>';
+*/
+    echo '
+    <div class="boxed" style="font-size: 90%; width: 90%;">
+    <div class="title roundtop '.$memclass.'" style="font-size: 90%;" >';
     if($memento->isEditable())
         echo '
             <a  href="index.php?mod=dbmf3&amp;tpl=memento_edit&amp;memento_id='.$memento->id.'"
@@ -119,33 +124,27 @@ foreach($mementos as $memento) {
                 <b>'.$memento->getDate().'</b></a>';
     else echo '
             '.$memento->getDate().'';
-    if($m_group!=null) $m_groupname = $m_group->name;
-    else $m_groupname = '';
-    echo '<br>
-            <i>'.$m_user->login.'('.$m_groupname.')</i>
-        </td>
-        <td>'.$memento->comments.'</td>
-        <td style="width: 180px;">'.$memento->comments2.'</td>
-    </tr>
+    if($memcatg!=null) $m_catgname = $memcatg->name;
+    else $m_catgname = '<i>'.$m_user->login.'</i>';
+    echo ' <div style="float: right;">'.$m_catgname.'</div>
+        </div>
+        <div class="row" style="font-size: 90%;">'.$memento->comments.'<br>
+        '.$memento->comments2.'</div>
+    </div>
 ';
 }
 
 echo '
-    <tr>
-        <td colspan="3" style="text-align: center; padding: 10px;"><small>
-<!--
-            <a  href="index.php?mod=dbmf3&amp;tpl=memento_edit&amp;contact_id='.$contact->id.'" class="button"
-                OnClick="return mysb_confirm(\''.MySBUtil::str2strict(_G('DBMF_confirm_memento_edition')).'\')">
-                '._G("DBMF_contact_mementos_create").'</a>
--->
+    <div class="boxed" style="font-size: 90%; width: 90%;">
+        <div class="row" style="text-align: center; border-bottom: 0px; background: transparent;">
             <a  href="index.php?mod=dbmf3&amp;tpl=memento_edit&amp;contact_id='.$contact->id.'"
                 class="button overlayed"
                 data-overconfirm="'.MySBUtil::str2strict(_G('DBMF_confirm_memento_edition')).'">
                 '._G("DBMF_contact_mementos_create").'</a>
             </small>
-        </td>
-    </tr>
-    </tbody></table>
+        </div>
+    </div>
+
     </td>
 </tr>
 ';

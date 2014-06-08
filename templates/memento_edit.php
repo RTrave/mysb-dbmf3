@@ -78,8 +78,6 @@ echo '<br>
 $memento_date = new MySBDateTime($memento->date_memento);
 if($memento_id!=-1) $m_user = MySBUserHelper::getByID($memento->user_id);
 else $m_user = $app->auth_user;
-if($memento->group_id!=0) $m_group = MySBGroupHelper::getByID($memento->group_id);
-else $m_group = null;
 
 $area_id = 'editor_id_'.rand(1,999999);
 $editor = new MySBEditor();
@@ -93,18 +91,25 @@ echo '
 </div>
 
 <div class="row" style="">
-    <div class="right" style=""><select name="memento_owner">';
-echo '
-            <option value="0">'._G("DBMF_memento_onlyowner").'</option>';
-$mgroups = MySBDBMFGroupHelper::load();
-foreach($mgroups as $mgroup) {
-    if($app->auth_user->haveGroup($mgroup->id) and $mgroup->dbmf_priority!=0) echo '
-        <option value="'.$mgroup->id.'" '.MySBUtil::form_isselected($memento->group_id,$mgroup->id).'>'.$mgroup->comments.'</option>';
+    <div class="right" style="">
+    <select name="memento_category">';
+$memcatgs = MySBDBMFMementoCatgHelper::loadAvailable();
+foreach( $memcatgs as $memcatg ) {
+    echo '
+        <option value="'.$memcatg->id.'" '.MySBUtil::form_isselected($memento->memcatg_id,$memcatg->id).'>'.$memcatg->name.'</option>';
 }
+if($memento_id==-1) $onlyowner = '';
+else $onlyowner = MySBUtil::form_isselected($memento->memcatg_id,0);
 echo '
-        </select>
-        <input type="checkbox" name="memento_group_edition" '.MySBUtil::form_ischecked($memento->group_edition,1).'>'._G("DBMF_memento_groupcanedit").'</div>
-    <b>'._G("DBMF_group_access").':</b>
+        <option value="0" '.$onlyowner.'>'._G("DBMF_memento_onlyowner").'</option>
+    </select>';
+
+if($memento_id==-1) $modifiable = ' checked="checked" ';
+else $modifiable = MySBUtil::form_ischecked($memento->group_edition,1);
+echo '
+    <input type="checkbox" name="memento_group_edition" '.$modifiable.'>'._G("DBMF_memento_groupcanedit").'
+    </div>
+    <b>'._G("DBMF_memento_category").':</b>
 </div>
 
 <div class="row" style="">

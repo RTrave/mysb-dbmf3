@@ -28,7 +28,7 @@ class MySBDBMFMemento extends MySBObject {
 
     public $contact_id = null;
 
-    public $group_id = null;
+    public $memcatg_id = null;
 
     public $type = MYSB_DBMF_MEMENTO_TYPE_PUNCTUAL;
 
@@ -64,6 +64,13 @@ class MySBDBMFMemento extends MySBObject {
         parent::update('dbmfmementos', (array) ($data_memento));
     }
 
+    public function setCategory($memcatg_id) {
+        global $app;
+        if($memcatg_id=='0' or $memcatg_id==0) $memcatg_id = '';
+        $this->update( array(
+            'memcatg_id' => $memcatg_id ));
+    }
+/*
     public function setOwner($group_id) {
         global $app;
         //$user_id = $app->auth_user->id;
@@ -71,11 +78,12 @@ class MySBDBMFMemento extends MySBObject {
         parent::update('dbmfmementos', array(
             'group_id' => $group_id ));
     }
-
+*/
     public function isEditable() {
         global $app;
-        if($this->user_id==$app->auth_user->id) return true;
-        if($app->auth_user->haveGroup($this->group_id) and $this->group_edition==1) return true;
+        if( $this->user_id==$app->auth_user->id ) return true;
+        $memcatg = MySBDBMFMementoCatgHelper::getByID($this->memcatg_id);
+        if( $memcatg->isAvailable() and $this->group_edition==1 ) return true;
         return false;
     }
 
@@ -160,17 +168,17 @@ class MySBDBMFMemento extends MySBObject {
  */
 class MySBDBMFMementoHelper {
 
-    public function create($owner_id,$contact_id,$type) {
+    public function create($memcatg_id,$contact_id,$type) {
         global $app;
         $mid = MySBDB::lastID('dbmfmementos')+1;
         if($mid==0) $mid = 1;
         MySBDB::query('INSERT INTO '.MySB_DBPREFIX.'dbmfmementos '.
             '(id, user_id, contact_id, type) VALUES '.
             "(".$mid.", '".$app->auth_user->id."', '".$contact_id."', ".$type." ); ",
-            "MySBDBMFMementoHelper::create($owner_id,$contact_id,$type)",
+            "MySBDBMFMementoHelper::create($memcatg_id,$contact_id,$type)",
             true, 'dbmf3' );
         $new_memento = new MySBDBMFMemento($mid);
-        $new_memento->setOwner($owner_id);
+        $new_memento->setCategory($memcatg_id);
         return $new_memento;
     }
 
@@ -186,10 +194,9 @@ class MySBDBMFMementoHelper {
         global $app;
         $user = $app->auth_user;
         $cond = '(user_id='.$user->id;
-        $groups = MySBDBMFGroupHelper::load();
-        foreach($groups as $group) 
-            if($user->haveGroup($group->id)) 
-                $cond .= ' or group_id='.$group->id;
+        $memcatgs = MySBDBMFMementoCatgHelper::loadAvailable();
+        foreach( $memcatgs as $memcatg ) 
+            $cond .= ' or memcatg_id='.$memcatg->id;
         return $cond .= ')';
     }
 

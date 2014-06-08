@@ -71,8 +71,7 @@ if(isset($_POST['contact_edit']) and MySBRoleHelper::checkAccess('dbmf_editor',f
 if(isset($_POST['memento_add'])) {
     if($_POST['memento_type']=='memtype0') $memtype = MYSB_DBMF_MEMENTO_TYPE_PUNCTUAL;
     elseif($_POST['memento_type']=='memtype1') $memtype = MYSB_DBMF_MEMENTO_TYPE_MONTHOFYEAR;
-    $new_memento = MySBDBMFMementoHelper::create($_POST['memento_owner'],$_GET['contact_id'],$memtype);
-    //$new_memento->setOwner($_POST['memento_owner']);
+    $new_memento = MySBDBMFMementoHelper::create($_POST['memento_category'],$_GET['contact_id'],$memtype);
     if($memtype==MYSB_DBMF_MEMENTO_TYPE_PUNCTUAL) {
         $new_memento_date = 
 MySBDateTimeHelper::html_formLoad('memento_date_');
@@ -102,7 +101,7 @@ if(isset($_POST['memento_modify'])) {
     if($_POST['memento_type']=='memtype0') $memtype = 0;
     elseif($_POST['memento_type']=='memtype1') $memtype = 1;
     $memento = new MySBDBMFMemento($_POST['memento_modify']);
-    $memento->setOwner($_POST['memento_owner']);
+    $memento->setCategory($_POST['memento_category']);
     if($memtype==MYSB_DBMF_MEMENTO_TYPE_PUNCTUAL) {
         $memento_date = MySBDateTimeHelper::html_formLoad('memento_date_');
         $memento->update( array(
@@ -111,7 +110,8 @@ if(isset($_POST['memento_modify'])) {
         $memento->update( array(
             'monthofyear_memento' => $_POST['memento_moy'] ) );
     }
-    if($_POST['memento_group_edition']=='on') $group_edition = 1;
+    if( isset($_POST['memento_group_edition']) and 
+        $_POST['memento_group_edition']=='on') $group_edition = 1;
     else $group_edition = 0;
     $memento->update( array(
         'type' => $memtype,

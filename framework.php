@@ -19,6 +19,7 @@ require (MySB_ROOTPATH.'/modules/dbmf3/libraries/block.php');
 require (MySB_ROOTPATH.'/modules/dbmf3/libraries/blockref.php');
 require (MySB_ROOTPATH.'/modules/dbmf3/libraries/contact.php');
 require (MySB_ROOTPATH.'/modules/dbmf3/libraries/memento.php');
+require (MySB_ROOTPATH.'/modules/dbmf3/libraries/mementocatg.php');
 
 require (MySB_ROOTPATH.'/modules/dbmf3/libraries/export.php');
 require (MySB_ROOTPATH.'/modules/dbmf3/libraries/export_display.php');

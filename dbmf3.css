@@ -137,11 +137,11 @@ margin: 0px 5px;
 }
 
 #mysbMiddle .mem_active {
-background: #ff9292;
+background: #ff9292 !important;
 }
 
 #mysbMiddle .mem_processed {
-background: #c0ffba;
+background: #c0ffba !important;
 }
 
 #rsvp_mailing_displaymail {
@@ -214,13 +214,13 @@ background-color: transparent;
 }
 
 #dbmfMementoList td.infos {
-width: 200px;
+width: 240px;
 }
 #dbmfMementoList div.floatingcell{
 float: left;
 }
 #dbmfMementoList div.date{
-width: 80px;
+width: 110px;
 }
 #dbmfMementoList div.name{
 text-align: left;
