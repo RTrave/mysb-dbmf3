@@ -51,8 +51,7 @@ echo '
 
 <div class="overBody">
 
-<table class="cform"><tbody>
-';
+<div class="list_support" style="padding: 2px 2px;">';
 
 _incI('common_edition','dbmf3');
 
@@ -60,9 +59,9 @@ $blocks = MySBDBMFBlockHelper::load();
 foreach($blocks as $block) {
     $group_edit = MySBGroupHelper::getByID($block->groupedit_id);
     echo '
-<tr class="title" >
-    <td colspan="2">'._G($block->lname).' <small><i>('.$group_edit->comments.')</i></small></td>
-</tr>';
+<div class="title">
+    <b>'._G($block->lname).' <small><i>('.$group_edit->comments.')</i></small></b>
+</div>';
     foreach($block->blockrefs as $blockref) {
         if($blockref->isActive()) {
             if(!$block->isEditable())
@@ -70,10 +69,13 @@ foreach($blocks as $block) {
             else 
                 $class_edit = '';
             $refname = $blockref->keyname;
-            echo '
-<tr style="'.$class_edit.'">
-    <td style="height: 18px; vertical-align: top; text-align: right;">'._G($blockref->lname).':</td>
-    <td>';
+            if( $blockref->getType()=='text' ) echo '
+<div class="row" style="'.$class_edit.' text-align: right;">
+    <div style="float: left;"><b>'._G($blockref->lname).':</b></div>
+    <div style="display: inline-block; margin: 0px 0px 0px auto;">';
+            else echo '
+<div class="row" style="'.$class_edit.'">
+    <div class="right">';
             if($block->isEditable()) 
                 echo $blockref->htmlForm('blockref',$contact->$refname,'('.$contact->lastname.' '.$contact->firstname.')');
             else {
@@ -83,17 +85,19 @@ foreach($blocks as $block) {
                     echo $blockref->htmlFormNonEditable('blockref',$contact->$refname);
             }
             echo '
-    </td>
-</tr>';
+    </div>';
+            if( $blockref->getType()!='text' ) echo '
+    <b>'._G($blockref->lname).':</b>';
+            echo '
+</div>';
         }
     }
 }
 echo '
-</tbody></table>
 
 </div>
 
-
+</div>
 <div class="overFoot">
  ';
 
@@ -112,7 +116,6 @@ if(isset($_POST['contact_edit'])) {
     echo '
 <script>
 loadItem("contact'.$contact->id.'","index.php?mod=dbmf3&inc=contact_display&id='.$contact->id.'");
-//$("#memento'.$_POST['memento_delete'].'").fadeOut(1000,"swing");
 </script>';
 }
 if(isset($_POST['memento_delete'])) {

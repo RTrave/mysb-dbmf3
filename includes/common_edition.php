@@ -21,82 +21,72 @@ $contact = $app->tpl_currentcontact;
 $date_creat = new MySBDateTime($contact->date_creat);
 $date_modif = new MySBDateTime($contact->date_modif);
 
+if( MySBRoleHelper::checkAccess('dbmf_editor',false) ) $isEditor = true;
+else $isEditor = false;
 
 echo '
-<tr class="title" >
-    <td colspan="2">'._G("DBMF_contact_contact_infos").'</td>
-</tr>
-<tr>
-    <td colspan="2" style="text-align: center;">
-        <small>
+
+<div class="row" style="text-align: center;">
+    <small>
         <b>'._G("DBMF_date_creat").': </b>'.$date_creat->strAEBY_l().' / 
         <b>'._G("DBMF_date_modif").': </b>'.$date_modif->strAEBY_l().'
-        </small>
-    </td>
-</tr>
-<tr>
-    <td style="text-align: right;"><b>'._G("DBMF_common_lastname").':</b></td>';
-if(MySBRoleHelper::checkAccess('dbmf_editor',false)) echo '
-    <td><input type="text" name="lastname" size="28" maxlength="64" value="'.$contact->lastname.'"></td>';
-else echo '
-    <td>'.$contact->lastname.'</td>';
-echo '
-</tr>
-<tr>
-    <td style="text-align: right;"><b>'._G("DBMF_common_firstname").':</b></td>';
-if(MySBRoleHelper::checkAccess('dbmf_editor',false)) echo '
-    <td><input type="text" name="firstname" size="28" maxlength="64" value="'.$contact->firstname.'"></td>';
-else echo '
-    <td>'.$contact->firstname.'</td>';
-echo '
-</tr>
-';
-echo '
-<tr>
-    <td style="text-align: right;"><b>'._G("DBMF_common_mail").':</b></td>';
-if(MySBRoleHelper::checkAccess('dbmf_editor',false)) {
-    echo '
-    <td>';
+    </small>
+</div>
 
-    $cmail = explode(',',$contact->mail);
-    $i_mail = 0;
-    foreach($cmail as $email) {
-        if( $i_mail>0 ) echo '
-        </div>';
-        $i_mail++;
-        echo '
-        <div>
-            <input type="email" name="mail'.$i_mail.'" size="28" maxlength="64" value="'.$email.'">';
-    }
+<div class="row">
+    <div class="right">';
+if( $isEditor ) echo '<input type="text" name="lastname" size="24" maxlength="64" value="'.$contact->lastname.'">';
+else echo $contact->lastname;
+echo '</div>
+    <b>'._G("DBMF_common_lastname").'</b>
+</div>
+
+<div class="row">
+    <div class="right">';
+if( $isEditor ) echo '<input type="text" name="firstname" size="24" maxlength="64" value="'.$contact->firstname.'">';
+else echo $contact->firstname;
+echo '</div>
+    <b>'._G("DBMF_common_firstname").'</b>
+</div>';
+
+function mail_input( $i_mail, $email, $isEditor, $isLast=false, $style='' ) {
     echo '
-            <img    src="images/icons/list-add.png" 
-                    alt="add a email" 
-                    id="dbmfmailaddicon"
-                    style="height: 20px; vertical-align: middle;"
-                    onClick="show(\'dbmfmailadd\');hide(\'dbmfmailaddicon\')">
-        </div>
-        <div>
-            <input type="email" name="mail'.($i_mail+1).'" size="28" maxlength="64" value="" style="display: none;" id="dbmfmailadd">
-        </div>
-    ';
-    echo '
-    </td>';
-} else {
-    echo '
-    <td>'.$contact->mail.'</td>';
+<div class="row" '.$style.'>
+    <div class="right">';
+if( $isEditor ) {
+    if( $isLast ) echo '
+        <img src="images/icons/list-add.png" 
+             alt="'._G("DBMF_common_addmail").'" 
+             title="'._G("DBMF_common_addmail").'"
+             id="dbmfmailaddicon"
+             style="height: 20px; vertical-align: middle;"
+             onClick="show(\'dbmfmailadd\');hide(\'dbmfmailaddicon\')">';
+    echo '<input type="email" name="mail'.$i_mail.'" size="24" maxlength="64" value="'.$email.'">';
+} else echo $email;
+echo '</div>
+    <b>'._G("DBMF_common_mail").' '.$i_mail.'</b>
+</div>';
 }
+
+$cmail = explode(',',$contact->mail);
+$i_mail = 0;
+if( count($cmail)==0 ) mail_input( 1, '', $isEditor );
+foreach($cmail as $email) {
+    $i_mail++;
+    if( count($cmail)==$i_mail ) mail_input( $i_mail, $email, $isEditor, true );
+    else mail_input( $i_mail, $email, $isEditor );
+}
+$i_mail++;
+mail_input( $i_mail, '', $isEditor, false, 'style="display: none;" id="dbmfmailadd"' );
+
+
 echo '
-</tr>
+<div class="title">
+    <b>'._G("DBMF_contact_mementos_infos").'</b>
+</div>
+
+<div class="row">
 ';
-echo '
-<tr class="title" >
-    <td colspan="2">'._G("DBMF_contact_mementos_infos").'</td>
-</tr>
-<tr>
-    <td colspan="2">';
-
-//echo '<table style="width: 95%;"><tbody>';
-
 $mementos = MySBDBMFMementoHelper::load($contact->id);
 foreach($mementos as $memento) {
     //$memento_date = new MySBDateTime($memento->date_memento);
@@ -108,14 +98,9 @@ foreach($mementos as $memento) {
     $m_user = MySBUserHelper::getByID($memento->user_id);
     if($memento->memcatg_id!=0) $memcatg = MySBDBMFMementoCatgHelper::getByID($memento->memcatg_id);
     else $memcatg = null;
-/*
     echo '
-    <tr style="font-size: 90%;">
-        <td style="width: 130px;" '.$memclass.'>';
-*/
-    echo '
-    <div class="boxed" style="font-size: 90%; width: 90%;">
-    <div class="title roundtop '.$memclass.'" style="font-size: 90%;" >';
+    <div class="boxed" style="font-size: 90%; width: 90%; margin-bottom: 2px;">
+    <div class="title roundtop '.$memclass.'" style="font-size: 90%; padding: 4px 4px 3px; min-height: 0px;" >';
     if($memento->isEditable())
         echo '
             <a  href="index.php?mod=dbmf3&amp;tpl=memento_edit&amp;memento_id='.$memento->id.'"
@@ -128,26 +113,31 @@ foreach($mementos as $memento) {
     else $m_catgname = '<i>'.$m_user->login.'</i>';
     echo ' <div style="float: right;">'.$m_catgname.'</div>
         </div>
-        <div class="row" style="font-size: 90%;">'.$memento->comments.'<br>
+        <div class="row" style="font-size: 90%; padding: 2px 4px 0px;">'.$memento->comments.'<br>
         '.$memento->comments2.'</div>
     </div>
 ';
 }
 
 echo '
-    <div class="boxed" style="font-size: 90%; width: 90%;">
-        <div class="row" style="text-align: center; border-bottom: 0px; background: transparent;">
-            <a  href="index.php?mod=dbmf3&amp;tpl=memento_edit&amp;contact_id='.$contact->id.'"
-                class="button overlayed"
-                data-overconfirm="'.MySBUtil::str2strict(_G('DBMF_confirm_memento_edition')).'">
-                '._G("DBMF_contact_mementos_create").'</a>
-            </small>
-        </div>
-    </div>
+    <div class="row" style="font-size: 90%; text-align: center; border-bottom: 0px; background: transparent;">
+        <a  href="index.php?mod=dbmf3&amp;tpl=memento_edit&amp;contact_id='.$contact->id.'"
+            class="button overlayed"
+            data-overconfirm="'.MySBUtil::str2strict(_G('DBMF_confirm_memento_edition')).'">
+            '._G("DBMF_contact_mementos_create").'</a>
+     </div>
+</div>';
 
-    </td>
-</tr>
+
+echo '
+<div class="row">
+    <div class="right">';
+if( $isEditor ) echo '<input type="text" name="firstname" size="24" maxlength="64" value="'.$contact->firstname.'">';
+else echo $contact->mail;
+echo '</div>
+    '._G("DBMF_common_mail").'
+</div>
+
 ';
-
 
 ?>
