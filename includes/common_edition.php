@@ -128,16 +128,4 @@ echo '
      </div>
 </div>';
 
-
-echo '
-<div class="row">
-    <div class="right">';
-if( $isEditor ) echo '<input type="text" name="firstname" size="24" maxlength="64" value="'.$contact->firstname.'">';
-else echo $contact->mail;
-echo '</div>
-    '._G("DBMF_common_mail").'
-</div>
-
-';
-
 ?>
