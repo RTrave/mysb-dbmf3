@@ -146,6 +146,11 @@ $daysold = $date_modif->absDiff();
 </tr>
 
 </tbody></table>
-</div>';
+</div>
+
+<script>
+show("results");
+</script>
+';
 
 ?>

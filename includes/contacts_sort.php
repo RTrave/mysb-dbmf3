@@ -173,19 +173,20 @@ $search_m = MySBDB::query( 'SELECT * FROM '.MySB_DBPREFIX.'dbmfcontacts '.
 
 echo '
 <script>
+show("results");
 function scrollresults() {
     $("html, body").animate({ scrollTop: $("div#results").offset().top }, 200);
 }
 function changesort(selvalue) {
-    scrollresults();
+    //scrollresults();
     loadItem( "results", "index.php?mod=dbmf3&inc=contacts_sort&sort="+selvalue );
 }
 function changeasc(selvalue) {
-    scrollresults();
+    //scrollresults();
     loadItem( "results", "index.php?mod=dbmf3&inc=contacts_sort&asc="+selvalue );
 }
 function changepack(selvalue) {
-    scrollresults();
+    //scrollresults();
     loadItem( "results", "index.php?mod=dbmf3&inc=contacts_sort&pack="+selvalue );
 }
 </script>';

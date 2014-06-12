@@ -200,11 +200,13 @@ class MySBDBMFMementoHelper {
         return $cond .= ')';
     }
 
-    public function load($contact_id=null) {
+    public function load($contact_id=null,$memcatg_id=0) {
         global $app;
         $req_cond = MySBDBMFMementoHelper::req_cond();
         if($contact_id!=null)
             $req_cond .= ' and contact_id='.$contact_id; 
+        if($memcatg_id!=0)
+            $req_cond .= ' and memcatg_id='.$memcatg_id; 
         $req_mementos = MySBDB::query("SELECT * FROM ".MySB_DBPREFIX."dbmfmementos ".
                 "WHERE (".$req_cond.") ".
                 "ORDER BY type,monthofyear_memento,date_memento,date_process",
@@ -235,9 +237,11 @@ class MySBDBMFMementoHelper {
     }
 */
 
-    public function loadActives() {
+    public function loadActives($memcatg_id=0) {
         global $app;
         $req_cond = MySBDBMFMementoHelper::req_cond();
+        if($memcatg_id!=0)
+            $req_cond .= ' and memcatg_id='.$memcatg_id; 
         $req_mementos = MySBDB::query("SELECT * FROM ".MySB_DBPREFIX."dbmfmementos ".
                 "WHERE (".$req_cond.") ".
                 "ORDER BY type,monthofyear_memento,date_memento,date_process",
