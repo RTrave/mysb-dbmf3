@@ -46,6 +46,8 @@ class MySBDBMFMemento extends MySBObject {
 
     public $group_edition = 0;
 
+    public $is_notified = 0;
+
 
     public function __construct( $id=null, $data_memento=array() ) {
         global $app;
@@ -79,11 +81,21 @@ class MySBDBMFMemento extends MySBObject {
             'group_id' => $group_id ));
     }
 */
-    public function isEditable() {
+    public function isEditable($user=null) {
         global $app;
-        if( $this->user_id==$app->auth_user->id ) return true;
+        if( $user==null ) $user = $app->auth_user;
+        if( $this->user_id==$user->id ) return true;
         $memcatg = MySBDBMFMementoCatgHelper::getByID($this->memcatg_id);
-        if( $memcatg->isAvailable() and $this->group_edition==1 ) return true;
+        if( $memcatg->isAvailable($user) and $this->group_edition==1 ) return true;
+        return false;
+    }
+
+    public function isTreatable($user=null) {
+        global $app;
+        if( $user==null ) $user = $app->auth_user;
+        if( $this->user_id==$user->id ) return true;
+        $memcatg = MySBDBMFMementoCatgHelper::getByID($this->memcatg_id);
+        if( $memcatg->isAvailable($user) ) return true;
         return false;
     }
 
@@ -149,7 +161,8 @@ class MySBDBMFMemento extends MySBObject {
         global $app;
         $current_date = new MySBDateTime();
         $this->update(array(
-            'date_process' => $current_date->date_string ));
+            'date_process' => $current_date->date_string,
+            'is_notified' => '0' ));
     }
 
     public function unprocess() {

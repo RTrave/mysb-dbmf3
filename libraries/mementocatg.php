@@ -37,9 +37,9 @@ class MySBDBMFMementoCatg extends MySBObject {
         parent::update( 'dbmfmementocatgs', $data_mementocatg );
     }
 
-    public function isAvailable() {
+    public function isAvailable($user=null) {
         global $app;
-        $user = $app->auth_user;
+        if( $user==null ) $user = $app->auth_user;
         $groups_csv = new MySBCSValues($this->group_ids);
         foreach( $groups_csv->values as $groupid ) 
             if( $user->haveGroup($groupid) )

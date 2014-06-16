@@ -14,7 +14,7 @@ defined('_MySBEXEC') or die;
 
 class MySBModule_dbmf3 {
 
-    public $version = 13;
+    public $version = 14;
 
     public function create() {
         global $app;
@@ -359,6 +359,19 @@ class MySBModule_dbmf3 {
             array(2,0,0,0),
             3,"dbmf_config",'dbmf3');
     }
+
+    public function init14() {
+        global $app;
+        MySBDB::query('ALTER TABLE '.MySB_DBPREFIX.'dbmfmementos '.
+            'ADD COLUMN is_notified int',
+            "__init.php",
+            false, "dbmf3");
+        $selconf = MySBConfigHelper::create('dbmf_notify_freq','DBMF_memnotif_week',MYSB_VALUE_TYPE_VARCHAR64_SELECT,
+            'Memento notification frequency (without new active)', 'dbmf3');
+        $selconf->addSelectOption( 'DBMF_memnotif_week' );
+        $selconf->addSelectOption( 'DBMF_memnotif_month' );
+    }
+
 
     public function uninit() {
         global $app;
