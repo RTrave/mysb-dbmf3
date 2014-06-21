@@ -38,42 +38,37 @@ if( isset($_POST['dbmf_request'])
 </div>';
 }
 
-/*
-if( isset($_POST['search_name']) ) $search_name = $_POST['search_name'];
-else $search_name = '';
-if( isset($_POST['search_all']) ) $search_all = $_POST['search_all'];
-else $search_all = '';
-if( isset($_POST['search_byid']) ) $search_byid = $_POST['search_byid'];
-else $search_byid = '';
-*/
-
 if( !isset($_POST['search_type']) ) $_POST['search_type'] = 'lastname';
 if( !isset($_POST['search_name']) ) $_POST['search_name'] = '';
 
 echo '
-<h2>'._G('DBMF_search').'</h2>
-
 <form action="index.php" method="post">
 
-<div class="paragraph">
-
-<input type="radio" name="search_type" id="search_bylastname" value="lastname" '.MySBUtil::form_ischecked($_POST['search_type'],'lastname').'>
-<label for="search_bylastname">'._G('DBMF_search_lastname').'</label>
-<input type="radio" name="search_type" id="search_all_fields" value="all_fields" '.MySBUtil::form_ischecked($_POST['search_type'],'all_fields').'>
-<label for="search_all_fields">'._G('DBMF_search_all_fields').'</label>
-<input type="radio" name="search_type" id="search_byid" value="byid" '.MySBUtil::form_ischecked($_POST['search_type'],'byid').'>
-<label for="search_byid">'._G('DBMF_search_byid').'</label>
-<br><br>
-<input type="text" name="search_name" value="'.$_POST['search_name'].'" class="smart">
-<br><br>
-<input type="hidden" name="dbmf_request" value="1">
-<input type="submit" value="'._G('DBMF_search_submit').'">
-<br>
-
+<div class="list_support">
+<div class="boxed" style="width: 500px;">
+    <div class="title roundtop"><b>'._G('DBMF_search').'</b></div>
+    <div class="row" style="text-align: center;">
+        <input type="radio" name="search_type" id="search_bylastname" value="lastname" '.MySBUtil::form_ischecked($_POST['search_type'],'lastname').'>
+        <label for="search_bylastname">'._G('DBMF_search_lastname').' '._G('DBMF_common_lastname').'</label>
+        <input type="radio" name="search_type" id="search_all_fields" value="all_fields" '.MySBUtil::form_ischecked($_POST['search_type'],'all_fields').'>
+        <label for="search_all_fields">'._G('DBMF_search_all_fields').'</label>
+        <input type="radio" name="search_type" id="search_byid" value="byid" '.MySBUtil::form_ischecked($_POST['search_type'],'byid').'>
+        <label for="search_byid">'._G('DBMF_search_byid').'</label>
+    </div>
+    <div class="row" style="text-align: center;">
+        <input  type="text" 
+                name="search_name" value="'.$_POST['search_name'].'" 
+                class="smart"
+                style="text-align: left;">
+    </div>
+    <div class="row" style="text-align: center;">
+        <input type="hidden" name="dbmf_request" value="1">
+        <input type="submit" value="'._G('DBMF_search_submit').'">
+    </div>
+</div>
 </div>
 
-</form>
-';
+</form>';
 
 
 ?>

@@ -16,12 +16,13 @@ global $app;
 
 
 echo '
-<h1>'._G('DBMF_addcontact').'</h1>
 <p>
 <div id="newcontactselection">';
 
 if( isset($app->dbmf_req_wcheck) and $app->dbmf_req_wcheck!='' ) {
 
+    echo '
+<h1>'._G('DBMF_addcontact').'</h1>';
     $editor = new MySBEditor();
     echo $editor->init("simple");
     while($data_wcheck = MySBDB::fetch_array($app->dbmf_req_wcheck)) {
@@ -58,17 +59,28 @@ if( isset($app->dbmf_req_wcheck) and $app->dbmf_req_wcheck!='' ) {
 
     echo '
 <form action="index.php?mod=dbmf3&amp;tpl=contact_add" method="post">
-<p>
-<input type="hidden" name="add_status" value="1">
-<b>'._G('DBMF_common_lastname').':</b>
-<input type="text" name="lastname" size="24" maxlength="64" value=""><br>
-<b>'._G('DBMF_common_firstname').':</b>
-<input type="text" name="firstname" size="24" maxlength="64" value=""><br>
-<b>'._G('DBMF_common_mail').':</b>
-<input type="email" name="mail" size="24" maxlength="64" value=""><br>
-<br>
-<input type="submit" value="'._G('DBMF_addcontact_verify').'">
-</p>
+
+<div class="list_support">
+<div class="boxed">
+    <div class="title roundtop"><b>'._G('DBMF_addcontact').'</b></div>
+    <div class="row">
+    <div class="right"><input type="text" name="lastname" size="24" maxlength="64" value=""></div>
+    '._G('DBMF_common_lastname').'
+    </div>
+    <div class="row">
+    <div class="right"><input type="text" name="firstname" size="24" maxlength="64" value=""></div>
+    '._G('DBMF_common_firstname').'
+    </div>
+    <div class="row">
+    <div class="right"><input type="email" name="mail" size="24" maxlength="64" value=""></div>
+    '._G('DBMF_common_mail').'
+    </div>
+    <div class="row" style="text-align: center;">
+    <input type="submit" value="'._G('DBMF_addcontact_verify').'">
+    </div>
+</div>
+</div>
+
 </form>
 </div>';
 
