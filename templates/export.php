@@ -49,7 +49,7 @@ foreach($exports as $export)
 echo '
 </select>
 <br><br>
-<a id="params_show" onClick="show(\'params\');hide(\'params_show\');" class="button">'._G('DBMF_export_showparams').'</a><br>
+<a id="params_show" onClick="show_auto(\'params\');hide(\'params_showA\');" class="button">'._G('DBMF_export_showparams').'</a><br>
 <br></p>
 <div id="params" style="display: none;">';
 
@@ -67,10 +67,11 @@ foreach($exports as $export) {
 echo '
 </div>
 <h3>'._G('DBMF_export_blockscriteria').'</h3>
-<div class="table_support" id="rsvpCriteria">
-<table><tbody>
 
-';
+<div class="list_support" id="rsvpCriteria">
+
+<div class="boxed" 
+     style="width: 450px; margin: 10px auto 3px;">';
 
 $blocks = MySBDBMFBlockHelper::load();
 $blockn_flag = 0;
@@ -79,50 +80,46 @@ foreach($blocks as $block) {
     if($blockn_flag==0 and $block->isViewable()) $blockn_flag = 1;
     elseif($block->isViewable()) {
         echo '
-<tr>
-    <td colspan="2" style="text-align: center; background: #c0c0c0;">
+    <div class="row" style="text-align: center; background: transparent; border: 0px; padding-bottom: 0px;">
     <select name="block_andorflag_'.$block->id.'">
         <option value="or">OR</option>
         <option value="and">AND</option>
     </select>
-    </td>
-</tr>';
+    </div>';
     }
     if($block->isViewable()) {
         echo '
-<tr class="title" >
-    <td colspan="2">';
-        echo $block->htmlFormWhereClause('b').' ';
-        echo _G($block->lname).' <small><i>('.$group_edit->comments.')</i></small></td>
-</tr>';
-        echo '
-<tr>
-    <td style="text-align: right;"><small>'._G('DBMF_request_blockref_and_or').'</small></td>
-    <td>
-        <small>
+    <div class="title roundtop">
+            '.$block->htmlFormWhereClause('b').'<b>'._G($block->lname).'</b>
+            <small><i>('.$group_edit->comments.')</i></small>
+            <div style="float: right; cursor: pointer;">
+                <img src="images/icons/go-down.png" alt="go-down"
+                     onClick="show_auto(\'block_select_'.$block->id.'\');"></div>
+    </div>
+    <div id="block_select_'.$block->id.'" style="display: none;">
+    <div class="row" style="text-align: center;">
+        '._G('DBMF_request_blockref_and_or').'
         <input type="radio" name="blockref_andorflag_'.$block->id.'" value="or" checked>OR 
         <input type="radio" name="blockref_andorflag_'.$block->id.'" value="and">AND<br>
-        </small>
-    </td>
-</tr>';
+    </div>';
         foreach($block->blockrefs as $blockref) {
             if($blockref->isActive()) {
                 echo '
-<tr>
-    <td style="text-align: right;">'._G($blockref->lname).':</td>
-    <td>';
-                echo $blockref->htmlFormWhereClause('br');
-                echo '
-    </td>
-</tr>';
+    <div class="row" style="min-height: 18px;">
+        <div class="right">'.$blockref->htmlFormWhereClause('br').'</div>
+        '._G($blockref->lname).'
+    </div>';
             }
         }
+        echo '
+    </div>';
     }
 }
 
 echo '
-</tbody></table>
 </div>
+</div>
+
 <p style="text-align: center;">
     <input type="hidden" name="dbmf_export_process" value="1">
     <input type="submit" value="'._G('DBMF_search_submit').'">

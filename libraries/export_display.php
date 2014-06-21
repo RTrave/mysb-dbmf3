@@ -40,74 +40,37 @@ class MySBDBMFExportDisplay extends MySBDBMFExport {
         $showcols = new MySBCSValues($app->auth_user->dbmf_showcols);
         $output = '';
         $blocks = MySBDBMFBlockHelper::load();
-        $output .= '
-<div class="table_support">';
-/*
-        $output .= '
-'._G('DBMF_display_orderby').':
-<select name="dbmf_exportdisplay_orderby'.$this->id.'">
-    <option value="lastname">'._G('DBMF_common_lastname').'</option>
-    <option value="date_modif">'._G('DBMF_date_modif').'</option>';
-        $blockref_orderby = MySBDBMFBlockRefHelper::load();
-        foreach($blockref_orderby as $oblockref) {
-            if($oblockref->orderby=='1') $output .= '
-    <option value="'.$oblockref->keyname.'">'._G($oblockref->lname).'</option>';
-        }
-        $output .= '
-</select><br>';
-*/
-        $output .= '
-'._G('DBMF_display_showfield').':<br>
-<table style="border: 0px; font-size: 80%; margin-left: 0px;"><tbody>
-<tr>';
 
-        $col_nb = 0;
+        $output .= '
+<div class="list_support" style="vertical-align: top;">
+'._G('DBMF_display_showfield').':<br>';
+
         foreach($blocks as $block) {
             if($block->isViewable()) {
-                $col_nb++;
                 $output .= '
-<td style="vertical-align: top;">
-<table style="width: 100%; font-size: 90%;"><tbody>
-<tr class="title" >
-    <td colspan="2">';
-                $output .= _G($block->lname).'
-    </td>
-</tr>';
+    <div class="boxed" style="font-size: 70%; width: 100%; margin: 2px 2px 0px;">
+        <div class="title" style="padding: 2px 2px 0px; min-height: 22px; width: 100px; "><b>'._G($block->lname).'</b></div>
+        <div class="row" style="padding: 2px 2px 0px; min-height: 18px; widthA: 70%;">';
                 foreach($block->blockrefs as $blockref) {
                     if($blockref->isActive()) {
-                        $refname = $blockref->keyname;
                         $output .= '
-<tr>
-    <td style="vertical-align: top; text-align: right;">'._G($blockref->lname).':</td>
-    <td>';
+        <div class="rowA" style="display:inline-block; padding: 2px 2px 0px; min-height: 22px;">';
                         if($showcols->have($blockref->id)) $colsshow_check = 'checked';
                         else $colsshow_check = '';
-                        $output .= '<input type="checkbox" name="display_'.$blockref->id.'" '.$colsshow_check.'>';
-                        $output .= '
-    </td>
-</tr>';
+                        $output .= '<input type="checkbox" name="display_'.$blockref->id.'" '.$colsshow_check.'>
+                        '._G($blockref->lname).'
+        </div>';
+
                     }
                 }
-            $output .= '
-</tbody></table>
-</td>';
-            }
-            if($col_nb==$showfields_colsnb) {
                 $output .= '
-</tr><tr>';
-                $col_nb = 0;
+        </div>
+    </div>';
             }
-        }
-        if($col_nb!=0) {
-        while($col_nb<($showfields_colsnb)) {
-            $output .= '<td></td>';
-            $col_nb++;
-        }
         }
         $output .= '
-</tr>
-</tbody></table>
-</div>';
+</div>
+<br>';
         return $output;
     }
 
@@ -144,13 +107,6 @@ class MySBDBMFExportDisplay extends MySBDBMFExport {
         echo '
 '.MySBEditor::init("simple").'
 <div id="results">';
-/*
-        echo '
-<p>
-'.MySBDB::num_rows($results).' results<br>
-</p>';
-        $app->tpl_dbmf_searchresult = $results;
-*/
         _incI('contacts_sort','dbmf3');
         echo '
 </div>';
