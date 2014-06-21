@@ -169,13 +169,16 @@ class MySBDBMFBlockHelper {
         if($pri_group==null) $pri_group_id = 1;
         else $pri_group_id = $pri_group->id; 
         MySBDB::query('INSERT INTO '.MySB_DBPREFIX."dbmfblocks ".
-            "(id, name, lname, groupedit_id) VALUES ".
-            "( $bid,'".$new_block_name."','".MySBUtil::str2db($lname)."',".$pri_group_id." )",
+            "(id, name, lname, groupedit_id, i_index) VALUES ".
+            "( $bid,'".$new_block_name."','".MySBUtil::str2db($lname)."',".$pri_group_id.",999 )",
             "MySBDBMFBlockHelper::create($name,$lname)",
             true, "dbmf3");
-        $new_block = new MySBDBMFBlock($bid);
-        if(isset($app->cache_dbmfblocks)) 
-            $app->cache_dbmfblocks[$brid] = $new_block;
+        MySBDBMFBlockHelper::indexBlocks();
+        //$new_block = new MySBDBMFBlock($bid);
+        if(isset($app->cache_dbmfblocks)) {
+            $app->cache_dbmfblocks = MySBDBMFBlockHelper::load(true);
+            //$app->cache_dbmfblocks[$brid] = $new_block;
+        }
         return $new_block;
     }
 

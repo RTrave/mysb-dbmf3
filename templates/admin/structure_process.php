@@ -16,20 +16,35 @@ global $app;
 
 if(!MySBRoleHelper::checkAccess('dbmf_config')) return;
 
-
+// Block operations
 if(isset($_POST['addblock_name']) and !empty($_POST['addblock_name'])) {
     MySBDBMFBlockHelper::create($_POST['addblock_name']);
     $app->pushMessage( _G('BDMF_block_created') );
 }
 
-if(isset($_POST['block_edit'])) {
-    $block = MySBDBMFBlockHelper::getByID($_POST['block_edit']);
+if(isset($_POST['block_edition'])) {
+    $block = MySBDBMFBlockHelper::getByID($_POST['block_edition']);
     $block->update( array(
         'lname' => $_POST['lname'],
         'groupedit_id' => $_POST['group_id']
     ) );
 }
 
+if(isset($_POST['block_orderup'])) {
+    $block = MySBDBMFBlockHelper::getByID($_POST['block_orderup']);
+    $block->indexUP();
+}
+
+if(isset($_POST['block_orderdown'])) {
+    $block = MySBDBMFBlockHelper::getByID($_POST['block_orderdown']);
+    $block->indexDOWN();
+}
+
+if(isset($_POST['block_del'])) {
+    MySBDBMFBlockHelper::delete($_POST['block_del']);
+}
+
+//BlockRef operations
 if(isset($_POST['blockref_add'])) {
     $block = MySBDBMFBlockHelper::getByID($_POST['blockref_add']);
     $blockref = $block->refAdd($_POST['lname'],$_POST['type']);
@@ -44,6 +59,10 @@ if(isset($_POST['blockref_del'])) {
 if(isset($_POST['blockref_edit_process'])) {
     $blockref = MySBDBMFBlockRefHelper::getByID($_POST['blockref_edit_process']);
     $blockref->update( array( 'lname'=>$_POST['lname'] ) );
+    if( ($_POST['switchorderby']!=1 and $blockref->orderby==1) or 
+        ($_POST['switchorderby']==1 and $blockref->orderby!=1) )
+        $blockref->switchOrderBy();
+    $blockref->setAlwaysShown($_POST['blockref_alwaysshown']);
     $app->tpl_blockref_edit = $blockref;
 }
 
@@ -82,30 +101,6 @@ if(isset($_POST['blockref_orderup'])) {
 if(isset($_POST['blockref_orderdown'])) {
     $blockref = MySBDBMFBlockRefHelper::getByID($_POST['blockref_orderdown']);
     $blockref->indexDOWN();
-}
-
-if(isset($_POST['blockref_switchorderby'])) {
-    $blockref = MySBDBMFBlockRefHelper::getByID($_POST['blockref_edit']);
-    $blockref->switchOrderBy();
-}
-
-if(isset($_POST['blockref_setalwaysshown'])) {
-    $blockref = MySBDBMFBlockRefHelper::getByID($_POST['blockref_edit']);
-    $blockref->setAlwaysShown($_POST['blockref_alwaysshown']);
-}
-
-if(isset($_POST['block_orderup'])) {
-    $block = MySBDBMFBlockHelper::getByID($_POST['block_orderup']);
-    $block->indexUP();
-}
-
-if(isset($_POST['block_orderdown'])) {
-    $block = MySBDBMFBlockHelper::getByID($_POST['block_orderdown']);
-    $block->indexDOWN();
-}
-
-if(isset($_POST['block_del'])) {
-    MySBDBMFBlockHelper::delete($_POST['block_del']);
 }
 
 ?>
