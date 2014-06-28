@@ -15,7 +15,7 @@ defined('_MySBEXEC') or die;
 global $app;
 
 
-_incI('admin_menu');
+_incI('admin/menu');
 
 echo '
 <h1>'._G('DBMF_admin_dbmf').'</h1>';
