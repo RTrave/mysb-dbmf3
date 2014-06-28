@@ -191,7 +191,7 @@ foreach($blocks as $block) {
             $class_bref = '';
         else $class_bref = ' background: #dddddd;';
         echo '
-    <div class="row" style="'.$class_bref.'" name="a_block'.$block->id.'">
+    <div class="row" style="'.$class_bref.'">
         <div style="float: left;">
         <form action="index.php?mod=dbmf3&amp;tpl=admin/structure" method="post">
         <input type="hidden" name="blockref_edit" value="'.$blockref->id.'">
@@ -246,10 +246,8 @@ foreach($blocks as $block) {
         </form>
         </div>
         </div>
-        <div style="display: inline-block; margin-left: 5px;">
-        '.$blockref->keyname.'-<b>'._G($blockref->lname).'</b>
+        '.$blockref->keyname.'<span class="cell_show"><br></span> <b>'._G($blockref->lname).'</b><br>
          <small>'.$blockref->getType().'</small>
-        </div>
     </div>';
     }
     echo '
