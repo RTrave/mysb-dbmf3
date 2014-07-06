@@ -17,24 +17,6 @@ global $app;
 if(!MySBRoleHelper::checkAccess('dbmf_config')) return;
 
 
-if( isset($_POST['memcatg_submit']) and $_POST['memcatg_submit']==1 ) {
-
-    $memcatgs = MySBDBMFMementoCatgHelper::load();
-    $groups = MySBGroupHelper::load();
-
-    foreach( $memcatgs as $memcatg ) {
-        $groups_csv = new MySBCSValues();
-        foreach( $groups as $group ) {
-            if( isset($_POST['memcatg_mc'.$memcatg->id.'g'.$group->id]) and 
-                $_POST['memcatg_mc'.$memcatg->id.'g'.$group->id]!='' ) 
-                $groups_csv->add( $group->id );
-        }
-        $memcatg->update( array(
-            'name' => $_POST['memcatg_name'.$memcatg->id],
-            'group_ids' => $groups_csv->csstring() ) );
-    }
-}
-
 if( isset($_POST['memcatg_new']) and $_POST['memcatg_new']==1 ) {
 
     $new_memcatg = MySBDBMFMementoCatgHelper::create( $_POST['memcatg_name_new'] );

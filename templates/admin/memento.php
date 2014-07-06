@@ -27,8 +27,6 @@ echo '
 <h2>'._G('DBMF_memcatg_config').'</h2>
 
 <div class="list_support" style="font-size: 90%;">
-
-<form action="index.php?mod=dbmf3&amp;tpl=admin/memento" method="post">
 ';
 
 $memcatgs = MySBDBMFMementoCatgHelper::load();
@@ -36,53 +34,14 @@ $groups = MySBGroupHelper::load();
 foreach( $memcatgs as $memcatg ) {
     echo '
     <div class="boxed" id="memcatg'.$memcatg->id.'" 
-         style="width: 450px; margin: 10px auto 3px;">
-
-        <div class="title roundtop"
-             style="cursor: pointer;"
-             onClick="show_auto(\'memcatg_edit_'.$memcatg->id.'\');">
-            <b>'.$memcatg->name.'</b> ('.$memcatg->id.')
-            <div style="float: right;"><img src="images/icons/go-down.png" alt="go-down"></div>
-        </div>
-
-    <div id="memcatg_edit_'.$memcatg->id.'" style="display: none; width: 100%;">
-        <div class="row">
-            <div class="right"><input type="text" name="memcatg_name'.$memcatg->id.'" value="'.$memcatg->name.'"></div>
-            <b>'._G('DBMF_memcatg_name').':</b>
-        </div>
-
-        <div class="row">';
-    $gids = new MySBCSValues( $memcatg->group_ids );
-    foreach( $groups as $group ) {
-        if( $group->id==0 ) continue;
-        $idcheck = '';
-        if( $gids->have($group->id) ) 
-            $idcheck = ' checked="checked" ';
-        echo '
-        <div style="display: inline-block; background: #dddddd; margin: 2px; padding: 2px;">
-            <input type="checkbox" id="memcatg_mc'.$memcatg->id.'g'.$group->id.'" name="memcatg_mc'.$memcatg->id.'g'.$group->id.'" '.$idcheck.'> 
-            <label for="memcatg_mc'.$memcatg->id.'g'.$group->id.'">'.$group->comments.'</label>
-        </div>';
-    }
-    
+         style="width: 450px; margin: 10px auto 3px;">';
+    $app->tpl_dbmf_currentmemcatg = $memcatg;
+    _incI('admin/memcatg_display','dbmf3');
     echo '
-        </div>
-
-    </div>
-
-    </div>
-';
+    </div>';
 }
 
 echo '
-    <div style="text-align: center; margin: 25px auto 10px;">
-            <input type="hidden" name="memcatg_submit" value="1">
-            <input type="submit" value="'._G('DBMF_memcatg_submit').'"
-                   style="">
-    </div>
-</form>
-
-
 <form action="index.php?mod=dbmf3&amp;tpl=admin/memento" method="post">
     <div class="boxed"
          style="width: 450px; margin-top: 35px;">

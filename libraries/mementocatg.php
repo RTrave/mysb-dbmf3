@@ -64,6 +64,20 @@ class MySBDBMFMementoCatgHelper extends MySBObject {
                 true, 'dbmf3' );
     }
 
+    public function delete($id) {
+        global $app;
+        if( isset($app->cache_dbmfmemcatgs) ) unset ($app->cache_dbmfmemcatgs);
+        MySBDB::query("UPDATE ".MySB_DBPREFIX."dbmfmementos ".
+                "SET memcatg_id='' ".
+                "WHERE memcatg_id=".$id,
+                "MySBDBMFMementoCatgHelper::delete($id)",
+                true, 'dbmf3' );
+        MySBDB::query("DELETE FROM ".MySB_DBPREFIX."dbmfmementocatgs ".
+                "WHERE id=".$id,
+                "MySBDBMFMementoCatgHelper::delete($id)",
+                true, 'dbmf3' );
+    }
+
     public function load() {
         global $app;
         if( isset($app->cache_dbmfmemcatgs) ) 
