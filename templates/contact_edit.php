@@ -69,13 +69,19 @@ foreach($blocks as $block) {
             else 
                 $class_edit = '';
             $refname = $blockref->keyname;
-            if( $blockref->getType()=='text' ) echo '
+            if( $blockref->getType()=='text' ) {
+                echo '
 <div class="row" style="'.$class_edit.' text-align: right;">
-    <div style="float: left;"><b>'._G($blockref->lname).':</b></div>
+    <div style="float: left;"><b>'._G($blockref->lname).':</b>';
+                if( $blockref->infos!='' )
+                    echo '<br><span class="help">'.$blockref->infos.'</span>';
+                echo '</div>
     <div style="display: inline-block; margin: 0px 0px 0px auto;">';
-            else echo '
+            } else {
+                echo '
 <div class="row" style="'.$class_edit.'">
     <div class="right">';
+            }
             if($block->isEditable()) 
                 echo $blockref->htmlForm('blockref',$contact->$refname,'('.$contact->lastname.' '.$contact->firstname.')');
             else {
@@ -86,8 +92,12 @@ foreach($blocks as $block) {
             }
             echo '
     </div>';
-            if( $blockref->getType()!='text' ) echo '
+            if( $blockref->getType()!='text' ) {
+                echo '
     <b>'._G($blockref->lname).':</b>';
+                if( $blockref->infos!='' )
+                    echo '<br><span class="help">'.$blockref->infos.'</span>';
+            }
             echo '
 </div>';
         }

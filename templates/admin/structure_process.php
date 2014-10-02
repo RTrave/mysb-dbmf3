@@ -63,6 +63,7 @@ if(isset($_POST['blockref_edit_process'])) {
         ($_POST['switchorderby']==1 and $blockref->orderby!=1) )
         $blockref->switchOrderBy();
     $blockref->setAlwaysShown($_POST['blockref_alwaysshown']);
+    $blockref->setInfos($_POST['infos']);
     $app->tpl_blockref_edit = $blockref;
 }
 

@@ -149,6 +149,10 @@ class MySBDBMFBlockRef extends MySBValue {
         return $output;
     }
 
+    function setInfos($infos) {
+        $this->update( array( "infos" => $infos ) );
+    }
+
 }
 
 

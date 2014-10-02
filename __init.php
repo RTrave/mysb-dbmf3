@@ -14,7 +14,7 @@ defined('_MySBEXEC') or die;
 
 class MySBModule_dbmf3 {
 
-    public $version = 14;
+    public $version = 15;
 
     public function create() {
         global $app;
@@ -372,6 +372,17 @@ class MySBModule_dbmf3 {
         $selconf->addSelectOption( 'DBMF_memnotif_month' );
     }
 
+    public function init15() {
+        global $app;
+        MySBConfigHelper::create('dbmf_ln_infos','',MYSB_VALUE_TYPE_TEXT,
+            'Lastname informations', 'dbmf3');
+        MySBConfigHelper::create('dbmf_fn_infos','',MYSB_VALUE_TYPE_TEXT,
+            'Firstname informations', 'dbmf3');
+        $req = MySBDB::query('ALTER TABLE '.MySB_DBPREFIX.'dbmfblockrefs '.
+            'ADD infos varchar(512)',
+            "__init.php",
+            false, "dbmf3");
+    }
 
     public function uninit() {
         global $app;

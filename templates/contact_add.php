@@ -65,11 +65,17 @@ if( isset($app->dbmf_req_wcheck) and $app->dbmf_req_wcheck!='' ) {
     <div class="title roundtop"><b>'._G('DBMF_addcontact').'</b></div>
     <div class="row">
     <div class="right"><input type="text" name="lastname" size="24" maxlength="64" value=""></div>
-    '._G('DBMF_common_lastname').'
+    '._G('DBMF_common_lastname').'';
+    if(MySBConfigHelper::Value('dbmf_ln_infos','dbmf3')!='')
+        echo '<br><span class="help">'.MySBConfigHelper::Value('dbmf_ln_infos','dbmf3').'</span>';
+echo '
     </div>
     <div class="row">
     <div class="right"><input type="text" name="firstname" size="24" maxlength="64" value=""></div>
-    '._G('DBMF_common_firstname').'
+    '._G('DBMF_common_firstname').'';
+    if(MySBConfigHelper::Value('dbmf_fn_infos','dbmf3')!='')
+        echo '<br><span class="help">'.MySBConfigHelper::Value('dbmf_fn_infos','dbmf3').'</span>';
+echo '
     </div>
     <div class="row">
     <div class="right"><input type="email" name="mail" size="24" maxlength="64" value=""></div>

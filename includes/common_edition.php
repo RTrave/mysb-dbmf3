@@ -38,16 +38,20 @@ echo '
 if( $isEditor ) echo '<input type="text" name="lastname" size="24" maxlength="64" value="'.$contact->lastname.'">';
 else echo $contact->lastname;
 echo '</div>
-    <b>'._G("DBMF_common_lastname").'</b>
-</div>
+    <b>'._G("DBMF_common_lastname").'</b>';
+    if(MySBConfigHelper::Value('dbmf_ln_infos','dbmf3')!='')
+        echo '<br><span class="help">'.MySBConfigHelper::Value('dbmf_ln_infos','dbmf3').'</span>';
+echo '</div>
 
 <div class="row">
     <div class="right">';
 if( $isEditor ) echo '<input type="text" name="firstname" size="24" maxlength="64" value="'.$contact->firstname.'">';
 else echo $contact->firstname;
 echo '</div>
-    <b>'._G("DBMF_common_firstname").'</b>
-</div>';
+    <b>'._G("DBMF_common_firstname").'</b>';
+    if(MySBConfigHelper::Value('dbmf_fn_infos','dbmf3')!='')
+        echo '<br><span class="help">'.MySBConfigHelper::Value('dbmf_fn_infos','dbmf3').'</span>';
+echo '</div>';
 
 function mail_input( $i_mail, $email, $isEditor, $isLast=false, $style='' ) {
     echo '

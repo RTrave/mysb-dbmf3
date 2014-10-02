@@ -67,6 +67,11 @@ echo '
     </div>
     '._G('DBMF_blockref_option_alwaysshown').'
 </div>
+<div class="row" style=" text-align: right;">
+    <div style="float: left;">'._G('DBMF_blockref_infos').'</div>
+    <div style="display: inline-block; margin: 0px 0px 0px auto;"><textarea name="infos" cols="28" rows="3">'.$blockref->infos.'</textarea>
+    </div>
+</div>
 <div class="row" style="text-align: center;">
     <input type="hidden" name="blockref_edit_process" value="'.$blockref->id.'">
     <input type="submit" value="'._G('DBMF_blockref_edition_process').'">
