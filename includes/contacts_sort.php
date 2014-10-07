@@ -36,6 +36,7 @@ if( isset($_GET["pack"]) )
 
 function sortActions($pack) {
     global $app;
+
     $output = '
 <div class="sort_actions">
 '._G('DBMF_display_orderby').':
@@ -102,6 +103,10 @@ function sortActions($pack) {
     return $output;
 }
 
+if( $_SESSION['dbmf_query_where']=='' ) {
+    echo '<br>'.(_G("DBMF_export_nowhereclause")).'<br><br>';
+    return;
+}
 
 $sql_all =  $_SESSION['dbmf_query_select'].' WHERE '.$_SESSION['dbmf_query_where'].
             ' ORDER by '.$_SESSION["dbmf_query_sort"].
