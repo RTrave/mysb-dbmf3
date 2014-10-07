@@ -1,3 +1,90 @@
+2014-10-07  Roman Trave <abadcafe@free.fr>
+
+	* includes/contacts_sort.php, locales/en/dbmf3.ini, locales/fr/dbmf3.ini:
+	Warning added for exports without any selection.
+
+2014-10-02  Roman Trave <abadcafe@free.fr>
+
+	* __init.php, includes/common_edition.php, libraries/blockref.php, locales/en/dbmf3.ini, locales/fr/dbmf3.ini, templates/admin/structure.php, templates/admin/structure_process.php, templates/contact_add.php, templates/contact_edit.php:
+	Help tip added to each field/blockref, and in config for lastname and firstname.
+
+2014-07-06  Roman Trave <abadcafe@free.fr>
+
+	* includes/admin/index.html, includes/admin/memcatg_display.php, libraries/mementocatg.php, locales/en/dbmf3.ini, locales/fr/dbmf3.ini, templates/admin/memento.php, templates/admin/memento_process.php:
+	Mementos categories deletion implemented, with dynamic edition.
+
+2014-06-28  Roman Trave <abadcafe@free.fr>
+
+	* templates/admin/dbmf.php: Change admin menu include.
+
+	* templates/admin/structure.php: Display minor modif.
+
+2014-06-21  Roman Trave <abadcafe@free.fr>
+
+	* locales/en/dbmf3.ini, locales/fr/dbmf3.ini, templates/contact_add.php, templates/fprequest.php:
+	Frontpage request and add page rewrited.
+
+	* dbmf3.css, libraries/export_display.php, templates/export.php:
+	Export and display plugin rewrited.
+
+	* libraries/block.php, templates/admin/structure.php, templates/admin/structure_process.php:
+	Structure edition rewrited and bug fixed.
+
+2014-06-19  Roman Trave <abadcafe@free.fr>
+
+	* includes/contact_display.php: Fix js script show() with the good id.
+
+2014-06-16  Roman Trave <abadcafe@free.fr>
+
+	* __init.php, cron.d/.htaccess, cron.d/mysb_dbmf3, libraries/memento.php, libraries/mementocatg.php, locales/en/dbmf3.ini, locales/en/mail_notify.php, locales/fr/dbmf3.ini, locales/fr/mail_notify.php, templates/notifications.php:
+	New notification system:
+	- daily mail for new active mementos,
+	- weekly (config improvement ready) mail for actives.
+
+2014-06-12  Roman Trave <abadcafe@free.fr>
+
+	* dbmf3.css, includes/contact_display.php, includes/contacts_sort.php, includes/mementos_sort.php, libraries/memento.php, locales/en/dbmf3.ini, locales/fr/dbmf3.ini, templates/mementos.php:
+	Add a sorting feature in mementos list.
+	Fix a jscript modif.
+
+2014-06-10  Roman Trave <abadcafe@free.fr>
+
+	* includes/common_edition.php: Removing test code .. hum.
+
+	* dbmf3.css, includes/common_edition.php, templates/contact_edit.php:
+	Rewritted contact edition, conforming to HTML5.
+
+2014-06-08  Roman Trave <abadcafe@free.fr>
+
+	* __init.php, dbmf3.css, dbmf3_handheld.css, framework.php, includes/common_edition.php, libraries/memento.php, libraries/mementocatg.php, locales/en/dbmf3.ini, locales/fr/dbmf3.ini, templates/admin/memento.php, templates/admin/memento_process.php, templates/admin/structure.php, templates/admin/structure_process.php, templates/contact_edit_process.php, templates/memento_edit.php, templates/mementos.php:
+	Memento's categories introduced, substituing group_ids method.
+	New config page, handling structure and mementos parameters.
+
+2014-06-05  Roman Trave <abadcafe@free.fr>
+
+	* locales/en/dbmf3.ini, locales/fr/dbmf3.ini, templates/memento_edit.php:
+	New compliant memento form.
+
+2014-05-27  Roman Trave <abadcafe@free.fr>
+
+	* includes/contacts_sort.php: Typo fix.
+
+2014-05-12  Roman Trave <abadcafe@free.fr>
+
+	* libraries/export_csv.php, libraries/export_mails.php:
+	Fix function argument typo.
+
+2014-03-06  Roman Trave <abadcafe@free.fr>
+
+	* ChangeLog: Ready to tag rel2a.
+
+2014-02-20  Roman Trave <abadcafe@free.fr>
+
+	* libraries/export_mailing.php, templates/admin/dbmf.php, templates/admin/dbmf_process.php, templates/contact_add.php, templates/fprequest.php, templates/memento_edit.php, templates/mementos.php:
+	New MySBEditor support.
+
+	* templates/admin/structure.php: Typo fix.
+
 2014-02-20  Roman Trave <abadcafe@free.fr>
 
 	* libraries/export_mailing.php, templates/admin/dbmf.php, templates/admin/dbmf_process.php, templates/contact_add.php, templates/fprequest.php, templates/memento_edit.php, templates/mementos.php:
