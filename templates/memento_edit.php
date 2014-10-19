@@ -82,17 +82,19 @@ else $m_user = $app->auth_user;
 $area_id = 'editor_id_'.rand(1,999999);
 $editor = new MySBEditor();
 
-if( $contact->mail!='' ) echo '
-<div class="list_support" style="">
+echo '
+<div class="list_support" style="">';
 
+if( $contact->mail!='' ) echo '
 <div class="row" style="">
     <div class="right" style=""><a href="mailto:'.$contact->mail.'">
             <img src="images/icons/mail-unread.png" 
                  alt="'._G('DBMF_mailto').' '.$contact->id.'" 
                  title="'._G('DBMF_mailto').' '.$contact->lastname.' '.$contact->firstname.' ('.$contact->id.')"></a></div>
     <b>'._G("DBMF_common_contact").':</b>
-</div>
+</div>';
 
+echo '
 <div class="row" style="">
     <div class="right" style="">'.$m_user->lastname.' '.$m_user->firstname.'</div>
     <b>'._G("DBMF_memento_owner").':</b>
