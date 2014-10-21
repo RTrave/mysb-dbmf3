@@ -56,8 +56,6 @@ if( isset($_GET['filter']) and $_GET['filter']=='all' ) {
 echo '
 <div id="dbmfMementoList">';
 
-//_incI("mementos_sort","dbmf3");
-
 $memento_type = -1;
 $anchor_nb = 0;
 
@@ -75,9 +73,7 @@ foreach($mementos_p as $memento) {
 <div class="list_support">';
     }
 
-    //if( $_SESSION["dbmf_memcatg_sort"]!=0 and $memento->memcatg_id!=$_SESSION["dbmf_memcatg_sort"] ) continue;
-
-    $contact = new MySBDBMFContact($memento->contact_id);
+    $contact = MySBDBMFMementoHelper::getContactInfos($memento->contact_id);
     $m_user = MySBUserHelper::getByID($memento->user_id);
     if($memento->memcatg_id!=0) $memcatg = MySBDBMFMementoCatgHelper::getByID($memento->memcatg_id);
     else $memcatg = null;

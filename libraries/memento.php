@@ -213,6 +213,33 @@ class MySBDBMFMementoHelper {
         return $cond .= ')';
     }
 
+    private function loadContactInfos($mementos) {
+        global $app;
+        $app->dbmfcontactinfos = array();
+        $mem_where = '';
+        $mem_count = 0;
+        foreach( $mementos as $memento ) {
+            if( $mem_where!='' ) $mem_where .= ' or ';
+            $mem_where .= 'id='.$memento->contact_id;
+            $mem_count++;
+            if( $mem_count==count($mementos) or strlen($mem_where)>=250) {
+                $req_contactinfos = MySBDB::query("SELECT id,lastname,firstname,mail FROM ".MySB_DBPREFIX."dbmfcontacts ".
+                    "WHERE (".$mem_where.") ".
+                    "ORDER BY id",
+                    "MySBDBMFMementoHelper::loadContactInfos($mementos)",
+                    true, 'dbmf3' );
+                while($data_contactinfos = MySBDB::fetch_array($req_contactinfos)) 
+                    $app->dbmfcontactinfos[$data_contactinfos['id']] = new MySBDBMFGroup(-1, $data_contactinfos);
+                $mem_where = '';
+            }
+        }
+    }
+
+    public function getContactInfos($contact_id) {
+        global $app;
+        if(isset($app->dbmfcontactinfos)) return $app->dbmfcontactinfos[$contact_id];
+    }
+
     public function load($contact_id=null,$memcatg_id=0) {
         global $app;
         $req_cond = MySBDBMFMementoHelper::req_cond();
@@ -227,28 +254,11 @@ class MySBDBMFMementoHelper {
                 true, 'dbmf3' );
         $mementos = array();
         while($data_memento = MySBDB::fetch_array($req_mementos)) {
-            //$mementos[$data_memento['id']] = new MySBDBMFMemento(null, $data_memento);
             $mementos[] = new MySBDBMFMemento(null, $data_memento);
         }
+        MySBDBMFMementoHelper::loadContactInfos($mementos);
         return $mementos;
     }
-
-/*
-    public function loadByUserID($user_id) {
-        global $app;
-        $req_cond = '';
-        $req_mementos = MySBDB::query("SELECT * FROM ".MySB_DBPREFIX."dbmfmementos ".
-                "WHERE user_id=".$user_id." ".
-                "ORDER BY date_memento",
-                "MySBDBMFMementoHelper::loadByUserID($user_id)",
-                true, 'dbmf3' );
-        $mementos = array();
-        while($data_memento = MySBDB::fetch_array($req_mementos)) {
-            $mementos[$data_memento['id']] = new MySBDBMFMemento(null, $data_memento);
-        }
-        return $mementos;
-    }
-*/
 
     public function loadActives($memcatg_id=0) {
         global $app;
@@ -269,6 +279,7 @@ class MySBDBMFMementoHelper {
             if($memento->isActive())
                 $act_mementos[] = $memento;
         }
+        MySBDBMFMementoHelper::loadContactInfos($act_mementos);
         return $act_mementos;
     }
 
