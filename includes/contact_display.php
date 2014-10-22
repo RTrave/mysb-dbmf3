@@ -94,18 +94,20 @@ $daysold = $date_modif->absDiff();
     $as_textonlylist = MySBDBMFBlockRefHelper::loadAlwaysShown(MYSB_DBMF_BLOCKREF_ALWAYSSHOWN_ASTEXTONLY);
     foreach($as_textonlylist as $sblockref) {
         $column_name = $sblockref->keyname;
-        if( $contact->$column_name!='' )
+        if( $contact->$column_name!='' and $contact->$column_name!=0 )
             echo '
             '.$sblockref->htmlFormNonEditable('',$contact->$column_name,_G($sblockref->lname)).'<br>';
+        else echo '<br>';
     }
     echo '
         <div class="cell_hide">';
     $as_textlist = MySBDBMFBlockRefHelper::loadAlwaysShown(MYSB_DBMF_BLOCKREF_ALWAYSSHOWN_ASTEXT);
     foreach($as_textlist as $sblockref) {
         $column_name = $sblockref->keyname;
-        if( $contact->$column_name!='' )
+        if( $contact->$column_name!='' and $contact->$column_name!=0 )
             echo '
             '.$sblockref->htmlFormNonEditable('',$contact->$column_name,MySBUtil::str2abbrv(_G($sblockref->lname),3,3)).'<br>';
+        else echo '<br>';
     }
 
     echo '
