@@ -29,7 +29,6 @@ class MySBDBMFExportCSV extends MySBDBMFExport {
     }
 
     public function htmlParamForm() {
-        $showfields_colsnb = MySBConfigHelper::Value('dbmf_showfields_colsnb', 'dbmf3');
         $output = '';
         $blocks = MySBDBMFBlockHelper::load();
         $output .= '

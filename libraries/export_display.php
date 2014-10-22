@@ -36,7 +36,6 @@ class MySBDBMFExportDisplay extends MySBDBMFExport {
 
     public function htmlParamForm() {
         global $app;
-        $showfields_colsnb = MySBConfigHelper::Value('dbmf_showfields_colsnb', 'dbmf3');
         $showcols = new MySBCSValues($app->auth_user->dbmf_showcols);
         $output = '';
         $blocks = MySBDBMFBlockHelper::load();
