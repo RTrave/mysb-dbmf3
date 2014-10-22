@@ -95,32 +95,54 @@ class MySBDBMFExportSummary extends MySBDBMFExport {
      */
     public function htmlResultOutput() {
         global $app,$_SESSION;
+        $summary_query_where = '';
+        $summary_query_fields = '';
+        foreach( $app->dbmf_summary_blockrefs as $blockref ) {
+            if( $summary_query_where!='' ) $summary_query_where .= ' or ';
+            $summary_query_where .= $blockref->keyname.'!=\'\'';
+            $summary_query_fields .= ','.$blockref->keyname;
+        }
         if( $_SESSION['dbmf_query_where']!='' )
-            $summary_query_where = $_SESSION['dbmf_query_where'].' and ';
-        else $summary_query_where = '';
+            $summary_query_where = $_SESSION['dbmf_query_where'].' and ('.$summary_query_where.')';
+        else $summary_query_where = '('.$summary_query_where.')';
+        $sql_summary =  'SELECT id'.$summary_query_fields.' FROM '.MySB_DBPREFIX.'dbmfcontacts '.
+                        ' WHERE ('.$summary_query_where.')';
+        $search_summary = MySBDB::query( $sql_summary,
+            "export_summary.php",
+            false, 'dbmf3');
+
         echo '
 <div id="results">';
         echo '
-Resultats:<br>
-<ul>';
+<p>Resultats:</p><br>
+<div class="boxed" style="width: 450px; margin: 10px auto 3px;">
+';
+        $complete_sum = 0;
         foreach( $app->dbmf_summary_blockrefs as $blockref ) {
-            echo '<li><small><i>'.$blockref->keyname.'</i></small>-'._G($blockref->lname).': ';
-            $sql_summary =  'SELECT id,'.$blockref->keyname.' FROM '.MySB_DBPREFIX.'dbmfcontacts '.
-                            ' WHERE ('.$summary_query_where.' '.$blockref->keyname.'!=\'\')';
-            $search_summary = MySBDB::query( $sql_summary,
-                "export_summary.php",
-                false, 'dbmf3');
+            echo '
+    <div class="row">
+        <div class="right">';
             $sum = 0;
             $nb = 0;
             while( $data_summary = MySBDB::fetch_array($search_summary) ) {
-                $sum += $data_summary[$blockref->keyname];
-                $nb ++;
+                if( $data_summary[$blockref->keyname]!='' and $data_summary[$blockref->keyname]!=0 ) {
+                    $sum += $data_summary[$blockref->keyname];
+                    $nb ++;
+                }
             }
-            echo $sum.' for '.$nb.' entries';
-            echo '</li>';
+            MySBDB::data_seek($search_summary,0);
+            $complete_sum += $sum;
+            echo $sum.' / '.$nb.' '._G('DBMF_common_contact');
+            echo '</div>
+        '._G($blockref->lname).'
+    </div>';
         }
         echo '
-</ul>
+    <div class="row">
+        <div class="right"><b>'.$complete_sum.' / '.MySBDB::num_rows($search_summary).' '._G('DBMF_common_contact').'</b></div>
+        '._G('DBMF_export_summary').'
+    </div>
+</div>
 </div>';
 
     }
