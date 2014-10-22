@@ -14,7 +14,7 @@ defined('_MySBEXEC') or die;
 
 class MySBModule_dbmf3 {
 
-    public $version = 15;
+    public $version = 16;
 
     public function create() {
         global $app;
@@ -384,6 +384,16 @@ class MySBModule_dbmf3 {
             false, "dbmf3");
     }
 
+    public function init16() {
+        global $app;
+        MySBPluginHelper::create('dbmf_exportsummary','DBMFExport',
+            array("Summary", 'Display summary', 'libraries/export_summary.php',''),
+            array(0,0,0,0),
+            6,"dbmf_user",'dbmf3');
+        MySBConfigHelper::delete('dbmf_showfields_colsnb','dbmf3');
+    }
+
+
     public function uninit() {
         global $app;
 
@@ -393,10 +403,12 @@ class MySBModule_dbmf3 {
 
         MySBDBMFExportHelper::delete(MySBDBMFExportHelper::getByName('DBMF_display')->id);
 
-        //plugins
-        MySBPluginHelper::delete('dbmf_showorga','dbmf3');
-        MySBPluginHelper::delete('dbmf_showtels','dbmf3');
+        MySBConfigHelper::delete('dbmf_globalaccess','dbmf3');
+        MySBConfigHelper::delete('dbmf_notify_freq','dbmf3');
+        MySBConfigHelper::delete('dbmf_ln_infos','dbmf3');
+        MySBConfigHelper::delete('dbmf_fn_infos','dbmf3');
 
+        //plugins
         MySBPluginHelper::delete('dbmf_exportupdate','dbmf3');
         MySBPluginHelper::delete('dbmf_exportcsv','dbmf3');
         MySBPluginHelper::delete('dbmf_exportmailscsv','dbmf3');

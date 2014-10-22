@@ -27,5 +27,6 @@ require (MySB_ROOTPATH.'/modules/dbmf3/libraries/export_mailing.php');
 require (MySB_ROOTPATH.'/modules/dbmf3/libraries/export_mails.php');
 require (MySB_ROOTPATH.'/modules/dbmf3/libraries/export_csv.php');
 require (MySB_ROOTPATH.'/modules/dbmf3/libraries/export_update.php');
+require (MySB_ROOTPATH.'/modules/dbmf3/libraries/export_summary.php');
 
 ?>
