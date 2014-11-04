@@ -107,7 +107,11 @@ class MySBDBMFExportCSV extends MySBDBMFExport {
         $titles = '"Name"'.$csv_char.'"Firstname"'.$csv_char.'"Mail"';
         $blockrefs = MySBDBMFBlockRefHelper::load();
         foreach($blockrefs as $blockref) {
-            $titles .= $csv_char.$this->keyname2red(_G($blockref->lname));
+            if( $blockref->isActive() )
+                if( $blockref->getType()=='boolean' or $blockref->getType()=='int' )
+                    $titles .= $csv_char.MySBUtil::str2abbrv(_G($blockref->lname));
+                else
+                    $titles .= $csv_char._G($blockref->lname);
         }
         fwrite($ftable,$titles."\n");
         $count = 0;
@@ -118,7 +122,12 @@ class MySBDBMFExportCSV extends MySBDBMFExport {
             $tablin[] = $contact->firstname;
             $tablin[] = $contact->mail;
             foreach($blockrefs as $blockref) {
-                $tablin[] = $this->db2csv(_G($contact_data[$blockref->keyname]));
+                if( $blockref->isActive() ) {
+                    if( $blockref->getType()=='tel' )
+                        $tablin[] = sprintf( " %s", $contact_data[$blockref->keyname]);
+                    else
+                        $tablin[] = $this->db2csv(_G($contact_data[$blockref->keyname]));
+                }
             }
             fputcsv($ftable,$tablin,';','"');
             $count++;
