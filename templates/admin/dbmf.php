@@ -245,7 +245,7 @@ else {
     $editor = new MySBEditor();
     echo '
 '.$editor->init("simple").'
-<div id="results">';
+<div id="contacts_results">';
     //$app->tpl_dbmf_searchresult = $app->dbmf_search_result;
     _incI('contacts_sort','dbmf3');
     echo '

@@ -29,7 +29,7 @@ if( isset($_POST['dbmf_request'])
     echo $editor->init("simple");
     echo '
 <h2>'._G('DBMF_search_results').'</h2>
-<div id="results">';
+<div id="contacts_results">';
 
     //$app->tpl_dbmf_searchresult = $app->dbmf_search_result;
     _incI('contacts_sort','dbmf3');

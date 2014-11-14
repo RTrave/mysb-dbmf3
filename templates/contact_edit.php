@@ -27,7 +27,7 @@ echo '
 
 <div class="overHead">
 
-    <div style="float: left; margin-left: 5px;">
+    <div style="float: left; margin-left: 0px;">
         <form   action="index.php?mod=dbmf3&amp;tpl=contact_del&amp;contact_id='.$contact->id.'" 
                 method="post" 
                 class="hidelayed"
@@ -40,7 +40,7 @@ echo '
                     title="'.sprintf(_G('DBMF_contact_delete'),$contact->lastname, $contact->firstname ).'">
         </form>
     </div>
-    '.$contact->lastname.' '.$contact->firstname.'
+    '.$contact->lastname.'<br><small>'.$contact->firstname.'</small>
 </div>
 ';
 
@@ -132,6 +132,12 @@ if(isset($_POST['memento_delete'])) {
     echo '
 <script>
 $("#memento'.$_POST['memento_delete'].'").fadeOut(1000,"swing");
+</script>';
+}
+if(isset($_POST['memento_add']) or isset($_POST['memento_modify'])) {
+    echo '
+<script>
+loadItem( "mementos_results", "index.php?mod=dbmf3&inc=mementos_sort&filter='.$_SESSION["dbmf_memento_lastfilter"].'" );
 </script>';
 }
 if($_GET['contact_id']==-1) {

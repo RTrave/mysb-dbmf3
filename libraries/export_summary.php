@@ -112,7 +112,7 @@ class MySBDBMFExportSummary extends MySBDBMFExport {
             false, 'dbmf3');
 
         echo '
-<div id="results">';
+<div id="summary_results">';
         echo '
 <p>Resultats:</p><br>
 <div class="boxed" style="width: 450px; margin: 10px auto 3px;">

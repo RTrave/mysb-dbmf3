@@ -29,7 +29,7 @@ echo '
 
 <h1>'._G('DBMF_mementos_summary').'</h1>
 
-<div id="results">
+<div id="mementos_results">
 ';
 
 

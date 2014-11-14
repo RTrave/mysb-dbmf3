@@ -76,9 +76,11 @@ if(isset($_POST['memento_add'])) {
         $new_memento_date = 
 MySBDateTimeHelper::html_formLoad('memento_date_');
         $new_memento->update( array(
-            'date_memento' => $new_memento_date->date_string ) );
+            'date_memento' => $new_memento_date->date_string,
+            'monthofyear_memento' => '' ) );
     } elseif($memtype==MYSB_DBMF_MEMENTO_TYPE_MONTHOFYEAR) {
         $new_memento->update( array(
+            'date_memento' => '',
             'monthofyear_memento' => $_POST['memento_moy'] ) );
     }
     if( isset($_POST['memento_group_edition']) and 

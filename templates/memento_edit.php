@@ -36,7 +36,7 @@ echo '
 <div class="overHead">';
 
 if($memento_id!=-1) echo '
-    <div style="float: left; margin-left: 5px;">
+    <div style="float: left; margin-left: 0px;">
         <form action="index.php?mod=dbmf3&amp;tpl=contact_edit&amp;contact_id='.$contact->id.'" 
               method="post"
               class="overlayed"
@@ -50,12 +50,12 @@ if($memento_id!=-1) echo '
     </div>';
 
 echo '
-<div style="float: right; margin-right: 20px;">
+<div style="float: left; margin-left: 5px;">
     <a  href="index.php?mod=dbmf3&amp;tpl=contact_edit&amp;contact_id='.$contact->id.'" 
         class="overlayed">
         <img    src="images/icons/text-editor.png" 
                 alt="'._G("DBMF_memento_edition_return").'" 
-                title="'._G('DBMF_edit').' '.$contact->lastname.' '.$contact->firstname.' ('.$contact->id.')"
+                title="'._G('DBMF_contact_edition').': '.$contact->lastname.' '.$contact->firstname.' ('.$contact->id.')"
                 style="width: 24px">
     </a>
 </div>
@@ -63,10 +63,9 @@ echo '
 if($memento->date_process!='') {
     $memento_process = new MySBDateTime($memento->date_process);
     echo '
-    <span class="help">'._G('DBMF_memento_process_last').': '.$memento_process->strEBY_l().'</span>';
+    <br><span class="help">'._G('DBMF_memento_process_last').': '.$memento_process->strEBY_l().'</span>';
 }
-echo '<br>
-'.$contact->lastname.' '.$contact->firstname.'
+echo '
 </div>
 
 <form   action="index.php?mod=dbmf3&amp;tpl=contact_edit&amp;contact_id='.$contact->id.'" 
@@ -91,7 +90,7 @@ if( $contact->mail!='' ) echo '
             <img src="images/icons/mail-unread.png" 
                  alt="'._G('DBMF_mailto').' '.$contact->id.'" 
                  title="'._G('DBMF_mailto').' '.$contact->lastname.' '.$contact->firstname.' ('.$contact->id.')"></a></div>
-    <b>'._G("DBMF_common_contact").':</b>
+    <b>'.$contact->lastname.'<br><small>'.$contact->firstname.'</small></b>
 </div>';
 
 echo '

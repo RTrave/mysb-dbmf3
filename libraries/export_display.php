@@ -105,7 +105,7 @@ class MySBDBMFExportDisplay extends MySBDBMFExport {
         global $app;
         echo '
 '.MySBEditor::init("simple").'
-<div id="results">';
+<div id="contacts_results">';
         _incI('contacts_sort','dbmf3');
         echo '
 </div>';

@@ -62,11 +62,11 @@ function sortActions($pack) {
     <img src="images/icons/go-last.png" style="float: right;" class="linked"
         alt="'._G('SBGT_last').'"
         title="'._G('SBGT_last').'"
-        onclick="scrollresults();loadItem(\'results\',\'index.php?mod=dbmf3&inc=contacts_sort&sid='.$pack['last_id'].'\');">
+        onclick="scrollresults();loadItem(\'contacts_results\',\'index.php?mod=dbmf3&inc=contacts_sort&sid='.$pack['last_id'].'\');">
     <img src="images/icons/go-next.png" style="float: right;" class="linked"
         alt="'._G('SBGT_next').'"
         title="'._G('SBGT_next').'"
-        onclick="scrollresults();loadItem(\'results\',\'index.php?mod=dbmf3&inc=contacts_sort&sid='.$pack['next_id'].'\');">';
+        onclick="scrollresults();loadItem(\'contacts_results\',\'index.php?mod=dbmf3&inc=contacts_sort&sid='.$pack['next_id'].'\');">';
     } else {
         $output .= '
     <img src="images/blank.png" style="float: right;" alt="blank" class="linked">
@@ -86,11 +86,11 @@ function sortActions($pack) {
     <img src="images/icons/go-previous.png" style="float: right;" class="linked"
         alt="'._G('SBGT_previous').'"
         title="'._G('SBGT_previous').'"
-        onclick="scrollresults();loadItem(\'results\',\'index.php?mod=dbmf3&inc=contacts_sort&sid='.$pack['prev_id'].'\');">
+        onclick="scrollresults();loadItem(\'contacts_results\',\'index.php?mod=dbmf3&inc=contacts_sort&sid='.$pack['prev_id'].'\');">
     <img src="images/icons/go-first.png" style="float: right;" class="linked"
         alt="'._G('SBGT_first').'"
         title="'._G('SBGT_first').'"
-        onclick="scrollresults();loadItem(\'results\',\'index.php?mod=dbmf3&inc=contacts_sort&sid='.$pack['first_id'].'\');">';
+        onclick="scrollresults();loadItem(\'contacts_results\',\'index.php?mod=dbmf3&inc=contacts_sort&sid='.$pack['first_id'].'\');">';
     } else {
         $output .= '
     <img src="images/blank.png" style="float: right;" alt="blank" class="linked">
@@ -178,21 +178,21 @@ $search_m = MySBDB::query( 'SELECT * FROM '.MySB_DBPREFIX.'dbmfcontacts '.
 
 echo '
 <script>
-show("results");
+show("contacts_results");
 function scrollresults() {
-    $("html, body").animate({ scrollTop: $("div#results").offset().top }, 200);
+    $("html, body").animate({ scrollTop: $("div#contacts_results").offset().top }, 200);
 }
 function changesort(selvalue) {
     //scrollresults();
-    loadItem( "results", "index.php?mod=dbmf3&inc=contacts_sort&sort="+selvalue );
+    loadItem( "contacts_results", "index.php?mod=dbmf3&inc=contacts_sort&sort="+selvalue );
 }
 function changeasc(selvalue) {
     //scrollresults();
-    loadItem( "results", "index.php?mod=dbmf3&inc=contacts_sort&asc="+selvalue );
+    loadItem( "contacts_results", "index.php?mod=dbmf3&inc=contacts_sort&asc="+selvalue );
 }
 function changepack(selvalue) {
     //scrollresults();
-    loadItem( "results", "index.php?mod=dbmf3&inc=contacts_sort&pack="+selvalue );
+    loadItem( "contacts_results", "index.php?mod=dbmf3&inc=contacts_sort&pack="+selvalue );
 }
 </script>';
 

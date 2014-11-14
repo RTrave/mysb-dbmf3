@@ -163,20 +163,6 @@ background: transparent;
 
 div#dbmfContact {}
 
-#overlay div.contentWrap #dbmfContact div.overHead {
-    height: 32px;
-    font-size: 110%;
-    padding: 3px 5px 0px;
-}
-#overlay div.contentWrap #dbmfContact div.overBody {
-    top: 35px;
-    bottom: 28px;
-}
-#overlay div.contentWrap #dbmfContact div.overFoot {
-    height: 24px;
-    padding: 4px 5px 0px;
-}
-
 #dbmfContact div.list_support div.title,
 #dbmfContact div.list_support div.row {
     padding: 1px;
@@ -258,20 +244,6 @@ width: 80px;
 }
 
 div#dbmfMemento {
-}
-
-#overlay div.contentWrap #dbmfMemento div.overHead {
-    height: 36px;
-    font-size: 110%;
-    padding: 3px 5px 0px;
-}
-#overlay div.contentWrap #dbmfMemento div.overBody {
-    top: 39px;
-    bottom: 27px;
-}
-#overlay div.contentWrap #dbmfMemento div.overFoot {
-    height: 23px;
-    padding: 4px 5px 0px;
 }
 
 #dbmfMemento table.cform {

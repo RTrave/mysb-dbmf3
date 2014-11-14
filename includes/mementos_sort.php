@@ -43,10 +43,12 @@ echo '
 
 if( isset($_GET['filter']) and $_GET['filter']=='all' ) {
     $mementos_p = MySBDBMFMementoHelper::load(null,$_SESSION["dbmf_memcatg_sort"]);
+    $_SESSION["dbmf_memento_lastfilter"] = 'all';
     echo '
 <h2>'._G('DBMF_mementos_all').' ('.count($mementos_p).')</h2>';
 } else {
     $_GET['filter']='';
+    $_SESSION["dbmf_memento_lastfilter"] = '';
     $mementos_p = MySBDBMFMementoHelper::loadActives($_SESSION["dbmf_memcatg_sort"]);
     echo '
 <h2>'._G('DBMF_mementos_actives').' ('.count($mementos_p).')</h2>
@@ -152,9 +154,9 @@ if( count($mementos_p)!=0 )
 
 echo '
 <script>
-show("results");
+show("mementos_results");
 function changesort(selvalue) {
-    loadItem( "results", "index.php?mod=dbmf3&inc=mementos_sort&sort="+selvalue+"&filter='.$_GET['filter'].'" );
+    loadItem( "mementos_results", "index.php?mod=dbmf3&inc=mementos_sort&sort="+selvalue+"&filter='.$_GET['filter'].'" );
 }
 </script>';
 
