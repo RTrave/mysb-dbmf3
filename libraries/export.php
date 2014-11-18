@@ -215,7 +215,7 @@ class MySBPluginDBMFExport extends MySBPlugin {
      */
     public function post_create() {
         global $app;
-        require_once (MySB_ROOTPATH.'/modules/'.$this->module.'/'.$this->value2);
+        //require (MySB_ROOTPATH.'/modules/'.$this->module.'/'.$this->value2);
     }
 
     /**
