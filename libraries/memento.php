@@ -61,7 +61,7 @@ class MySBDBMFMemento extends MySBObject {
         parent::__construct((array) ($data_memento));
     }
 
-    public function update( $data_memento ) {
+    public function update( $data_memento=array() ) {
         global $app;
         parent::update('dbmfmementos', (array) ($data_memento));
     }
@@ -226,7 +226,7 @@ class MySBDBMFMementoHelper {
                 $req_contactinfos = MySBDB::query("SELECT id,lastname,firstname,mail FROM ".MySB_DBPREFIX."dbmfcontacts ".
                     "WHERE (".$mem_where.") ".
                     "ORDER BY id",
-                    "MySBDBMFMementoHelper::loadContactInfos($mementos)",
+                    "MySBDBMFMementoHelper::loadContactInfos()",
                     true, 'dbmf3' );
                 while($data_contactinfos = MySBDB::fetch_array($req_contactinfos)) 
                     $app->dbmfcontactinfos[$data_contactinfos['id']] = new MySBDBMFGroup(-1, $data_contactinfos);
@@ -249,7 +249,7 @@ class MySBDBMFMementoHelper {
             $req_cond .= ' and memcatg_id='.$memcatg_id; 
         $req_mementos = MySBDB::query("SELECT * FROM ".MySB_DBPREFIX."dbmfmementos ".
                 "WHERE (".$req_cond.") ".
-                "ORDER BY monthofyear_memento,date_memento,date_process,type",
+                "ORDER BY type,monthofyear_memento,date_memento,date_process",
                 "MySBDBMFMementoHelper::load($contact_id)",
                 true, 'dbmf3' );
         $mementos = array();
@@ -267,7 +267,7 @@ class MySBDBMFMementoHelper {
             $req_cond .= ' and memcatg_id='.$memcatg_id; 
         $req_mementos = MySBDB::query("SELECT * FROM ".MySB_DBPREFIX."dbmfmementos ".
                 "WHERE (".$req_cond.") ".
-                "ORDER BY monthofyear_memento,date_memento,date_process,type",
+                "ORDER BY type,monthofyear_memento,date_memento,date_process",
                 "MySBDBMFMementoHelper::loadActives()",
                 true, 'dbmf3' );
         $mementos = array();
