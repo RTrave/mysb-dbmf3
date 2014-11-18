@@ -28,8 +28,9 @@ if( isset($_GET['memento_id']) ) {
 }
 
 echo '
-<div class="overlayWidth" data-overwidth="460"></div>
-<div class="overlayHeight" data-overheight="500"></div>
+<div class="overlaySize" 
+    data-overheight=""
+    data-overwidth="460"></div>
 
 <div id="dbmfMemento">
 
@@ -82,11 +83,11 @@ $area_id = 'editor_id_'.rand(1,999999);
 $editor = new MySBEditor();
 
 echo '
-<div class="list_support" style="">';
+<div class="list_support" style="padding: 2px 4px;">';
 
 if( $contact->mail!='' ) echo '
 <div class="row" style="">
-    <div class="right" style=""><a href="mailto:'.$contact->mail.'">
+    <div style="float: right;"><a href="mailto:'.$contact->mail.'">
             <img src="images/icons/mail-unread.png" 
                  alt="'._G('DBMF_mailto').' '.$contact->id.'" 
                  title="'._G('DBMF_mailto').' '.$contact->lastname.' '.$contact->firstname.' ('.$contact->id.')"></a></div>
@@ -94,11 +95,6 @@ if( $contact->mail!='' ) echo '
 </div>';
 
 echo '
-<div class="row" style="">
-    <div class="right" style="">'.$m_user->lastname.' '.$m_user->firstname.'</div>
-    <b>'._G("DBMF_memento_owner").':</b>
-</div>
-
 <div class="row" style="">
     <div class="right" style="">
     <select name="memento_category">';
@@ -169,7 +165,12 @@ echo '
 
 <div class="row" style="">
     <b>'._G("DBMF_memento_comments2").':</b>
-    <div><textarea name="memento_comments2" cols="40" rows="3">'.$memento->comments2.'</textarea></div>
+    <div><textarea name="memento_comments2" cols="32" rows="3">'.$memento->comments2.'</textarea></div>
+</div>
+
+<div class="row" style="">
+    <div class="right" style="">'.$m_user->lastname.' '.$m_user->firstname.'</div>
+    <b>'._G("DBMF_memento_owner").':</b>
 </div>
 
 </div>

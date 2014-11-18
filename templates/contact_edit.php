@@ -20,8 +20,10 @@ $contact = $app->tpl_currentcontact;
 if(isset($_POST['contact_delete'])) return;
 
 echo '
-<div class="overlayWidth" data-overwidth="440"></div>
-<div class="overlayHeight" data-overheight="600"></div>
+<div class="overlaySize" 
+    data-overheight=""
+    data-overwidth="440"></div>
+
 
 <div id="dbmfContact">
 
@@ -51,7 +53,7 @@ echo '
 
 <div class="overBody">
 
-<div class="list_support" style="padding: 2px 2px;">';
+<div class="list_support" style="padding: 2px 4px;">';
 
 _incI('common_edition','dbmf3');
 
