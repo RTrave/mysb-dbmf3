@@ -83,14 +83,16 @@ $area_id = 'editor_id_'.rand(1,999999);
 $editor = new MySBEditor();
 
 echo '
-<div class="list_support" style="padding: 2px 4px;">';
+<div class="list_support" style="padding: 2px 4px;">
+
+<div class="row" style="">';
 
 if( $contact->mail!='' ) echo '
-<div class="row" style="">
     <div style="float: right;"><a href="mailto:'.$contact->mail.'">
             <img src="images/icons/mail-unread.png" 
                  alt="'._G('DBMF_mailto').' '.$contact->id.'" 
-                 title="'._G('DBMF_mailto').' '.$contact->lastname.' '.$contact->firstname.' ('.$contact->id.')"></a></div>
+                 title="'._G('DBMF_mailto').' '.$contact->lastname.' '.$contact->firstname.' ('.$contact->id.')"></a></div>';
+echo '
     <b>'.$contact->lastname.'<br><small>'.$contact->firstname.'</small></b>
 </div>';
 
