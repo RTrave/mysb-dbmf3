@@ -49,7 +49,7 @@ foreach($exports as $export)
 echo '
 </select>
 <br><br>
-<a id="params_show" onClick="show_auto(\'params\');hide(\'params_showA\');" class="button">'._G('DBMF_export_showparams').'</a><br>
+<a id="params_show" onClick="toggle_slide(\'params\');hide(\'params_showA\');" class="button">'._G('DBMF_export_showparams').'</a><br>
 <br></p>
 <div id="params" style="display: none;">';
 
@@ -94,7 +94,7 @@ foreach($blocks as $block) {
             <small><i>('.$group_edit->comments.')</i></small>
             <div style="float: right; cursor: pointer;">
                 <img src="images/icons/go-down.png" alt="go-down"
-                     onClick="show_auto(\'block_select_'.$block->id.'\');"></div>
+                     onClick="toggle_slide(\'block_select_'.$block->id.'\');"></div>
     </div>
     <div id="block_select_'.$block->id.'" style="display: none;">
     <div class="row" style="text-align: center;">
@@ -105,7 +105,7 @@ foreach($blocks as $block) {
         foreach($block->blockrefs as $blockref) {
             if($blockref->isActive()) {
                 echo '
-    <div class="row" style="min-height: 18px;">
+    <div class="row">
         <div class="right">'.$blockref->htmlFormWhereClause('br').'</div>
         '._G($blockref->lname).'
     </div>';

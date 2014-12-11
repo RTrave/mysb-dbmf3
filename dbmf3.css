@@ -12,28 +12,21 @@ div#mysbMiddle {
 font-size: 95%;
 }
 
-#overlay div.contentWrap div.overBody {
-background: #eeeeee;
-}
-
 #mysbMiddle table,
 #mysbMiddle tr  {
 background: transparent;
 }
 
 #mysbMiddle td.cell_names {
-overflowM: visible;
 width: 30%;
 }
 #mysbMiddle td.cell_names b {
-overflowf: scroll;
 position: absolute;
 }
 #mysbMiddle td.cell_plugins {
 vertical-align: top;
 text-align: right;
 height: 100%;
-widthM: 80%;
 width: 100%;
 }
 
@@ -43,7 +36,6 @@ width: 1px;
 
 #mysbMiddle td.cell_infos {
 max-width: 80px;
-min-widthM: 120px;
 min-width: 180px;
 text-align: left;
 vertical-align: top;
@@ -188,7 +180,7 @@ font-size: 90%;
 }
 
 div#rsvpCriteria {
-    font-size: 80%;
+    font-size1: 80%;
 }
 
 #rsvpCriteria div.boxed div.title {

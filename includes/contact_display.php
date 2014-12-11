@@ -148,11 +148,6 @@ $daysold = $date_modif->absDiff();
 </tr>
 
 </tbody></table>
-</div>
-
-<script>
-show("contact'.$contact->id.'");
-</script>
-';
+</div>';
 
 ?>

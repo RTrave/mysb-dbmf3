@@ -76,14 +76,3 @@ font-size: 80%;
 width: 40px;
 }
 
-#overlay div.contentWrap #dbmfContact div.overBody,
-#overlay div.contentWrap #dbmfMemento div.overBody {
-    font-size1: 80%;
-    bottom1: 38px;
-}
-#overlay div.contentWrap #dbmfContact div.overFoot,
-#overlay div.contentWrap #dbmfMemento div.overFoot {
-    height1: 35px;
-    padding1: 2px 5px 0px;
-}
-
