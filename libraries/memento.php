@@ -95,7 +95,7 @@ class MySBDBMFMemento extends MySBObject {
         if( $user==null ) $user = $app->auth_user;
         if( $this->user_id==$user->id ) return true;
         $memcatg = MySBDBMFMementoCatgHelper::getByID($this->memcatg_id);
-        if( $memcatg->isAvailable($user) ) return true;
+        if( $memcatg!=null and $memcatg->isAvailable($user) ) return true;
         return false;
     }
 
