@@ -44,7 +44,7 @@ $daysold = $date_modif->absDiff();
         <img    src="images/icons/text-editor.png" 
                 alt="Edition '.$contact->id.'" 
                 title="'._G('DBMF_edit').' '.$contact->lastname.' '.$contact->firstname.' ('.$contact->id.')"
-                style="width: 24px"></a>
+                style="width1: 24px"></a>
     </td>
     <td style="width: 26px; text-align: left;">';
     if( $contact->mail!='' ) echo '

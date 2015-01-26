@@ -29,19 +29,19 @@ echo '
 
 <div class="overHead">
 
-    <div style="float: left; margin-left: 0px;">
         <form   action="index.php?mod=dbmf3&amp;tpl=contact_del&amp;contact_id='.$contact->id.'" 
                 method="post" 
                 class="hidelayed"
                 data-overconfirm="'.MySBUtil::str2strict(sprintf(_G('DBMF_confirm_contact_delete'),$contact->lastname, $contact->firstname )).'">
+    <div class="action first">
             <input  type="hidden" name="dbmf_contact_delete" value="'.$contact->id.'">
             <input  type="hidden" name="dbmf_request_reuse" value="1">
             <input  src="images/icons/user-trash.png"
                     type="image"
                     alt="'._G('DBMF_contact_delete').'"
                     title="'.sprintf(_G('DBMF_contact_delete'),$contact->lastname, $contact->firstname ).'">
-        </form>
     </div>
+        </form>
     '.$contact->lastname.'<br><small>'.$contact->firstname.'</small>
 </div>
 ';
@@ -115,7 +115,7 @@ echo '
 
 if(MySBRoleHelper::checkAccess('dbmf_editor',false)) echo '
     <input type="hidden" name="contact_edit" value="1">
-    <input type="submit" value="'._G('DBMF_contact_edition_submit').'">';
+    <input type="submit" value="'._G('DBMF_contact_edition_submit').'" class="action" style="width: 100%;">';
 
 echo '
 </div>

@@ -108,6 +108,7 @@ vertical-align: middle;
 background: transparent;
 }
 #mysbMiddle td {
+vertical-align: top;
 border: 0px solid black;
 }
 

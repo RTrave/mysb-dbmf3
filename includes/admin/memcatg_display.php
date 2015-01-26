@@ -59,7 +59,7 @@ hide(\'memcatg'.$memcatg->id.'\');
         <img    src="images/icons/go-down.png" 
                 alt="go-down"
                 style="cursor: pointer;"
-                onClick="show_auto(\'memcatg_edit_'.$memcatg->id.'\');">
+                onClick="toggle_slide(\'memcatg_edit_'.$memcatg->id.'\');">
     </div>
     <div style="float: right; margin-right: 7px;">
         <form   action="index.php?mod=dbmf3&amp;inc=admin/memcatg_display&amp;id='.$memcatg->id.'" 

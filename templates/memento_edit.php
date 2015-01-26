@@ -37,29 +37,29 @@ echo '
 <div class="overHead">';
 
 if($memento_id!=-1) echo '
-    <div style="float: left; margin-left: 0px;">
         <form action="index.php?mod=dbmf3&amp;tpl=contact_edit&amp;contact_id='.$contact->id.'" 
               method="post"
               class="overlayed"
               data-overconfirm="'.MySBUtil::str2strict(_G('DBMF_confirm_memento_delete')).'">
+    <div class="action first">
             <input type="hidden" name="memento_delete" value="'.$memento_id.'">
             <input src="images/icons/user-trash.png"
                    type="image"
                    alt="'._G('DBMF_memento_edition_delete').'"
                    title="'._G('DBMF_memento_edition_delete').'">
-        </form>
-    </div>';
+    </div>
+        </form>';
 
 echo '
-<div style="float: left; margin-left: 5px;">
     <a  href="index.php?mod=dbmf3&amp;tpl=contact_edit&amp;contact_id='.$contact->id.'" 
         class="overlayed">
+    <div class="action">
         <img    src="images/icons/text-editor.png" 
                 alt="'._G("DBMF_memento_edition_return").'" 
                 title="'._G('DBMF_contact_edition').': '.$contact->lastname.' '.$contact->firstname.' ('.$contact->id.')"
-                style="width: 24px">
+                style="width1: 24px">
+    </div>
     </a>
-</div>
 '._G("DBMF_memento").'';
 if($memento->date_process!='') {
     $memento_process = new MySBDateTime($memento->date_process);
@@ -185,7 +185,8 @@ if($memento_id!=-1) echo '
 else echo '
     <input type="hidden" name="memento_add" value="1">';
 echo '
-    <input type="submit" value="'._G('DBMF_memento_edition_submit').'">';
+    <input type="submit" value="'._G('DBMF_memento_edition_submit').'" 
+           class="action" style="width: 100%;">';
 echo '
 </div>
 

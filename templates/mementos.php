@@ -22,8 +22,8 @@ echo $editor->init("simple");
 echo '
 <div id="mysbMenuLevel">
 <ul>
-    <li><a href="index.php?mod=dbmf3&amp;tpl=mementos">'._G('DBMF_mementos_actives').'</a></li>
-    <li><a href="index.php?mod=dbmf3&amp;tpl=mementos&amp;filter=all">'._G('DBMF_mementos_all').'</a></li>
+    <li class="first"><a href="index.php?mod=dbmf3&amp;tpl=mementos">'._G('DBMF_mementos_actives').'</a></li>
+    <li class="last"><a href="index.php?mod=dbmf3&amp;tpl=mementos&amp;filter=all">'._G('DBMF_mementos_all').'</a></li>
 </ul>
 </div>
 
