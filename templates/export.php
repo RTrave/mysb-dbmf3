@@ -96,7 +96,7 @@ foreach($blocks as $block) {
                 <img src="images/icons/go-down.png" alt="go-down"
                      onClick="toggle_slide(\'block_select_'.$block->id.'\');"></div>
     </div>
-    <div id="block_select_'.$block->id.'" style="display: none;">
+    <div id="block_select_'.$block->id.'" style="display: none; width: 100%;">
     <div class="row" style="text-align: center;">
         '._G('DBMF_request_blockref_and_or').'
         <input type="radio" name="blockref_andorflag_'.$block->id.'" value="or" checked>OR 
