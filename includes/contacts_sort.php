@@ -204,6 +204,7 @@ echo '
 <br>
 <b>'.$first_packid.'-'.$last_packid.'</b><br>
 ('.$counter.' results)<br>
+<br>
 </p>
 
 <div class="list_support">';
