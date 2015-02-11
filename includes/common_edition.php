@@ -102,25 +102,26 @@ foreach($mementos as $memento) {
     $m_user = MySBUserHelper::getByID($memento->user_id);
     if($memento->memcatg_id!=0) $memcatg = MySBDBMFMementoCatgHelper::getByID($memento->memcatg_id);
     else $memcatg = null;
-    echo '
-    <div class="boxed" style="font-size: 90%; width: 90%; margin-bottom: 2px;">
-    <div class="title roundtop '.$memclass.'" style="font-size: 90%; padding: 4px 4px 3px; min-height: 0px;" >';
+
     if($memento->isEditable())
         echo '
             <a  href="index.php?mod=dbmf3&amp;tpl=memento_edit&amp;memento_id='.$memento->id.'"
                 class="overlayed"
-                data-overconfirm="'.MySBUtil::str2strict(_G("DBMF_confirm_memento_edition")).'">
-                <b>'.$memento->getDate().'</b></a>';
-    else echo '
-            '.$memento->getDate().'';
+                style="text-decoration: none;"
+                data-overconfirm="'.MySBUtil::str2strict(_G("DBMF_confirm_memento_edition")).'">';
+    echo '
+    <div class="boxed" style="font-size: 90%; width: 90%; margin-bottom: 2px;">
+    <div class="title roundtop '.$memclass.'" style="font-size: 90%; padding: 4px 4px 3px; min-height: 0px;" >
+        <b>'.$memento->getDate().'</b>';
     if($memcatg!=null) $m_catgname = $memcatg->name;
     else $m_catgname = '<i>'.$m_user->login.'</i>';
     echo ' <div style="float: right;">'.$m_catgname.'</div>
         </div>
-        <div class="row" style="font-size: 90%; padding: 2px 4px 0px;">'.$memento->comments.'<br>
+        <div class="row" style="font-size: 90%; padding: 2px 4px 0px; background: #eeeeee;">'.$memento->comments.'<br>
         '.$memento->comments2.'</div>
-    </div>
-';
+    </div>';
+    if($memento->isEditable())
+        echo '</a>';
 }
 
 echo '
