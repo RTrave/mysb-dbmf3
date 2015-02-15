@@ -155,6 +155,7 @@ class MySBDBMFMemento extends MySBObject {
             case MYSB_DBMF_MEMENTO_TYPE_DAYOFMONTH:
                 ;
         }
+        return false;
     }
 
     public function process() {
@@ -170,6 +171,7 @@ class MySBDBMFMemento extends MySBObject {
         //$this->update(array('date_process' => '(null)' ));
         MySBDB::query('UPDATE '.MySB_DBPREFIX.'dbmfmementos SET date_process=(null) WHERE id='.$this->id,
             "MySBDBMFMemento::unprocess()", false, 'dbmf3' );
+        $this->date_process = '';
     }
 
 }

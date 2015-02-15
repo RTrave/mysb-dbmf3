@@ -139,6 +139,7 @@ $("#memento'.$_POST['memento_delete'].'").fadeOut(1000,"swing");
 if(isset($_POST['memento_add']) or isset($_POST['memento_modify'])) {
     echo '
 <script>
+desactiveOverlay();
 loadItem( "mementos_results", "index.php?mod=dbmf3&inc=mementos_sort&filter='.$_SESSION["dbmf_memento_lastfilter"].'" );
 </script>';
 }

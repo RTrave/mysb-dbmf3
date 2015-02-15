@@ -17,14 +17,31 @@ global $app;
 if( !MySBRoleHelper::checkAccess('dbmf_editor') ) return;
 
 
-if( isset($_GET['memento_id']) ) {
-    $memento = new MySBDBMFMemento($_GET['memento_id']);
-    $contact = new MySBDBMFContact($memento->contact_id);
-    $memento_id = $memento->id;
-} elseif( isset($_GET['contact_id']) ) {
-    $contact = new MySBDBMFContact($_GET['contact_id']);
-    $memento_id = -1;
-    $memento = new MySBDBMFMemento(null,array("user_id"=>$contact->id));
+$memento = $app->tpl_dbmf_currentmemento;
+$contact = $app->tpl_dbmf_currentcontact;
+    if($memento->isActive()) $Active = true;
+    else $Active = false;
+    if( $Active and $memento->id!=-1 ) $memclass = 'mem_active';
+    elseif( !$Active and $memento->date_process!='' ) $memclass = 'mem_processed';
+    else $memclass='';
+
+if(isset($_POST['memento_add'])) {
+    echo '
+<script>
+loadItem( "mementos_results", "index.php?mod=dbmf3&inc=mementos_sort&filter='.$_SESSION["dbmf_memento_lastfilter"].'" );
+</script>';
+} elseif( isset($_POST['memento_modify']) or isset($_POST['memento_process']) or isset($_POST['memento_unprocess']) ) {
+    echo '
+<script>
+loadItem( "memento'.$memento->id.'", "index.php?mod=dbmf3&inc=memento_display&memento_id='.$memento->id.'" );
+</script>';
+} elseif( isset($_POST['memento_delete']) ) {
+    echo '
+<script>
+toggle_slide( "memento'.$_POST['memento_delete'].'" );
+desactiveOverlay();
+</script>';
+    return;
 }
 
 echo '
@@ -34,34 +51,65 @@ echo '
 
 <div id="dbmfMemento">
 
-<div class="overHead">';
-
-if($memento_id!=-1) echo '
-        <form action="index.php?mod=dbmf3&amp;tpl=contact_edit&amp;contact_id='.$contact->id.'" 
-              method="post"
-              class="overlayed"
-              data-overconfirm="'.MySBUtil::str2strict(_G('DBMF_confirm_memento_delete')).'">
-    <div class="action first">
-            <input type="hidden" name="memento_delete" value="'.$memento_id.'">
-            <input src="images/icons/user-trash.png"
-                   type="image"
-                   alt="'._G('DBMF_memento_edition_delete').'"
-                   title="'._G('DBMF_memento_edition_delete').'">
-    </div>
-        </form>';
+<div class="overHead '.$memclass.'">';
 
 echo '
     <a  href="index.php?mod=dbmf3&amp;tpl=contact_edit&amp;contact_id='.$contact->id.'" 
         class="overlayed">
-    <div class="action">
+    <div class="action first">
         <img    src="images/icons/text-editor.png" 
                 alt="'._G("DBMF_memento_edition_return").'" 
                 title="'._G('DBMF_contact_edition').': '.$contact->lastname.' '.$contact->firstname.' ('.$contact->id.')"
                 style="width1: 24px">
     </div>
-    </a>
+    </a>';
+if($memento->id!=-1) {
+    echo '
+        <form action="index.php?mod=dbmf3&amp;tpl=memento_edit&amp;memento_id='.$memento->id.'" 
+              method="post"
+              class="hidelayed"
+              data-overconfirm="'.MySBUtil::str2strict(_G('DBMF_confirm_memento_delete')).'">
+    <div class="action">
+            <input type="hidden" name="memento_delete" value="'.$memento->id.'">
+            <input src="images/icons/user-trash.png"
+                   type="image"
+                   alt="'._G('DBMF_memento_edition_delete').'"
+                   title="'._G('DBMF_memento_edition_delete').'">
+    </div>
+        </form>
+        ';
+    if($Active) {
+        echo '
+        <form action="index.php?mod=dbmf3&tpl=memento_edit&amp;memento_id='.$memento->id.'" 
+              method="post"
+              class="overlayed">
+    <div class="action">
+            <input type="hidden" name="memento_process" value="'.$memento->id.'">
+            <input src="images/icons/emblem-system.png"
+                   type="image"
+                   alt="'._G('DBMF_memento_process_submit').'"
+                   title="'._G('DBMF_memento_process_submit').'">
+    </div>
+        </form>';
+    } elseif(!$Active and $memento->date_process!='') {
+        echo '
+        <form action="index.php?mod=dbmf3&tpl=memento_edit&amp;memento_id='.$memento->id.'" 
+              method="post"
+              class="overlayed">
+    <div class="action">
+            <input type="hidden" name="memento_unprocess" value="'.$memento->id.'">
+            <input src="images/icons/emblem-system-stop.png"
+                   type="image"
+                   alt="'._G('DBMF_memento_unprocess_submit').'"
+                   title="'._G('DBMF_memento_unprocess_submit').'">
+    </div>
+        </form>';
+    }
+}
+
+echo '
 '._G("DBMF_memento").'';
-if($memento->date_process!='') {
+if( !$Active and $memento->date_process!='' ) {
     $memento_process = new MySBDateTime($memento->date_process);
     echo '
     <br><span class="help">'._G('DBMF_memento_process_last').': '.$memento_process->strEBY_l().'</span>';
@@ -69,14 +117,14 @@ if($memento->date_process!='') {
 echo '
 </div>
 
-<form   action="index.php?mod=dbmf3&amp;tpl=contact_edit&amp;contact_id='.$contact->id.'" 
+<form   action="index.php?mod=dbmf3&amp;tpl=memento_edit&amp;memento_id='.$memento->id.'" 
         method="post"
         class="overlayed">
 
 <div class="overBody">';
 
 $memento_date = new MySBDateTime($memento->date_memento);
-if($memento_id!=-1) $m_user = MySBUserHelper::getByID($memento->user_id);
+if($memento->id!=-1) $m_user = MySBUserHelper::getByID($memento->user_id);
 else $m_user = $app->auth_user;
 
 $area_id = 'editor_id_'.rand(1,999999);
@@ -105,13 +153,13 @@ foreach( $memcatgs as $memcatg ) {
     echo '
         <option value="'.$memcatg->id.'" '.MySBUtil::form_isselected($memento->memcatg_id,$memcatg->id).'>'.$memcatg->name.'</option>';
 }
-if($memento_id==-1) $onlyowner = '';
+if($memento->id==-1) $onlyowner = '';
 else $onlyowner = MySBUtil::form_isselected($memento->memcatg_id,0);
 echo '
         <option value="0" '.$onlyowner.'>'._G("DBMF_memento_onlyowner").'</option>
     </select>';
 
-if($memento_id==-1) $modifiable = ' checked="checked" ';
+if($memento->id==-1) $modifiable = ' checked="checked" ';
 else $modifiable = MySBUtil::form_ischecked($memento->group_edition,1);
 echo '
     <input type="checkbox" name="memento_group_edition" '.$modifiable.'>'._G("DBMF_memento_groupcanedit").'
@@ -180,10 +228,10 @@ echo '
 </div>
 
 <div class="overFoot">';
-if($memento_id!=-1) echo '
-    <input type="hidden" name="memento_modify" value="'.$memento_id.'">';
+if($memento->id!=-1) echo '
+    <input type="hidden" name="memento_modify" value="1">';
 else echo '
-    <input type="hidden" name="memento_add" value="1">';
+    <input type="hidden" name="memento_add" value="'.$contact->id.'">';
 echo '
     <input type="submit" value="'._G('DBMF_memento_edition_submit').'" 
            class="action" style="width: 100%;">';

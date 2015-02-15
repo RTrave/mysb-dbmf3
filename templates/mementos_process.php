@@ -17,19 +17,4 @@ global $app;
 if( !MySBRoleHelper::checkAccess('dbmf_user') ) return;
 
 
-if(isset($_POST['memento_process'])) {
-    //echo 'ID:'.$_POST['memento_process'].'<br>';
-    $memento = new MySBDBMFMemento($_POST['memento_process']);
-    $memento->process();
-    $app->pushMessage(_G('DBMF_memento_processed'));
-}
-
-if(isset($_POST['memento_unprocess'])) {
-    //echo 'ID:'.$_POST['memento_process'].'<br>';
-    $memento = new MySBDBMFMemento($_POST['memento_unprocess']);
-    $memento->unprocess();
-    $app->pushMessage(_G('DBMF_memento_unprocessed'));
-}
-
-
 ?>

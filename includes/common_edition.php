@@ -117,7 +117,7 @@ foreach($mementos as $memento) {
     else $m_catgname = '<i>'.$m_user->login.'</i>';
     echo ' <div style="float: right;">'.$m_catgname.'</div>
         </div>
-        <div class="row" style="font-size: 90%; padding: 2px 4px 0px; background: #eeeeee;">'.$memento->comments.'<br>
+        <div class="row '.$memclass.'" style="font-size: 90%; padding: 2px 4px 0px; background: #eeeeee;">'.$memento->comments.'<br>
         '.$memento->comments2.'</div>
     </div>';
     if($memento->isEditable())
