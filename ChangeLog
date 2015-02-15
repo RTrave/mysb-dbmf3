@@ -1,5 +1,7 @@
 2015-02-15  Roman Trave <abadcafe@free.fr>
 
+	* ChangeLog: Release tagged rel2c.
+
 	* libraries/memento.php: Fix bad default values.
 
 	* includes/common_edition.php, includes/memento_display.php, includes/mementos_sort.php, libraries/memento.php, locales/fr/dbmf3.ini, templates/contact_edit.php, templates/contact_edit_process.php, templates/memento_edit.php, templates/memento_edit_process.php, templates/mementos_process.php, dbmf3.css:
