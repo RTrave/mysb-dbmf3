@@ -1,6 +1,92 @@
+2015-02-15  Roman Trave <abadcafe@free.fr>
+
+	* libraries/memento.php: Fix bad default values.
+
+	* includes/common_edition.php, includes/memento_display.php, includes/mementos_sort.php, libraries/memento.php, locales/fr/dbmf3.ini, templates/contact_edit.php, templates/contact_edit_process.php, templates/memento_edit.php, templates/memento_edit_process.php, templates/mementos_process.php, dbmf3.css:
+	New mementos handling, huge refresh UI.
+
+2015-02-11  Roman Trave <abadcafe@free.fr>
+
+	* includes/contacts_sort.php: Fix minor display overlap.
+
+	* includes/common_edition.php:
+	Modified mementos display in contact edition.
+
+2015-01-28  Roman Trave <abadcafe@free.fr>
+
+	* dbmf3.css, templates/export.php: Minor criteria display fix.
+
+2015-01-26  Roman Trave <abadcafe@free.fr>
+
+	* dbmf3.css, includes/admin/memcatg_display.php, includes/contact_display.php, templates/admin/memento.php, templates/admin/structure.php, templates/contact_edit.php, templates/memento_edit.php, templates/mementos.php:
+	Few changes, following the new theme/paradigm.
+
+2014-12-13  Roman Trave <abadcafe@free.fr>
+
+	* libraries/memento.php: Fix a non verified condition.
+
+2014-12-11  Roman Trave <abadcafe@free.fr>
+
+	* dbmf3.css, dbmf3_handheld.css, includes/contact_display.php, templates/export.php:
+	Few animations fixes.
+
+2014-11-18  Roman Trave <abadcafe@free.fr>
+
+	* templates/memento_edit.php:
+	Fix typo: contact name is now display, even without mail.
+
+	* dbmf3_handheld.css, templates/contact_edit.php, templates/memento_edit.php:
+	New clean overlay window usage.
+
+	* libraries/memento.php: Fix sort.
+
+	* libraries/export.php: Fix a library preload confusion.
+
+2014-11-14  Roman Trave <abadcafe@free.fr>
+
+	* dbmf3.css, includes/contacts_sort.php, includes/mementos_sort.php, libraries/export_display.php, libraries/export_summary.php, libraries/memento.php, locales/fr/dbmf3.ini, templates/admin/dbmf.php, templates/contact_edit.php, templates/contact_edit_process.php, templates/fprequest.php, templates/memento_edit.php, templates/mementos.php:
+	Modifications around the new JS/CSS cleaned code.
+	Mementos resume is now reload when a memento changes or was delete.
+	Fixed DB code to garantee the mementos resume sorting.
+
+2014-11-04  Roman Trave <abadcafe@free.fr>
+
+	* libraries/export_csv.php:
+	Ehanced CSV export (fix fieldnames, tel, ..).
+
+2014-10-22  Roman Trave <abadcafe@free.fr>
+
+	* includes/contact_display.php: Fix a display bug of _ALWAYSSHOWN_.
+
+	* libraries/export_summary.php, locales/en/dbmf3.ini, locales/fr/dbmf3.ini:
+	Summary improved, display and complete sum.
+
+	* __init.php, framework.php, libraries/export_summary.php:
+	New summary export feature implemented.
+
+	* libraries/export_csv.php, libraries/export_display.php:
+	Old showfields_colsnb config references removed.
+
+2014-10-21  Roman Trave <abadcafe@free.fr>
+
+	* includes/mementos_sort.php, libraries/memento.php:
+	Optimized DB access when load the mementos summary.
+
+	* templates/contact_edit_process.php:
+	Fix a possible confusion when we change the memento type.
+
+2014-10-19  Roman Trave <abadcafe@free.fr>
+
+	* templates/memento_edit.php: Fix typo.
+
+	* locales/en/dbmf3.ini, locales/fr/dbmf3.ini, templates/memento_edit.php:
+	Add a contact mail access on memento edition.
+
 2014-10-07  Roman Trave <abadcafe@free.fr>
 
-	* includes/contacts_sort.php, locales/en/dbmf3.ini, locales/fr/dbmf3.ini:
+	* ChangeLog: Ready to tag rel2b
+
+	* locales/en/dbmf3.ini, locales/fr/dbmf3.ini, includes/contacts_sort.php:
 	Warning added for exports without any selection.
 
 2014-10-02  Roman Trave <abadcafe@free.fr>
