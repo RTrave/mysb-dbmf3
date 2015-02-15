@@ -34,9 +34,9 @@ class MySBDBMFMemento extends MySBObject {
 
     public $date_memento = '';
 
-    public $dayofmonth_memento = 0;
+    public $dayofmonth_memento = '';
 
-    public $monthofyear_memento = 0;
+    public $monthofyear_memento = '';
 
     public $date_process = '';
 
