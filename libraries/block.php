@@ -170,16 +170,18 @@ class MySBDBMFBlockHelper {
         else $pri_group_id = $pri_group->id; 
         MySBDB::query('INSERT INTO '.MySB_DBPREFIX."dbmfblocks ".
             "(id, name, lname, groupedit_id, i_index) VALUES ".
-            "( $bid,'".$new_block_name."','".MySBUtil::str2db($lname)."',".$pri_group_id.",999 )",
-            "MySBDBMFBlockHelper::create($name,$lname)",
+            "($bid, '".$new_block_name."', '".MySBUtil::str2db($lname)."', ".$pri_group_id.", 999)",
+            "MySBDBMFBlockHelper::create($lname)",
             true, "dbmf3");
         MySBDBMFBlockHelper::indexBlocks();
         //$new_block = new MySBDBMFBlock($bid);
-        if(isset($app->cache_dbmfblocks)) {
-            $app->cache_dbmfblocks = MySBDBMFBlockHelper::load(true);
+        if(isset($app->cache_dbmfblocks)) 
+            $app->cache_dbmfblocks=null;
+        $app->cache_dbmfblocks = MySBDBMFBlockHelper::load(true);
             //$app->cache_dbmfblocks[$brid] = $new_block;
-        }
-        return $new_block;
+        //}
+        return $app->cache_dbmfblocks[$bid];
+        //return $new_block;
     }
 
     public function delete($id) {

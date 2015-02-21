@@ -20,6 +20,8 @@ global $app;
  */
 class MySBDBMFGroup extends MySBGroup {
 
+    public $dbmf_priority = '';
+
     public function __construct($id=-1,$data_group=array()) {
         global $app;
         if($id!=-1) {

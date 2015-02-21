@@ -21,7 +21,7 @@ class MySBModule_dbmf3 {
 
         //tables
         $req = MySBDB::query('CREATE TABLE '.MySB_DBPREFIX.'dbmfcontacts ( '.
-            'id int, '.
+            'id int unique key, '.
             'date_creat date, '.
             'date_modif date, '.
             'lastname varchar(64), '.
@@ -30,15 +30,16 @@ class MySBModule_dbmf3 {
             false, "dbmf3");
 
         $req = MySBDB::query('CREATE TABLE '.MySB_DBPREFIX.'dbmfblocks ( '.
-            'id int not null,  '.
+            'id int not null unique key,  '.
             'name varchar(32),  '.
             'lname varchar(512), '.
-            'groupedit_id int )',
+            'groupedit_id int, '.
+            'i_index int )',
             "__init.php",
             false, "dbmf3");
 
         $req = MySBDB::query('CREATE TABLE '.MySB_DBPREFIX.'dbmfblockrefs ( '.
-            'id int not null, '.
+            'id int not null unique key, '.
             'block_id int, '.
             'keyname varchar(32), '.
             'lname varchar(64), '.
@@ -49,7 +50,7 @@ class MySBModule_dbmf3 {
             false, "dbmf3");
 
         $req = MySBDB::query('CREATE TABLE '.MySB_DBPREFIX.'dbmfexports ( '.
-            'id int, '.
+            'id int unique key, '.
             'type varchar(32), '.
             'name varchar(64), '.
             'comments varchar(128), '.
@@ -60,6 +61,10 @@ class MySBModule_dbmf3 {
 
         $req = MySBDB::query('ALTER TABLE '.MySB_DBPREFIX.'groups ADD COLUMN '.
             'dbmf_priority int',
+            "__init.php",
+            false, "dbmf3");
+        $req = MySBDB::query('UPDATE '.MySB_DBPREFIX.'groups dbmf_priority=3 '.
+            'WHERE id=1 ',
             "__init.php",
             false, "dbmf3");
 
@@ -241,10 +246,12 @@ class MySBModule_dbmf3 {
 
     public function init6() {
         global $app;
+/*
         $req = MySBDB::query('ALTER TABLE '.MySB_DBPREFIX.'dbmfblocks '.
             'ADD i_index int',
             "__init.php",
             false, "dbmf3");
+*/
         MySBDBMFBlockHelper::indexBlocks();
         $req = MySBDB::query('ALTER TABLE '.MySB_DBPREFIX.'users '.
             'ADD dbmf_showcols varchar(512)',
