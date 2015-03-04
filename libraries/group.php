@@ -81,6 +81,14 @@ class MySBDBMFGroupHelper {
         return $primary;
     }
 
+    public function getByID($id) {
+        global $app;
+        $groups = MySBDBMFGroupHelper::load();
+        if( isset($groups[$id]) )
+            return $groups[$id];
+        return null;
+    }
+
 }
 
 
