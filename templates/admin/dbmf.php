@@ -31,29 +31,20 @@ if(isset($_POST['dbmf_editexport'])) {
 echo '
 <h2>'._G('DBMF_admin_groups').'</h2>
 
-<h3>'._G('DBMF_listgroups').'</h3>
-<div class="table_support">
-<center>
-<table width="50%"><tbody>
-<tr class="title">
-    <td>id</td>
-    <td width="100px">'._G('DBMF_group_name').'</td>
-    <td>'._G('DBMF_groups_comments').'</td>
-    <td width="250px" align="center">'._G('DBMF_groups_dbmfpriority').'</td>
-</tr>';
+<div class="boxed">
 
+<div class="title roundtop">
+    <b>'._G('DBMF_listgroups').'</b>
+</div>';
 $dbmf_groups = MySBDBMFGroupHelper::load();
 foreach($dbmf_groups as $group) {
     if($group->dbmf_priority=='' or $group->dbmf_priority==0) 
-        $class_group = ' style="background: #bbbbbb;"';
+        $style_group = ' style="background1: #bbbbbb;"';
     else 
-        $class_group = '';
+        $style_group = ' style="font-weight: bold;"';
     echo '
-<tr '.$class_group.'>
-    <td>'.$group->id.'</td>
-    <td>'.$group->name.'</td>
-    <td>'.$group->comments.'</td>
-    <td align="center">
+<div class="row" '.$style_group.'>
+    <div class="right">
         <form action="index.php?mod=dbmf3&amp;tpl=admin/dbmf" method="post">
         <select name="dbmf_priority">
             <option value="">'._G('DBMF_groups_unused').'</option>';
@@ -68,21 +59,72 @@ foreach($dbmf_groups as $group) {
         <input type="hidden" name="group_id" value="'.$group->id.'">
         <input type="submit" value="'._G('DBMF_group_modify').'">
         </form>
-    </td>
-</tr>
-';
+    </div>
+    '.$group->comments.'<br>
+    <span class="help">'.$group->name.'</span>
+</div>';
 }
 echo '
-</tbody></table>
-</center>
-</div>
+</div>';
 
-</div>
+echo '
+</div>';
 
+echo '
 <h2>'._G('DBMF_admin_exports').'</h2>';
 
 if(isset($_POST['dbmf_editexport'])) {
     $export = MySBDBMFExportHelper::getByID($_POST['dbmf_editexport']);
+
+    echo '
+<div class="boxed">
+<form action="index.php?mod=dbmf3&amp;tpl=admin/dbmf" method="post">
+
+<div class="title roundtop">
+    <b>'._G('DBMF_editexport').'</b>
+</div>
+<div class="row">
+    <div class="right"><input type="text" name="export_name" value="'.$export->name.'"></div>
+    '._G('DBMF_export_name').'
+</div>
+<div class="row">
+    <div class="right"><input type="text" name="export_comments" value="'.$export->comments.'"></div>
+    '._G('DBMF_export_comments').'
+</div>
+<div class="row">
+    <div class="right">';
+    $pluginsExport = MySBPluginHelper::loadByType('DBMFExport');
+    foreach($pluginsExport as $plugin) 
+        if($plugin->value0==$export->type) break;
+    echo $plugin->value1.'</div>
+    '._G('DBMF_export_type').'
+</div>
+<div class="row">
+    <div class="right">
+    <select name="export_groupid" >';
+    foreach($dbmf_groups as $group) {
+        echo '
+        <option value="'.$group->id.'" '.MySBUtil::form_isselected($group->id,$export->group_id).'>'.$group->comments.'</option>';
+    }
+    echo '
+    </select>
+    </div>
+    '._G('DBMF_export_group').'
+</div>
+<div class="title">
+    '._G('DBMF_export_config').'
+</div>
+<div class="row">
+    '.$export->htmlConfigForm().'
+</div>
+<div class="title">
+    <input type="hidden" name="dbmf_editexport_process" value="'.$export->id.'">
+    <input type="submit" value="'._G('DBMF_editexport_submit').'">
+</div>
+
+</form>
+</div>';
+
     echo '
 <h3>'._G('DBMF_editexport').'</h3>
 
@@ -135,111 +177,94 @@ if(isset($_POST['dbmf_editexport'])) {
 </tr>
 </tbody></table>
 </center>
-</div>';
+</div>
+</form>';
 }
 
 echo '
-</form><h3>'._G('DBMF_listexports').'</h3>
-<div class="table_support">
-<center>
-<table width="80%"><tbody>
-<tr class="title">
-    <td width="20px">id</td>
-    <td width="100px">'._G('DBMF_export_name').'</td>
-    <td width="100px">'._G('DBMF_export_comments').'</td>
-    <td width="50px">'._G('DBMF_export_type').'</td>
-    <td width="100px">'._G('DBMF_export_group').'</td>
-    <td align="center">'._G('DBMF_export_config').'</td>
-    <td width="50px" align="center">'._G('DBMF_edition').'</td>
-</tr>';
+<div class="boxed">
+
+<div class="title roundtop">
+    <b>'._G('DBMF_listexports').'</b>
+</div>';
 
 $exports = MySBDBMFExportHelper::load();
 foreach($exports as $export) {
     $group = MySBGroupHelper::getByID($export->group_id);
     echo '
-<tr>
-    <td>'.$export->id.'</td>
-    <td>'.$export->name.'</td>
-    <td>'.$export->comments.'</td>
-    <td>'.$export->type.'</td>
-    <td>'.$group->comments.'</td>
-    <td>'.$export->displayConfig().'</td>
-    <td>
+<div class="row">
+    <div class="right" style="text-align: right;">'.$export->type.'<br><span class="help">'.$group->comments.'</span></div>
+    <div style="float: left;">
     <form action="index.php?mod=dbmf3&amp;tpl=admin/dbmf" method="post">
         <input type="hidden" name="dbmf_editexport" value="'.$export->id.'">
-        <input type="submit" value="'._G('DBMF_editexport').'">
+        <input src="images/icons/text-editor.png"
+               type="image"
+               alt="'._G('DBMF_editexport').' '.$export->name.'"
+               title="'._G('DBMF_editexport').' '.$export->name.'">
     </form>
-    </td>
-</tr>';
+    </div>
+    '.$export->name.'<br>
+    <span class="help">'.$export->comments.'</span>
+</div>';
 }
+echo '
+</div>';
 
 echo '
-</tbody></table>
-</center>
-</div>
-
-<h3>'._G('DBMF_addexports').'</h3>
-
+<div class="boxed">
 <form action="index.php?mod=dbmf3&amp;tpl=admin/dbmf" method="post">
 
-<div class="table_support">
-<center>
-<table><tbody>
-<tr>
-    <td>'._G('DBMF_export_name').'</td>
-    <td><input type="text" name="export_name" value=""></td>
-</tr>
-<tr>
-    <td>'._G('DBMF_export_comments').'</td>
-    <td><input type="text" name="export_comments" value=""></td>
-</tr>
-<tr>
-    <td>'._G('DBMF_export_type').'</td>
-    <td>
+<div class="title roundtop">
+    <b>'._G('DBMF_addexports').'</b>
+</div>
+<div class="row">
+    <div class="right"><input type="text" name="export_name" value=""></div>
+    '._G('DBMF_export_name').'
+</div>
+<div class="row">
+    <div class="right"><input type="text" name="export_comments" value=""></div>
+    '._G('DBMF_export_comments').'
+</div>
+<div class="row">
+    <div class="right">
     <select name="export_type">';
 $pluginsExport = MySBPluginHelper::loadByType('DBMFExport');
 foreach($pluginsExport as $plugin) 
     echo '
         <option value="'.$plugin->value0.'">'.$plugin->value1.'</option>';
 echo '
-    </select>    
-    </td>
-</tr>
-<tr>
-    <td>'._G('DBMF_export_group').'</td>
-    <td>
+    </select>
+    </div>
+    '._G('DBMF_export_type').'
+</div>
+<div class="row">
+    <div class="right">
     <select name="export_groupid">';
-
-foreach($dbmf_groups as $group) {
+foreach($dbmf_groups as $group) 
     echo '
         <option value="'.$group->id.'">'.$group->comments.'</option>';
-}
-
 echo '
-    </select>    
-    </td>
-</tr>
-<tr>
-    <td colspan="2" style="text-align: center;">
-        <input type="hidden" name="dbmf_addexport" value="1">
-        <input type="submit" value="'._G('DBMF_addexports').'">
-    </td>
-</tr>
-</tbody></table>
-</center>
+    </select>
+    </div>
+    '._G('DBMF_export_group').'
+</div>
+<div class="title">
+    <input type="hidden" name="dbmf_addexport" value="1">
+    <input type="submit" value="'._G('DBMF_addexports').'">
 </div>
 
-</form>';
+</form>
+</div>';
 
 echo '
 <h3 id="orphans">'._G('DBMF_orphans').'</h3>';
 
 if( !isset($_POST['dbmf_orphans']) ) echo '
 <form action="index.php?mod=dbmf3&amp;tpl=admin/dbmf#orphans" method="post">
-<p>Search orphans contacts:
+<div style="text-align: center;"><br>
     <input type="hidden" name="dbmf_orphans" value="1">
     <input type="submit" value="'._G('DBMF_orphans_search').'">
-</p>
+</div><br><br>
 </form>';
 else {
     $editor = new MySBEditor();

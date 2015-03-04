@@ -17,7 +17,7 @@ global $app;
 if(!MySBRoleHelper::checkAccess('admin')) return;
 
 if(isset($_POST['group_id'])) {
-    $group = new MySBDBMFGroup($_POST['group_id']);
+    $group = MySBDBMFGroupHelper::getByID($_POST['group_id']);
     $group->setPriority($_POST['dbmf_priority']);
 }
 
@@ -34,7 +34,7 @@ if(isset($_POST['dbmf_editexport_process'])) {
 
 if(isset($_POST['dbmf_addexport'])) {
     if(!empty($_POST['export_name']) and !empty($_POST['export_comments']))
-        MySBDBMFExportHelper::create( $_POST['export_name'], $_POST['export_type'], $_POST['export_comments'], $_POST['export_config'], $_POST['export_groupid'] );
+        MySBDBMFExportHelper::create( $_POST['export_name'], $_POST['export_type'], $_POST['export_comments'], '', $_POST['export_groupid'] );
 }
 
 if(isset($_POST['dbmf_contact_delete'])) {
