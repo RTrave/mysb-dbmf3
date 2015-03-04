@@ -1,3 +1,21 @@
+2015-03-04  Roman Trave <abadcafe@free.fr>
+
+	* ChangeLog: Release tagged rel2d.
+
+	* templates/admin/dbmf_process.php, templates/admin/dbmf.php:
+	Rewrited admin page.
+
+	* libraries/group.php: Add a getByID() helper to groups.
+
+2015-03-03  Roman Trave <abadcafe@free.fr>
+
+	* __init.php: Force UTF8 charset in table creation.
+
+2015-02-21  Roman Trave <abadcafe@free.fr>
+
+	* __init.php, libraries/block.php, libraries/group.php:
+	few fixes in initialization sequence.
+
 2015-02-15  Roman Trave <abadcafe@free.fr>
 
 	* ChangeLog: Release tagged rel2c.
