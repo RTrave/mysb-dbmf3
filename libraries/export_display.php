@@ -1,4 +1,4 @@
-<?php 
+<?php
 /***************************************************************************
  *
  *   phpMySandBox/DBMF3 module - TRoman<abadcafe@free.fr> - 2012
@@ -15,7 +15,7 @@ defined('_MySBEXEC') or die;
 
 /**
  * DBMF Export class
- * 
+ *
  */
 class MySBDBMFExportDisplay extends MySBDBMFExport {
 
@@ -31,7 +31,7 @@ class MySBDBMFExportDisplay extends MySBDBMFExport {
 */
 
     public function selectionProcess( $selection ) {
-        
+
     }
 
     public function htmlParamForm() {
@@ -99,12 +99,13 @@ class MySBDBMFExportDisplay extends MySBDBMFExport {
 
     /**
      * Search result output
-     * @param   
+     * @param
      */
     public function htmlResultOutput() {
         global $app;
+        $editor = new MySBEditor();
         echo '
-'.MySBEditor::init("simple").'
+'.$editor->init("simple").'
 <div id="contacts_results">';
         _incI('contacts_sort','dbmf3');
         echo '

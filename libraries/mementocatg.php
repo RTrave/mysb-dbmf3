@@ -1,4 +1,4 @@
-<?php 
+<?php
 /***************************************************************************
  *
  *   phpMySandBox/RSVP module - TRoman<abadcafe@free.fr> - 2012
@@ -15,7 +15,7 @@ defined('_MySBEXEC') or die;
 
 /**
  * DBMF Mementos class
- * 
+ *
  */
 class MySBDBMFMementoCatg extends MySBObject {
 
@@ -34,14 +34,14 @@ class MySBDBMFMementoCatg extends MySBObject {
     }
 
     public function update( $data_mementocatg ) {
-        parent::update( 'dbmfmementocatgs', $data_mementocatg );
+        parent::__update( 'dbmfmementocatgs', $data_mementocatg );
     }
 
     public function isAvailable($user=null) {
         global $app;
         if( $user==null ) $user = $app->auth_user;
         $groups_csv = new MySBCSValues($this->group_ids);
-        foreach( $groups_csv->values as $groupid ) 
+        foreach( $groups_csv->values as $groupid )
             if( $user->haveGroup($groupid) )
                 return true;
     }
@@ -50,11 +50,11 @@ class MySBDBMFMementoCatg extends MySBObject {
 
 /**
  * DBMF Mementos class
- * 
+ *
  */
 class MySBDBMFMementoCatgHelper extends MySBObject {
 
-    public function create($name) {
+    public static function create($name) {
         $mcid = MySBDB::lastID('dbmfmementocatgs')+1;
         if($mcid==0) $mcid = 1;
         $req_mementocatgs = MySBDB::query("INSERT INTO ".MySB_DBPREFIX."dbmfmementocatgs ".
@@ -64,7 +64,7 @@ class MySBDBMFMementoCatgHelper extends MySBObject {
                 true, 'dbmf3' );
     }
 
-    public function delete($id) {
+    public static function delete($id) {
         global $app;
         if( isset($app->cache_dbmfmemcatgs) ) unset ($app->cache_dbmfmemcatgs);
         MySBDB::query("UPDATE ".MySB_DBPREFIX."dbmfmementos ".
@@ -78,9 +78,9 @@ class MySBDBMFMementoCatgHelper extends MySBObject {
                 true, 'dbmf3' );
     }
 
-    public function load() {
+    public static function load() {
         global $app;
-        if( isset($app->cache_dbmfmemcatgs) ) 
+        if( isset($app->cache_dbmfmemcatgs) )
             return $app->cache_dbmfmemcatgs;
         $req_memcatgs = MySBDB::query("SELECT * FROM ".MySB_DBPREFIX."dbmfmementocatgs ".
                 "ORDER BY id",
@@ -93,7 +93,7 @@ class MySBDBMFMementoCatgHelper extends MySBObject {
         return $app->cache_dbmfmemcatgs;
     }
 
-    public function loadAvailable() {
+    public static function loadAvailable() {
         global $app;
         $memcatgs = MySBDBMFMementoCatgHelper::load();
         $available_memcatgs = array();
@@ -103,10 +103,10 @@ class MySBDBMFMementoCatgHelper extends MySBObject {
         return $available_memcatgs;
     }
 
-    public function getByID($id) {
+    public static function getByID($id) {
         global $app;
         $memcatgs = MySBDBMFMementoCatgHelper::load();
-        foreach( $memcatgs as $memcatg ) 
+        foreach( $memcatgs as $memcatg )
             if( $memcatg->id==$id )
                 return $memcatg;
         return null;

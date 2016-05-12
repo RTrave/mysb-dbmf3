@@ -1,4 +1,4 @@
-<?php 
+<?php
 /***************************************************************************
  *
  *   phpMySandBox/DBMF3 module - TRoman<abadcafe@free.fr> - 2012
@@ -15,7 +15,7 @@ defined('_MySBEXEC') or die;
 
 /**
  * DBMF Export class
- * 
+ *
  */
 class MySBDBMFExport extends MySBObject {
 
@@ -29,7 +29,7 @@ class MySBDBMFExport extends MySBObject {
         global $app;
         if($id!=-1) {
             $req_export = MySBDB::query("SELECT * FROM ".MySB_DBPREFIX.'dbmfexports '.
-                'WHERE id='.$id, 
+                'WHERE id='.$id,
                 "MySBDBMFExport::__construct($id)",
                 false, 'dbmf3');
             $data_export = MySBDB::fetch_array($req_export);
@@ -39,17 +39,17 @@ class MySBDBMFExport extends MySBObject {
         $config_values = explode(';',$this->config);
         foreach($config_values as $value) {
             $config = explode('=',$value);
-            if($config[0]!='') 
+            if($config[0]!='')
                 $this->config_array[$config[0]] = $config[1];
         }
     }
 
     public function update($data_export) {
-        parent::update( 'dbmfexports', $data_export );
+        parent::__update( 'dbmfexports', $data_export );
         $config_values = explode(';',$this->config);
         foreach($config_values as $value) {
             $config = explode('=',$value);
-            if($config[0]!='') 
+            if($config[0]!='')
                 $this->config_array[$config[0]] = $config[1];
         }
     }
@@ -70,7 +70,7 @@ class MySBDBMFExport extends MySBObject {
 
     /**
      * Config form display
-     * @param   
+     * @param
      */
     public function htmlConfigForm() {
         return _G('DBMF_export_noconfig');
@@ -78,14 +78,14 @@ class MySBDBMFExport extends MySBObject {
 
     /**
      * Config form process
-     * @param   
+     * @param
      */
     public function htmlConfigProcess() {
     }
 
     /**
      * Parameters form display
-     * @param   
+     * @param
      */
     public function htmlParamForm() {
         return _G('DBMF_export_noparam');
@@ -93,28 +93,28 @@ class MySBDBMFExport extends MySBObject {
 
     /**
      * Parameters form process
-     * @param   
+     * @param
      */
     public function htmlParamProcess() {
     }
 
     /**
      * "WHERE" clause of export
-     * @param   
+     * @param
      */
     public function requestWhereClause() {
     }
 
     /**
      * "ORDER BY" clause of export
-     * @param   
+     * @param
      */
     public function requestOrderBy() {
     }
 
     /**
      * Search result output
-     * @param   
+     * @param
      */
     public function htmlResultOutput() {
         return '<p>No export output</p>';
@@ -124,7 +124,7 @@ class MySBDBMFExport extends MySBObject {
 
 class MySBDBMFExportHelper {
 
-    public function create($name,$type,$comments,$config,$group_id) {
+    public static function create($name,$type,$comments,$config,$group_id) {
         global $app;
         $bid = MySBDB::firstID('dbmfexports');
         if($bid==0) $bid = 1;
@@ -137,14 +137,14 @@ class MySBDBMFExportHelper {
         if (class_exists($exportClass)) {
             $new_export = new $exportClass($bid);
             $new_export->post_create();
-            if(isset($app->cache_dbmfexports)) 
+            if(isset($app->cache_dbmfexports))
                 $app->cache_dbmfexports[$bid] = $new_export;
-        } else 
+        } else
             $app->ERR("MySBDBMFExportHelper::create($name,$type): class '$exportClass' not found");
         return $new_export;
     }
 
-    public function delete($id) {
+    public static function delete($id) {
         global $app;
         $export = MySBDBMFExportHelper::getByID($id);
         $export->pre_delete();
@@ -152,13 +152,13 @@ class MySBDBMFExportHelper {
             "WHERE id='".$id."'",
             "MySBDBMFExportHelper::delete($id)",
             true, "dbmf3");
-        if(isset($app->cache_dbmfexports)) 
+        if(isset($app->cache_dbmfexports))
             unset( $app->cache_dbmfexports[$id]);
     }
 
-    public function load() {
+    public static function load() {
         global $app;
-        if(isset($app->cache_dbmfexports)) 
+        if(isset($app->cache_dbmfexports))
             return $app->cache_dbmfexports;
         $app->cache_dbmfexports = array();
         $req_dbmfexports = MySBDB::query("SELECT * FROM ".MySB_DBPREFIX."dbmfexports ".
@@ -171,19 +171,19 @@ class MySBDBMFExportHelper {
                 if($app->auth_user->haveGroup($data_export['group_id']) or $app->auth_user->haveGroup('0')) {
                     $app->cache_dbmfexports[$data_export['id']] = new $exportClass(-1, $data_export);
                 }
-            } else 
+            } else
                 $app->LOG("MySBDBMFExportHelper::load(): class '$exportClass' not found");
         }
         return $app->cache_dbmfexports;
     }
 
-    public function getByID($id) {
+    public static function getByID($id) {
         global $app;
         $exports = MySBDBMFExportHelper::load();
         return $exports[$id];
     }
 
-    public function getByName($name) {
+    public static function getByName($name) {
         global $app;
         $exports = MySBDBMFExportHelper::load();
         foreach($exports as $export) {
@@ -211,7 +211,7 @@ class MySBPluginDBMFExport extends MySBPlugin {
 
     /**
      * Include process after plugin creation
-     * @param   
+     * @param
      */
     public function post_create() {
         global $app;
@@ -220,7 +220,7 @@ class MySBPluginDBMFExport extends MySBPlugin {
 
     /**
      * Include process
-     * @param   
+     * @param
      */
     public function includeFile() {
         global $app;

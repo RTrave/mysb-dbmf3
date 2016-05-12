@@ -1,4 +1,4 @@
-<?php 
+<?php
 /***************************************************************************
  *
  *   phpMySandBox/DBMF3 module - TRoman<abadcafe@free.fr> - 2012
@@ -16,7 +16,7 @@ defined('_MySBEXEC') or die;
 
 /**
  * DBMF Block class
- * 
+ *
  */
 class MySBDBMFBlock extends MySBObject {
 
@@ -29,7 +29,7 @@ class MySBDBMFBlock extends MySBObject {
         global $app;
         if($id!=-1) {
             $req_block = MySBDB::query("SELECT * FROM ".MySB_DBPREFIX.'dbmfblocks '.
-                'WHERE id='.$id, 
+                'WHERE id='.$id,
                 "MySBDBMFBlock::__construct($id)",
                 false, 'dbmf3');
             $data_block = MySBDB::fetch_array($req_block);
@@ -43,7 +43,7 @@ class MySBDBMFBlock extends MySBObject {
     }
 
     public function update($data_block) {
-        parent::update( 'dbmfblocks', $data_block );
+        parent::__update( 'dbmfblocks', $data_block );
     }
 
     public function isEditable() {
@@ -160,14 +160,14 @@ class MySBDBMFBlock extends MySBObject {
 
 class MySBDBMFBlockHelper {
 
-    public function create($lname) {
+    public static function create($lname) {
         global $app;
         $bid = MySBDB::lastID('dbmfblocks')+1;
         if($bid==0) $bid = 1;
         $new_block_name = 'dbmfblock'.$bid;
         $pri_group = MySBDBMFGroupHelper::get_primary($app->auth_user);
         if($pri_group==null) $pri_group_id = 1;
-        else $pri_group_id = $pri_group->id; 
+        else $pri_group_id = $pri_group->id;
         MySBDB::query('INSERT INTO '.MySB_DBPREFIX."dbmfblocks ".
             "(id, name, lname, groupedit_id, i_index) VALUES ".
             "($bid, '".$new_block_name."', '".MySBUtil::str2db($lname)."', ".$pri_group_id.", 999)",
@@ -175,7 +175,7 @@ class MySBDBMFBlockHelper {
             true, "dbmf3");
         MySBDBMFBlockHelper::indexBlocks();
         //$new_block = new MySBDBMFBlock($bid);
-        if(isset($app->cache_dbmfblocks)) 
+        if(isset($app->cache_dbmfblocks))
             $app->cache_dbmfblocks=null;
         $app->cache_dbmfblocks = MySBDBMFBlockHelper::load(true);
             //$app->cache_dbmfblocks[$brid] = $new_block;
@@ -184,7 +184,7 @@ class MySBDBMFBlockHelper {
         //return $new_block;
     }
 
-    public function delete($id) {
+    public static function delete($id) {
         $block = MySBDBMFBlockHelper::getByID($id);
         MySBDB::query("DELETE FROM ".MySB_DBPREFIX.'dbmfblockrefs WHERE '.
             "block_id=$id",
@@ -197,9 +197,9 @@ class MySBDBMFBlockHelper {
         MySBDBMFBlockHelper::load(true);
     }
 
-    public function load($force=false) {
+    public static function load($force=false) {
         global $app;
-        if(isset($app->cache_dbmfblocks) and $force==false) 
+        if(isset($app->cache_dbmfblocks) and $force==false)
             return $app->cache_dbmfblocks;
         $app->cache_dbmfblocks = array();
         $req_dbmfblocks = MySBDB::query("SELECT * FROM ".MySB_DBPREFIX."dbmfblocks ".
@@ -212,13 +212,13 @@ class MySBDBMFBlockHelper {
         return $app->cache_dbmfblocks;
     }
 
-    public function getByID($id) {
+    public static function getByID($id) {
         global $app;
         $blocks = MySBDBMFBlockHelper::load();
         return $blocks[$id];
     }
 
-    public function indexBlocks() {
+    public static function indexBlocks() {
         global $app;
         $index = 1;
         $req_blocks = MySBDB::query("SELECT * FROM ".MySB_DBPREFIX."dbmfblocks ".
@@ -236,7 +236,7 @@ class MySBDBMFBlockHelper {
         MySBDBMFBlockHelper::load(true);
     }
 
-    public function sqlWhereClauseOwner() {
+    public static function sqlWhereClauseOwner() {
         global $app;
         $blocks = MySBDBMFBlockHelper::load();
         $clause_owner = '';

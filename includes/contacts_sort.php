@@ -1,4 +1,4 @@
-<?php 
+<?php
 /***************************************************************************
  *
  *   phpMySandBox/DBMF3 module - TRoman<abadcafe@free.fr> - 2012
@@ -18,19 +18,19 @@ global $app;
 if( !MySBRoleHelper::checkAccess('dbmf_user') ) return;
 
 
-if( !isset($_SESSION["dbmf_query_sort"]) ) 
+if( !isset($_SESSION["dbmf_query_sort"]) )
     $_SESSION["dbmf_query_sort"] = 'lastname';
-if( isset($_GET["sort"]) ) 
+if( isset($_GET["sort"]) )
     $_SESSION["dbmf_query_sort"] = $_GET["sort"];
 
-if( !isset($_SESSION["dbmf_query_asc"]) ) 
+if( !isset($_SESSION["dbmf_query_asc"]) )
     $_SESSION["dbmf_query_asc"] = '';
-if( isset($_GET["asc"]) ) 
+if( isset($_GET["asc"]) )
     $_SESSION["dbmf_query_asc"] = $_GET["asc"];
 
-if( !isset($_SESSION["dbmf_search_pack"]) ) 
+if( !isset($_SESSION["dbmf_search_pack"]) )
     $_SESSION["dbmf_search_pack"] = '20';
-if( isset($_GET["pack"]) ) 
+if( isset($_GET["pack"]) )
     $_SESSION["dbmf_search_pack"] = $_GET["pack"];
 
 
@@ -45,7 +45,7 @@ function sortActions($pack) {
     <option value="date_modif" '.MySBUtil::form_isselected('date_modif',$_SESSION["dbmf_query_sort"]).'>'._G('DBMF_date_modif').'</option>';
     $blockref_orderby = MySBDBMFBlockRefHelper::load();
     foreach($blockref_orderby as $oblockref) {
-        if($oblockref->orderby=='1') 
+        if($oblockref->orderby=='1')
             $output .= '
     <option value="'.$oblockref->keyname.'" '.MySBUtil::form_isselected($oblockref->keyname,$_SESSION["dbmf_query_sort"]).'>'._G($oblockref->lname).'</option>';
     }
@@ -112,7 +112,7 @@ $sql_all =  $_SESSION['dbmf_query_select'].' WHERE '.$_SESSION['dbmf_query_where
             ' ORDER by '.$_SESSION["dbmf_query_sort"].
             ' '.$_SESSION["dbmf_query_asc"];
 $search_all = MySBDB::query( $sql_all,
-    "request_process.php",
+    "contact_sort.php",
     false, 'dbmf3');
 
 //$search_result = $app->tpl_dbmf_searchresult;
@@ -132,6 +132,12 @@ $counter = 0;
 $i_pack = 0;
 $i_contact = 0;
 $i_currentpack = 0;
+
+if(MySBDB::num_rows($search_all)==0) {
+    echo '<p>No results</p>';
+    return;
+}
+
 while( $datares = MySBDB::fetch_array($search_all) ) {
     if( $i_contact==$_SESSION["dbmf_search_pack"] ) {
         $i_contact = 0;

@@ -1,4 +1,4 @@
-<?php 
+<?php
 /***************************************************************************
  *
  *   phpMySandBox/DBMF3 module - TRoman<abadcafe@free.fr> - 2012
@@ -16,7 +16,7 @@ global $app;
 
 /**
  * DBMF group class
- * 
+ *
  */
 class MySBDBMFGroup extends MySBGroup {
 
@@ -45,11 +45,11 @@ class MySBDBMFGroup extends MySBGroup {
 
 /**
  * DBMF group helper class
- * 
+ *
  */
 class MySBDBMFGroupHelper {
 
-    public function load() {
+    public static function load() {
         global $app;
         if(isset($app->dbmfgroups)) return $app->dbmfgroups;
         $app->dbmfgroups = array();
@@ -63,7 +63,7 @@ class MySBDBMFGroupHelper {
         return $app->dbmfgroups;
     }
 
-    public function get_primary($user) {
+    public static function get_primary($user) {
         global $app;
         $groups = MySBDBMFGroupHelper::load();
         $primary = null;
@@ -81,7 +81,7 @@ class MySBDBMFGroupHelper {
         return $primary;
     }
 
-    public function getByID($id) {
+    public static function getByID($id) {
         global $app;
         $groups = MySBDBMFGroupHelper::load();
         if( isset($groups[$id]) )

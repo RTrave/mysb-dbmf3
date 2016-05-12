@@ -1,4 +1,4 @@
-<?php 
+<?php
 /***************************************************************************
  *
  *   phpMySandBox/DBMF3 module - TRoman<abadcafe@free.fr> - 2012
@@ -14,7 +14,7 @@ defined('_MySBEXEC') or die;
 
 /**
  * DBMF Contact class
- * 
+ *
  */
 class MySBDBMFContact extends MySBObject {
 
@@ -27,7 +27,7 @@ class MySBDBMFContact extends MySBObject {
         if($id!=null) {
             if( isset($app->dbmf_cache_contacts[$id]) and $app->dbmf_cache_contacts[$id]!='' ) {
                 $data_contact = $app->dbmf_cache_contacts[$id];
-            } else { 
+            } else {
                 $req_contact = MySBDB::query("SELECT * FROM ".MySB_DBPREFIX.'dbmfcontacts '.
                     'WHERE id='.$id
                     ,"MySBDBMFContact::__construct($id)",
@@ -41,7 +41,7 @@ class MySBDBMFContact extends MySBObject {
 
     public function update( $data_contact ) {
         global $app;
-        parent::update('dbmfcontacts', (array) ($data_contact));
+        parent::__update('dbmfcontacts', (array) ($data_contact));
     }
 
     public function addMementoSimple($message) {
@@ -60,7 +60,7 @@ class MySBDBMFContact extends MySBObject {
 
 class MySBDBMFContactHelper {
 
-    public function create($lastname,$firstname,$mail) {
+    public static function create($lastname,$firstname,$mail) {
         global $app;
         $cid = MySBDB::lastID('dbmfcontacts')+1;
         if($cid==0) $cid = 1;
@@ -73,16 +73,16 @@ class MySBDBMFContactHelper {
             true, 'dbmf3' );
         $new_contact = new MySBDBMFContact($cid);
         $pluginsEvent = MySBPluginHelper::loadByType('DBMFEvent');
-        foreach($pluginsEvent as $plugin) 
+        foreach($pluginsEvent as $plugin)
             $plugin->contactCreate($new_contact);
         return $new_contact;
     }
 
-    public function delete($id) {
+    public static function delete($id) {
         global $app;
         $contact = new MySBDBMFContact($id);
         $pluginsEvent = MySBPluginHelper::loadByType('DBMFEvent');
-        foreach($pluginsEvent as $plugin) 
+        foreach($pluginsEvent as $plugin)
             $plugin->contactDelete($contact);
         MySBDB::query('DELETE FROM '.MySB_DBPREFIX.'dbmfcontacts '.
             'WHERE id='.$id,

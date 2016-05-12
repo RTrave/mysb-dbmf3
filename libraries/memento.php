@@ -1,4 +1,4 @@
-<?php 
+<?php
 /***************************************************************************
  *
  *   phpMySandBox/RSVP module - TRoman<abadcafe@free.fr> - 2012
@@ -20,7 +20,7 @@ define('MYSB_DBMF_MEMENTO_TYPE_DAYOFMONTH', 2);
 
 /**
  * DBMF Mementos class
- * 
+ *
  */
 class MySBDBMFMemento extends MySBObject {
 
@@ -63,7 +63,7 @@ class MySBDBMFMemento extends MySBObject {
 
     public function update( $data_memento=array() ) {
         global $app;
-        parent::update('dbmfmementos', (array) ($data_memento));
+        parent::__update('dbmfmementos', (array) ($data_memento));
     }
 
     public function setCategory($memcatg_id) {
@@ -179,11 +179,11 @@ class MySBDBMFMemento extends MySBObject {
 
 /**
  * DBMF Mementos class
- * 
+ *
  */
 class MySBDBMFMementoHelper {
 
-    public function create($memcatg_id,$contact_id,$type) {
+    public static function create($memcatg_id,$contact_id,$type) {
         global $app;
         $mid = MySBDB::lastID('dbmfmementos')+1;
         if($mid==0) $mid = 1;
@@ -197,7 +197,7 @@ class MySBDBMFMementoHelper {
         return $new_memento;
     }
 
-    public function delete($id) {
+    public static function delete($id) {
         global $app;
         MySBDB::query('DELETE FROM '.MySB_DBPREFIX.'dbmfmementos '.
             'WHERE id='.$id,
@@ -205,17 +205,17 @@ class MySBDBMFMementoHelper {
             true, 'dbmf3' );
     }
 
-    private function req_cond() {
+    private static function req_cond() {
         global $app;
         $user = $app->auth_user;
         $cond = '(user_id='.$user->id;
         $memcatgs = MySBDBMFMementoCatgHelper::loadAvailable();
-        foreach( $memcatgs as $memcatg ) 
+        foreach( $memcatgs as $memcatg )
             $cond .= ' or memcatg_id='.$memcatg->id;
         return $cond .= ')';
     }
 
-    private function loadContactInfos($mementos) {
+    private static function loadContactInfos($mementos) {
         global $app;
         $app->dbmfcontactinfos = array();
         $mem_where = '';
@@ -230,25 +230,25 @@ class MySBDBMFMementoHelper {
                     "ORDER BY id",
                     "MySBDBMFMementoHelper::loadContactInfos()",
                     true, 'dbmf3' );
-                while($data_contactinfos = MySBDB::fetch_array($req_contactinfos)) 
+                while($data_contactinfos = MySBDB::fetch_array($req_contactinfos))
                     $app->dbmfcontactinfos[$data_contactinfos['id']] = new MySBDBMFGroup(-1, $data_contactinfos);
                 $mem_where = '';
             }
         }
     }
 
-    public function getContactInfos($contact_id) {
+    public static function getContactInfos($contact_id) {
         global $app;
         if(isset($app->dbmfcontactinfos)) return $app->dbmfcontactinfos[$contact_id];
     }
 
-    public function load($contact_id=null,$memcatg_id=0) {
+    public static function load($contact_id=null,$memcatg_id=0) {
         global $app;
         $req_cond = MySBDBMFMementoHelper::req_cond();
         if($contact_id!=null)
-            $req_cond .= ' and contact_id='.$contact_id; 
+            $req_cond .= ' and contact_id='.$contact_id;
         if($memcatg_id!=0)
-            $req_cond .= ' and memcatg_id='.$memcatg_id; 
+            $req_cond .= ' and memcatg_id='.$memcatg_id;
         $req_mementos = MySBDB::query("SELECT * FROM ".MySB_DBPREFIX."dbmfmementos ".
                 "WHERE (".$req_cond.") ".
                 "ORDER BY type,monthofyear_memento,date_memento,date_process",
@@ -262,11 +262,11 @@ class MySBDBMFMementoHelper {
         return $mementos;
     }
 
-    public function loadActives($memcatg_id=0) {
+    public static function loadActives($memcatg_id=0) {
         global $app;
         $req_cond = MySBDBMFMementoHelper::req_cond();
         if($memcatg_id!=0)
-            $req_cond .= ' and memcatg_id='.$memcatg_id; 
+            $req_cond .= ' and memcatg_id='.$memcatg_id;
         $req_mementos = MySBDB::query("SELECT * FROM ".MySB_DBPREFIX."dbmfmementos ".
                 "WHERE (".$req_cond.") ".
                 "ORDER BY type,monthofyear_memento,date_memento,date_process",
