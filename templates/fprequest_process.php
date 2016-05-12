@@ -1,4 +1,4 @@
-<?php 
+<?php
 /***************************************************************************
  *
  *   phpMySandBox/DBMF3 module - TRoman<abadcafe@free.fr> - 2012
@@ -51,11 +51,11 @@ if(isset($_POST['dbmf_request'])) {
         $clause_a = '';
     }
 
-    if($clause_owner!='' and $clause_a!='') $clause_a .= ' and ('.$clause_owner.')';
+    if($clause_owner!='' and $clause_a!='') $clause_a = '('.$clause_a.') and ('.$clause_owner.')';
     elseif($clause_owner!='') $clause_a .= '('.$clause_owner.')';
 
 	$_SESSION['dbmf_query_select'] = $sql_r;
-	$_SESSION['dbmf_query_where'] = $clause_a;
+	$_SESSION['dbmf_query_where'] = '('.$clause_a.')';
 
 }
 
