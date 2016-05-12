@@ -1,4 +1,4 @@
-<?php 
+<?php
 /***************************************************************************
  *
  *   phpMySandBox/DBMF3 module - TRoman<abadcafe@free.fr> - 2012
@@ -38,9 +38,9 @@ echo '
 </div>';
 $dbmf_groups = MySBDBMFGroupHelper::load();
 foreach($dbmf_groups as $group) {
-    if($group->dbmf_priority=='' or $group->dbmf_priority==0) 
+    if($group->dbmf_priority=='' or $group->dbmf_priority==0)
         $style_group = ' style="background1: #bbbbbb;"';
-    else 
+    else
         $style_group = ' style="font-weight: bold;"';
     echo '
 <div class="row" '.$style_group.'>
@@ -94,7 +94,7 @@ if(isset($_POST['dbmf_editexport'])) {
 <div class="row">
     <div class="right">';
     $pluginsExport = MySBPluginHelper::loadByType('DBMFExport');
-    foreach($pluginsExport as $plugin) 
+    foreach($pluginsExport as $plugin)
         if($plugin->value0==$export->type) break;
     echo $plugin->value1.'</div>
     '._G('DBMF_export_type').'
@@ -124,61 +124,6 @@ if(isset($_POST['dbmf_editexport'])) {
 
 </form>
 </div>';
-
-    echo '
-<h3>'._G('DBMF_editexport').'</h3>
-
-<form action="index.php?mod=dbmf3&amp;tpl=admin/dbmf" method="post">
-
-<div class="table_support">
-<center>
-<table><tbody>
-<tr>
-    <td>'._G('DBMF_export_name').'</td>
-    <td><input type="text" name="export_name" value="'.$export->name.'"></td>
-</tr>
-<tr>
-    <td>'._G('DBMF_export_comments').'</td>
-    <td><input type="text" name="export_comments" value="'.$export->comments.'"></td>
-</tr>
-<tr>
-    <td>'._G('DBMF_export_type').'</td>
-    <td>';
-    $pluginsExport = MySBPluginHelper::loadByType('DBMFExport');
-    foreach($pluginsExport as $plugin) 
-        if($plugin->value0==$export->type) break;
-    echo $plugin->value1.'</td>
-</tr>
-<tr>
-    <td>'._G('DBMF_export_group').'</td>
-    <td>
-    <select name="export_groupid" >';
-    foreach($dbmf_groups as $group) {
-        echo '
-        <option value="'.$group->id.'" '.MySBUtil::form_isselected($group->id,$export->group_id).'>'.$group->comments.'</option>';
-    }
-    echo '
-    </select>    
-    </td>
-</tr>
-<tr>
-    <td>'._G('DBMF_export_config').'</td>
-    <td>';
-    echo '
-        '.$export->htmlConfigForm();
-    echo '
-    </td>
-</tr>
-<tr>
-    <td colspan="2" style="text-align: center;">
-        <input type="hidden" name="dbmf_editexport_process" value="'.$export->id.'">
-        <input type="submit" value="'._G('DBMF_editexport_submit').'">
-    </td>
-</tr>
-</tbody></table>
-</center>
-</div>
-</form>';
 }
 
 echo '
@@ -229,7 +174,7 @@ echo '
     <div class="right">
     <select name="export_type">';
 $pluginsExport = MySBPluginHelper::loadByType('DBMFExport');
-foreach($pluginsExport as $plugin) 
+foreach($pluginsExport as $plugin)
     echo '
         <option value="'.$plugin->value0.'">'.$plugin->value1.'</option>';
 echo '
@@ -240,7 +185,7 @@ echo '
 <div class="row">
     <div class="right">
     <select name="export_groupid">';
-foreach($dbmf_groups as $group) 
+foreach($dbmf_groups as $group)
     echo '
         <option value="'.$group->id.'">'.$group->comments.'</option>';
 echo '
