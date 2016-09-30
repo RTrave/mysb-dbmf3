@@ -139,7 +139,7 @@ foreach($blocks as $block) {
     $group_edit = MySBGroupHelper::getByID($block->groupedit_id);
 
     echo '
-<div class="boxed" style="width: 600px; margin-top: 10px;">
+<div class="boxed" style="width: 600px; margin-top: 10px;" id="a_block'.$block->id.'">
     <div class="title roundtop">
         <div style="float: left; width: 100px;">
         <div style="display: inline-block; width: 40px;">
