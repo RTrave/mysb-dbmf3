@@ -53,7 +53,8 @@ class MySBDBMFContact extends MySBObject {
         $memento->update( array(
             'date_memento' => $today_date,
             'comments' => $message,
-            'group_edition' => 1 ) );
+            'group_edition' => 1,
+            'type' => 1 ) );
     }
 
 }
