@@ -180,7 +180,9 @@ class MySBDBMFExportHelper {
     public static function getByID($id) {
         global $app;
         $exports = MySBDBMFExportHelper::load();
-        return $exports[$id];
+        if (isset($exports[$id]))
+            return $exports[$id];
+        return null;
     }
 
     public static function getByName($name) {
