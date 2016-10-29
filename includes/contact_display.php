@@ -106,7 +106,7 @@ $daysold = $date_modif->absDiff();
         $column_name = $sblockref->keyname;
         if( $contact->$column_name!='' and $contact->$column_name!=0 )
             echo '
-            '.$sblockref->htmlFormNonEditable('',$contact->$column_name,MySBUtil::str2abbrv(_G($sblockref->lname),3,3)).'<br>';
+            '.$sblockref->htmlFormNonEditable('',$contact->$column_name,MySBUtil::str2abbrv(_G($sblockref->lname),4,4)).'<br>';
         else echo '<br>';
     }
 
