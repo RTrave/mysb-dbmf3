@@ -1,3 +1,19 @@
+2016-11-07  Roman Trave <abadcafe@free.fr>
+
+	* ChangeLog: Project tagged rel2f.
+
+2016-10-30  Roman Trave <abadcafe@free.fr>
+
+	* includes/contact_display.php:
+	BlockRef name text display now truncated from 3 to 4 chars.
+
+2016-09-30  Roman Trave <abadcafe@free.fr>
+
+	* libraries/export.php:
+	Added isset() condition to prevent warning on non-set indice.
+
+	* libraries/contact.php: Memento type is now set in addMementoSimple().
+
 2016-06-13  Roman Trave <abadcafe@free.fr>
 
 	* ChangeLog: Project tagged rel2e.
