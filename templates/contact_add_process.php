@@ -18,7 +18,7 @@ if(!MySBRoleHelper::checkAccess('dbmf_editor')) return;
 
 if( isset($_POST['lastname']) ) {
 if( empty($_POST['lastname']) and empty($_POST['firstname']) and empty($_POST['mail']) ) {
-    $app->pushMessage(_G("DBMF_addcontact_lastname_required"));
+    $app->pushMessage(_G('DBMF_addcontact_lastname_required'));
 } else {
     $sql_wcheck = 'SELECT * from '.MySB_DBPREFIX.'dbmfcontacts '.
         'WHERE ';

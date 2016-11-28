@@ -58,7 +58,7 @@ echo '
         class="overlayed">
     <div class="action first">
         <img    src="images/icons/text-editor.png" 
-                alt="'._G("DBMF_memento_edition_return").'" 
+                alt="'._G('DBMF_memento_edition_return').'" 
                 title="'._G('DBMF_contact_edition').': '.$contact->lastname.' '.$contact->firstname.' ('.$contact->id.')"
                 style="width1: 24px">
     </div>
@@ -108,7 +108,7 @@ if($memento->id!=-1) {
 }
 
 echo '
-'._G("DBMF_memento").'';
+'._G('DBMF_memento').'';
 if( !$Active and $memento->date_process!='' ) {
     $memento_process = new MySBDateTime($memento->date_process);
     echo '
@@ -156,23 +156,23 @@ foreach( $memcatgs as $memcatg ) {
 if($memento->id==-1) $onlyowner = '';
 else $onlyowner = MySBUtil::form_isselected($memento->memcatg_id,0);
 echo '
-        <option value="0" '.$onlyowner.'>'._G("DBMF_memento_onlyowner").'</option>
+        <option value="0" '.$onlyowner.'>'._G('DBMF_memento_onlyowner').'</option>
     </select>';
 
 if($memento->id==-1) $modifiable = ' checked="checked" ';
 else $modifiable = MySBUtil::form_ischecked($memento->group_edition,1);
 echo '
-    <input type="checkbox" name="memento_group_edition" '.$modifiable.'>'._G("DBMF_memento_groupcanedit").'
+    <input type="checkbox" name="memento_group_edition" '.$modifiable.'>'._G('DBMF_memento_groupcanedit').'
     </div>
-    <b>'._G("DBMF_memento_category").':</b>
+    <b>'._G('DBMF_memento_category').':</b>
 </div>
 
 <div class="row" style="">
     <div class="right" style=""><select name="memento_type" onChange="hide_instant(\'memtype0\');hide_instant(\'memtype1\');show(this.options[this.selectedIndex].value);">
-            <option value="memtype'.MYSB_DBMF_MEMENTO_TYPE_PUNCTUAL.'" '.MySBUtil::form_isselected($memento->type,MYSB_DBMF_MEMENTO_TYPE_PUNCTUAL).'>'._G("DBMF_memento_type_punctual").'</option>
-            <option value="memtype'.MYSB_DBMF_MEMENTO_TYPE_MONTHOFYEAR.'" '.MySBUtil::form_isselected($memento->type,MYSB_DBMF_MEMENTO_TYPE_MONTHOFYEAR).'>'._G("DBMF_memento_type_monthofyear").'</option>
+            <option value="memtype'.MYSB_DBMF_MEMENTO_TYPE_PUNCTUAL.'" '.MySBUtil::form_isselected($memento->type,MYSB_DBMF_MEMENTO_TYPE_PUNCTUAL).'>'._G('DBMF_memento_type_punctual').'</option>
+            <option value="memtype'.MYSB_DBMF_MEMENTO_TYPE_MONTHOFYEAR.'" '.MySBUtil::form_isselected($memento->type,MYSB_DBMF_MEMENTO_TYPE_MONTHOFYEAR).'>'._G('DBMF_memento_type_monthofyear').'</option>
         </select></div>
-    <b>'._G("DBMF_memento_type").':</b>';
+    <b>'._G('DBMF_memento_type').':</b>';
 
 echo '
 </div>';
@@ -204,23 +204,23 @@ echo '
             </select>
         </div>
     </div>
-    <b>'._G("DBMF_memento_date").':</b>
+    <b>'._G('DBMF_memento_date').':</b>
 </div>
 
 <div class="row" style="">
-    <b>'._G("DBMF_memento_comments").':</b>
+    <b>'._G('DBMF_memento_comments').':</b>
     <div><textarea name="memento_comments" cols="40" rows="3" class="mceEditor" id="'.$area_id.'">'.$memento->comments.'</textarea></div>
 '.$editor->active($area_id).'
 </div>
 
 <div class="row" style="">
-    <b>'._G("DBMF_memento_comments2").':</b>
+    <b>'._G('DBMF_memento_comments2').':</b>
     <div><textarea name="memento_comments2" cols="32" rows="3">'.$memento->comments2.'</textarea></div>
 </div>
 
 <div class="row" style="">
     <div class="right" style="">'.$m_user->lastname.' '.$m_user->firstname.'</div>
-    <b>'._G("DBMF_memento_owner").':</b>
+    <b>'._G('DBMF_memento_owner').':</b>
 </div>
 
 </div>

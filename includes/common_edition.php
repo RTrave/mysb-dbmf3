@@ -28,8 +28,8 @@ echo '
 
 <div class="row" style="text-align: center;">
     <small>
-        <b>'._G("DBMF_date_creat").': </b>'.$date_creat->strAEBY_l().' / 
-        <b>'._G("DBMF_date_modif").': </b>'.$date_modif->strAEBY_l().'
+        <b>'._G('DBMF_date_creat').': </b>'.$date_creat->strAEBY_l().' / 
+        <b>'._G('DBMF_date_modif').': </b>'.$date_modif->strAEBY_l().'
     </small>
 </div>
 
@@ -38,7 +38,7 @@ echo '
 if( $isEditor ) echo '<input type="text" name="lastname" size="24" maxlength="64" value="'.$contact->lastname.'">';
 else echo $contact->lastname;
 echo '</div>
-    <b>'._G("DBMF_common_lastname").'</b>';
+    <b>'._G('DBMF_common_lastname').'</b>';
     if(MySBConfigHelper::Value('dbmf_ln_infos','dbmf3')!='')
         echo '<br><span class="help">'.MySBConfigHelper::Value('dbmf_ln_infos','dbmf3').'</span>';
 echo '</div>
@@ -48,7 +48,7 @@ echo '</div>
 if( $isEditor ) echo '<input type="text" name="firstname" size="24" maxlength="64" value="'.$contact->firstname.'">';
 else echo $contact->firstname;
 echo '</div>
-    <b>'._G("DBMF_common_firstname").'</b>';
+    <b>'._G('DBMF_common_firstname').'</b>';
     if(MySBConfigHelper::Value('dbmf_fn_infos','dbmf3')!='')
         echo '<br><span class="help">'.MySBConfigHelper::Value('dbmf_fn_infos','dbmf3').'</span>';
 echo '</div>';
@@ -60,15 +60,15 @@ function mail_input( $i_mail, $email, $isEditor, $isLast=false, $style='' ) {
 if( $isEditor ) {
     if( $isLast ) echo '
         <img src="images/icons/list-add.png" 
-             alt="'._G("DBMF_common_addmail").'" 
-             title="'._G("DBMF_common_addmail").'"
+             alt="'._G('DBMF_common_addmail').'" 
+             title="'._G('DBMF_common_addmail').'"
              id="dbmfmailaddicon"
              style="height: 20px; vertical-align: middle;"
              onClick="show(\'dbmfmailadd\');hide(\'dbmfmailaddicon\')">';
     echo '<input type="email" name="mail'.$i_mail.'" size="24" maxlength="64" value="'.$email.'">';
 } else echo $email;
 echo '</div>
-    <b>'._G("DBMF_common_mail").' '.$i_mail.'</b>
+    <b>'._G('DBMF_common_mail').' '.$i_mail.'</b>
 </div>';
 }
 
@@ -86,7 +86,7 @@ mail_input( $i_mail, '', $isEditor, false, 'style="display: none;" id="dbmfmaila
 
 echo '
 <div class="title">
-    <b>'._G("DBMF_contact_mementos_infos").'</b>
+    <b>'._G('DBMF_contact_mementos_infos').'</b>
 </div>
 
 <div class="row">
@@ -108,7 +108,7 @@ foreach($mementos as $memento) {
             <a  href="index.php?mod=dbmf3&amp;tpl=memento_edit&amp;memento_id='.$memento->id.'"
                 class="overlayed"
                 style="text-decoration: none;"
-                data-overconfirm="'.MySBUtil::str2strict(_G("DBMF_confirm_memento_edition")).'">';
+                data-overconfirm="'.MySBUtil::str2strict(_G('DBMF_confirm_memento_edition')).'">';
     echo '
     <div class="boxed" style="font-size: 90%; width: 90%; margin-bottom: 2px;">
     <div class="title roundtop '.$memclass.'" style="font-size: 90%; padding: 4px 4px 3px; min-height: 0px;" >
@@ -129,7 +129,7 @@ echo '
         <a  href="index.php?mod=dbmf3&amp;tpl=memento_edit&amp;contact_id='.$contact->id.'"
             class="button overlayed"
             data-overconfirm="'.MySBUtil::str2strict(_G('DBMF_confirm_memento_edition')).'">
-            '._G("DBMF_contact_mementos_create").'</a>
+            '._G('DBMF_contact_mementos_create').'</a>
      </div>
 </div>';
 

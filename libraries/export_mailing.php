@@ -84,7 +84,7 @@ class MySBDBMFExportMailing extends MySBDBMFExport {
     <input type="checkbox" name="dbmf_exportmailing_unsubscribefields"><br>
     '._G('DBMF_exportmailing_replyto').':
     <select name="dbmf_exportmailing_replyto">
-        <option value="base">'._G("DBMF_exportmailing_replyto_base").'</option>
+        <option value="base">'._G('DBMF_exportmailing_replyto_base').'</option>
         <option value="tech">'.MySBConfigHelper::Value('website_name').' ('.MySBConfigHelper::Value('technical_contact').')</option>
         <option value="self">'.$app->auth_user->lastname.' '.$app->auth_user->firstname.' ('.$app->auth_user->mail.')</option>
     </select><br>

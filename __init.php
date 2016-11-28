@@ -136,22 +136,22 @@ class MySBModule_dbmf3 {
         global $app;
 
         MySBPluginHelper::create('addcontact_menutext','MenuItem',
-            array("DBMF_topmenu_addcontact", "addcontact", 'DBMF_topmenu_addcontactinfos',''),
+            array('DBMF_topmenu_addcontact', "addcontact", 'DBMF_topmenu_addcontactinfos',''),
             array(1,0,0,0),
             4,"dbmf_editor",'dbmf3');
 
         MySBPluginHelper::create('export_menutext','MenuItem',
-            array("DBMF_topmenu_export", "export", 'DBMF_topmenu_exportinfos',''),
+            array('DBMF_topmenu_export', "export", 'DBMF_topmenu_exportinfos',''),
             array(1,0,0,0),
             5,"dbmf_user",'dbmf3');
 
         MySBPluginHelper::create('blockedit_menutext','MenuItem',
-            array("DBMF_topmenu_blockedit", "blockedit", 'DBMF_topmenu_blockeditinfos',''),
+            array('DBMF_topmenu_blockedit', "blockedit", 'DBMF_topmenu_blockeditinfos',''),
             array(2,0,0,0),
             3,"dbmf_blockedit",'dbmf3');
 
         MySBPluginHelper::create('admindbmf_menutext','MenuItem',
-            array("DBMF_adminmenu_dbmf", "admindbmf", 'DBMF_adminmenu_dbmfinfos',''),
+            array('DBMF_adminmenu_dbmf', "admindbmf", 'DBMF_adminmenu_dbmfinfos',''),
             array(3,0,0,0),
             6,"admin",'dbmf3');
         MySBPluginHelper::create('dbmf_request','FrontPage',
@@ -243,7 +243,7 @@ class MySBModule_dbmf3 {
             false, "dbmf3");
 
         MySBPluginHelper::create('mementos_menutext','MenuItem',
-            array("DBMF_topmenu_mementos", "mementos", 'DBMF_topmenu_mementosinfos',''),
+            array('DBMF_topmenu_mementos', "mementos", 'DBMF_topmenu_mementosinfos',''),
             array(2,0,0,0),
             7,"dbmf_user",'dbmf3');
 
@@ -324,19 +324,19 @@ class MySBModule_dbmf3 {
             array(0,0,0,0),
             3,"dbmf_user",'dbmf3');
         MySBPluginHelper::create('export_menutext','MenuItem',
-            array("DBMF_topmenu_export", "export", 'DBMF_topmenu_exportinfos',''),
+            array('DBMF_topmenu_export', "export", 'DBMF_topmenu_exportinfos',''),
             array(2,0,0,0),
             5,"dbmf_user",'dbmf3');
         MySBPluginHelper::create('addcontact_menutext','MenuItem',
-            array("DBMF_topmenu_addcontact", "contact_add", 'DBMF_topmenu_addcontactinfos',''),
+            array('DBMF_topmenu_addcontact', "contact_add", 'DBMF_topmenu_addcontactinfos',''),
             array(1,0,0,0),
             4,"dbmf_editor",'dbmf3');
         MySBPluginHelper::create('blockedit_menutext','MenuItem',
-            array("DBMF_topmenu_blockedit", "admin/structure", 'DBMF_topmenu_blockeditinfos',''),
+            array('DBMF_topmenu_blockedit', "admin/structure", 'DBMF_topmenu_blockeditinfos',''),
             array(2,0,0,0),
             3,"dbmf_blockedit",'dbmf3');
         MySBPluginHelper::create('admindbmf_menutext','MenuItem',
-            array("DBMF_adminmenu_dbmf", "admin/dbmf", 'DBMF_adminmenu_dbmfinfos',''),
+            array('DBMF_adminmenu_dbmf', "admin/dbmf", 'DBMF_adminmenu_dbmfinfos',''),
             array(3,0,0,0),
             6,"admin",'dbmf3');
     }
@@ -368,7 +368,7 @@ class MySBModule_dbmf3 {
         $configrole->assignToGroup('admin',true);
         MySBPluginHelper::delete('blockedit_menutext','dbmf3');
         MySBPluginHelper::create('config_menutext','MenuItem',
-            array("DBMF_topmenu_config", "admin/structure", 'DBMF_topmenu_configinfos',''),
+            array('DBMF_topmenu_config', "admin/structure", 'DBMF_topmenu_configinfos',''),
             array(2,0,0,0),
             3,"dbmf_config",'dbmf3');
     }
@@ -400,7 +400,7 @@ class MySBModule_dbmf3 {
     public function init16() {
         global $app;
         MySBPluginHelper::create('dbmf_exportsummary','DBMFExport',
-            array("Summary", 'Display summary', 'libraries/export_summary.php',''),
+            array('Summary', 'Display summary', 'libraries/export_summary.php',''),
             array(0,0,0,0),
             6,"dbmf_user",'dbmf3');
         MySBConfigHelper::delete('dbmf_showfields_colsnb','dbmf3');

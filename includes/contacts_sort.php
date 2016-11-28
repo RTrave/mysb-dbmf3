@@ -104,7 +104,7 @@ function sortActions($pack) {
 }
 
 if( $_SESSION['dbmf_query_where']=='' ) {
-    echo '<br>'.(_G("DBMF_export_nowhereclause")).'<br><br>';
+    echo '<br>'.(_G('DBMF_export_nowhereclause')).'<br><br>';
     return;
 }
 
