@@ -14,7 +14,7 @@ defined('_MySBEXEC') or die;
 
 global $app;
 
-if(!MySBRoleHelper::checkAccess('dbmf_user')) return;
+if(!MySBRoleHelper::checkAccess('dbmf_user',false)) return;
 
 
 $act_mementos = MySBDBMFMementoHelper::loadActives();
