@@ -1,3 +1,13 @@
+2016-11-28  Roman Trave <abadcafe@free.fr>
+
+	* ChangeLog: Project tagged rel2g.
+
+	* templates/fpinfos.php, templates/fprequest.php:
+	Fix usage of FrontPage plugin.
+
+	* includes/common_edition.php, includes/contacts_sort.php, libraries/export_mailing.php, libraries/plugins_dbmf.php, locales/en/dbmf3.ini, locales/fr/dbmf3.ini, templates/contact_add_process.php, templates/memento_edit.php, __init.php:
+	Cleaning and update localization.
+
 2016-11-07  Roman Trave <abadcafe@free.fr>
 
 	* ChangeLog: Project tagged rel2f.
