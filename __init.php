@@ -14,7 +14,7 @@ defined('_MySBEXEC') or die;
 
 class MySBModule_dbmf3 {
 
-    public $version = 16;
+    public $version = 17;
 
     public function create() {
         global $app;
@@ -406,6 +406,21 @@ class MySBModule_dbmf3 {
         MySBConfigHelper::delete('dbmf_showfields_colsnb','dbmf3');
     }
 
+    public function init17() {
+        global $app;
+        $autosubsrole = MySBRoleHelper::create('dbmf_autosubs','Auto-subscribe process');
+
+        MySBConfigHelper::create('dbmf_autosubs_blockref','',MYSB_VALUE_TYPE_VARCHAR512,
+            'BlockRef filled with 1 when autosubs', 'dbmf3');
+        MySBPluginHelper::create('autosubs_menutext','MenuItem',
+            array('DBMF_topmenu_autosubs', "autosubs1&blanklay=1", 'DBMF_topmenu_autosubsinfos',''),
+            array(1,0,0,0),
+            6,"dbmf_autosubs",'dbmf3');
+        $req = MySBDB::query('ALTER TABLE '.MySB_DBPREFIX.'dbmfblockrefs '.
+            'ADD autosubs int',
+            "__init.php",
+            false, "dbmf3");
+    }
 
     public function uninit() {
         global $app;
@@ -413,6 +428,7 @@ class MySBModule_dbmf3 {
         MySBRoleHelper::delete('dbmf_user');
         MySBRoleHelper::delete('dbmf_editor');
         MySBRoleHelper::delete('dbmf_config');
+        MySBRoleHelper::delete('dbmf_autosubs');
 
         MySBDBMFExportHelper::delete(MySBDBMFExportHelper::getByName('DBMF_display')->id);
 
@@ -420,6 +436,7 @@ class MySBModule_dbmf3 {
         MySBConfigHelper::delete('dbmf_notify_freq','dbmf3');
         MySBConfigHelper::delete('dbmf_ln_infos','dbmf3');
         MySBConfigHelper::delete('dbmf_fn_infos','dbmf3');
+        MySBConfigHelper::delete('dbmf_autosubs_blockref','dbmf3');
 
         //plugins
         MySBPluginHelper::delete('dbmf_exportupdate','dbmf3');
@@ -436,6 +453,7 @@ class MySBModule_dbmf3 {
         MySBPluginHelper::delete('export_menutext','dbmf3');
         MySBPluginHelper::delete('config_menutext','dbmf3');
         MySBPluginHelper::delete('mementos_menutext','dbmf3');
+        MySBPluginHelper::delete('autosubs_menutext','dbmf3');
         
     }
 

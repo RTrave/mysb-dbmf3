@@ -38,7 +38,7 @@ if( isset($_POST['dbmf_request'])
 </div>';
 }
 
-if( !isset($_POST['search_type']) ) $_POST['search_type'] = 'lastname';
+if( !isset($_POST['search_type']) ) $_POST['search_type'] = 'all_fields';
 if( !isset($_POST['search_name']) ) $_POST['search_name'] = '';
 
 echo '
@@ -59,7 +59,8 @@ echo '
         <input  type="text" 
                 name="search_name" value="'.$_POST['search_name'].'" 
                 class="smart"
-                style="text-align: left;">
+                style="text-align: left;"
+                autofocus>
     </div>
     <div class="row" style="text-align: center;">
         <input type="hidden" name="dbmf_request" value="1">

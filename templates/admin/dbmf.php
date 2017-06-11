@@ -222,4 +222,23 @@ else {
 </div>';
 }
 
+echo '
+<h3 id="autosubs">'._G('DBMF_autosubs_config').'</h3>
+<form action="index.php?mod=dbmf3&amp;tpl=admin/dbmf#autosubs" method="post">';
+
+$blockrefs = MySBDBMFBlockRefHelper::load();
+foreach( $blockrefs as $blockref ) {
+    echo '
+<div style="display: inline-block; background: #dddddd; margin: 2px 3px; padding: 1px 3px;">
+    <input name="'.$blockref->keyname.'" "'.MySBUtil::form_ischecked($blockref->autosubs,"1").'" type="checkbox">
+    '._G($blockref->lname).'
+</div>';
+}
+echo '<br>
+    <input type="hidden" name="dbmf_autosubs" value="1">
+    <input type="submit" value="'._G('DBMF_autosubs_configsubmit').'">
+</form>
+
+';
+
 ?>
