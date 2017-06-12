@@ -1,6 +1,18 @@
-2016-11-28  Roman Trave <abadcafe@free.fr>
+2017-06-12  Roman Trave <abadcafe@free.fr>
 
-	* ChangeLog: Project tagged rel2g.
+	* ChangeLog: Release tagged rel2h.
+
+2017-06-11  Roman Trave <abadcafe@free.fr>
+
+	* __init.php, includes/autosubs_foot.php, includes/autosubs_head.php, locales/en/dbmf3.ini, locales/fr/dbmf3.ini, templates/admin/dbmf.php, templates/admin/dbmf_process.php, templates/autosubs1.php, templates/autosubs1_process.php, templates/autosubs2.php, templates/autosubs2_process.php, templates/fprequest.php:
+	Contacts auto-subscription process added.
+	Few tweaks in front page.
+
+2017-04-01  Roman Trave <abadcafe@free.fr>
+
+	* ChangeLog: Release tagged rel2g.
+
+2016-11-28  Roman Trave <abadcafe@free.fr>
 
 	* templates/fpinfos.php, templates/fprequest.php:
 	Fix usage of FrontPage plugin.
