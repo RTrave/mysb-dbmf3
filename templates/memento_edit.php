@@ -129,6 +129,7 @@ else $m_user = $app->auth_user;
 
 $area_id = 'editor_id_'.rand(1,999999);
 $editor = new MySBEditor();
+echo $editor->init("simple");
 
 echo '
 <div class="list_support" style="padding: 2px 4px;">

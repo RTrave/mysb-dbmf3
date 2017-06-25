@@ -17,7 +17,7 @@ global $app;
 if(!MySBRoleHelper::checkAccess('dbmf_user')) return;
 
 $editor = new MySBEditor();
-echo $editor->init("simple");
+//echo $editor->init("simple");
 
 echo '
 <div id="mysbMenuLevel">
