@@ -158,7 +158,12 @@ div#dbmfContact {}
 
 #dbmfContact div.list_support div.title,
 #dbmfContact div.list_support div.row {
-    padding: 1px;
+    padding: 1px 0px 6px;
+}
+
+#dbmfMemento div.list_support div.title,
+#dbmfMemento div.list_support div.row {
+    padding: 1px 0px 6px;
 }
 
 #dbmfContact table.cform {
