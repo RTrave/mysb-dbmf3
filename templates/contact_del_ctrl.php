@@ -25,5 +25,6 @@ if(isset($_POST['dbmf_contact_delete'])) {
     $app->pushMessage(_G('DBMF_contact_deleted'));
 }
 
+include( _pathT('contact_del','dbmf3') );
 
 ?>

@@ -69,4 +69,6 @@ if(isset($_POST['dbmf_autosubs'])) {
     }
 }
 
+include( _pathT('admin/dbmf','dbmf3') );
+
 ?>

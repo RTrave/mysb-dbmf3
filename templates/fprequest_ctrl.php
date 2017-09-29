@@ -59,4 +59,6 @@ if(isset($_POST['dbmf_request'])) {
 
 }
 
+include( _pathT('fprequest','dbmf3') );
+
 ?>

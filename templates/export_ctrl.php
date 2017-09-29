@@ -72,4 +72,6 @@ if(isset($_POST['dbmf_export_process'])) {
 	$_SESSION['dbmf_query_select'] = $sql_select;
 }
 
+include( _pathT('export','dbmf3') );
+
 ?>

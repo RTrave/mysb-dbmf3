@@ -23,4 +23,6 @@ if( isset($_POST['memcatg_new']) and $_POST['memcatg_new']==1 ) {
 
 }
 
+include( _pathT('admin/memento','dbmf3') );
+
 ?>

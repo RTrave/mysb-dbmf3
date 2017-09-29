@@ -104,4 +104,6 @@ if(isset($_POST['blockref_orderdown'])) {
     $blockref->indexDOWN();
 }
 
+include( _pathT('admin/structure','dbmf3') );
+
 ?>

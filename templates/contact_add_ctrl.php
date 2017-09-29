@@ -42,4 +42,6 @@ if( empty($_POST['lastname']) and empty($_POST['firstname']) and empty($_POST['m
 }
 }
 
+include( _pathT('contact_add','dbmf3') );
+
 ?>

@@ -67,4 +67,6 @@ if(isset($_POST['contact_edit']) and MySBRoleHelper::checkAccess('dbmf_editor',f
     $app->pushMessage(_G('DBMF_contact_modified'));
 }
 
+include( _pathT('contact_edit','dbmf3') );
+
 ?>

@@ -96,4 +96,6 @@ if(isset($_POST['memento_unprocess'])) {
 $app->tpl_dbmf_currentmemento = $memento;
 $app->tpl_dbmf_currentcontact = $contact;
 
+include( _pathT('memento_edit','dbmf3') );
+
 ?>

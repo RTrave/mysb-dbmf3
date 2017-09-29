@@ -16,5 +16,6 @@ global $app;
 
 if( !MySBRoleHelper::checkAccess('dbmf_user') ) return;
 
+include( _pathT('mementos','dbmf3') );
 
 ?>
