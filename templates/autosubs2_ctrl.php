@@ -1,4 +1,4 @@
-<?php 
+<?php
 /***************************************************************************
  *
  *   phpMySandBox/RSVP module - TRoman<abadcafe@free.fr> - 2012
@@ -17,7 +17,7 @@ global $app;
 // Process id
 if(isset($_GET['pid']))
     $pid = $_GET['pid'];
-else 
+else
     $pid = '';
 
 if(!MySBRoleHelper::checkAccess('dbmf_autosubs')) return;
@@ -29,7 +29,7 @@ if( isset($_POST['autosubs_modifs']) ) {
     $autosubs_ids = explode(',',$_POST['autosubs_modifs']);
     $blockrefs = MySBDBMFBlockRefHelper::load();
     foreach($autosubs_ids as $as_id) {
-    
+
         $contact = new MySBDBMFContact($as_id);
         //echo $contact->id.'/';
         $contact_datas = array(
@@ -65,7 +65,7 @@ if( empty($_POST['email'.$pid]) ) {
         'WHERE ';
     $sql_wcheck_cond = '';
 /*
-    if( $_POST['lastname']!='' ) 
+    if( $_POST['lastname']!='' )
         $sql_wcheck_cond = 'lastname RLIKE \''.MySBUtil::str2whereclause($_POST['lastname']).'\' ';
     if( $_POST['firstname']!='' ) {
         if( $sql_wcheck_cond!= '' )
@@ -79,16 +79,16 @@ if( empty($_POST['email'.$pid]) ) {
     }
     $app->dbmf_req_wcheck = MySBDB::query($sql_wcheck.$sql_wcheck_cond.
         ' ORDER by id DESC;',
-        "autosubs2_process.php",
+        "autosubs2_ctrl.php",
         true, "dbmf3");
     //echo count($app->dbmf_req_wcheck).'B';
-    
+
     if(MySBDB::num_rows($app->dbmf_req_wcheck)==0) {
         //echo 'NEW<br>';
         $contact = MySBDBMFContactHelper::create('', '', $_POST['email'.$pid]);
         $app->dbmf_req_wcheck = MySBDB::query($sql_wcheck.$sql_wcheck_cond.
         ' ORDER by lastname;',
-        "autosubs2_process.php",
+        "autosubs2_ctrl.php",
         true, "dbmf3");
     }
 }
@@ -105,9 +105,11 @@ if( isset($_POST['new_email'] ) ) {
     $contact = MySBDBMFContactHelper::create('', '', $_POST['new_email']);
     $app->dbmf_req_wcheck = MySBDB::query($sql_wcheck.$sql_wcheck_cond.
         ' ORDER by lastname;',
-        "autosubs2_process.php",
+        "autosubs2_ctrl.php",
         true, "dbmf3");
     $_POST['email'.$pid] = $_POST['new_email'];
 }
+
+include( _pathT('autosubs2','dbmf3') );
 
 ?>

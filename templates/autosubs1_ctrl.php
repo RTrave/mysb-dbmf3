@@ -1,4 +1,4 @@
-<?php 
+<?php
 /***************************************************************************
  *
  *   phpMySandBox/RSVP module - TRoman<abadcafe@free.fr> - 2012
@@ -24,7 +24,7 @@ if( empty($_POST['lastname']) and empty($_POST['firstname']) and empty($_POST['m
     $sql_wcheck = 'SELECT * from '.MySB_DBPREFIX.'dbmfcontacts '.
         'WHERE ';
     $sql_wcheck_cond = '';
-    if( $_POST['lastname']!='' ) 
+    if( $_POST['lastname']!='' )
         $sql_wcheck_cond = 'lastname RLIKE \''.MySBUtil::str2whereclause($_POST['lastname']).'\' ';
     if( $_POST['firstname']!='' ) {
         if( $sql_wcheck_cond!= '' )
@@ -32,7 +32,7 @@ if( empty($_POST['lastname']) and empty($_POST['firstname']) and empty($_POST['m
         $sql_wcheck_cond .= 'firstname RLIKE \''.MySBUtil::str2whereclause($_POST['firstname']).'\' ';
     }
     if( $_POST['mail']!='' ) {
-        if( $sql_wcheck_cond!='' ) 
+        if( $sql_wcheck_cond!='' )
             $sql_wcheck_cond .= ' OR ';
         $sql_wcheck_cond .= 'mail RLIKE \''.MySBUtil::str2whereclause($_POST['mail']).'\' ';
     }
@@ -43,5 +43,7 @@ if( empty($_POST['lastname']) and empty($_POST['firstname']) and empty($_POST['m
 }
 }
 */
+
+include( _pathT('autosubs1','dbmf3') );
 
 ?>
