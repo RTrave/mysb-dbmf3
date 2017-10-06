@@ -25,7 +25,7 @@ class MySBModule_dbmf3 {
             'date_creat date, '.
             'date_modif date, '.
             'lastname varchar(64), '.
-            'firstname varchar(64) )  
+            'firstname varchar(64) )
             DEFAULT CHARSET=utf8',
             "__init.php",
             false, "dbmf3");
@@ -35,7 +35,7 @@ class MySBModule_dbmf3 {
             'name varchar(32),  '.
             'lname varchar(512), '.
             'groupedit_id int, '.
-            'i_index int )  
+            'i_index int )
             DEFAULT CHARSET=utf8',
             "__init.php",
             false, "dbmf3");
@@ -47,7 +47,7 @@ class MySBModule_dbmf3 {
             'lname varchar(64), '.
             'type varchar(64), '.
             'status int, '.
-            'i_index int)  
+            'i_index int)
             DEFAULT CHARSET=utf8',
             "__init.php",
             false, "dbmf3");
@@ -58,7 +58,7 @@ class MySBModule_dbmf3 {
             'name varchar(64), '.
             'comments varchar(128), '.
             'config varchar(512), '.
-            'group_id int )  
+            'group_id int )
             DEFAULT CHARSET=utf8',
             "__init.php",
             false, "dbmf3");
@@ -237,7 +237,7 @@ class MySBModule_dbmf3 {
             'dayofmonth_memento int, '.
             'monthofyear_memento int, '.
             'date_process datetime, '.
-            'comments varchar(512) )  
+            'comments varchar(512) )
             DEFAULT CHARSET=utf8',
             "__init.php",
             false, "dbmf3");
@@ -346,7 +346,7 @@ class MySBModule_dbmf3 {
         $req = MySBDB::query('CREATE TABLE '.MySB_DBPREFIX.'dbmfmementocatgs ( '.
             'id int not null primary key, '.
             'name varchar(64), '.
-            'group_ids varchar(64) )  
+            'group_ids varchar(64) )
             DEFAULT CHARSET=utf8',
             "__init.php",
             false, "dbmf3");
@@ -431,6 +431,12 @@ class MySBModule_dbmf3 {
         MySBRoleHelper::delete('dbmf_autosubs');
 
         MySBDBMFExportHelper::delete(MySBDBMFExportHelper::getByName('DBMF_display')->id);
+        $plugs = MySBPluginHelper::loadByType('DBMFExport');
+        foreach($plugs as $plug)
+            MySBPluginHelper::delete($plug->name,$plug->module);
+        $plugs = MySBPluginHelper::loadByType('DBMFDisplay');
+        foreach($plugs as $plug)
+            MySBPluginHelper::delete($plug->name,$plug->module);
 
         MySBConfigHelper::delete('dbmf_globalaccess','dbmf3');
         MySBConfigHelper::delete('dbmf_notify_freq','dbmf3');
@@ -454,7 +460,7 @@ class MySBModule_dbmf3 {
         MySBPluginHelper::delete('config_menutext','dbmf3');
         MySBPluginHelper::delete('mementos_menutext','dbmf3');
         MySBPluginHelper::delete('autosubs_menutext','dbmf3');
-        
+
     }
 
 }
