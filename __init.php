@@ -67,7 +67,7 @@ class MySBModule_dbmf3 {
             'dbmf_priority int',
             "__init.php",
             false, "dbmf3");
-        $req = MySBDB::query('UPDATE '.MySB_DBPREFIX.'groups dbmf_priority=3 '.
+        $req = MySBDB::query('UPDATE '.MySB_DBPREFIX.'groups SET dbmf_priority=3 '.
             'WHERE id=1 ',
             "__init.php",
             false, "dbmf3");
