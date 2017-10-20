@@ -1,4 +1,4 @@
-<?php 
+<?php
 /***************************************************************************
  *
  *   phpMySandBox/DBMF3 module - TRoman<abadcafe@free.fr> - 2012
@@ -20,7 +20,7 @@ echo '
 <h1>'._G('DBMF_request_title').'</h1>
 ';
 
-if( isset($_POST['dbmf_request']) 
+if( isset($_POST['dbmf_request'])
     or isset($_POST['dbmf_request_advanced'])
     or isset($_POST['dbmf_request_byid'])
     or isset($_POST['dbmf_contact_delete']) ) {
@@ -32,7 +32,7 @@ if( isset($_POST['dbmf_request'])
 <div id="contacts_results">';
 
     //$app->tpl_dbmf_searchresult = $app->dbmf_search_result;
-    _incI('contacts_sort','dbmf3');
+    include( _pathI('contacts_sort_ctrl','dbmf3') );
 
     echo '
 </div>';
@@ -56,8 +56,8 @@ echo '
         <label for="search_byid">'._G('DBMF_search_byid').'</label>
     </div>
     <div class="row" style="text-align: center;">
-        <input  type="text" 
-                name="search_name" value="'.$_POST['search_name'].'" 
+        <input  type="text"
+                name="search_name" value="'.$_POST['search_name'].'"
                 class="smart"
                 style="text-align: left;"
                 autofocus>

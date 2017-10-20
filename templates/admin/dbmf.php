@@ -15,7 +15,7 @@ defined('_MySBEXEC') or die;
 global $app;
 
 
-_incI('admin/menu');
+include( _pathI('admin/menu') );
 
 echo '
 <h1>'._G('DBMF_admin_dbmf').'</h1>';
@@ -217,7 +217,7 @@ else {
 '.$editor->init("simple").'
 <div id="contacts_results">';
     //$app->tpl_dbmf_searchresult = $app->dbmf_search_result;
-    _incI('contacts_sort','dbmf3');
+    include( _pathI('contacts_sort_ctrl','dbmf3') );
     echo '
 </div>';
 }

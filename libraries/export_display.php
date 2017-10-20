@@ -107,7 +107,7 @@ class MySBDBMFExportDisplay extends MySBDBMFExport {
         echo '
 '.$editor->init("simple").'
 <div id="contacts_results">';
-        _incI('contacts_sort','dbmf3');
+        include( _pathI('contacts_sort_ctrl','dbmf3') );
         echo '
 </div>';
 

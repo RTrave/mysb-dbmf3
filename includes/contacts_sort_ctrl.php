@@ -221,7 +221,7 @@ while($data_print = MySBDB::fetch_array($search_m)) {
     $app->tpl_dbmf_currentcontact = $contact;
     echo '
     <div id="contact'.$contact->id.'">';
-    _incI('contact_display','dbmf3');
+    include( _pathI('contact_display_ctrl','dbmf3') );
     echo '
     </div>';
 

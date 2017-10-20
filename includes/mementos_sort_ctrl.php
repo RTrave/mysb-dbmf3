@@ -1,4 +1,4 @@
-<?php 
+<?php
 /***************************************************************************
  *
  *   phpMySandBox/DBMF3 module - TRoman<abadcafe@free.fr> - 2012
@@ -17,9 +17,9 @@ global $app;
 
 if( !MySBRoleHelper::checkAccess('dbmf_user') ) return;
 
-if( !isset($_SESSION["dbmf_memcatg_sort"]) ) 
+if( !isset($_SESSION["dbmf_memcatg_sort"]) )
     $_SESSION["dbmf_memcatg_sort"] = 0;
-if( isset($_GET["sort"]) ) 
+if( isset($_GET["sort"]) )
     $_SESSION["dbmf_memcatg_sort"] = $_GET["sort"];
 
 
@@ -83,7 +83,7 @@ foreach($mementos_p as $memento) {
 <div class="cell" id="memento'.$memento->id.'" style="background-color: transparent;">';
 
     $app->tpl_dbmf_currentmemento = $memento;
-    _incI('memento_display','dbmf3');
+    include( _pathI('memento_display_ctrl','dbmf3') );
 
     echo '
 </div>';

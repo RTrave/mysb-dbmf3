@@ -1,4 +1,4 @@
-<?php 
+<?php
 /***************************************************************************
  *
  *   phpMySandBox/DBMF3 module - TRoman<abadcafe@free.fr> - 2012
@@ -20,7 +20,7 @@ $contact = $app->tpl_currentcontact;
 if(isset($_POST['contact_delete'])) return;
 
 echo '
-<div class="overlaySize" 
+<div class="overlaySize"
     data-overheight=""
     data-overwidth="440"></div>
 
@@ -29,8 +29,8 @@ echo '
 
 <div class="overHead">
 
-        <form   action="index.php?mod=dbmf3&amp;tpl=contact_del&amp;contact_id='.$contact->id.'" 
-                method="post" 
+        <form   action="index.php?mod=dbmf3&amp;tpl=contact_del&amp;contact_id='.$contact->id.'"
+                method="post"
                 class="hidelayed"
                 data-overconfirm="'.MySBUtil::str2strict(sprintf(_G('DBMF_confirm_contact_delete'),$contact->lastname, $contact->firstname )).'">
     <div class="action first">
@@ -55,7 +55,7 @@ echo '
 
 <div class="list_support" style="padding: 2px 4px;">';
 
-_incI('common_edition','dbmf3');
+include( _pathI('common_edition','dbmf3') );
 
 $blocks = MySBDBMFBlockHelper::load();
 foreach($blocks as $block) {
@@ -68,7 +68,7 @@ foreach($blocks as $block) {
         if($blockref->isActive()) {
             if(!$block->isEditable())
                 $class_edit = 'background: #cccccc;';
-            else 
+            else
                 $class_edit = '';
             $refname = $blockref->keyname;
             if( $blockref->getType()=='text' ) {
@@ -84,10 +84,10 @@ foreach($blocks as $block) {
 <div class="row" style="'.$class_edit.'">
     <div class="right">';
             }
-            if($block->isEditable()) 
+            if($block->isEditable())
                 echo $blockref->htmlForm('blockref',$contact->$refname,'('.$contact->lastname.' '.$contact->firstname.')');
             else {
-                if( $blockref->getType()=='tel' or $blockref->getType()=='url' ) 
+                if( $blockref->getType()=='tel' or $blockref->getType()=='url' )
                     echo $blockref->htmlFormNonEditable('blockref',$contact->$refname,'('.$contact->lastname.' '.$contact->firstname.')');
                 else
                     echo $blockref->htmlFormNonEditable('blockref',$contact->$refname);

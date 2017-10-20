@@ -1,4 +1,4 @@
-<?php 
+<?php
 /***************************************************************************
  *
  *   phpMySandBox/DBMF3 module - TRoman<abadcafe@free.fr> - 2012
@@ -33,10 +33,10 @@ $memcatgs = MySBDBMFMementoCatgHelper::load();
 $groups = MySBGroupHelper::load();
 foreach( $memcatgs as $memcatg ) {
     echo '
-    <div class="boxed" id="memcatg'.$memcatg->id.'" 
+    <div class="boxed" id="memcatg'.$memcatg->id.'"
          style="width: 450px; margin: 10px auto 3px;">';
     $app->tpl_dbmf_currentmemcatg = $memcatg;
-    _incI('admin/memcatg_display','dbmf3');
+    include( _pathI('admin/memcatg_display_ctrl','dbmf3') );
     echo '
     </div>';
 }

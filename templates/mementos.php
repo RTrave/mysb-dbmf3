@@ -1,4 +1,4 @@
-<?php 
+<?php
 /***************************************************************************
  *
  *   phpMySandBox/DBMF3 module - TRoman<abadcafe@free.fr> - 2012
@@ -33,7 +33,7 @@ echo '
 ';
 
 
-_incI('mementos_sort','dbmf3');
+include( _pathI('mementos_sort_ctrl','dbmf3') );
 
 echo '
 </div>

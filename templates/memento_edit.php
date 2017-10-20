@@ -1,4 +1,4 @@
-<?php 
+<?php
 /***************************************************************************
  *
  *   phpMySandBox/DBMF3 module - TRoman<abadcafe@free.fr> - 2013
@@ -45,7 +45,7 @@ desactiveOverlay();
 }
 
 echo '
-<div class="overlaySize" 
+<div class="overlaySize"
     data-overheight=""
     data-overwidth="460"></div>
 
@@ -54,18 +54,18 @@ echo '
 <div class="overHead '.$memclass.'">';
 
 echo '
-    <a  href="index.php?mod=dbmf3&amp;tpl=contact_edit&amp;contact_id='.$contact->id.'" 
+    <a  href="index.php?mod=dbmf3&amp;tpl=contact_edit&amp;contact_id='.$contact->id.'"
         class="overlayed">
     <div class="action first">
-        <img    src="images/icons/text-editor.png" 
-                alt="'._G('DBMF_memento_edition_return').'" 
+        <img    src="images/icons/text-editor.png"
+                alt="'._G('DBMF_memento_edition_return').'"
                 title="'._G('DBMF_contact_edition').': '.$contact->lastname.' '.$contact->firstname.' ('.$contact->id.')"
                 style="width1: 24px">
     </div>
     </a>';
 if($memento->id!=-1) {
     echo '
-        <form action="index.php?mod=dbmf3&amp;tpl=memento_edit&amp;memento_id='.$memento->id.'" 
+        <form action="index.php?mod=dbmf3&amp;tpl=memento_edit&amp;memento_id='.$memento->id.'"
               method="post"
               class="hidelayed"
               data-overconfirm="'.MySBUtil::str2strict(_G('DBMF_confirm_memento_delete')).'">
@@ -80,7 +80,7 @@ if($memento->id!=-1) {
         ';
     if($Active) {
         echo '
-        <form action="index.php?mod=dbmf3&tpl=memento_edit&amp;memento_id='.$memento->id.'" 
+        <form action="index.php?mod=dbmf3&tpl=memento_edit&amp;memento_id='.$memento->id.'"
               method="post"
               class="overlayed">
     <div class="action">
@@ -93,7 +93,7 @@ if($memento->id!=-1) {
         </form>';
     } elseif(!$Active and $memento->date_process!='') {
         echo '
-        <form action="index.php?mod=dbmf3&tpl=memento_edit&amp;memento_id='.$memento->id.'" 
+        <form action="index.php?mod=dbmf3&tpl=memento_edit&amp;memento_id='.$memento->id.'"
               method="post"
               class="overlayed">
     <div class="action">
@@ -117,7 +117,7 @@ if( !$Active and $memento->date_process!='' ) {
 echo '
 </div>
 
-<form   action="index.php?mod=dbmf3&amp;tpl=memento_edit&amp;memento_id='.$memento->id.'" 
+<form   action="index.php?mod=dbmf3&amp;tpl=memento_edit&amp;memento_id='.$memento->id.'"
         method="post"
         class="overlayed">
 
@@ -129,7 +129,7 @@ else $m_user = $app->auth_user;
 
 $area_id = 'editor_id_'.rand(1,999999);
 $editor = new MySBEditor();
-echo $editor->init("simple");
+echo $editor->init($area_id,"simple");
 
 echo '
 <div class="list_support" style="padding: 2px 4px;">
@@ -138,8 +138,8 @@ echo '
 
 if( $contact->mail!='' ) echo '
     <div style="float: right;"><a href="mailto:'.$contact->mail.'">
-            <img src="images/icons/mail-unread.png" 
-                 alt="'._G('DBMF_mailto').' '.$contact->id.'" 
+            <img src="images/icons/mail-unread.png"
+                 alt="'._G('DBMF_mailto').' '.$contact->id.'"
                  title="'._G('DBMF_mailto').' '.$contact->lastname.' '.$contact->firstname.' ('.$contact->id.')"></a></div>';
 echo '
     <b>'.$contact->lastname.'<br><small>'.$contact->firstname.'</small></b>
@@ -234,7 +234,7 @@ if($memento->id!=-1) echo '
 else echo '
     <input type="hidden" name="memento_add" value="'.$contact->id.'">';
 echo '
-    <input type="submit" value="'._G('DBMF_memento_edition_submit').'" 
+    <input type="submit" value="'._G('DBMF_memento_edition_submit').'"
            class="action" style="width: 100%;">';
 echo '
 </div>
