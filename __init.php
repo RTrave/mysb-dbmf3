@@ -14,7 +14,12 @@ defined('_MySBEXEC') or die;
 
 class MySBModule_dbmf3 {
 
+    public $lname = 'dbmf3';
     public $version = 17;
+    public $homelink = 'https://github.com/RTrave/mysb-dbmf3';
+    public $require = array(
+        'core' => 7
+        );
 
     public function create() {
         global $app;
