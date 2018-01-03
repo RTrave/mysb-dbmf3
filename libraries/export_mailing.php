@@ -1,4 +1,4 @@
-<?php 
+<?php
 /***************************************************************************
  *
  *   phpMySandBox/DBMF3 module - TRoman<abadcafe@free.fr> - 2012
@@ -18,7 +18,7 @@ define('MAXBYSEND_DEFAULT',150);
 
 /**
  * DBMF Mailing Export class
- * 
+ *
  */
 class MySBDBMFExportMailing extends MySBDBMFExport {
 
@@ -32,12 +32,12 @@ class MySBDBMFExportMailing extends MySBDBMFExport {
         if($this->config_array['modulo']!='') $modulo = $this->config_array['modulo'];
         else $modulo = MODULO_DEFAULT;
         $str_res = '
-'._G('DBMF_exportmailing_config_modulo').': 
+'._G('DBMF_exportmailing_config_modulo').':
     <input type="text" name="dbmf_exportmailing_config_modulo" value="'.$modulo.'"><br>';
         if($this->config_array['maxbysend']!='') $maxbysend = $this->config_array['maxbysend'];
         else $maxbysend = MAXBYSEND_DEFAULT;
         $str_res .= '
-'._G('DBMF_exportmailing_config_maxbysend').': 
+'._G('DBMF_exportmailing_config_maxbysend').':
     <input type="text" name="dbmf_exportmailing_config_maxbysend" value="'.$maxbysend.'"><br>';
         return $str_res;
     }
@@ -45,18 +45,19 @@ class MySBDBMFExportMailing extends MySBDBMFExport {
     public function htmlConfigProcess() {
         global $app;
         global $_POST;
-        $str_res = 
+        $str_res =
             'modulo='.$_POST['dbmf_exportmailing_config_modulo'].';'.
             'maxbysend='.$_POST['dbmf_exportmailing_config_maxbysend'].';';
         return $str_res;
     }
 
     public function selectionProcess( $selection ) {
-        
+
     }
 
     public function htmlParamForm() {
         global $app;
+        include(MySB_ROOTPATH.'/config.php');
         $editor = new MySBEditor();
         $output = $editor->init("exportmailing_body");
         $output .= '
@@ -86,7 +87,7 @@ class MySBDBMFExportMailing extends MySBDBMFExport {
     '._G('DBMF_exportmailing_replyto').':
     <select name="dbmf_exportmailing_replyto">
         <option value="base">'._G('DBMF_exportmailing_replyto_base').'</option>
-        <option value="tech">'.MySBConfigHelper::Value('website_name').' ('.MySBConfigHelper::Value('technical_contact').')</option>
+        <option value="tech">'.MySBConfigHelper::Value('website_name').' ('.$mysb_mail.')</option>
         <option value="self">'.$app->auth_user->lastname.' '.$app->auth_user->firstname.' ('.$app->auth_user->mail.')</option>
     </select><br>
     '._G('DBMF_exportmailing_firstid').':
@@ -98,39 +99,40 @@ class MySBDBMFExportMailing extends MySBDBMFExport {
 
     public function htmlParamProcess() {
         global $app;
+        include(MySB_ROOTPATH.'/config.php');
         if( $_POST['dbmf_exportmailing_replyto']=='tech' ) {
-            $this->replyto_addr = MySBConfigHelper::Value('technical_contact');
+            $this->replyto_addr = $mysb_mail;
             $this->replyto_geck = MySBConfigHelper::Value('website_name');
         } elseif( $_POST['dbmf_exportmailing_replyto']=='self' ) {
             $this->replyto_addr = $app->auth_user->mail;
             $this->replyto_geck = $app->auth_user->lastname.' '.$app->auth_user->firstname;
         } else {
-            $this->replyto_addr = MySBConfigHelper::Value('technical_contact');
-            $this->replyto_geck = '';
+            $this->replyto_addr = $mysb_mail;
+            $this->replyto_geck = MySBConfigHelper::Value('website_name');
         }
-        if( isset($_POST['dbmf_exportmailing_sendaslist']) and $_POST['dbmf_exportmailing_sendaslist']!='' ) 
+        if( isset($_POST['dbmf_exportmailing_sendaslist']) and $_POST['dbmf_exportmailing_sendaslist']!='' )
             $this->mailing_sendaslist = true;
         else $this->mailing_sendaslist = false;
-        if( isset($_POST['dbmf_exportmailing_unsubscribefields']) and $_POST['dbmf_exportmailing_unsubscribefields']!='' ) 
+        if( isset($_POST['dbmf_exportmailing_unsubscribefields']) and $_POST['dbmf_exportmailing_unsubscribefields']!='' )
             $this->mailing_unsubscribefields = true;
         else $this->mailing_unsubscribefields = false;
         $this->mailing_firstid = $_POST['dbmf_exportmailing_firstid'];
         $this->mailing_subject = $_POST['dbmf_exportmailing_subject'];
         $this->mailing_body = $_POST['dbmf_exportmailing_body'];
         $uploaddir = MySB_ROOTPATH.'/modules/dbmf3/files/';
-        if( !empty($_FILES['dbmf_exportmailing_att1']['name']) and 
+        if( !empty($_FILES['dbmf_exportmailing_att1']['name']) and
             !empty($_FILES['dbmf_exportmailing_att1']['tmp_name']) ) {
             move_uploaded_file($_FILES['dbmf_exportmailing_att1']['tmp_name'],$uploaddir.$_FILES['dbmf_exportmailing_att1']['name']);
             $this->mailing_att1 = $uploaddir.$_FILES['dbmf_exportmailing_att1']['name'];
         }
         else $this->mailing_att1 = "";
-        if( !empty($_FILES['dbmf_exportmailing_att2']['name']) and 
+        if( !empty($_FILES['dbmf_exportmailing_att2']['name']) and
             !empty($_FILES['dbmf_exportmailing_att2']['tmp_name']) ) {
             move_uploaded_file($_FILES['dbmf_exportmailing_att2']['tmp_name'],$uploaddir.$_FILES['dbmf_exportmailing_att2']['name']);
             $this->mailing_att2 = $uploaddir.$_FILES['dbmf_exportmailing_att2']['name'];
         }
         else $this->mailing_att2 = "";
-        if( !empty($_FILES['dbmf_exportmailing_att3']['name']) and 
+        if( !empty($_FILES['dbmf_exportmailing_att3']['name']) and
             !empty($_FILES['dbmf_exportmailing_att3']['tmp_name']) ) {
             move_uploaded_file($_FILES['dbmf_exportmailing_att3']['tmp_name'],$uploaddir.$_FILES['dbmf_exportmailing_att3']['name']);
             $this->mailing_att3 = $uploaddir.$_FILES['dbmf_exportmailing_att3']['name'];
@@ -140,7 +142,7 @@ class MySBDBMFExportMailing extends MySBDBMFExport {
 
     /**
      * Search result output
-     * @param   
+     * @param
      */
     public function htmlResultOutput() {
         global $app;
@@ -150,9 +152,11 @@ class MySBDBMFExportMailing extends MySBDBMFExport {
             return;
         }
 
-        if( $this->config_array['modulo']!='' ) $modulo = $this->config_array['modulo'];
+        if( isset($this->config_array['modulo']) and $this->config_array['modulo']!='' )
+            $modulo = $this->config_array['modulo'];
         else $modulo = MODULO_DEFAULT;
-        if( $this->config_array['maxbysend']!='' ) $maxbysend = $this->config_array['maxbysend'];
+        if( isset($this->config_array['maxbysend']) and $this->config_array['maxbysend']!='' )
+            $maxbysend = $this->config_array['maxbysend'];
         else $maxbysend = MAXBYSEND_DEFAULT;
 
         $sql_all =  'SELECT * from '.MySB_DBPREFIX.'dbmfcontacts WHERE '.$_SESSION['dbmf_query_where'].
@@ -236,7 +240,7 @@ $this->replyto_addr.'?subject=Unsubscribe</a></small></p>');
         }
 
         $current_mail->close();
-        
+
         $output .= '
 '._G('DBMF_exportmailing_nbmail').': '.($mails_index).'<br>
 </p>';
@@ -275,7 +279,7 @@ $this->replyto_addr.'?subject=Unsubscribe</a></small></p>');
         while( !$mail_sent ) {
             $tmp_mail = clone $smail;
             $tmp_mail->clearRecipients();
-            foreach( $this->mailinglist as $address=>$contact ) 
+            foreach( $this->mailinglist as $address=>$contact )
                 if( $contact!=null ) {
                     $tmp_mail->addBCC( $address, $contact->firstname.' '.$contact->lastname );
                 }
@@ -310,13 +314,14 @@ $this->replyto_addr.'?subject=Unsubscribe</a></small></p>');
 
     public function checkMailError($error) {
         global $app;
+        include(MySB_ROOTPATH.'/config.php');
         if( $this->previous_error==$error )
             return false;
         $this->previous_error = $error;
         $check = false;
         $badmails = MySBUtil::extractEmails($error);
         foreach($badmails as $badmail) {
-            if( $badmail!=$app->auth_user->mail and $badmail!=MySBConfigHelper::Value('technical_contact') ) {
+            if( $badmail!=$app->auth_user->mail and $badmail!=$mysb_mail ) {
                 $this->bad_adresses[$badmail] = $badmail;
                 $check = true;
             }
