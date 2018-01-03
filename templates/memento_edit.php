@@ -26,6 +26,8 @@ $contact = $app->tpl_dbmf_currentcontact;
     else $memclass='';
 
 if(isset($_POST['memento_add'])) {
+    if(!isset($_SESSION["dbmf_memento_lastfilter"]))
+        $_SESSION["dbmf_memento_lastfilter"] = '';
     echo '
 <script>
 loadItem( "mementos_results", "index.php?mod=dbmf3&inc=mementos_sort&filter='.$_SESSION["dbmf_memento_lastfilter"].'" );
