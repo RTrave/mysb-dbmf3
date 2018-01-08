@@ -29,12 +29,16 @@ class MySBDBMFExportMailing extends MySBDBMFExport {
 
     public function htmlConfigForm() {
         global $app;
-        if($this->config_array['modulo']!='') $modulo = $this->config_array['modulo'];
+        if( isset($this->config_array['modulo']) and
+            $this->config_array['modulo']!='' ) 
+            $modulo = $this->config_array['modulo'];
         else $modulo = MODULO_DEFAULT;
         $str_res = '
 '._G('DBMF_exportmailing_config_modulo').':
     <input type="text" name="dbmf_exportmailing_config_modulo" value="'.$modulo.'"><br>';
-        if($this->config_array['maxbysend']!='') $maxbysend = $this->config_array['maxbysend'];
+        if( isset($this->config_array['maxbysend']) and
+            $this->config_array['maxbysend']!='' ) 
+            $maxbysend = $this->config_array['maxbysend'];
         else $maxbysend = MAXBYSEND_DEFAULT;
         $str_res .= '
 '._G('DBMF_exportmailing_config_maxbysend').':
