@@ -1,4 +1,4 @@
-<?php 
+<?php
 /***************************************************************************
  *
  *   phpMySandBox/DBMF3 module - TRoman<abadcafe@free.fr> - 2012
@@ -25,8 +25,8 @@ echo '
 <h1>'._G('DBMF_config').': '._G('DBMF_contacts_config').'</h1>';
 
 
-if( isset($_POST['blockref_edit']) or 
-    isset($_POST['blockref_edit_process']) or 
+if( isset($_POST['blockref_edit']) or
+    isset($_POST['blockref_edit_process']) or
     isset($_POST['blockref_add']) ) {
 
 $blockref = $app->tpl_blockref_edit;
@@ -55,13 +55,13 @@ echo '
 <div class="row">
     <div class="right">
         <select name="blockref_alwaysshown">
-            <option value="'.MYSB_DBMF_BLOCKREF_ALWAYSSHOWN_NO.'" 
+            <option value="'.MYSB_DBMF_BLOCKREF_ALWAYSSHOWN_NO.'"
                     '.MySBUtil::form_isselected($blockref->alwaysshown,MYSB_DBMF_BLOCKREF_ALWAYSSHOWN_NO).'>'._G('DBMF_blockref_alwaysshown_no').'</option>
-            <option value="'.MYSB_DBMF_BLOCKREF_ALWAYSSHOWN_ASTEXT.'" 
+            <option value="'.MYSB_DBMF_BLOCKREF_ALWAYSSHOWN_ASTEXT.'"
                     '.MySBUtil::form_isselected($blockref->alwaysshown,MYSB_DBMF_BLOCKREF_ALWAYSSHOWN_ASTEXT).'>'._G('DBMF_blockref_alwaysshown_bottom').'</option>
-            <option value="'.MYSB_DBMF_BLOCKREF_ALWAYSSHOWN_ASPLUG.'" 
+            <option value="'.MYSB_DBMF_BLOCKREF_ALWAYSSHOWN_ASPLUG.'"
                     '.MySBUtil::form_isselected($blockref->alwaysshown,MYSB_DBMF_BLOCKREF_ALWAYSSHOWN_ASPLUG).'>'._G('DBMF_blockref_alwaysshown_plugins').'</option>
-            <option value="'.MYSB_DBMF_BLOCKREF_ALWAYSSHOWN_ASTEXTONLY.'" 
+            <option value="'.MYSB_DBMF_BLOCKREF_ALWAYSSHOWN_ASTEXTONLY.'"
                     '.MySBUtil::form_isselected($blockref->alwaysshown,MYSB_DBMF_BLOCKREF_ALWAYSSHOWN_ASTEXTONLY).'>'._G('DBMF_blockref_alwaysshown_txtonly').'</option>
         </select>
     </div>
@@ -167,7 +167,7 @@ foreach($blocks as $block) {
         </div>
         <b>'._G($block->lname).'</b> <small><i>(ID:'.$block->id.')</i></small>
     </div>
-    
+
     <form action="index.php?mod=dbmf3&amp;tpl=admin/structure" method="post">
     <div class="row">
         <div class="right"><input type="text" name="lname" value="'.$block->lname.'"></div>
@@ -177,7 +177,7 @@ foreach($blocks as $block) {
         <div class="right"><select name="group_id">';
         $groups = MySBDBMFGroupHelper::load();
         foreach($groups as $group)
-            if($group->dbmf_priority>0) 
+            if($group->dbmf_priority>0)
                 echo '
             <option value="'.$group->id.'" '.MySBUtil::form_isselected($group->id,$group_edit->id).'>'.$group->comments.'</option>';
         echo '
@@ -189,12 +189,14 @@ foreach($blocks as $block) {
         <input type="submit" value="'._G('DBMF_block_edition').'">
     </div>
     </form>
+    <div class="row" style="min-height: 0px; padding: 0px;">
+    </div>
     ';
 
     foreach($block->blockrefs as $blockref) {
         if($blockref->status==MYSB_DBMF_BLOCKREF_STATUS_ACTIVE)
-            $class_bref = '';
-        else $class_bref = ' background: #dddddd;';
+            $class_bref = ' background: #ffffff;';
+        else $class_bref = ' background: #eeeeee;';
         echo '
     <div class="row" style="'.$class_bref.'">
         <div style="float: left;">
@@ -221,10 +223,10 @@ foreach($blocks as $block) {
         <form action="index.php?mod=dbmf3&amp;tpl=admin/structure#a_block'.$block->id.'" method="post">
         <input type="hidden" name="blockref_switchactive" value="'.$blockref->id.'">';
 
-            if($blockref->status==MYSB_DBMF_BLOCKREF_STATUS_ACTIVE) 
+            if($blockref->status==MYSB_DBMF_BLOCKREF_STATUS_ACTIVE)
                 echo '
         <input type="submit" value="'._G('DBMF_blockref_desactive').'">';
-            else 
+            else
                 echo '
         <input type="submit" value="'._G('DBMF_blockref_active').'">';
 

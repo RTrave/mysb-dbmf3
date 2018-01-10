@@ -1,4 +1,4 @@
-<?php 
+<?php
 /***************************************************************************
  *
  *   phpMySandBox/DBMF3 module - TRoman<abadcafe@free.fr> - 2012
@@ -28,7 +28,7 @@ foreach( $showcols->values as $br_id ) {
 
 if( isset($_GET['id']) )
     $contact = new MySBDBMFContact( $_GET['id'] );
-else 
+else
     $contact = $app->tpl_dbmf_currentcontact;
 $date_modif = new MySBDateTime($contact->date_modif);
 $daysold = $date_modif->absDiff();
@@ -41,16 +41,16 @@ $daysold = $date_modif->absDiff();
     <td style="width: 20px; text-align: left;">
         <a  class="overlayed"
             href="index.php?mod=dbmf3&amp;tpl=contact_edit&amp;contact_id='.$contact->id.'">
-        <img    src="images/icons/text-editor.png" 
-                alt="Edition '.$contact->id.'" 
+        <img    src="images/icons/text-editor.png"
+                alt="Edition '.$contact->id.'"
                 title="'._G('DBMF_edit').' '.$contact->lastname.' '.$contact->firstname.' ('.$contact->id.')"
                 style="width1: 24px"></a>
     </td>
     <td style="width: 26px; text-align: left;">';
     if( $contact->mail!='' ) echo '
             <a href="mailto:'.$contact->mail.'">
-            <img src="images/icons/mail-unread.png" 
-                 alt="'._G('DBMF_mailto').' '.$contact->id.'" 
+            <img src="images/icons/mail-unread.png"
+                 alt="'._G('DBMF_mailto').' '.$contact->id.'"
                  title="'._G('DBMF_mailto').' '.$contact->lastname.' '.$contact->firstname.' ('.$contact->id.')"></a>';
 
     echo '
@@ -60,20 +60,20 @@ $daysold = $date_modif->absDiff();
     </td>
     <td rowspan="2" class="cell_plugins">
         <div class="incell_hide">';
-    
+
     $as_showlist = MySBDBMFBlockRefHelper::loadAlwaysShown(MYSB_DBMF_BLOCKREF_ALWAYSSHOWN_ASPLUG);
-    foreach($as_showlist as $sblockref) 
+    foreach($as_showlist as $sblockref)
         echo $sblockref->displayPlugin( $contact, 'incell_hide' );
 
-    foreach($showcols_blockrefs as $sblockref) 
+    foreach($showcols_blockrefs as $sblockref)
         echo $sblockref->displayPlugin( $contact, 'incell_hide' );
- 
+
     echo '
         </div>
     </td>
     <td style="width: 20px; height: 20px; text-align: right; vertical-align: top;">
-        <form   action="index.php?mod=dbmf3&amp;tpl=contact_del&amp;contact_id='.$contact->id.'" 
-                method="post" 
+        <form   action="index.php?mod=dbmf3&amp;tpl=contact_del&amp;contact_id='.$contact->id.'"
+                method="post"
                 class="hidelayed"
                 data-overconfirm="'.MySBUtil::str2strict(sprintf(_G('DBMF_confirm_contact_delete'),$contact->lastname, $contact->firstname )).'">
             <input  type="hidden" name="dbmf_contact_delete" value="'.$contact->id.'">
@@ -124,7 +124,7 @@ $daysold = $date_modif->absDiff();
         <div class="cell_hide">
 ';
     $pluginsDisplay = MySBPluginHelper::loadByType('DBMFDisplay');
-    foreach($pluginsDisplay as $plugin) 
+    foreach($pluginsDisplay as $plugin)
         echo $plugin->displayIcons(1,$contact);
     echo '
         </div>
@@ -134,13 +134,13 @@ $daysold = $date_modif->absDiff();
     $as_showlist = MySBDBMFBlockRefHelper::loadAlwaysShown(MYSB_DBMF_BLOCKREF_ALWAYSSHOWN_ASPLUG);
     $size_cell = 50*( count($as_hidelist) + count($as_showlist) );
     echo '
-        <div class="incell_show" style="text-align: right; width: '.$size_cell.'px;">';
-    
-    foreach($as_hidelist as $sblockref) 
-        echo $sblockref->displayPlugin( $contact, 'incell_floatshow' );
+        <div class="incell_hide" style="text-align: right; width: '.$size_cell.'px;">';
 
-    foreach($as_showlist as $sblockref) 
+/*    foreach($as_hidelist as $sblockref)
+        echo $sblockref->displayPlugin( $contact, 'incell_floatshow' );
+    foreach($as_showlist as $sblockref)
         echo $sblockref->displayPlugin( $contact, '' );
+*/
 
     echo '
         </div>

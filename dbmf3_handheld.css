@@ -12,6 +12,12 @@ div#mysbMiddle {
 font-size: 95%;
 }
 
+#mysbMiddle div.searchresults {
+width: 100%;
+}
+#mysbMiddle div.list_support {
+padding: 7px 0px 1px;
+}
 #mysbMiddle div.cell {
 min-height: 44px;
 }
@@ -74,5 +80,9 @@ font-size: 80%;
 }
 #dbmfMementoList td.actions{
 width: 40px;
+}
+#mysbMiddle div.mem_maxh {
+max-height: 150px;
+overflow-y: hidden;
 }
 

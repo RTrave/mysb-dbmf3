@@ -1,4 +1,4 @@
-<?php 
+<?php
 /***************************************************************************
  *
  *   phpMySandBox/DBMF3 module - TRoman<abadcafe@free.fr> - 2012
@@ -15,7 +15,7 @@ defined('_MySBEXEC') or die;
 
 /**
  * DBMF CSV Export class
- * 
+ *
  */
 class MySBDBMFExportCSV extends MySBDBMFExport {
 
@@ -25,7 +25,7 @@ class MySBDBMFExportCSV extends MySBDBMFExport {
     }
 
     public function selectionProcess( $selection ) {
-        
+
     }
 
     public function htmlParamForm() {
@@ -33,12 +33,10 @@ class MySBDBMFExportCSV extends MySBDBMFExport {
         $blocks = MySBDBMFBlockHelper::load();
         $output .= '
 <div class="table_support">
-<p>
     '._G('DBMF_exportcsv_filename').':
     <input type="text" name="dbmf_exportcsv_filename" value="" size="24">.csv<br>
     '._G('DBMF_exportcsv_fileinfos').':<br>
     <textarea name="dbmf_exportcsv_fileinfos" cols="40" rows="4"></textarea>
-</p>
 </div>';
         return $output;
     }
@@ -50,7 +48,7 @@ class MySBDBMFExportCSV extends MySBDBMFExport {
     }
 
     public function requestOrderBy() {
-        if( isset($_POST["dbmf_exportcsv_orderby$this->id"]) ) 
+        if( isset($_POST["dbmf_exportcsv_orderby$this->id"]) )
             return $_POST["dbmf_exportcsv_orderby$this->id"];
         return '';
     }
@@ -89,7 +87,7 @@ class MySBDBMFExportCSV extends MySBDBMFExport {
 
     /**
      * Search result output
-     * @param   
+     * @param
      */
     public function htmlResultOutput() {
         global $app;
@@ -134,9 +132,11 @@ class MySBDBMFExportCSV extends MySBDBMFExport {
         }
         fclose($ftable);
         echo '
-<p>
-CSV output: '.$count.' results<br>
-</p>';
+
+<div class="searchresults" style="padding: 5px;">
+CSV output: '.$count.' results
+</div><br>
+';
         $stmail = new MySBMail('sendtable','dbmf3');
         $stmail->addTO($app->auth_user->mail,$app->auth_user->firstname.' '.$app->auth_user->lastname);
         if($this->csv_filename=='.csv') $csv_filename = 'sendtable.csv';

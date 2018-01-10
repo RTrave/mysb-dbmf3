@@ -117,7 +117,7 @@ if(isset($_POST['dbmf_editexport'])) {
 <div class="row">
     '.$export->htmlConfigForm().'
 </div>
-<div class="title">
+<div class="row" style="text-align: center;">
     <input type="hidden" name="dbmf_editexport_process" value="'.$export->id.'">
     <input type="submit" value="'._G('DBMF_editexport_submit').'">
 </div>
@@ -193,7 +193,7 @@ echo '
     </div>
     '._G('DBMF_export_group').'
 </div>
-<div class="title">
+<div class="row" style="text-align: center;">
     <input type="hidden" name="dbmf_addexport" value="1">
     <input type="submit" value="'._G('DBMF_addexports').'">
 </div>
@@ -224,21 +224,23 @@ else {
 
 echo '
 <h3 id="autosubs">'._G('DBMF_autosubs_config').'</h3>
-<form action="index.php?mod=dbmf3&amp;tpl=admin/dbmf#autosubs" method="post">';
+<form action="index.php?mod=dbmf3&amp;tpl=admin/dbmf#autosubs" method="post">
+<p>';
 
 $blockrefs = MySBDBMFBlockRefHelper::load();
 foreach( $blockrefs as $blockref ) {
     echo '
-<div style="display: inline-block; background: #dddddd; margin: 2px 3px; padding: 1px 3px;">
+<span style="display: inline-block; background: #dddddd; margin: 2px 3px; padding: 1px 3px;">
     <input name="'.$blockref->keyname.'" "'.MySBUtil::form_ischecked($blockref->autosubs,"1").'" type="checkbox">
     '._G($blockref->lname).'
-</div>';
+</span>';
 }
-echo '<br>
+echo '</p><p style="text-align: center;">
     <input type="hidden" name="dbmf_autosubs" value="1">
     <input type="submit" value="'._G('DBMF_autosubs_configsubmit').'">
+</p>
 </form>
-
+<br>
 ';
 
 ?>

@@ -1,4 +1,4 @@
-<?php 
+<?php
 /***************************************************************************
  *
  *   phpMySandBox/DBMF3 module - TRoman<abadcafe@free.fr> - 2012
@@ -15,7 +15,7 @@ defined('_MySBEXEC') or die;
 
 /**
  * DBMF Export class
- * 
+ *
  */
 class MySBDBMFExportSummary extends MySBDBMFExport {
 
@@ -25,7 +25,7 @@ class MySBDBMFExportSummary extends MySBDBMFExport {
     }
 
     public function selectionProcess( $selection ) {
-        
+
     }
 
     public function htmlParamForm() {
@@ -33,8 +33,8 @@ class MySBDBMFExportSummary extends MySBDBMFExport {
         $output = '';
         $blocks = MySBDBMFBlockHelper::load();
         $output .= '
-<div class="list_support" style="vertical-align: top;">
-'._G('DBMF_display_showfield').':<br>';
+<div class="list_support" style="vertical-align: top; text-align: left;">
+'._G('DBMF_display_showfield').'<br><br>';
 
         foreach($blocks as $block) {
             if($block->isViewable()) {
@@ -43,10 +43,10 @@ class MySBDBMFExportSummary extends MySBDBMFExport {
         <div class="title" style="padding: 2px 2px 0px; min-height: 22px; width: 100px; "><b>'._G($block->lname).'</b></div>
         <div class="row" style="padding: 2px 2px 0px; min-height: 18px; widthA: 70%;">';
                 foreach($block->blockrefs as $blockref) {
-                    if( $blockref->isActive() and 
+                    if( $blockref->isActive() and
                         ($blockref->type==MYSB_VALUE_TYPE_INT or $blockref->type==MYSB_VALUE_TYPE_BOOL) ) {
                         $output .= '
-        <div class="rowA" style="display:inline-block; padding: 2px 2px 0px; min-height: 22px;">';
+        <div class="rowA" style="display:inline-block; padding: 2px 2px 0px; min-height: 22px; background-color: #dddddd;">';
 /*
                         if($showcols->have($blockref->id)) $colsshow_check = 'checked';
                         else $colsshow_check = '';
@@ -91,7 +91,7 @@ class MySBDBMFExportSummary extends MySBDBMFExport {
 
     /**
      * Search result output
-     * @param   
+     * @param
      */
     public function htmlResultOutput() {
         global $app,$_SESSION;

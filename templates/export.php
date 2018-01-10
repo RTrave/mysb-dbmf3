@@ -1,4 +1,4 @@
-<?php 
+<?php
 /***************************************************************************
  *
  *   phpMySandBox/DBMF3 module - TRoman<abadcafe@free.fr> - 2012
@@ -20,9 +20,13 @@ echo '
 
 if( isset($_POST['dbmf_export_process']) ) {
     echo '
-<h2>'._G('DBMF_search_results').'</h2>';
+<h2>'._G('DBMF_search_results').'</h2>
+<div class="list_support">';
 
     echo $app->dbmf_export_plugin->htmlResultOutput();
+    echo '
+</div>
+<br>    ';
     return;
 }
 
@@ -34,15 +38,16 @@ echo '
 
 <h3>'._G('DBMF_export_select_type').'</h3>
 
-<p>';
+<div class="list_support">
+<div class="searchresults" style="padding: 5px;">';
 
 echo '
 <select name="export_plug" onChange="';
 $exports = MySBDBMFExportHelper::load();
-foreach($exports as $export) 
+foreach($exports as $export)
     echo 'hide(\'export_plug'.$export->id.'\');';
 echo 'show(this.options[this.selectedIndex].value);">';
-foreach($exports as $export) 
+foreach($exports as $export)
     echo '
     <option value="export_plug'.$export->id.'">'._G($export->name).'</option>';
 
@@ -50,7 +55,7 @@ echo '
 </select>
 <br><br>
 <a id="params_show" onClick="toggle_slide(\'params\');hide(\'params_showA\');" class="button">'._G('DBMF_export_showparams').'</a><br>
-<br></p>
+<br>
 <div id="params" style="display: none;">';
 
 $hide_flag = '';
@@ -66,12 +71,14 @@ foreach($exports as $export) {
 
 echo '
 </div>
+</div>
+</div>
 <h3>'._G('DBMF_export_blockscriteria').'</h3>
 
 <div class="list_support" id="rsvpCriteria">
 
-<div class="boxed" 
-     style="width: 450px; margin: 10px auto 3px;">';
+<div class="boxed"
+     style="width: 450px; margin: 10px auto 10px;">';
 
 $blocks = MySBDBMFBlockHelper::load();
 $blockn_flag = 0;
@@ -99,7 +106,7 @@ foreach($blocks as $block) {
     <div id="block_select_'.$block->id.'" style="display: none; width: 100%;">
     <div class="row" style="text-align: center;">
         '._G('DBMF_request_blockref_and_or').'
-        <input type="radio" name="blockref_andorflag_'.$block->id.'" value="or" checked>OR 
+        <input type="radio" name="blockref_andorflag_'.$block->id.'" value="or" checked>OR
         <input type="radio" name="blockref_andorflag_'.$block->id.'" value="and">AND<br>
     </div>';
         foreach($block->blockrefs as $blockref) {
@@ -118,12 +125,11 @@ foreach($blocks as $block) {
 
 echo '
 </div>
-</div>
 
-<p style="text-align: center;">
     <input type="hidden" name="dbmf_export_process" value="1">
-    <input type="submit" value="'._G('DBMF_search_submit').'">
-</p>
+    <input type="submit" value="'._G('DBMF_search_submit').'"
+           style="margin-bottom: 10px;">
+</div>
 </form>';
 
 ?>

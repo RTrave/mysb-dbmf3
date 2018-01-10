@@ -41,8 +41,9 @@ class MySBDBMFExportDisplay extends MySBDBMFExport {
         $blocks = MySBDBMFBlockHelper::load();
 
         $output .= '
-<div class="list_support" style="vertical-align: top;">
-'._G('DBMF_display_showfield').':<br>';
+<div class="list_support"
+     style="vertical-align: top; text-align: left;">
+'._G('DBMF_display_showfield').'<br><br>';
 
         foreach($blocks as $block) {
             if($block->isViewable()) {
@@ -53,7 +54,7 @@ class MySBDBMFExportDisplay extends MySBDBMFExport {
                 foreach($block->blockrefs as $blockref) {
                     if($blockref->isActive()) {
                         $output .= '
-        <div class="rowA" style="display:inline-block; padding: 2px 2px 0px; min-height: 22px;">';
+        <div class="rowA" style="display:inline-block; padding: 2px 2px 0px; min-height: 22px; background-color: #dddddd;">';
                         if($showcols->have($blockref->id)) $colsshow_check = 'checked';
                         else $colsshow_check = '';
                         $output .= '<input type="checkbox" name="display_'.$blockref->id.'" '.$colsshow_check.'>

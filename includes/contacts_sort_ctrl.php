@@ -200,20 +200,21 @@ function changepack(selvalue) {
     //scrollresults();
     loadItem( "contacts_results", "index.php?mod=dbmf3&inc=contacts_sort&pack="+selvalue );
 }
-</script>';
+</script>
+<div class="list_support">
+<div class="searchresults">';
 
 echo sortActions($packF);
 
 
 echo '
-<p>
 <br>
 <b>'.$first_packid.'-'.$last_packid.'</b><br>
 ('.$counter.' results)<br>
 <br>
-</p>
-
-<div class="list_support">';
+<br>
+<br>
+';
 
 while($data_print = MySBDB::fetch_array($search_m)) {
 
@@ -228,17 +229,17 @@ while($data_print = MySBDB::fetch_array($search_m)) {
 }
 
 echo '
-</div>
+<br>
 ';
 echo sortActions($packF);
 
 echo '
-<p><br>
 <img    src="images/icons/go-top.png" class="linked"
         alt="'._G('SBGT_top').'"
         title="'._G('SBGT_top').'"
         onclick="scrollresults();">
-</p>
+</div>
+</div>
 <br>';
 
 ?>

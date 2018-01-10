@@ -1,4 +1,4 @@
-<?php 
+<?php
 /***************************************************************************
  *
  *   phpMySandBox/DBMF3 module - TRoman<abadcafe@free.fr> - 2012
@@ -59,8 +59,8 @@ if( isset($_GET['memento_id']) ) {
         <div style="float: left;">
         <a  href="index.php?mod=dbmf3&amp;tpl=contact_edit&amp;contact_id='.$contact->id.'"
             class="overlayed">
-            <img    src="images/icons/text-editor.png" 
-                    alt="Edition '.$contact->id.'" 
+            <img    src="images/icons/text-editor.png"
+                    alt="Edition '.$contact->id.'"
                     title="'._G('DBMF_edit').' '.$contact->lastname.' '.$contact->firstname.' (memento '.$memento->id.')">
         </a>
         </div>
@@ -70,14 +70,14 @@ if( isset($_GET['memento_id']) ) {
     </td>
     <td class="comments">
         <table style="width: 100%; background-color: transparent;"><tbody><tr>
-            <td style="min-width: 20%;">'.$memento->comments.'</td>
+            <td style="min-width: 20%;"><div class="mem_maxh">'.$memento->comments.'</div></td>
             <td style="min-width: 20%;">'.$memento->comments2.'</td>
         </tr></tbody></table>
     </td>
-    <td class="actions" style="vertical-align: middle;">';
+    <td class="actions" style="vertical-align: top;">';
     if($Active) {
         echo '
-        <form action="index.php?mod=dbmf3&tpl=memento_edit&amp;memento_id='.$memento->id.'" 
+        <form action="index.php?mod=dbmf3&tpl=memento_edit&amp;memento_id='.$memento->id.'"
               method="post"
               class="hidelayed">
             <input type="hidden" name="memento_process" value="'.$memento->id.'">
@@ -88,7 +88,7 @@ if( isset($_GET['memento_id']) ) {
         </form>';
     } elseif(!$Active and $memento->date_process!='') {
         echo '
-        <form action="index.php?mod=dbmf3&tpl=memento_edit&amp;memento_id='.$memento->id.'" 
+        <form action="index.php?mod=dbmf3&tpl=memento_edit&amp;memento_id='.$memento->id.'"
               method="post"
               class="hidelayed">
             <input type="hidden" name="memento_unprocess" value="'.$memento->id.'">
@@ -100,8 +100,8 @@ if( isset($_GET['memento_id']) ) {
     }
     echo '
     </td>
-    <td class="actions" style="vertical-align: middle;">
-        <form action="index.php?mod=dbmf3&amp;tpl=memento_edit&amp;memento_id='.$memento->id.'" 
+    <td class="actions" style="vertical-align: top;">
+        <form action="index.php?mod=dbmf3&amp;tpl=memento_edit&amp;memento_id='.$memento->id.'"
               method="post"
               class="hidelayed"
               data-overconfirm="'.MySBUtil::str2strict(_G('DBMF_confirm_memento_delete')).'">

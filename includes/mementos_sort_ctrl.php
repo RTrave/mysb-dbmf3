@@ -80,7 +80,8 @@ foreach($mementos_p as $memento) {
     elseif(!$Active and $memento->date_process!='') $memclass = 'mem_processed';
     else $memclass='';
     echo '
-<div class="cell" id="memento'.$memento->id.'" style="background-color: transparent;">';
+<div class="cell" id="memento'.$memento->id.'"
+     style="background-color: transparent; width: 80%; display: inline-block;">';
 
     $app->tpl_dbmf_currentmemento = $memento;
     include( _pathI('memento_display_ctrl','dbmf3') );

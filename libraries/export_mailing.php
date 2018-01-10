@@ -30,14 +30,14 @@ class MySBDBMFExportMailing extends MySBDBMFExport {
     public function htmlConfigForm() {
         global $app;
         if( isset($this->config_array['modulo']) and
-            $this->config_array['modulo']!='' ) 
+            $this->config_array['modulo']!='' )
             $modulo = $this->config_array['modulo'];
         else $modulo = MODULO_DEFAULT;
         $str_res = '
 '._G('DBMF_exportmailing_config_modulo').':
     <input type="text" name="dbmf_exportmailing_config_modulo" value="'.$modulo.'"><br>';
         if( isset($this->config_array['maxbysend']) and
-            $this->config_array['maxbysend']!='' ) 
+            $this->config_array['maxbysend']!='' )
             $maxbysend = $this->config_array['maxbysend'];
         else $maxbysend = MAXBYSEND_DEFAULT;
         $str_res .= '
@@ -65,7 +65,7 @@ class MySBDBMFExportMailing extends MySBDBMFExport {
         $editor = new MySBEditor();
         $output = $editor->init("exportmailing_body");
         $output .= '
-<p>
+<div>
     '._G('DBMF_exportmailing_subject').':
     <input type="text" name="dbmf_exportmailing_subject" value="" size="24"><br>
     '._G('DBMF_exportmailing_body').':<br>
@@ -80,10 +80,10 @@ class MySBDBMFExportMailing extends MySBDBMFExport {
     '._G('DBMF_exportmailing_attachment').' 3:
     <input type="hidden" name="MAX_FILE_SIZE" value="2000000" />
     <input name="dbmf_exportmailing_att3" type="file" />
-</p>';
+</div>';
         $output .= '
 <h4>'._G('DBMF_exportmailing_advancedparams').'</h4>
-<p>
+<div>
     '._G('DBMF_exportmailing_sendaslist').':
     <input type="checkbox" name="dbmf_exportmailing_sendaslist"><br>
     '._G('DBMF_exportmailing_unsubscribefields').':
@@ -96,7 +96,7 @@ class MySBDBMFExportMailing extends MySBDBMFExport {
     </select><br>
     '._G('DBMF_exportmailing_firstid').':
     <input type="text" name="dbmf_exportmailing_firstid" value="" size="8">
-</p>
+</div>
     ';
         return $output;
     }
@@ -152,7 +152,7 @@ class MySBDBMFExportMailing extends MySBDBMFExport {
         global $app;
 
         if( $this->mailing_subject=='' or $this->mailing_body=='' ) {
-            echo '<p>'._G('DBMF_exportmailing_emptyfield').'</p>';
+            echo ''._G('DBMF_exportmailing_emptyfield').'';
             return;
         }
 
@@ -170,20 +170,21 @@ class MySBDBMFExportMailing extends MySBDBMFExport {
             false, 'dbmf3');
 
         $output = '
-<p>
+<div class="searchresults" style="padding: 5px;">
+<div>
 '.MySBDB::num_rows($results).' contacts<br>';
         if( $this->mailing_sendaslist )
             $output .= '(send as list)';
         $output .= '
-</p>
+</div>
 <h3>'._G('DBMF_exportmailing_sending').'</h3>
 <div id="rsvp_mailing_displaymail">
-<p><b>'.$this->mailing_subject.'</b></p>
+<div><b>'.$this->mailing_subject.'</b></div>
 <br>
 '.MySBUtil::str2html($this->mailing_body).'
 <br>
 </div>
-<p>';
+<div>';
 
         $current_mail = new MySBMail('mailing','dbmf3');
         if( $this->replyto_geck!='' ) $current_mail->setReplyTo($this->replyto_addr,$this->replyto_geck);
@@ -193,10 +194,10 @@ class MySBDBMFExportMailing extends MySBDBMFExport {
         if( $this->mailing_unsubscribefields ) {
             //$current_mail->addHeader('List-Unsubscribe: <mailto:'.$this->replyto_addr.'?subject=Unsubscribe>');
             $current_mail->addFooter('
-<p></p>
-<p style="text-align: center; background-color: #cccccc;"><small>'._G('DBMF_exportmailing_unsubscribe').
+<div></div>
+<div style="text-align: center; background-color: #cccccc;"><small>'._G('DBMF_exportmailing_unsubscribe').
 ': <a href="mailto:'.$this->replyto_addr.'?subject=Unsubscribe">'.
-$this->replyto_addr.'?subject=Unsubscribe</a></small></p>');
+$this->replyto_addr.'?subject=Unsubscribe</a></small></div>');
         }
         $current_mail->data['body'] = $this->mailing_body;
         $current_mail->data['subject'] = $this->mailing_subject;
@@ -247,7 +248,8 @@ $this->replyto_addr.'?subject=Unsubscribe</a></small></p>');
 
         $output .= '
 '._G('DBMF_exportmailing_nbmail').': '.($mails_index).'<br>
-</p>';
+</div>
+</div>';
 
         if( $mails_index==$maxbysend and ($data_result=MySBDB::fetch_array($results)) ) {
             $contact = new MySBDBMFContact(null,$data_result);

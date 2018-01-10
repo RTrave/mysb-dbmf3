@@ -1,4 +1,4 @@
-<?php 
+<?php
 /***************************************************************************
  *
  *   phpMySandBox/DBMF3 module - TRoman<abadcafe@free.fr> - 2012
@@ -15,7 +15,7 @@ defined('_MySBEXEC') or die;
 
 /**
  * DBMF CSV'Mails Export class
- * 
+ *
  */
 class MySBDBMFExportMailsCSV extends MySBDBMFExport {
 
@@ -31,26 +31,26 @@ class MySBDBMFExportMailsCSV extends MySBDBMFExport {
 */
 
     public function selectionProcess( $selection ) {
-        
+
     }
 
     public function htmlParamForm() {
         $output = '
-<p>'._G('DBMF_exportmail_modulo').' = 
+'._G('DBMF_exportmail_modulo').' =
     <input type="text" name="dbmf_exportmailscsv_modulo" value="50" size="6">
-</p>';
+<br>';
         return $output;
     }
 
     public function htmlParamProcess() {
         global $app;
         $app->tpl_dbmfexportmailscsv_modulo = $_POST['dbmf_exportmailscsv_modulo'];
-        
+
     }
 
     /**
      * Search result output
-     * @param   
+     * @param
      */
     public function htmlResultOutput() {
         global $app;
@@ -61,10 +61,9 @@ class MySBDBMFExportMailsCSV extends MySBDBMFExport {
             false, 'dbmf3');
 
         $output = '
-<p>
+<div class="searchresults" style="padding: 5px;">
 '.MySBDB::num_rows($results).' results<br>
-</p>
-<p>Mails (by '.$app->tpl_dbmfexportmailscsv_modulo.'):<br><br>
+<br>Mails (by '.$app->tpl_dbmfexportmailscsv_modulo.'):<br><br>
 <code style="width: 70%;">
 ';
         $modulo_index = 0;
@@ -82,12 +81,11 @@ class MySBDBMFExportMailsCSV extends MySBDBMFExport {
             }
         }
         $output .= '
-</code>
-</p>';
+</code><br>
+';
         $output .= '
-<p>
 '.$count.' valids<br>
-</p>';
+</div>';
         return $output;
     }
 
