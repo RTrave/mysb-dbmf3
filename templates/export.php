@@ -34,9 +34,7 @@ if( isset($_POST['dbmf_export_process']) ) {
 echo '
 <form enctype="multipart/form-data" action="index.php?mod=dbmf3&amp;tpl=export" method="post">
 
-<h2>'._G('DBMF_export_contacts').'</h2>
-
-<h3>'._G('DBMF_export_select_type').'</h3>
+<h2>'._G('DBMF_export_select_type').'</h3>
 
 <div class="list_support">
 <div class="searchresults" style="padding: 5px;">';
@@ -73,7 +71,7 @@ echo '
 </div>
 </div>
 </div>
-<h3>'._G('DBMF_export_blockscriteria').'</h3>
+<h2>'._G('DBMF_export_blockscriteria').'</h2>
 
 <div class="list_support" id="rsvpCriteria">
 
