@@ -1,4 +1,4 @@
-<?php 
+<?php
 /***************************************************************************
  *
  *   phpMySandBox/DBMF3 module - TRoman<abadcafe@free.fr> - 2012
@@ -15,7 +15,7 @@ defined('_MySBEXEC') or die;
 
 /**
  * DBMF Export class
- * 
+ *
  */
 class MySBDBMFExportUpdate extends MySBDBMFExport {
 
@@ -26,7 +26,7 @@ class MySBDBMFExportUpdate extends MySBDBMFExport {
 
 
     public function selectionProcess( $selection ) {
-        
+
     }
 
     public function htmlParamForm() {
@@ -54,7 +54,7 @@ class MySBDBMFExportUpdate extends MySBDBMFExport {
                     if($blockref->isActive()) {
                         $refname = $blockref->keyname;
                         $output .= '
-<tr>
+<tr style="background-color: #fff;">
     <td style="vertical-align: top; text-align: left;">
         <input type="checkbox" name="upd_id_'.$blockref->id.'">'._G($blockref->lname).':
     </td>
@@ -97,8 +97,8 @@ class MySBDBMFExportUpdate extends MySBDBMFExport {
         foreach($blocks as $block) {
             if($block->isViewable()) {
                 foreach($block->blockrefs as $blockref) {
-                    if( $blockref->isActive() and 
-                        isset($_POST['upd_id_'.$blockref->id]) and 
+                    if( $blockref->isActive() and
+                        isset($_POST['upd_id_'.$blockref->id]) and
                         $_POST['upd_id_'.$blockref->id]=='on') {
 
                         if($this->update_sql!='') $this->update_sql .= ', ';
@@ -116,7 +116,7 @@ class MySBDBMFExportUpdate extends MySBDBMFExport {
 
     /**
      * Search result output
-     * @param   
+     * @param
      */
     public function htmlResultOutput() {
         global $app;

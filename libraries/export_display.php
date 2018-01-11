@@ -54,7 +54,7 @@ class MySBDBMFExportDisplay extends MySBDBMFExport {
                 foreach($block->blockrefs as $blockref) {
                     if($blockref->isActive()) {
                         $output .= '
-        <div class="rowA" style="display:inline-block; padding: 2px 2px 0px; min-height: 22px; background-color: #dddddd;">';
+        <div class="checkboxlist">';
                         if($showcols->have($blockref->id)) $colsshow_check = 'checked';
                         else $colsshow_check = '';
                         $output .= '<input type="checkbox" name="display_'.$blockref->id.'" '.$colsshow_check.'>

@@ -41,12 +41,12 @@ class MySBDBMFExportSummary extends MySBDBMFExport {
                 $output .= '
     <div class="boxed" style="font-size: 70%; width: 100%; margin: 2px 2px 0px;">
         <div class="title" style="padding: 2px 2px 0px; min-height: 22px; width: 100px; "><b>'._G($block->lname).'</b></div>
-        <div class="row" style="padding: 2px 2px 0px; min-height: 18px; widthA: 70%;">';
+        <div class="row" style="padding: 2px 2px 0px; min-height: 18px;">';
                 foreach($block->blockrefs as $blockref) {
                     if( $blockref->isActive() and
                         ($blockref->type==MYSB_VALUE_TYPE_INT or $blockref->type==MYSB_VALUE_TYPE_BOOL) ) {
                         $output .= '
-        <div class="rowA" style="display:inline-block; padding: 2px 2px 0px; min-height: 22px; background-color: #dddddd;">';
+        <div class="checkboxlist">';
 /*
                         if($showcols->have($blockref->id)) $colsshow_check = 'checked';
                         else $colsshow_check = '';
