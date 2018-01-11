@@ -1,4 +1,4 @@
-<?php 
+<?php
 /***************************************************************************
  *
  *   phpMySandBox/DBMF3 module - TRoman<abadcafe@free.fr> - 2012
@@ -37,7 +37,7 @@ foreach($mementos as $memento) {
 
 $req_users = MySBDB::query('SELECT * FROM '.MySB_DBPREFIX."users ".
     "WHERE id!=0",
-    "templates/notifications.php" );
+    "templates/notifications.php", 'dbmf3' );
 while( $data_user=MySBDB::fetch_array($req_users) ) {
 
     $user = new MySBUser(-1,$data_user);
@@ -47,7 +47,7 @@ while( $data_user=MySBDB::fetch_array($req_users) ) {
     foreach( $act_mementos as $memento ) {
         if( $memento->isTreatable($user) ) {
             $active_nb += 1;
-            if( $memento->is_notified!=1 ) 
+            if( $memento->is_notified!=1 )
                 $active_nb_new += 1;
         }
     }

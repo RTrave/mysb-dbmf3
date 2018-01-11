@@ -233,7 +233,7 @@ class MySBModule_dbmf3 {
     public function init5() {
         global $app;
         $req = MySBDB::query('CREATE TABLE '.MySB_DBPREFIX.'dbmfmementos ( '.
-            'id int, '.
+            'id int unique key, '.
             'user_id int, '.
             'group_id int, '.
             'contact_id int, '.
