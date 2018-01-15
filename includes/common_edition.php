@@ -1,4 +1,4 @@
-<?php 
+<?php
 /***************************************************************************
  *
  *   phpMySandBox/DBMF3 module - TRoman<abadcafe@free.fr> - 2012
@@ -28,7 +28,7 @@ echo '
 
 <div class="row" style="text-align: center;">
     <small>
-        <b>'._G('DBMF_date_creat').': </b>'.$date_creat->strAEBY_l().' / 
+        <b>'._G('DBMF_date_creat').': </b>'.$date_creat->strAEBY_l().' /
         <b>'._G('DBMF_date_modif').': </b>'.$date_modif->strAEBY_l().'
     </small>
 </div>
@@ -59,8 +59,8 @@ function mail_input( $i_mail, $email, $isEditor, $isLast=false, $style='' ) {
     <div class="right">';
 if( $isEditor ) {
     if( $isLast ) echo '
-        <img src="images/icons/list-add.png" 
-             alt="'._G('DBMF_common_addmail').'" 
+        <img src="images/icons/list-add.png"
+             alt="'._G('DBMF_common_addmail').'"
              title="'._G('DBMF_common_addmail').'"
              id="dbmfmailaddicon"
              style="height: 20px; vertical-align: middle;"
@@ -118,7 +118,7 @@ foreach($mementos as $memento) {
     echo ' <div style="float: right;">'.$m_catgname.'</div>
         </div>
         <div class="row '.$memclass.'" style="font-size: 90%; padding: 2px 4px 0px; background: #eeeeee;">'.$memento->comments.'<br>
-        '.$memento->comments2.'</div>
+        </div>
     </div>';
     if($memento->isEditable())
         echo '</a>';

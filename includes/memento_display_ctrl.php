@@ -71,9 +71,19 @@ if( isset($_GET['memento_id']) ) {
     <td class="comments">
         <table style="width: 100%; background-color: transparent;"><tbody><tr>
             <td style="min-width: 20%;"><div class="mem_maxh">'.$memento->comments.'</div></td>
-            <td style="min-width: 20%;">'.$memento->comments2.'</td>
         </tr></tbody></table>
-    </td>
+    </td>';
+    if( $memento->comments2!='' ) {
+        echo '
+    <td class="actions" style="vertical-align: top;">
+        <div class="tooltip">
+        <img src="images/icons/mail-attachment.png"
+             alt="'._G('DBMF_memento_edition_delete').'">
+        <span>'.$memento->comments2.'
+        </div>
+    </td>';
+    }
+    echo '
     <td class="actions" style="vertical-align: top;">';
     if($Active) {
         echo '
