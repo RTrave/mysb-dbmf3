@@ -33,39 +33,36 @@ class MySBDBMFExportSummary extends MySBDBMFExport {
         $output = '';
         $blocks = MySBDBMFBlockHelper::load();
         $output .= '
-<div class="list_support" style="vertical-align: top; text-align: left;">
-'._G('DBMF_display_showfield').'<br><br>';
+<h3>'._G('DBMF_display_showfield').'</h3>';
 
         foreach($blocks as $block) {
             if($block->isViewable()) {
-                $output .= '
-    <div class="boxed" style="font-size: 70%; width: 100%; margin: 2px 2px 0px;">
-        <div class="title" style="padding: 2px 2px 0px; min-height: 22px; width: 100px; "><b>'._G($block->lname).'</b></div>
-        <div class="row" style="padding: 2px 2px 0px; min-height: 18px;">';
-                foreach($block->blockrefs as $blockref) {
-                    if( $blockref->isActive() and
-                        ($blockref->type==MYSB_VALUE_TYPE_INT or $blockref->type==MYSB_VALUE_TYPE_BOOL) ) {
-                        $output .= '
-        <div class="checkboxlist">';
-/*
-                        if($showcols->have($blockref->id)) $colsshow_check = 'checked';
-                        else $colsshow_check = '';
-*/
-                        $output .= '<input type="checkbox" name="summary_'.$blockref->keyname.'">
-                        '._G($blockref->lname).'
-        </div>';
-
-                    }
+            $output .= '
+<div class="row" style="font-size: 70%;">
+  <p class="col-12">
+    <b>'._G($block->lname).'</b>
+  </p>
+</div>
+<div class="row checkbox-list" style="font-size: 70%;">';
+            foreach($block->blockrefs as $blockref) {
+                if( $blockref->isActive() and
+                    ( $blockref->type==MYSB_VALUE_TYPE_INT or
+                      $blockref->type==MYSB_VALUE_TYPE_BOOL) )
+                {
+                    $output .= '
+  <label for="summary_'.$blockref->keyname.'">
+    <p><i>'._G($blockref->lname).'</i></p>
+    <input type="checkbox" name="summary_'.$blockref->keyname.'"
+           id="summary_'.$blockref->keyname.'">
+  </label>';
                 }
-                $output .= '
-        </div>
-    </div>';
+            }
+            $output .= '
+</div>';
             }
         }
-        $output .= '
-</div>
-<br>';
-        return $output;
+    $output .= '';
+    return $output;
     }
 
     public function htmlParamProcess() {

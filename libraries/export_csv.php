@@ -32,11 +32,26 @@ class MySBDBMFExportCSV extends MySBDBMFExport {
         $output = '';
         $blocks = MySBDBMFBlockHelper::load();
         $output .= '
-<div class="table_support">
+<div class="row label">
+  <label class="col-sm-4" for="dbmf_exportcsv_filename">
     '._G('DBMF_exportcsv_filename').':
-    <input type="text" name="dbmf_exportcsv_filename" value="" size="24">.csv<br>
+  </label>
+  <div class="col-7">
+    <input type="text" name="dbmf_exportcsv_filename"
+           value="" id="dbmf_exportcsv_filename">
+  </div>
+  <p class="col-1">
+    .csv
+  </p>
+</div>
+<div class="row label">
+  <label class="col-md-4" for="dbmf_exportcsv_fileinfos">
     '._G('DBMF_exportcsv_fileinfos').':<br>
-    <textarea name="dbmf_exportcsv_fileinfos" cols="40" rows="4"></textarea>
+  </label>
+  <div class="col-md-8">
+    <textarea name="dbmf_exportcsv_fileinfos"
+              id="dbmf_exportcsv_fileinfos"></textarea>
+  </div>
 </div>';
         return $output;
     }

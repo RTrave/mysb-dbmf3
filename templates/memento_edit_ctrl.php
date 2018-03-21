@@ -1,4 +1,4 @@
-<?php 
+<?php
 /***************************************************************************
  *
  *   phpMySandBox/DBMF3 module - TRoman<abadcafe@free.fr> - 2013
@@ -22,7 +22,7 @@ if(isset($_POST['memento_add'])) {
     elseif($_POST['memento_type']=='memtype1') $memtype = MYSB_DBMF_MEMENTO_TYPE_MONTHOFYEAR;
     $memento = MySBDBMFMementoHelper::create($_POST['memento_category'],$_POST['memento_add'],$memtype);
     if($memtype==MYSB_DBMF_MEMENTO_TYPE_PUNCTUAL) {
-        $new_memento_date = 
+        $new_memento_date =
 MySBDateTimeHelper::html_formLoad('memento_date_');
         $memento->update( array(
             'date_memento' => $new_memento_date->date_string,
@@ -32,8 +32,8 @@ MySBDateTimeHelper::html_formLoad('memento_date_');
             'date_memento' => '',
             'monthofyear_memento' => $_POST['memento_moy'] ) );
     }
-    if( isset($_POST['memento_group_edition']) and 
-        $_POST['memento_group_edition']=='on') 
+    if( isset($_POST['memento_group_edition']) and
+        $_POST['memento_group_edition']=='on')
         $group_edition = 1;
     else $group_edition = 0;
     $memento->update( array(
@@ -53,8 +53,8 @@ MySBDateTimeHelper::html_formLoad('memento_date_');
 }
 
 
-if(isset($_POST['memento_delete'])) {
-    MySBDBMFMementoHelper::delete($_POST['memento_delete']);
+if(isset($_GET['memento_delete'])) {
+    MySBDBMFMementoHelper::delete($_GET['memento_id']);
     $app->pushMessage(_G('DBMF_memento_deleted'));
 }
 
@@ -72,7 +72,7 @@ if( isset($_POST['memento_modify']) ) {
             'monthofyear_memento' => $_POST['memento_moy'],
             'date_memento' => '' ) );
     }
-    if( isset($_POST['memento_group_edition']) and 
+    if( isset($_POST['memento_group_edition']) and
         $_POST['memento_group_edition']=='on') $group_edition = 1;
     else $group_edition = 0;
     $memento->update( array(
@@ -83,12 +83,12 @@ if( isset($_POST['memento_modify']) ) {
     $app->pushMessage(_G('DBMF_memento_modified'));
 }
 
-if(isset($_POST['memento_process'])) {
+if(isset($_GET['memento_process'])) {
     $memento->process();
     $app->pushMessage(_G('DBMF_memento_processed'));
 }
 
-if(isset($_POST['memento_unprocess'])) {
+if(isset($_GET['memento_unprocess'])) {
     $memento->unprocess();
     $app->pushMessage(_G('DBMF_memento_unprocessed'));
 }

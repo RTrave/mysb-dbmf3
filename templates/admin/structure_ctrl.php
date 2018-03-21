@@ -1,4 +1,4 @@
-<?php 
+<?php
 /***************************************************************************
  *
  *   phpMySandBox/DBMF3 module - TRoman<abadcafe@free.fr> - 2012
@@ -59,7 +59,7 @@ if(isset($_POST['blockref_del'])) {
 if(isset($_POST['blockref_edit_process'])) {
     $blockref = MySBDBMFBlockRefHelper::getByID($_POST['blockref_edit_process']);
     $blockref->update( array( 'lname'=>$_POST['lname'] ) );
-    if( ($_POST['switchorderby']!=1 and $blockref->orderby==1) or 
+    if( ($_POST['switchorderby']!=1 and $blockref->orderby==1) or
         ($_POST['switchorderby']==1 and $blockref->orderby!=1) )
         $blockref->switchOrderBy();
     $blockref->setAlwaysShown($_POST['blockref_alwaysshown']);
@@ -67,8 +67,8 @@ if(isset($_POST['blockref_edit_process'])) {
     $app->tpl_blockref_edit = $blockref;
 }
 
-if(isset($_POST['blockref_edit'])) {
-    $app->tpl_blockref_edit = MySBDBMFBlockRefHelper::getByID($_POST['blockref_edit']);
+if(isset($_GET['blockref_edit'])) {
+    $app->tpl_blockref_edit = MySBDBMFBlockRefHelper::getByID($_GET['blockref_edit']);
 }
 
 if(isset($_POST['blockref_switchactive'])) {

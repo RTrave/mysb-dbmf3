@@ -1,4 +1,4 @@
-<?php 
+<?php
 /***************************************************************************
  *
  *   phpMySandBox/DBMF3 module - TRoman<abadcafe@free.fr> - 2012
@@ -16,9 +16,12 @@ global $app;
 
 if(!MySBRoleHelper::checkAccess('dbmf_user',false)) return;
 
+echo '
+<div class="col-md-8 col-unique">
+<div class="content">';
 
 $act_mementos = MySBDBMFMementoHelper::loadActives();
-if(count($act_mementos)>=1) 
+if(count($act_mementos)>=1)
     echo '
 <h2>'._G('DBMF_baseinfos_mementos').'</h2>
 <ul>
@@ -52,9 +55,9 @@ if(!isset($_SESSION['dbmf3_baseinfos_date'])) {
     $clause_t = '('.$clause_owner.')';
     if($clause_t!='()') $sql_r .= 'WHERE '.$clause_t.' ';
 
-	if($norights_flag) 
+	if($norights_flag)
 	    $infosava_result = array();
-    else 
+    else
         $infosava_result = MySBDB::query( $sql_r,
             "infos.php",
             false, 'dbmf3');
@@ -69,9 +72,9 @@ if(!isset($_SESSION['dbmf3_baseinfos_date'])) {
 
 }
 
-if( MySBConfigHelper::Value('dbmf_globalaccess','dbmf3') ) 
+if( MySBConfigHelper::Value('dbmf_globalaccess','dbmf3') )
     $globalaccess_info = ' <small><i>(GLOBAL ACCESS)</i></small>';
-else 
+else
     $globalaccess_info = '';
 
 echo '
@@ -80,10 +83,12 @@ echo '
     <li>'._G('DBMF_baseinfos_complete').': '.$_SESSION['dbmf3_baseinfos_tot'].'</li>
     <li>
         '._G('DBMF_baseinfos_avaible').': '.$_SESSION['dbmf3_baseinfos_ava'].' '.$globalaccess_info;
-if( $norights_flag ) 
+if( $norights_flag )
     echo '<br><i>'._G('DBMF_no_rights').'</i>';
 echo '
     </li>
-</ul>';
+</ul>
+</div>
+</div>';
 
 ?>

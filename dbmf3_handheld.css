@@ -7,7 +7,7 @@
  *
 ***************************************************************************/
 
-
+/*
 div#mysbMiddle {
 font-size: 95%;
 }
@@ -42,16 +42,16 @@ height: 40px;
 display: inline-block;
 float: left;
 }
+*/
+/* #mysbMiddle .w60    { width: 48px; } */
+/* #mysbMiddle .w80    { width: 48px; } */
+/* #mysbMiddle .w120   { width: 48px; } */
+/* #mysbMiddle .w180   { width: 48px; } */
 
-#mysbMiddle .w60    { width: 48px; }
-#mysbMiddle .w80    { width: 48px; }
-#mysbMiddle .w120   { width: 48px; }
-#mysbMiddle .w180   { width: 48px; }
-
-table#rsvpContact {
-font-size: 80%;
-}
-
+/* table#rsvpContact { */
+/* font-size: 80%; */
+/* } */
+/*
 #rsvpCriteria table {
 font-size: 80%;
 }
@@ -85,4 +85,4 @@ width: 40px;
 max-height: 150px;
 overflow-y: hidden;
 }
-
+*/

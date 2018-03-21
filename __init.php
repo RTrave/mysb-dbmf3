@@ -15,7 +15,7 @@ defined('_MySBEXEC') or die;
 class MySBModule_dbmf3 {
 
     public $lname = 'dbmf3';
-    public $version = 17;
+    public $version = 18;
     public $homelink = 'https://github.com/RTrave/mysb-dbmf3';
     public $require = array(
         'core' => 7
@@ -426,6 +426,15 @@ class MySBModule_dbmf3 {
             "__init.php",
             false, "dbmf3");
     }
+
+    public function init18() {
+        global $app;
+        MySBPluginHelper::create('config_menutext','MenuItem',
+            array('DBMF_topmenu_config', "admin/config&page=structure", 'DBMF_topmenu_configinfos',''),
+            array(2,0,0,0),
+            3,"dbmf_config",'dbmf3');
+    }
+
 
     public function uninit() {
         global $app;

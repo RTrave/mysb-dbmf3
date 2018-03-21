@@ -15,26 +15,16 @@ defined('_MySBEXEC') or die;
 global $app;
 
 echo '
-<div id="mysbMenuLevel">
-<ul>
-    <li class="first"><a href="index.php?mod=dbmf3&amp;tpl=admin/structure">'._G('DBMF_blocks_config').'</a></li>
-    <li class="last"><a href="index.php?mod=dbmf3&amp;tpl=admin/memento">'._G('DBMF_mementos_config').'</a></li>
-</ul>
-</div>
+<div class="content">
+  <h1>'._G('DBMF_memcatg_config').'</h1>
 
-<h1>'._G('DBMF_config').': '._G('DBMF_mementos_config').'</h1>
-
-<h2>'._G('DBMF_memcatg_config').'</h2>
-
-<div class="list_support" style="font-size: 90%;">
 ';
 
 $memcatgs = MySBDBMFMementoCatgHelper::load();
 $groups = MySBGroupHelper::load();
 foreach( $memcatgs as $memcatg ) {
     echo '
-    <div class="boxed" id="memcatg'.$memcatg->id.'"
-         style="width: 450px; margin: 10px auto 3px;">';
+    <div id="memcatg'.$memcatg->id.'">';
     $app->tpl_dbmf_currentmemcatg = $memcatg;
     include( _pathI('admin/memcatg_display_ctrl','dbmf3') );
     echo '
@@ -42,27 +32,34 @@ foreach( $memcatgs as $memcatg ) {
 }
 
 echo '
-<form action="index.php?mod=dbmf3&amp;tpl=admin/memento" method="post">
-    <div class="boxed"
-         style="width: 450px; margin-top: 35px;">
+</div>
 
-        <div class="title roundtop">
-            <b>'._G('DBMF_memcatg_new').'</b>
-        </div>
+<form action="'.$hrefconfig.'" method="post">
+<div class="content">
 
-        <div class="row">
-            <div class="right"><input type="text" name="memcatg_name_new" value=""></div>
-            <b>'._G('DBMF_memcatg_name').':</b>
-        </div>
+  <h1>'._G('DBMF_memcatg_new').'</h1>
 
-        <div class="row" style="text-align: center;">
-            <input type="hidden" name="memcatg_new" value="1">
-            <input type="submit" value="'._G('DBMF_memcatg_newsubmit').'">
-        </div>
+  <div class="row label">
+    <label class="col-6" for="">
+      <b>'._G('DBMF_memcatg_name').':</b>
+    </label>
+    <div class="col-6">
+        <input type="text" name="memcatg_name_new"
+               value="" id="memcatg_name_new">
     </div>
-</form>
+  </div>
+
+  <div class="row">
+    <div class="col-sm-3"></div>
+    <div class="col-sm-6">
+      <input type="hidden" name="memcatg_new" value="1">
+      <input type="submit" class="btn-primary"
+             value="'._G('DBMF_memcatg_newsubmit').'">
+    </div>
+    <div class="col-sm-3"></div>
+  </div>
 
 </div>
-';
+</form>';
 
 ?>

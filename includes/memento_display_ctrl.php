@@ -40,6 +40,76 @@ if( isset($_GET['memento_id']) ) {
     elseif(!$Active and $memento->date_process!='') $memclass = 'mem_processed';
     else $memclass='mem_processed';
 
+    if($memcatg!=null) $m_catgname = $memcatg->name;
+    else $m_catgname = '<i>'.$m_user->login.'</i>';
+?>
+
+<div class="row <?= $memclass ?>" style="border-spacing: 0;">
+
+<?php if( $Active ) { ?>
+<a class="hidelayed col-1 t-center btn-light"
+   href="index.php?mod=dbmf3&tpl=memento_edit&amp;memento_id=<?= $memento->id ?>&amp;memento_process=1"
+   title="<?= _G('DBMF_memento_process_submit') ?>">
+  <img src="images/icons/emblem-system.png" alt="">
+</a>
+<?php } elseif(!$Active and $memento->date_process!='') { ?>
+<a class="hidelayed col-1 t-center btn-light"
+   href="index.php?mod=dbmf3&tpl=memento_edit&amp;memento_id=<?= $memento->id ?>&amp;memento_unprocess=1"
+   title="<?= _G('DBMF_memento_unprocess_submit') ?>">
+  <img src="images/icons/emblem-system-stop.png" alt="">
+</a>
+<?php } else { ?>
+<a class="col-1 t-center inactive"
+   href="#"
+   title="">
+  <img src="images/blank.png" alt="">
+</a>
+<?php } ?>
+
+<?php if($memento->isEditable()) { ?>
+<a class="overlayed col-auto btn-light"
+   href="index.php?mod=dbmf3&amp;tpl=memento_edit&amp;memento_id=<?= $memento->id ?>"
+   title="">
+<?php } else { ?>
+<div class="col-auto">
+<?php } ?>
+    <div class="date">
+      <b><?= $memento->getDate() ?></b><br>
+      <span class="help"><?= $m_catgname ?></span><br>
+      <?= $contact->lastname ?>
+    </div>
+  <div class="infos">
+    <?= $memento->comments ?>
+  </div>
+<?php if( $memento->comments2!='' ) { ?>
+  <div class="tooltip">
+    <img src="images/icons/mail-attachment.png" alt="">
+    <span class="left"><?= $memento->comments2 ?></span>
+  </div>
+<?php } ?>
+<?php if($memento->isEditable()) { ?>
+</a>
+<?php } else { ?>
+</div>
+<?php } ?>
+
+<a class="overlayed col-1 t-center btn-secondary-light d-show-sm"
+   href="index.php?mod=dbmf3&amp;tpl=contact_edit&amp;contact_id=<?= $contact->id ?>"
+   title="<?= _G('DBMF_edit').' '.$contact->lastname.' '.$contact->firstname.' (memento '.$memento->id ?>)">
+  <img src="images/icons/text-editor.png" alt="">
+</a>
+
+<a class="hidelayed col-1 t-center btn-danger-light d-show-md"
+   href="index.php?mod=dbmf3&amp;tpl=memento_edit&amp;memento_id=<?= $memento->id ?>&amp;memento_delete=1"
+   title="<?= _G('DBMF_memento_edition_delete') ?>"
+   data-overconfirm="<?= MySBUtil::str2strict(_G('DBMF_confirm_memento_delete')) ?>">
+  <img src="images/icons/user-trash.png" alt="">
+</a>
+
+</div>
+
+<!--
+<?php
     echo '
 <table style="width: 100%; background-color: transparent;" class="roundtop roundbottom '.$memclass.'"><tbody>
 <tr>
@@ -50,8 +120,6 @@ if( isset($_GET['memento_id']) ) {
             class="overlayed"><b>'.$memento->getDate().'</b></a>';
     else echo '
         <b>'.$memento->getDate().'</b>';
-    if($memcatg!=null) $m_catgname = $memcatg->name;
-    else $m_catgname = '<i>'.$m_user->login.'</i>';
     echo '<br>
         <span class="cell_hidem"><small>'.$m_catgname.'</small></span>
         </div>
@@ -128,3 +196,5 @@ if( isset($_GET['memento_id']) ) {
 </tbody></table>';
 
 ?>
+
+-->

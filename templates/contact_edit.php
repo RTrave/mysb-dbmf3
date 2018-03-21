@@ -20,109 +20,132 @@ $contact = $app->tpl_currentcontact;
 if(isset($_POST['contact_delete'])) return;
 
 echo '
-<div class="overlaySize"
+<div class="overlaySize1"
     data-overheight=""
     data-overwidth="440"></div>
 
 
+<!--
 <div id="dbmfContact">
+-->
 
-<div class="overHead">
-
-        <form   action="index.php?mod=dbmf3&amp;tpl=contact_del&amp;contact_id='.$contact->id.'"
-                method="post"
-                class="hidelayed"
-                data-overconfirm="'.MySBUtil::str2strict(sprintf(_G('DBMF_confirm_contact_delete'),$contact->lastname, $contact->firstname )).'">
-    <div class="action first">
-            <input  type="hidden" name="dbmf_contact_delete" value="'.$contact->id.'">
-            <input  type="hidden" name="dbmf_request_reuse" value="1">
-            <input  src="images/icons/user-trash.png"
-                    type="image"
-                    alt="'._G('DBMF_contact_delete').'"
-                    title="'.sprintf(_G('DBMF_contact_delete'),$contact->lastname, $contact->firstname ).'">
-    </div>
-        </form>
-    '.$contact->lastname.'<br><small>'.$contact->firstname.'</small>
-</div>
-';
-
-echo '
 <form   action="index.php?mod=dbmf3&amp;tpl=contact_edit&amp;contact_id='.$contact->id.'"
         method="post"
         class="overlayed">
 
-<div class="overBody">
+<div class="modalContent">
 
-<div class="list_support" style="padding: 2px 4px;">';
+<div class="modalTitle">
+  <a class="hidelayed col-1 t-center btn-danger"
+     href="index.php?mod=dbmf3&amp;tpl=contact_del&amp;contact_id='.$contact->id.'&amp;dbmf_contact_delete=1&amp;dbmf_request_reuse=1"
+     data-overconfirm="'.MySBUtil::str2strict(sprintf(_G('DBMF_confirm_contact_delete'),$contact->lastname, $contact->firstname )).'"
+     title="'.sprintf(_G('DBMF_contact_delete'),$contact->lastname, $contact->firstname ).'">
+    <img src="images/icons/user-trash.png" alt="">
+  </a>
+  <p class="col-auto">
+    '.$contact->lastname.'<br>
+    <small>'.$contact->firstname.'</small>
+  </p>
+</div>
+';
+
+echo '
+
+<div class="modalBody">
+
+<div class="content1 list1">';
 
 include( _pathI('common_edition','dbmf3') );
 
 $blocks = MySBDBMFBlockHelper::load();
 foreach($blocks as $block) {
-    $group_edit = MySBGroupHelper::getByID($block->groupedit_id);
-    echo '
-<div class="title">
-    <b>'._G($block->lname).' <small><i>('.$group_edit->comments.')</i></small></b>
-</div>';
-    foreach($block->blockrefs as $blockref) {
-        if($blockref->isActive()) {
-            if(!$block->isEditable())
-                $class_edit = 'background: #cccccc;';
-            else
-                $class_edit = '';
-            $refname = $blockref->keyname;
-            if( $blockref->getType()=='text' ) {
-                echo '
-<div class="row" style="'.$class_edit.' text-align: right;">
-    <div style="float: left;"><b>'._G($blockref->lname).':</b>';
-                if( $blockref->infos!='' )
-                    echo '<br><span class="help">'.$blockref->infos.'</span>';
-                echo '</div>
-    <div style="display: inline-block; margin: 0px 0px 0px auto;">';
-            } else {
-                echo '
-<div class="row" style="'.$class_edit.'">
-    <div class="right">';
-            }
-            if($block->isEditable())
-                echo $blockref->htmlForm('blockref',$contact->$refname,'('.$contact->lastname.' '.$contact->firstname.')');
-            else {
-                if( $blockref->getType()=='tel' or $blockref->getType()=='url' )
-                    echo $blockref->htmlFormNonEditable('blockref',$contact->$refname,'('.$contact->lastname.' '.$contact->firstname.')');
-                else
-                    echo $blockref->htmlFormNonEditable('blockref',$contact->$refname);
-            }
-            echo '
-    </div>';
-            if( $blockref->getType()!='text' ) {
-                echo '
+  $group_edit = MySBGroupHelper::getByID($block->groupedit_id);
+  echo '
+  <h2>
+    '._G($block->lname).'
+    <small><i>('.$group_edit->comments.')</i></small>
+  </h2>';
+  foreach($block->blockrefs as $blockref) {
+    if($blockref->isActive()) {
+      if(!$block->isEditable())
+        $class_edit = 'background: #cccccc;';
+      else
+        $class_edit = '';
+      $refname = $blockref->keyname;
+
+      echo '
+  <div class="row label" style1="'.$class_edit.' text-align: right;">';
+      if($block->isEditable())
+        echo $blockref->innerRow('blockref',$contact->$refname,true,_G($blockref->lname),$blockref->infos);
+      else {
+        if( $blockref->getType()=='tel' or $blockref->getType()=='url' )
+          echo $blockref->htmlFormNonEditable('blockref',$contact->$refname,'('.$contact->lastname.' '.$contact->firstname.')');
+        else
+          echo $blockref->htmlFormNonEditable('blockref',$contact->$refname);
+      }
+      echo '
+  </div>';
+/*
+      if( $blockref->getType()=='text1' ) {
+        echo '
+  <div class="row label" style1="'.$class_edit.' text-align: right;">
+    <label class="col-sm-4" style1="float: left;"><b>'._G($blockref->lname).':</b><br>';
+        if( $blockref->infos!='' )
+          echo '<span class="help">'.$blockref->infos.'</span>';
+        echo '
+    </label>
+    <div class="col-sm-8" style1="display: inline-block; margin: 0px 0px 0px auto;">';
+      } else {
+        echo '
+  <div class="row label" style="'.$class_edit.'">';
+        if( $blockref->getType()!='text1' ) {
+          echo '
+    <label class="col-sm-4" for="blockref'.$blockref->keyname.'">
     <b>'._G($blockref->lname).':</b>';
-                if( $blockref->infos!='' )
-                    echo '<br><span class="help">'.$blockref->infos.'</span>';
-            }
-            echo '
-</div>';
+          if( $blockref->infos!='' )
+            echo '<br><span class="help">'.$blockref->infos.'</span>';
+          echo '
+  </label>
+  <div class="col-sm-8">';
         }
+        if($block->isEditable())
+          echo $blockref->htmlForm('blockref',$contact->$refname,'('.$contact->lastname.' '.$contact->firstname.')');
+        else {
+          if( $blockref->getType()=='tel' or $blockref->getType()=='url' )
+            echo $blockref->htmlFormNonEditable('blockref',$contact->$refname,'('.$contact->lastname.' '.$contact->firstname.')');
+          else
+            echo $blockref->htmlFormNonEditable('blockref',$contact->$refname);
+        }
+        echo '
+    </div>';
+      }
+      echo '
+  </div>';
+*/
     }
+  }
 }
 echo '
 
 </div>
 
 </div>
-<div class="overFoot">
- ';
+</div>
+<div class="modalFoot">
+  <div class="col-12 t-center">';
 
 if(MySBRoleHelper::checkAccess('dbmf_editor',false)) echo '
     <input type="hidden" name="contact_edit" value="1">
-    <input type="submit" value="'._G('DBMF_contact_edition_submit').'" class="action" style="width: 100%;">';
+    <input type="submit" class="btn-primary"
+           value="'._G('DBMF_contact_edition_submit').'" class="action" style="width: 100%;">';
 
 echo '
+  </div>
 </div>
 
 </form>
 
-</div>';
+';
 
 if(isset($_POST['contact_edit'])) {
     echo '

@@ -34,15 +34,32 @@ class MySBDBMFExportMailing extends MySBDBMFExport {
             $modulo = $this->config_array['modulo'];
         else $modulo = MODULO_DEFAULT;
         $str_res = '
-'._G('DBMF_exportmailing_config_modulo').':
-    <input type="text" name="dbmf_exportmailing_config_modulo" value="'.$modulo.'"><br>';
+<div class="row label">
+  <label class="col-sm-6" for="dbmf_exportmailing_config_modulo">
+    '._G('DBMF_exportmailing_config_modulo').':
+  </label>
+  <div class="col-sm-6">
+    <input type="text" name="dbmf_exportmailing_config_modulo"
+            id="dbmf_exportmailing_config_modulo"
+            value="'.$modulo.'">';
         if( isset($this->config_array['maxbysend']) and
             $this->config_array['maxbysend']!='' )
             $maxbysend = $this->config_array['maxbysend'];
         else $maxbysend = MAXBYSEND_DEFAULT;
         $str_res .= '
-'._G('DBMF_exportmailing_config_maxbysend').':
-    <input type="text" name="dbmf_exportmailing_config_maxbysend" value="'.$maxbysend.'"><br>';
+  </div>
+</div>
+
+<div class="row label">
+  <label class="col-sm-6" for="dbmf_exportmailing_config_maxbysend">
+    '._G('DBMF_exportmailing_config_maxbysend').':
+  </label>
+  <div class="col-sm-6">
+    <input type="text" name="dbmf_exportmailing_config_maxbysend"
+           id="dbmf_exportmailing_config_maxbysend"
+           value="'.$maxbysend.'">
+  </div>
+</div>';
         return $str_res;
     }
 
@@ -65,37 +82,93 @@ class MySBDBMFExportMailing extends MySBDBMFExport {
         $editor = new MySBEditor();
         $output = $editor->init("exportmailing_body");
         $output .= '
-<div>
+<div class="row label">
+  <label class="col-sm-4" for="dbmf_exportmailing_subject">
     '._G('DBMF_exportmailing_subject').':
-    <input type="text" name="dbmf_exportmailing_subject" value="" size="24"><br>
-    '._G('DBMF_exportmailing_body').':<br>
-    <div style="max-width: 640px"><textarea name="dbmf_exportmailing_body" cols="60" rows="8" class="mceEditor" id="exportmailing_body"></textarea></div>
+  </label>
+  <div class="col-sm-8">
+    <input type="text" value=""
+           name="dbmf_exportmailing_subject" id="dbmf_exportmailing_subject">
+  </div>
+</div>
+
+<div class="row label">
+  <label class="col-sm-12" for="exportmailing_body">
+    '._G('DBMF_exportmailing_body').':
+  </label>
+  <div class="col-sm-12">
+    <textarea name="dbmf_exportmailing_body" class="mceEditor" id="exportmailing_body"></textarea>
 '.$editor->active("exportmailing_body").'
+  </div>
+</div>
+
+<div class="row label">
+  <label class="col-sm-4" for="dbmf_exportmailing_att1">
     '._G('DBMF_exportmailing_attachment').' 1:
+  </label>
+  <div class="col-sm-8">
     <input type="hidden" name="MAX_FILE_SIZE" value="2000000" />
-    <input name="dbmf_exportmailing_att1" type="file" /><br>
+    <input name="dbmf_exportmailing_att1" id="dbmf_exportmailing_att1" type="file" />
+  </div>
+</div>
+<div class="row label">
+  <label class="col-sm-4" for="dbmf_exportmailing_att2">
     '._G('DBMF_exportmailing_attachment').' 2:
+  </label>
+  <div class="col-sm-8">
     <input type="hidden" name="MAX_FILE_SIZE" value="2000000" />
-    <input name="dbmf_exportmailing_att2" type="file" /><br>
+    <input name="dbmf_exportmailing_att2" id="dbmf_exportmailing_att2" type="file" />
+  </div>
+</div>
+<div class="row label">
+  <label class="col-sm-4" for="dbmf_exportmailing_att3">
     '._G('DBMF_exportmailing_attachment').' 3:
+  </label>
+  <div class="col-sm-8">
     <input type="hidden" name="MAX_FILE_SIZE" value="2000000" />
-    <input name="dbmf_exportmailing_att3" type="file" />
-</div>';
+    <input name="dbmf_exportmailing_att3" id="dbmf_exportmailing_att3" type="file" />
+  </div>
+</div>
+';
         $output .= '
-<h4>'._G('DBMF_exportmailing_advancedparams').'</h4>
-<div>
+<h3>'._G('DBMF_exportmailing_advancedparams').'</h3>
+
+<div class="row label">
+  <label class="col-sm-11" for="dbmf_exportmailing_sendaslist">
     '._G('DBMF_exportmailing_sendaslist').':
-    <input type="checkbox" name="dbmf_exportmailing_sendaslist"><br>
+  </label>
+  <div class="col-sm-1">
+    <input type="checkbox" name="dbmf_exportmailing_sendaslist" id="dbmf_exportmailing_sendaslist">
+  </div>
+</div>
+
+<div class="row label">
+  <label class="col-sm-11" for="dbmf_exportmailing_unsubscribefields">
     '._G('DBMF_exportmailing_unsubscribefields').':
-    <input type="checkbox" name="dbmf_exportmailing_unsubscribefields"><br>
+  </label>
+  <div class="col-sm-1">
+    <input type="checkbox" name="dbmf_exportmailing_unsubscribefields" id="dbmf_exportmailing_unsubscribefields">
+  </div>
+</div>
+<div class="row label">
+  <label class="col-md-4" for="dbmf_exportmailing_replyto">
     '._G('DBMF_exportmailing_replyto').':
-    <select name="dbmf_exportmailing_replyto">
+  </label>
+  <div class="col-md-8">
+    <select name="dbmf_exportmailing_replyto" id="dbmf_exportmailing_replyto">
         <option value="base">'._G('DBMF_exportmailing_replyto_base').'</option>
         <option value="tech">'.MySBConfigHelper::Value('website_name').' ('.$mysb_mail.')</option>
         <option value="self">'.$app->auth_user->lastname.' '.$app->auth_user->firstname.' ('.$app->auth_user->mail.')</option>
     </select><br>
+  </div>
+</div>
+<div class="row label">
+  <label class="col-sm-10" for="dbmf_exportmailing_firstid">
     '._G('DBMF_exportmailing_firstid').':
-    <input type="text" name="dbmf_exportmailing_firstid" value="" size="8">
+  </label>
+  <div class="col-sm-2">
+    <input type="text" name="dbmf_exportmailing_firstid" id="dbmf_exportmailing_firstid" value="" size="8">
+  </div>
 </div>
     ';
         return $output;

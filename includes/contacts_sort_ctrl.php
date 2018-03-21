@@ -34,74 +34,72 @@ if( isset($_GET["pack"]) )
     $_SESSION["dbmf_search_pack"] = $_GET["pack"];
 
 
-function sortActions($pack) {
+function sortRange($pack) {
     global $app;
-
-    $output = '
-<div class="sort_actions">
-'._G('DBMF_display_orderby').':
-<select name="dbmf_exportdisplay_orderby" onchange="changesort(this.value);">
-    <option value="lastname" '.MySBUtil::form_isselected('lastname',$_SESSION["dbmf_query_sort"]).'>'._G('DBMF_common_lastname').'</option>
-    <option value="date_modif" '.MySBUtil::form_isselected('date_modif',$_SESSION["dbmf_query_sort"]).'>'._G('DBMF_date_modif').'</option>';
-    $blockref_orderby = MySBDBMFBlockRefHelper::load();
-    foreach($blockref_orderby as $oblockref) {
-        if($oblockref->orderby=='1')
-            $output .= '
-    <option value="'.$oblockref->keyname.'" '.MySBUtil::form_isselected($oblockref->keyname,$_SESSION["dbmf_query_sort"]).'>'._G($oblockref->lname).'</option>';
-    }
-    $output .= '
-</select>
-<select name="dbmf_exportdisplay_asc" onchange="changeasc(this.value);">
-    <option value="asc" '.MySBUtil::form_isselected('asc',$_SESSION["dbmf_query_asc"]).'>asc</option>
-    <option value="desc" '.MySBUtil::form_isselected('desc',$_SESSION["dbmf_query_asc"]).'>desc</option>
-</select>
-<br>
-<div style="vertical-align: top;">';
+    $output = '';
     if( $pack['next_id']!=-1 ) {
         $output .= '
-    <img src="images/icons/go-last.png" style="float: right;" class="linked"
+<div class="col-1 t-left" style="padding: 0 2px;">
+    <img src="images/icons/go-last.png" class="btn"
         alt="'._G('SBGT_last').'"
         title="'._G('SBGT_last').'"
-        onclick="scrollresults();loadItem(\'contacts_results\',\'index.php?mod=dbmf3&inc=contacts_sort&sid='.$pack['last_id'].'\');">
-    <img src="images/icons/go-next.png" style="float: right;" class="linked"
+        onclick="loadItem(\'contacts_results\',\'index.php?mod=dbmf3&inc=contacts_sort&sid='.$pack['last_id'].'\');">
+</div>
+<div class="col-1 t-left" style="padding: 0 2px;">
+    <img src="images/icons/go-next.png" class="btn"
         alt="'._G('SBGT_next').'"
         title="'._G('SBGT_next').'"
-        onclick="scrollresults();loadItem(\'contacts_results\',\'index.php?mod=dbmf3&inc=contacts_sort&sid='.$pack['next_id'].'\');">';
+        onclick="loadItem(\'contacts_results\',\'index.php?mod=dbmf3&inc=contacts_sort&sid='.$pack['next_id'].'\');">
+</div>';
     } else {
         $output .= '
-    <img src="images/blank.png" style="float: right;" alt="blank" class="linked">
-    <img src="images/blank.png" style="float: right;" alt="blank" class="linked">';
+<div class="col-1 t-left" style="padding: 0 2px;">
+    <img src="images/blank.png" style="cursor: auto;" alt="blank-last" class="btn">
+</div>
+<div class="col-1 t-left" style="padding: 0 2px;">
+    <img src="images/blank.png" style="cursor: auto;" alt="blank-next" class="btn">
+</div>';
     }
     $output .= '
-<select name="dbmf_exportdisplay_pack" onchange="changepack(this.value);" style="float: right; margin: 0px 20px;">
+<div class="col-2 t-center" style="padding: 0 2px;">
+<select name="dbmf_exportdisplay_pack" onchange="changepack(this.value);"
+        style="float1: right; margin: 0px 20px; width: auto;">
     <option value="5" '.MySBUtil::form_isselected('5',$_SESSION["dbmf_search_pack"]).'>5</option>
     <option value="10" '.MySBUtil::form_isselected('10',$_SESSION["dbmf_search_pack"]).'>10</option>
     <option value="20" '.MySBUtil::form_isselected('20',$_SESSION["dbmf_search_pack"]).'>20</option>
     <option value="30" '.MySBUtil::form_isselected('30',$_SESSION["dbmf_search_pack"]).'>30</option>
     <option value="50" '.MySBUtil::form_isselected('50',$_SESSION["dbmf_search_pack"]).'>50</option>
     <option value="100" '.MySBUtil::form_isselected('100',$_SESSION["dbmf_search_pack"]).'>100</option>
-</select>';
+</select>
+</div>';
     if( $pack['prev_id']!=-1 ) {
         $output .= '
-    <img src="images/icons/go-previous.png" style="float: right;" class="linked"
+<div class="col-1 t-right" style="padding: 0 2px;">
+    <img src="images/icons/go-previous.png" class="btn"
         alt="'._G('SBGT_previous').'"
         title="'._G('SBGT_previous').'"
-        onclick="scrollresults();loadItem(\'contacts_results\',\'index.php?mod=dbmf3&inc=contacts_sort&sid='.$pack['prev_id'].'\');">
-    <img src="images/icons/go-first.png" style="float: right;" class="linked"
+        onclick="loadItem(\'contacts_results\',\'index.php?mod=dbmf3&inc=contacts_sort&sid='.$pack['prev_id'].'\');">
+</div>
+<div class="col-1 t-right" style="padding: 0 2px;">
+    <img src="images/icons/go-first.png" class="btn"
         alt="'._G('SBGT_first').'"
         title="'._G('SBGT_first').'"
-        onclick="scrollresults();loadItem(\'contacts_results\',\'index.php?mod=dbmf3&inc=contacts_sort&sid='.$pack['first_id'].'\');">';
+        onclick="loadItem(\'contacts_results\',\'index.php?mod=dbmf3&inc=contacts_sort&sid='.$pack['first_id'].'\');">
+</div>';
     } else {
         $output .= '
-    <img src="images/blank.png" style="float: right;" alt="blank" class="linked">
-    <img src="images/blank.png" style="float: right;" alt="blank" class="linked">';
-    }
-    $output .= '
+<div class="col-1 t-right" style="padding: 0 2px;">
+    <img src="images/blank.png" style="cursor: auto;" alt="blank-previous" class="btn">
 </div>
+<div class="col-1 t-right" style="padding: 0 2px;">
+    <img src="images/blank.png" style="cursor: auto;" alt="blank-first" class="btn">
 </div>';
+    }
+    $output .= '';
 
     return $output;
 }
+
 
 if( $_SESSION['dbmf_query_where']=='' ) {
     echo '<br>'.(_G('DBMF_export_nowhereclause')).'<br><br>';
@@ -184,44 +182,64 @@ $search_m = MySBDB::query( 'SELECT * FROM '.MySB_DBPREFIX.'dbmfcontacts '.
 
 echo '
 <script>
-show("contacts_results");
 function scrollresults() {
-    $("html, body").animate({ scrollTop: $("div#contacts_results").offset().top }, 200);
 }
 function changesort(selvalue) {
-    //scrollresults();
-    loadItem( "contacts_results", "index.php?mod=dbmf3&inc=contacts_sort&sort="+selvalue );
+  loadItem( "contacts_results", "index.php?mod=dbmf3&inc=contacts_sort&sort="+selvalue );
 }
 function changeasc(selvalue) {
-    //scrollresults();
-    loadItem( "contacts_results", "index.php?mod=dbmf3&inc=contacts_sort&asc="+selvalue );
+  loadItem( "contacts_results", "index.php?mod=dbmf3&inc=contacts_sort&asc="+selvalue );
 }
 function changepack(selvalue) {
-    //scrollresults();
-    loadItem( "contacts_results", "index.php?mod=dbmf3&inc=contacts_sort&pack="+selvalue );
+  loadItem( "contacts_results", "index.php?mod=dbmf3&inc=contacts_sort&pack="+selvalue );
 }
-</script>
-<div class="list_support">
-<div class="searchresults">';
+</script>';
 
-echo sortActions($packF);
+//echo sortActions($packF);
 
 
 echo '
-<br>
-<b>'.$first_packid.'-'.$last_packid.'</b><br>
-('.$counter.' results)<br>
-<br>
-<br>
-<br>
-';
+<div class="content list bg-primary">
+<div class="row collapse bg-primary" style="margin-bottom: 0px;">
+  <div class="col-5">
+    <p><b>'.$first_packid.'-'.$last_packid.'</b><br>
+    ('.$counter.' results)</p>
+  </div>
+  <div class="col-4 t-right" style="padding: 0 2px;">
+    <select name="dbmf_exportdisplay_orderby" style="width1: auto;"
+            onchange="changesort(this.value);">
+      <option value="lastname" '.MySBUtil::form_isselected('lastname',$_SESSION["dbmf_query_sort"]).'>'._G('DBMF_common_lastname').'</option>
+      <option value="date_modif" '.MySBUtil::form_isselected('date_modif',$_SESSION["dbmf_query_sort"]).'>'._G('DBMF_date_modif').'</option>';
+$blockref_orderby = MySBDBMFBlockRefHelper::load();
+foreach($blockref_orderby as $oblockref) {
+  if($oblockref->orderby=='1')
+    echo '
+      <option value="'.$oblockref->keyname.'" '.MySBUtil::form_isselected($oblockref->keyname,$_SESSION["dbmf_query_sort"]).'>'._G($oblockref->lname).'</option>';
+}
+echo '
+    </select>
+  </div>
+  <div class="col-3 t-right" style="padding: 0 2px;">
+    <select name="dbmf_exportdisplay_asc" style="width1: auto;"
+            onchange="changeasc(this.value);">
+      <option value="asc" '.MySBUtil::form_isselected('asc',$_SESSION["dbmf_query_asc"]).'>asc</option>
+      <option value="desc" '.MySBUtil::form_isselected('desc',$_SESSION["dbmf_query_asc"]).'>desc</option>
+    </select>
+  </div>
+</div>
+
+<div class="row collapse bg-primary" style="margin-bottom: 5px;">
+  <div class="col-sm-6"></div>
+  '.sortRange($packF).'
+</div>';
 
 while($data_print = MySBDB::fetch_array($search_m)) {
 
     $contact = new MySBDBMFContact(null,$data_print);
     $app->tpl_dbmf_currentcontact = $contact;
     echo '
-    <div id="contact'.$contact->id.'">';
+    <div id="contact'.$contact->id.'"
+         class="row contact_display bg-primary-light">';
     include( _pathI('contact_display_ctrl','dbmf3') );
     echo '
     </div>';
@@ -229,17 +247,16 @@ while($data_print = MySBDB::fetch_array($search_m)) {
 }
 
 echo '
+<div class="row bg-primary" style="margin-top: 5px;">
+  <a href="#search" class="col-1 btn btn-light"
+     title="'._G('SBGT_top').'">
+    <img src="images/icons/go-top.png" class="linked"
+         alt="'._G('SBGT_top').'">
+  </a>
+  <div class="col-11">
+  </div>
+</div>
 <br>
-';
-echo sortActions($packF);
-
-echo '
-<img    src="images/icons/go-top.png" class="linked"
-        alt="'._G('SBGT_top').'"
-        title="'._G('SBGT_top').'"
-        onclick="scrollresults();">
-</div>
-</div>
-<br>';
+</div>';
 
 ?>

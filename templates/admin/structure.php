@@ -14,81 +14,136 @@ defined('_MySBEXEC') or die;
 
 global $app;
 
-echo '
-<div id="mysbMenuLevel">
-<ul>
-    <li class="first"><a href="index.php?mod=dbmf3&amp;tpl=admin/structure">'._G('DBMF_blocks_config').'</a></li>
-    <li class="last"><a href="index.php?mod=dbmf3&amp;tpl=admin/memento">'._G('DBMF_mementos_config').'</a></li>
-</ul>
-</div>
+# global $_GET;
+# if ( !isset($_GET['tpl']) or $_GET['tpl']=='' )
+#   $_GET['tpl'] = 'admin/structure';
 
-<h1>'._G('DBMF_config').': '._G('DBMF_contacts_config').'</h1>';
+# function isActive($tpl_code) {
+#   if( $_GET['tpl']==$tpl_code )
+#     return 'no-collapse';
+#   else return '';
+# }
+?>
 
 
-if( isset($_POST['blockref_edit']) or
+<?php
+
+if( isset($_GET['blockref_edit']) or
     isset($_POST['blockref_edit_process']) or
     isset($_POST['blockref_add']) ) {
 
 $blockref = $app->tpl_blockref_edit;
 echo '
-<div class="list_support">
+<div class="content">
+<h1>'._G($blockref->lname).' <span class="help">('.$blockref->keyname.')</span></h1>
 
-<div class="boxed">
-<form action="index.php?mod=dbmf3&amp;tpl=admin/structure" method="post">
-<div class="title roundtop">
-    '.$blockref->keyname.' - <b>'._G($blockref->lname).'</b><br>
-    <small><i>'._G('DBMF_blockref_type').':</i> '.$blockref->getType().'</small>
-</div>
-<div class="row">
-    <div class="right"><input type="text" name="lname" value="'.$blockref->lname.'"></div>
-    '._G('DBMF_blockref_lname').'
-</div>
-<div class="row">
-    <div class="right">
-    <select name="switchorderby">
+<form action="'.$hrefconfig.'" method="post">
+
+  <div class="row">
+    <p class="col-6">
+      '._G('DBMF_blockref_type').'
+    </p>
+    <p class="col-6">
+      '.$blockref->getType().'
+    </p>
+  </div>
+  <div class="row label">
+    <label class="col-6" for="lname">
+      '._G('DBMF_blockref_lname').'
+    </label>
+    <div class="col-6">
+      <input type="text" name="lname" id="lname"
+             value="'.$blockref->lname.'">
+    </div>
+  </div>
+  <div class="row label">
+    <label class="col-6" for="switchorderby">
+      '._G('DBMF_blockref_option_orderby').'
+    </label>
+    <div class="col-6">
+      <select name="switchorderby" id="switchorderby">
         <option value="0">'._G('DBMF_blockref_orderby_no').'</option>
         <option value="1" '.MySBUtil::form_isselected($blockref->orderby,1).'>'._G('DBMF_blockref_orderby_ok').'</option>
-    </select>
+      </select>
     </div>
-    '._G('DBMF_blockref_option_orderby').'
-</div>
-<div class="row">
-    <div class="right">
-        <select name="blockref_alwaysshown">
-            <option value="'.MYSB_DBMF_BLOCKREF_ALWAYSSHOWN_NO.'"
-                    '.MySBUtil::form_isselected($blockref->alwaysshown,MYSB_DBMF_BLOCKREF_ALWAYSSHOWN_NO).'>'._G('DBMF_blockref_alwaysshown_no').'</option>
-            <option value="'.MYSB_DBMF_BLOCKREF_ALWAYSSHOWN_ASTEXT.'"
-                    '.MySBUtil::form_isselected($blockref->alwaysshown,MYSB_DBMF_BLOCKREF_ALWAYSSHOWN_ASTEXT).'>'._G('DBMF_blockref_alwaysshown_bottom').'</option>
-            <option value="'.MYSB_DBMF_BLOCKREF_ALWAYSSHOWN_ASPLUG.'"
-                    '.MySBUtil::form_isselected($blockref->alwaysshown,MYSB_DBMF_BLOCKREF_ALWAYSSHOWN_ASPLUG).'>'._G('DBMF_blockref_alwaysshown_plugins').'</option>
-            <option value="'.MYSB_DBMF_BLOCKREF_ALWAYSSHOWN_ASTEXTONLY.'"
-                    '.MySBUtil::form_isselected($blockref->alwaysshown,MYSB_DBMF_BLOCKREF_ALWAYSSHOWN_ASTEXTONLY).'>'._G('DBMF_blockref_alwaysshown_txtonly').'</option>
-        </select>
+  </div>
+  <div class="row label">
+    <label class="col-6" for="blockref_alwaysshown">
+      '._G('DBMF_blockref_option_alwaysshown').'
+    </label>
+    <div class="col-6">
+      <select name="blockref_alwaysshown" id="blockref_alwaysshown">
+        <option value="'.MYSB_DBMF_BLOCKREF_ALWAYSSHOWN_NO.'"
+                '.MySBUtil::form_isselected($blockref->alwaysshown,MYSB_DBMF_BLOCKREF_ALWAYSSHOWN_NO).'>'._G('DBMF_blockref_alwaysshown_no').'</option>
+        <option value="'.MYSB_DBMF_BLOCKREF_ALWAYSSHOWN_ASTEXT.'"
+                '.MySBUtil::form_isselected($blockref->alwaysshown,MYSB_DBMF_BLOCKREF_ALWAYSSHOWN_ASTEXT).'>'._G('DBMF_blockref_alwaysshown_bottom').'</option>
+        <option value="'.MYSB_DBMF_BLOCKREF_ALWAYSSHOWN_ASPLUG.'"
+                '.MySBUtil::form_isselected($blockref->alwaysshown,MYSB_DBMF_BLOCKREF_ALWAYSSHOWN_ASPLUG).'>'._G('DBMF_blockref_alwaysshown_plugins').'</option>
+        <option value="'.MYSB_DBMF_BLOCKREF_ALWAYSSHOWN_ASTEXTONLY.'"
+                '.MySBUtil::form_isselected($blockref->alwaysshown,MYSB_DBMF_BLOCKREF_ALWAYSSHOWN_ASTEXTONLY).'>'._G('DBMF_blockref_alwaysshown_txtonly').'</option>
+      </select>
     </div>
-    '._G('DBMF_blockref_option_alwaysshown').'
-</div>
-<div class="row" style=" text-align: right;">
-    <div style="float: left;">'._G('DBMF_blockref_infos').'</div>
-    <div style="display: inline-block; margin: 0px 0px 0px auto;"><textarea name="infos" cols="28" rows="3">'.$blockref->infos.'</textarea>
+  </div>
+  <div class="row label">
+    <label class="col-6" for="infos">
+      '._G('DBMF_blockref_infos').'
+    </label>
+    <div class="col-6">
+      <textarea name="infos" id="infos">'.$blockref->infos.'</textarea>
     </div>
-</div>
-<div class="row" style="text-align: center;">
-    <input type="hidden" name="blockref_edit_process" value="'.$blockref->id.'">
-    <input type="submit" value="'._G('DBMF_blockref_edition_process').'">
-</div>
+  </div>
+
+  <div class="row">
+    <div class="col-sm-3"></div>
+    <div class="col-sm-6">
+      <input type="hidden" name="blockref_edit_process" value="'.$blockref->id.'">
+      <input type="submit" class="btn-primary"
+             value="'._G('DBMF_blockref_edition_process').'">
+    </div>
+    <div class="col-sm-3"></div>
+  </div>
 </form>';
 
 if($blockref->type==MYSB_VALUE_TYPE_VARCHAR64_SELECT) {
     echo '
-<div class="title">Options</div>';
+  <h2 class="border-top">Options</h2>';
     $req_options = MySBDB::query("SELECT * from ".MySB_DBPREFIX."valueoptions ".
         "WHERE value_keyname='".$blockref->grp."-".$blockref->keyname."' ".
         "ORDER BY value0",
         "MySBDBMFBlockRef::htmlOptionFormTR()");
     while($option = MySBDB::fetch_array($req_options)) {
         echo '
-<div class="row" style="border: 0px;">
-    <form action="index.php?mod=dbmf3&amp;tpl=admin/structure" method="post">
+  <div class="row label">
+
+    <label class="col-3" for="blockref_mod_option'.$option['value0'].'">
+      Option '.$option['value0'].'
+    </label>
+    <form action="'.$hrefconfig.'&amp;blockref_edit='.$blockref->id.'" method="post">
+    <div class="col-5">
+      <input type="text" name="blockref_mod_option" id="blockref_mod_option'.$option['value0'].'"
+             value="'.$option['value1'].'">
+    </div>
+    <div class="col-2" title="'._G('DBMF_blockref_mod_option').'">
+      <input type="hidden" name="blockref_option_id" value="'.$option['value0'].'">
+      <input type="hidden" name="blockref_edit" value="'.$blockref->id.'">
+      <input type="submit" class="btn-primary-light"
+             value="'._G('DBMF_blockref_mod_option').'">
+    </div>
+    </form>
+    <form action="'.$hrefconfig.'&amp;blockref_edit='.$blockref->id.'"
+        method="post"  class="col-2"
+        title="'._G('DBMF_blockref_del_option').'">
+      <input type="hidden" name="blockref_del_option" value="1">
+      <input type="hidden" name="blockref_option_id" value="'.$option['value0'].'">
+      <input type="hidden" name="blockref_edit" value="'.$blockref->id.'">
+      <input type="submit" class="btn-danger-light"
+             value="'._G('DBMF_blockref_del_option').'">
+    </form>
+
+  </div>
+<!--
+  <div class="row">
+    <form action="'.$hrefconfig.'" method="post">
     <div class="right">
         <input type="hidden" name="blockref_del_option" value="'.$option['value1'].'">
         <input type="hidden" name="blockref_edit" value="'.$blockref->id.'">
@@ -99,21 +154,37 @@ if($blockref->type==MYSB_VALUE_TYPE_VARCHAR64_SELECT) {
     Option '.$option['value0'].'
 </div>
 <div class="row">
-    <form action="index.php?mod=dbmf3&amp;tpl=admin/structure" method="post">
-    <div class="right">
+    <form action="'.$hrefconfig.'" method="post">
+    <div>
         <input type="hidden" name="blockref_option_id" value="'.$option['value0'].'">
         <input type="hidden" name="blockref_edit" value="'.$blockref->id.'">
         <input type="submit" value="'._G('DBMF_blockref_mod_option').'">
     </div>
     <input type="text" name="blockref_mod_option" value="'.$option['value1'].'">
     </form>
-</div>';
+</div>
+-->';
     }
     echo '
-<div class="row" style="border: 0px;">
-    '._G('DBMF_blockref_newoption').'
-</div>
-<div class="row" style="border: 0px;">
+  <div class="row label">
+  <form action="'.$hrefconfig.'&amp;blockref_edit='.$blockref->id.'" method="post">
+    <label class="col-3" for="blockref_new_option">
+      '._G('DBMF_blockref_newoption').'
+    </label>
+    <div class="col-5">
+      <input type="text" name="blockref_new_option"
+             id="blockref_new_option"value="">
+    </div>
+    <div class="col-4">
+      <input type="hidden" name="blockref_edit" value="'.$blockref->id.'">
+      <input type="submit"  class="btn-primary-light"
+             value="'._G('DBMF_blockref_add_option').'">
+    </div>
+  </form>
+  </div>
+<!--
+  <h3 class="border-top">'._G('DBMF_blockref_newoption').'</h3>
+  <div class="row">
     <form action="index.php?mod=dbmf3&amp;tpl=admin/structure" method="post">
     <div class="right">
         <input type="hidden" name="blockref_edit" value="'.$blockref->id.'">
@@ -121,17 +192,18 @@ if($blockref->type==MYSB_VALUE_TYPE_VARCHAR64_SELECT) {
     </div>
     <input type="text" name="blockref_new_option" value="">
     </form>
-</div>';
+</div>
+-->';
 }
 echo '
 </div>
 </div>';
+return;
 }
 
 
 echo '
-<h2>'._G('DBMF_currentblocks').'</h2>
-<div class="list_support">';
+';
 
 $blocks = MySBDBMFBlockHelper::load();
 foreach($blocks as $block) {
@@ -139,66 +211,153 @@ foreach($blocks as $block) {
     $group_edit = MySBGroupHelper::getByID($block->groupedit_id);
 
     echo '
-<div class="boxed" style="width: 600px; margin-top: 10px;" id="a_block'.$block->id.'">
-    <div class="title roundtop">
-        <div style="float: left; width: 100px;">
-        <div style="display: inline-block; width: 40px;">
-        <form action="index.php?mod=dbmf3&amp;tpl=admin/structure#a_block'.$block->id.'" method="post">
-        <input type="hidden" name="block_orderdown" value="'.$block->id.'">
-        <input type="submit" value="&darr;">
-        </form>
-        </div>
-        <div style="display: inline-block; width: 40px;">
-        <form action="index.php?mod=dbmf3&amp;tpl=admin/structure#a_block'.$block->id.'" method="post">
-        <input type="hidden" name="block_orderup" value="'.$block->id.'">
-        <input type="submit" value="&uarr;">
-        </form>
-        </div>
-        </div>
-        <div style="float: right;">
-        <form action="index.php?mod=dbmf3&amp;tpl=admin/structure#a_block'.$block->id.'" method="post"
-        OnSubmit="return mysb_confirm(\''.MySBUtil::str2strict(sprintf(_G('DBMF_confirm_block_delete'), $block->lname, $group_edit->comments )).'\')">
-        <input type="hidden" name="block_del" value="'.$block->id.'">
-        <input  src="images/icons/user-trash.png"
-                    type="image"
-                    alt="'._G('DBMF_block_delete').'"
-                    title="'._G('DBMF_block_delete').'">
-        </form>
-        </div>
-        <b>'._G($block->lname).'</b> <small><i>(ID:'.$block->id.')</i></small>
-    </div>
+<div class="content" id="a_block'.$block->id.'">
 
-    <form action="index.php?mod=dbmf3&amp;tpl=admin/structure" method="post">
-    <div class="row">
-        <div class="right"><input type="text" name="lname" value="'.$block->lname.'"></div>
-        '._G('DBMF_block_lname').'
+  <h1>'._G('DBMF_config').': '._G($block->lname).'</h1>
+
+  <div class="row">
+<div class="content list"><div class="row">
+
+  <form action="'.$hrefconfig.'#a_block'.$block->id.'"
+        method="post"  class="col-1 btn btn-primary"
+        title="&darr;">
+    <input type="hidden" name="block_orderdown" value="'.$block->id.'">
+    <input src="images/icons/go-down.png"
+           type="image" alt="">
+  </form>
+  <form action="'.$hrefconfig.'#a_block'.$block->id.'"
+        method="post"  class="col-1 btn btn-primary"
+        title="&uarr;">
+    <input type="hidden" name="block_orderup" value="'.$block->id.'">
+    <input src="images/icons/go-up.png"
+           type="image" alt="">
+  </form>
+
+  <p class="col-9">
+    <b>'._G($block->lname).'</b>
+    <span class="help">(ID:'.$block->id.')</span>
+  </p>
+
+  <form action="'.$hrefconfig.'"
+        method="post"  class="col-1 btn btn-danger"
+        OnClick="return mysb_confirm(\''.MySBUtil::str2strict(sprintf(_G('DBMF_confirm_block_delete'), $block->lname, $group_edit->comments )).'\')"
+        title="'._G('DBMF_block_delete').'">
+    <input type="hidden" name="block_del" value="'.$block->id.'">
+    <input src="images/icons/user-trash.png"
+           type="image" alt="">
+  </form>
+
+</div></div>
+  </div>
+
+  <form action="'.$hrefconfig.'#a_block'.$block->id.'" method="post">
+  <div class="row label">
+    <label class="col-sm-6" for="mod_lname'.$block->id.'">
+      <b>'._G('DBMF_block_lname').'</b>
+    </label>
+    <div class="col-sm-6">
+      <input type="text" name="lname" id="mod_lname'.$block->id.'"
+             value="'.$block->lname.'">
     </div>
-    <div class="row">
-        <div class="right"><select name="group_id">';
-        $groups = MySBDBMFGroupHelper::load();
-        foreach($groups as $group)
-            if($group->dbmf_priority>0)
-                echo '
-            <option value="'.$group->id.'" '.MySBUtil::form_isselected($group->id,$group_edit->id).'>'.$group->comments.'</option>';
+  </div>
+  <div class="row label">
+    <label class="col-sm-6" for="group_id'.$block->id.'">
+      <b>'._G('DBMF_block_groupedit').'</b>
+    </label>
+    <div class="col-sm-6">
+      <select name="group_id" id="group_id'.$block->id.'">';
+    $groups = MySBDBMFGroupHelper::load();
+    foreach($groups as $group)
+      if($group->dbmf_priority>0)
         echo '
-        </select></div>
-        '._G('DBMF_block_groupedit').'
+        <option value="'.$group->id.'" '.MySBUtil::form_isselected($group->id,$group_edit->id).'>'.$group->comments.'</option>';
+      echo '
+      </select>
     </div>
-    <div class="row" style="text-align: center;">
-        <input type="hidden" name="block_edition" value="'.$block->id.'">
-        <input type="submit" value="'._G('DBMF_block_edition').'">
+  </div>
+  <div class="row border-bottom" id="a_blockrefs'.$block->id.'">
+    <div class="col-sm-3"></div>
+    <div class="col-sm-6">
+      <input type="hidden" name="block_edition" value="'.$block->id.'">
+      <input type="submit" class="btn-primary"
+             value="'._G('DBMF_block_edition').'">
     </div>
+    <div class="col-sm-3"></div>
+  </div>
     </form>
-    <div class="row" style="min-height: 0px; padding: 0px;">
-    </div>
     ';
 
     foreach($block->blockrefs as $blockref) {
         if($blockref->status==MYSB_DBMF_BLOCKREF_STATUS_ACTIVE)
-            $class_bref = ' background: #ffffff;';
-        else $class_bref = ' background: #eeeeee;';
+            $class_bref = ' blockref_active';
+        else $class_bref = ' blockref_inactive';
         echo '
-    <div class="row" style="'.$class_bref.'">
+  <div class="content list">
+  <div class="row'.$class_bref.'">
+
+  <form action="'.$hrefconfig.'#a_blockrefs'.$block->id.'"
+        method="post"  class="col-1 btn btn-dark"
+        title="&darr;">
+    <input type="hidden" name="blockref_orderdown" value="'.$blockref->id.'">
+    <input src="images/icons/go-down.png"
+           type="image" alt="">
+  </form>
+
+  <form action="'.$hrefconfig.'#a_blockrefs'.$block->id.'"
+        method="post"  class="col-1 btn btn-dark"
+        title="&uarr;">
+    <input type="hidden" name="blockref_orderup" value="'.$blockref->id.'">
+    <input src="images/icons/go-up.png"
+           type="image" alt="">
+  </form>
+
+  <a href="'.$hrefconfig.'&amp;blockref_edit='.$blockref->id.'"
+     class="col-auto btn btn-dark t-left"
+     title="'._G('DBMF_blockref_edition').'">
+    <b>'._G($blockref->lname).'</b><br>
+    <span class="help">'.$blockref->keyname.' ('.$blockref->getType().')</span>
+  </a>
+  <form action="'.$hrefconfig.'#a_blockrefs'.$block->id.'"
+        method="post"  class="col-2 btn"
+        title="">
+    <input type="hidden" name="blockref_switchactive" value="'.$blockref->id.'">';
+        if($blockref->status==MYSB_DBMF_BLOCKREF_STATUS_ACTIVE)
+          echo '
+    <input type="submit" class="btn-danger-light"
+           value="'._G('DBMF_blockref_desactive').'">';
+        else
+          echo '
+    <input type="submit" class="btn-success-light"
+           value="'._G('DBMF_blockref_active').'">';
+        echo '
+  </form>
+<!--
+    <a href="index.php?mod=dbmf3&amp;tpl=admin/config&amp;page=structure&amp;block_orderup='.$block->id.'#a_block'.$block->id.'"
+       class="col-2 t-center btn btn-success-light"
+       title="&uarr;">
+      Activer?
+    </a>
+    <a href="'.$hrefconfig.'&amp;blockref_del='.$blockref->id.'#a_block'.$block->id.'"
+     class="col-1 t-center btn btn-danger"
+     data-overconfirm=""
+     title="'._G('DBMF_block_delete').'">
+      <img src="images/icons/user-trash.png" alt="">
+    </a>
+-->
+  <form action="'.$hrefconfig.'#a_blockrefs'.$block->id.'"
+        method="post"  class="col-1 btn btn-danger-light"
+        OnSubmit="return mysb_confirm(\''.MySBUtil::str2strict(sprintf(_G('DBMF_confirm_blockref_delete'), $blockref->lname, $blockref->keyname )).'\')"
+        title="'._G('DBMF_blockref_delete').'">
+    <input type="hidden" name="block_id" value="'.$block->id.'">
+    <input type="hidden" name="blockref_del" value="'.$blockref->id.'">
+    <input src="images/icons/user-trash.png"
+           type="image" alt="">
+  </form>
+
+  </div>
+  </div>
+<!--
+    <div class="row'.$class_bref.'">
         <div style="float: left;">
         <form action="index.php?mod=dbmf3&amp;tpl=admin/structure" method="post">
         <input type="hidden" name="blockref_edit" value="'.$blockref->id.'">
@@ -255,52 +414,71 @@ foreach($blocks as $block) {
         </div>
         '.$blockref->keyname.'<span class="cell_show"><br></span> <b>'._G($blockref->lname).'</b><br>
          <small>'.$blockref->getType().'</small>
-    </div>';
+    </div>
+-->';
     }
+
     echo '
-    <form action="index.php?mod=dbmf3&amp;tpl=admin/structure#a_block'.$block->id.'" method="post">
-    <div class="row" style="border-bottom: 0px;">
-    <div class="right"><input type="text" name="lname" value=""></div>
-    '._G('DBMF_blockref_name').'
+  <form action="'.$hrefconfig.'#a_blockrefs'.$block->id.'" method="post">
+  <div class="row label border-top">
+    <label class="col-sm-6" for="lname'.$block->id.'">
+      '._G('DBMF_blockref_name').'
+    </label>
+    <div class="col-sm-6">
+      <input type="text" name="lname" id="lname'.$block->id.'" value="">
     </div>
-    <div class="row" style="border-bottom: 0px;">
-    <div class="right">
-        <select name="type">
-            <option value="'.MYSB_VALUE_TYPE_INT.'" >int</option>
-            <option value="'.MYSB_VALUE_TYPE_BOOL.'" >bool</option>
-            <option value="'.MYSB_VALUE_TYPE_VARCHAR64.'" >varchar(64)</option>
-            <option value="'.MYSB_VALUE_TYPE_VARCHAR512.'" >varchar(512)</option>
-            <option value="'.MYSB_VALUE_TYPE_TEXT.'" >text/varchar(512)</option>
-            <option value="'.MYSB_VALUE_TYPE_VARCHAR64_SELECT.'" >select/varchar(64)</option>
-            <option value="'.MYSB_VALUE_TYPE_TEL.'" >tel/varchar(64)</option>
-            <option value="'.MYSB_VALUE_TYPE_URL.'" >url/varchar(128)</option>
-        </select></div>
+  </div>
+  <div class="row label">
+    <label class="col-sm-6" for="type'.$block->id.'">
     '._G('DBMF_blockref_type').'
+    </label>
+    <div class="col-sm-6">
+      <select name="type" id="type'.$block->id.'">
+        <option value="'.MYSB_VALUE_TYPE_INT.'" >int</option>
+        <option value="'.MYSB_VALUE_TYPE_BOOL.'" >bool</option>
+        <option value="'.MYSB_VALUE_TYPE_VARCHAR64.'" >varchar(64)</option>
+        <option value="'.MYSB_VALUE_TYPE_VARCHAR512.'" >varchar(512)</option>
+        <option value="'.MYSB_VALUE_TYPE_TEXT.'" >text/varchar(512)</option>
+        <option value="'.MYSB_VALUE_TYPE_VARCHAR64_SELECT.'" >select/varchar(64)</option>
+        <option value="'.MYSB_VALUE_TYPE_TEL.'" >tel/varchar(64)</option>
+        <option value="'.MYSB_VALUE_TYPE_URL.'" >url/varchar(128)</option>
+      </select>
     </div>
-    <div class="row" style="text-align: center;">
+  </div>
+  <div class="row">
+    <div class="col-sm-3"></div>
+    <div class="col-sm-6">
         <input type="hidden" name="blockref_add" value="'.$block->id.'">
-        <input type="submit" value="'._G('DBMF_blockref_add').'">
+        <input type="submit" class="btn-primary"
+               value="'._G('DBMF_blockref_add').'">
     </div>
-    </form>
+    <div class="col-sm-3"></div>
+  </div>
+  </form>
 </div>';
 }
 
 echo '
-</div>
-
-<div class="boxed" style="width: 600px; margin-top: 10px;">
-<form action="?mod=dbmf3&amp;tpl=admin/structure" method="post">
-    <div class="title roundtop">
-        <b>'._G('DBMF_addblock').'</b>
+<div class="content">
+<form action="'.$hrefconfig.'" method="post">
+  <h1>'._G('DBMF_addblock').'</h1>
+  <div class="row label">
+    <label class="col-sm-6" for="addblock_name">
+      '._G('DBMF_block_name').'
+    </label>
+    <div class="col-6">
+      <input type="text" name="addblock_name" id="addblock_name">
     </div>
-    <div class="row">
-        <div class="right"><input type="text" name="addblock_name"></div>
-        '._G('DBMF_block_name').'
+  </div>
+  <div class="row">
+    <div class="col-sm-3"></div>
+    <div class="col-sm-6">
+      <input type="hidden" name="block_add" value="1">
+      <input type="submit" class="btn-primary"
+             value="'._G('DBMF_block_add').'">
     </div>
-    <div class="row" style="text-align: center;">
-        <input type="hidden" name="block_add" value="1">
-        <input type="submit" value="'._G('DBMF_block_add').'">
-    </div>
+    <div class="col-sm-3"></div>
+  </div>
 </form>
 </div>';
 

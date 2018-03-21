@@ -32,9 +32,115 @@ else
     $contact = $app->tpl_dbmf_currentcontact;
 $date_modif = new MySBDateTime($contact->date_modif);
 $daysold = $date_modif->absDiff();
+?>
 
+<?php if( $contact->mail!='' ) { ?>
+<a class="col-1 t-center btn-light"
+   href="mailto:<?= $contact->mail ?>"
+   title="<?= _G('DBMF_mailto') ?> <?= $contact->lastname ?> <?= $contact->firstname ?>">
+  <img src="images/icons/mail-unread.png" alt="mail-unread">
+</a>
+<?php } else { ?>
+<a class="col-1 t-center inactive" href="javascript:void(0);">
+  <img src="images/blank.png" alt="blank">
+</a>
+<?php } ?>
+
+<a class="overlayed col-auto btn-light" style="color: black;"
+   href="index.php?mod=dbmf3&amp;tpl=contact_edit&amp;contact_id=<?= $contact->id ?>"
+   title="<?= _G('DBMF_edit') ?> <?= $contact->lastname ?> <?= $contact->firstname ?> (<?= $contact->id ?>)">
+  <p>
+    <b><?= $contact->lastname ?></b><br><?= $contact->firstname ?><br>
+    <span class="help">
+      <?= sprintf(_G('DBMF_days_old'),$daysold) ?>
+    </span><br>
+<?php
+    $as_textonlylist = MySBDBMFBlockRefHelper::loadAlwaysShown(MYSB_DBMF_BLOCKREF_ALWAYSSHOWN_ASTEXTONLY);
+    foreach($as_textonlylist as $sblockref) {
+        $column_name = $sblockref->keyname;
+        if( $contact->$column_name!='' and $contact->$column_name!=0 )
+            echo '
+    <span class="d-show-sm help">
+            '.$sblockref->htmlFormNonEditable( '',
+                                               $contact->$column_name,
+                                               _G($sblockref->lname),
+                                               false,
+                                               false).'</span><br class="d-show-sm">';
+        else echo '
+    <br class="d-show-sm">';
+    }
+    $as_textlist = MySBDBMFBlockRefHelper::loadAlwaysShown(MYSB_DBMF_BLOCKREF_ALWAYSSHOWN_ASTEXT);
+    foreach($as_textlist as $sblockref) {
+        $column_name = $sblockref->keyname;
+        if( $contact->$column_name!='' and $contact->$column_name!=0 )
+            echo '
+    <span class="d-show-md help">
+            '.$sblockref->htmlFormNonEditable( '',
+                                               $contact->$column_name,
+                                               MySBUtil::str2abbrv(_G($sblockref->lname),4,4),
+                                               false,
+                                               false).'</span><br class="d-show-md">';
+        else echo '
+    <br class="d-show-md">';
+    }
+?>
+  </p>
+</a>
+<div class="col-6 bg-primary-light">
+  <div class="display_plugins t-right">
+    <div class="plugins-int" style="">
+<?php
+    foreach($as_textonlylist as $sblockref)
+        echo $sblockref->displayPlugin( $contact, 'd-hide-sm' );
+    foreach($as_textlist as $sblockref)
+        echo $sblockref->displayPlugin( $contact, 'd-hide-md' );
+    $as_showlist = MySBDBMFBlockRefHelper::loadAlwaysShown(MYSB_DBMF_BLOCKREF_ALWAYSSHOWN_ASPLUG);
+    foreach($as_showlist as $sblockref)
+        echo $sblockref->displayPlugin( $contact, 'd-show-sm' );
+    foreach($showcols_blockrefs as $sblockref)
+        echo $sblockref->displayPlugin( $contact, 'd-show-md' );
+?>
+    </div>
+    <div class="plugins-ext d-show-md">
+<?php
+    $pluginsDisplay = MySBPluginHelper::loadByType('DBMFDisplay');
+    foreach($pluginsDisplay as $plugin)
+        echo $plugin->displayIcons(1,$contact);
+?>
+    </div>
+  </div>
+</div>
+
+<a class="hidelayed col-1 t-center btn-danger-light"
+   href="index.php?mod=dbmf3&amp;tpl=contact_del&amp;contact_delete=<?= $contact->id ?>&amp;dbmf_request_reuse=1"
+   title="<?= sprintf(_G('DBMF_contact_delete'),$contact->lastname, $contact->firstname ) ?>"
+   data-overconfirm="<?= MySBUtil::str2strict(sprintf(_G('DBMF_confirm_contact_delete'),$contact->lastname, $contact->firstname )) ?>">
+  <img src="images/icons/user-trash.png"
+       alt="user-trash">
+</a>
+
+<?php
+/*
+$pluginsDisplay = MySBPluginHelper::loadByType('DBMFDisplay');
+if(count($pluginsDisplay)!=0) {
+  echo '
+    </div>
+    <div class="row contact_display bg-primary-light collapse">';
+  foreach($pluginsDisplay as $plugin)
+    echo $plugin->displayIcons(1,$contact);
+  echo '';
+}
+*/
+?>
+
+<!--
+
+</div>
+<div>
+
+<?php
     echo '
-<div class="cell roundtop roundbottom">
+<div class="cell roundtop roundbottom" style="width: 100%;">
 <table class="cell"><tbody>
 
 <tr class="cell">
@@ -51,7 +157,7 @@ $daysold = $date_modif->absDiff();
             <a href="mailto:'.$contact->mail.'">
             <img src="images/icons/mail-unread.png"
                  alt="'._G('DBMF_mailto').' '.$contact->id.'"
-                 title="'._G('DBMF_mailto').' '.$contact->lastname.' '.$contact->firstname.' ('.$contact->id.')"></a>';
+                 title="'._G('DBMF_mailto').' '.$contact->lastname.' '.$contact->firstname.'"></a>';
 
     echo '
     </td>
@@ -148,6 +254,9 @@ $daysold = $date_modif->absDiff();
 </tr>
 
 </tbody></table>
-</div>';
+</div>
+
+-->
+';
 
 ?>

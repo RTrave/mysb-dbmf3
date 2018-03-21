@@ -36,9 +36,15 @@ class MySBDBMFExportMailsCSV extends MySBDBMFExport {
 
     public function htmlParamForm() {
         $output = '
-'._G('DBMF_exportmail_modulo').' =
-    <input type="text" name="dbmf_exportmailscsv_modulo" value="50" size="6">
-<br>';
+<div class="row label">
+  <label class="col-sm-8" for="dbmf_exportmailscsv_modulo">
+    '._G('DBMF_exportmail_modulo').'
+  </label>
+  <div class="col-sm-4">
+    <input type="text" name="dbmf_exportmailscsv_modulo"
+           value="50" id="dbmf_exportmailscsv_modulo">
+  </div>
+</div>';
         return $output;
     }
 

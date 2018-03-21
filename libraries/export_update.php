@@ -34,8 +34,9 @@ class MySBDBMFExportUpdate extends MySBDBMFExport {
         $output = '';
         $blocks = MySBDBMFBlockHelper::load();
         $output .= '
-<div class="table_support">
-'._G('DBMF_exportupdate_updfield').':<br>
+<h3>'._G('DBMF_exportupdate_updfield').'</h3>
+<div class="row">
+  <div class="col-12">
 <table style="border: 0px; font-size: 80%"><tbody>
 <tr>';
 
@@ -86,6 +87,7 @@ class MySBDBMFExportUpdate extends MySBDBMFExport {
         $output .= '
 </tr>
 </tbody></table>
+  </div>
 </div>';
         return $output;
     }

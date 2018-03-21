@@ -26,49 +26,118 @@ else $isEditor = false;
 
 echo '
 
-<div class="row" style="text-align: center;">
-    <small>
-        <b>'._G('DBMF_date_creat').': </b>'.$date_creat->strAEBY_l().' /
-        <b>'._G('DBMF_date_modif').': </b>'.$date_modif->strAEBY_l().'
-    </small>
+<div class="row">
+    <p class="col-12 t-center">
+        <span class="help"><b>'._G('DBMF_date_creat').': </b>'.$date_creat->strAEBY_l().' /
+        <b>'._G('DBMF_date_modif').': </b>'.$date_modif->strAEBY_l().'</span>
+    </p>
 </div>
 
-<div class="row">
-    <div class="right">';
-if( $isEditor ) echo '<input type="text" name="lastname" size="24" maxlength="64" value="'.$contact->lastname.'">';
+<div class="row label">
+  <label class="col-sm-4" for="lastname">
+    '._G('DBMF_common_lastname').'<br>
+    <span class="help">'.MySBConfigHelper::Value('dbmf_ln_infos','dbmf3').'</span>
+  </label>
+  <div class="col-sm-8">';
+if( $isEditor ) echo '
+    <input type="text" name="lastname" id="lastname"
+           size="24" maxlength="64" value="'.$contact->lastname.'">';
 else echo $contact->lastname;
-echo '</div>
-    <b>'._G('DBMF_common_lastname').'</b>';
-    if(MySBConfigHelper::Value('dbmf_ln_infos','dbmf3')!='')
-        echo '<br><span class="help">'.MySBConfigHelper::Value('dbmf_ln_infos','dbmf3').'</span>';
-echo '</div>
+echo '
+  </div>
+</div>
 
-<div class="row">
-    <div class="right">';
-if( $isEditor ) echo '<input type="text" name="firstname" size="24" maxlength="64" value="'.$contact->firstname.'">';
+<div class="row label">
+  <label class="col-sm-4" for="firstname">
+    '._G('DBMF_common_firstname').'<br>
+    <span class="help">'.MySBConfigHelper::Value('dbmf_fn_infos','dbmf3').'</span>
+  </label>
+  <div class="col-sm-8">';
+if( $isEditor ) echo '
+    <input type="text" name="firstname" id="firstname"
+           maxlength="64" value="'.$contact->firstname.'">';
 else echo $contact->firstname;
-echo '</div>
-    <b>'._G('DBMF_common_firstname').'</b>';
-    if(MySBConfigHelper::Value('dbmf_fn_infos','dbmf3')!='')
-        echo '<br><span class="help">'.MySBConfigHelper::Value('dbmf_fn_infos','dbmf3').'</span>';
-echo '</div>';
+echo '
+  </div>
+</div>';
 
+
+function mailRow( $i_mail, $email, $isEditor, $style='' ) {
+  echo '
+<div class="row label'.$style.'">
+  <label class="col-sm-4" for="mail'.$i_mail.'">
+    '._G('DBMF_common_mail').' '.$i_mail.'
+  </label>';
+  if( $isEditor ) {
+    echo '
+  <div class="col-sm-8">
+    <input type="email" name="mail'.$i_mail.'" id="mail'.$i_mail.'"
+           maxlength="64" value="'.$email.'">
+  </div>';
+  } else {
+    echo '
+  <div class="col-sm-8">
+    '.$email.'
+  </div>';
+  }
+  echo '
+</div>';
+}
+
+$cmail = explode(',',$contact->mail);
+$i_mail = 0;
+if( count($cmail)==0 ) mailRow( 1, '', $isEditor );
+foreach($cmail as $email) {
+    $i_mail++;
+    mailRow( $i_mail, $email, $isEditor );
+}
+$i_mail++;
+mailRow( $i_mail, '', $isEditor, ' d-hide" id="mailAdded' );
+if( $isEditor ) {
+    echo '
+<div class="row" id="mailAdd">
+  <label class="col-sm-4" for="mail'.$i_mail.'">
+    '._G('DBMF_common_addmail').'
+  </label>
+  <a href="javascript:void(0);"
+     class="col-8 btn btn-primary-light t-center"
+     style="padding: 0;"
+     title="'._G('DBMF_common_addmail').'"
+     onClick="show(\'mailAdded\');hide(\'mailAdd\');">
+        <img src="images/icons/list-add.png"
+             alt="'._G('DBMF_common_addmail').'"
+             id="" class="">
+  </a>
+</div>';
+}
+
+/*
 function mail_input( $i_mail, $email, $isEditor, $isLast=false, $style='' ) {
     echo '
-<div class="row" '.$style.'>
-    <div class="right">';
+<div class="row label" '.$style.'>
+  <label class="col-sm-3" for="mail'.$i_mail.'">
+    '._G('DBMF_common_mail').' '.$i_mail.'
+  </label>';
 if( $isEditor ) {
+    echo '
+  <a href="#"
+     class="col-1 btn-primary-light t-center"
+     title="'._G('DBMF_common_addmail').'"
+     onClick="show(\'dbmfmailadd\');hide(\'dbmfmailaddicon\')">';
     if( $isLast ) echo '
         <img src="images/icons/list-add.png"
              alt="'._G('DBMF_common_addmail').'"
-             title="'._G('DBMF_common_addmail').'"
-             id="dbmfmailaddicon"
-             style="height: 20px; vertical-align: middle;"
-             onClick="show(\'dbmfmailadd\');hide(\'dbmfmailaddicon\')">';
-    echo '<input type="email" name="mail'.$i_mail.'" size="24" maxlength="64" value="'.$email.'">';
-} else echo $email;
-echo '</div>
-    <b>'._G('DBMF_common_mail').' '.$i_mail.'</b>
+             id="dbmfmailaddicon">';
+    echo '
+  </a>
+  <div class="col-sm-8">
+    <input type="email" name="mail'.$i_mail.'" id="mail'.$i_mail.'"
+           maxlength="64" value="'.$email.'">';
+} else echo '
+  <div class="col-sm-9">
+  '.$email;
+echo '
+  </div>
 </div>';
 }
 
@@ -82,15 +151,10 @@ foreach($cmail as $email) {
 }
 $i_mail++;
 mail_input( $i_mail, '', $isEditor, false, 'style="display: none;" id="dbmfmailadd"' );
-
+*/
 
 echo '
-<div class="title">
-    <b>'._G('DBMF_contact_mementos_infos').'</b>
-</div>
-
-<div class="row">
-';
+<h2 class="border-top">'._G('DBMF_contact_mementos_infos').'</h2>';
 $mementos = MySBDBMFMementoHelper::load($contact->id);
 foreach($mementos as $memento) {
     //$memento_date = new MySBDateTime($memento->date_memento);
@@ -98,39 +162,52 @@ foreach($mementos as $memento) {
     else $Active = false;
     if($Active) $memclass = 'mem_active';
     elseif(!$Active and $memento->date_process!='') $memclass = 'mem_processed';
-    else $memclass='';
+    else $memclass='mem_processed';
     $m_user = MySBUserHelper::getByID($memento->user_id);
     if($memento->memcatg_id!=0) $memcatg = MySBDBMFMementoCatgHelper::getByID($memento->memcatg_id);
     else $memcatg = null;
 
+    echo '
+<div class="row contact-mementolist '.$memclass.'">';
     if($memento->isEditable())
         echo '
-            <a  href="index.php?mod=dbmf3&amp;tpl=memento_edit&amp;memento_id='.$memento->id.'"
-                class="overlayed"
-                style="text-decoration: none;"
-                data-overconfirm="'.MySBUtil::str2strict(_G('DBMF_confirm_memento_edition')).'">';
+  <a  href="index.php?mod=dbmf3&amp;tpl=memento_edit&amp;memento_id='.$memento->id.'"
+      class="overlayed col-12 btn-light"
+      style="text-decoration: none; color: black;"
+      data-overconfirm="'.MySBUtil::str2strict(_G('DBMF_confirm_memento_edition')).'">';
     echo '
-    <div class="boxed" style="font-size: 90%; width: 90%; margin-bottom: 2px;">
-    <div class="title roundtop '.$memclass.'" style="font-size: 90%; padding: 4px 4px 3px; min-height: 0px;" >
+    <div>
+      <div class="title1 roundtop1">
         <b>'.$memento->getDate().'</b>';
     if($memcatg!=null) $m_catgname = $memcatg->name;
     else $m_catgname = '<i>'.$m_user->login.'</i>';
-    echo ' <div style="float: right;">'.$m_catgname.'</div>
-        </div>
-        <div class="row '.$memclass.'" style="font-size: 90%; padding: 2px 4px 0px; background: #eeeeee;">'.$memento->comments.'<br>
-        </div>
+    echo '
+        <div class="f-right">'.$m_catgname.'</div>
+      </div>
+      <div class="row1 '.$memclass.'1" style="font-size: 90%;">
+        '.$memento->comments.'
+      </div>
     </div>';
     if($memento->isEditable())
-        echo '</a>';
+        echo '
+  </a>';
+    echo '
+</div>';
 }
 
 echo '
-    <div class="row" style="font-size: 90%; text-align: center; border-bottom: 0px; background: transparent;">
-        <a  href="index.php?mod=dbmf3&amp;tpl=memento_edit&amp;contact_id='.$contact->id.'"
-            class="button overlayed"
-            data-overconfirm="'.MySBUtil::str2strict(_G('DBMF_confirm_memento_edition')).'">
-            '._G('DBMF_contact_mementos_create').'</a>
-     </div>
+</div>
+
+<div class="row border-bottom">
+  <div class="col-sm-3"></div>
+  <div class="col-sm-6 t-center">
+    <a class="btn overlayed btn-primary"
+       href="index.php?mod=dbmf3&amp;tpl=memento_edit&amp;contact_id='.$contact->id.'"
+       data-overconfirm="'.MySBUtil::str2strict(_G('DBMF_confirm_memento_edition')).'">
+      '._G('DBMF_contact_mementos_create').'
+  </a>
+  </div>
+  <div class="col-sm-3"></div>
 </div>';
 
 ?>
