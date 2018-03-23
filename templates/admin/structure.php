@@ -233,10 +233,10 @@ foreach($blocks as $block) {
            type="image" alt="">
   </form>
 
-  <p class="col-9">
-    <b>'._G($block->lname).'</b>
-    <span class="help">(ID:'.$block->id.')</span>
-  </p>
+  <div class="col-9">
+    <p><b>'._G($block->lname).'</b>
+    <span class="help">(ID:'.$block->id.')</span></p>
+  </div>
 
   <form action="'.$hrefconfig.'"
         method="post"  class="col-1 btn btn-danger"

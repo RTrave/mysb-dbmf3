@@ -35,7 +35,7 @@ $daysold = $date_modif->absDiff();
 ?>
 
 <?php if( $contact->mail!='' ) { ?>
-<a class="col-1 t-center btn-light"
+<a class="col-1 t-center btn-dark"
    href="mailto:<?= $contact->mail ?>"
    title="<?= _G('DBMF_mailto') ?> <?= $contact->lastname ?> <?= $contact->firstname ?>">
   <img src="images/icons/mail-unread.png" alt="mail-unread">
@@ -45,27 +45,28 @@ $daysold = $date_modif->absDiff();
   <img src="images/blank.png" alt="blank">
 </a>
 <?php } ?>
-
-<a class="overlayed col-auto btn-light" style="color: black;"
+<a class="overlayed col-1 t-center btn-dark"
    href="index.php?mod=dbmf3&amp;tpl=contact_edit&amp;contact_id=<?= $contact->id ?>"
    title="<?= _G('DBMF_edit') ?> <?= $contact->lastname ?> <?= $contact->firstname ?> (<?= $contact->id ?>)">
+  <img src="images/icons/text-editor.png" alt="text-editor"><br>
+  <span class="daysold_text"><?= sprintf(_G('DBMF_days_old'),$daysold) ?></span>
+</a>
+
+<div class="col-auto">
   <p>
     <b><?= $contact->lastname ?></b><br><?= $contact->firstname ?><br>
-    <span class="help">
-      <?= sprintf(_G('DBMF_days_old'),$daysold) ?>
-    </span><br>
 <?php
     $as_textonlylist = MySBDBMFBlockRefHelper::loadAlwaysShown(MYSB_DBMF_BLOCKREF_ALWAYSSHOWN_ASTEXTONLY);
     foreach($as_textonlylist as $sblockref) {
         $column_name = $sblockref->keyname;
         if( $contact->$column_name!='' and $contact->$column_name!=0 )
             echo '
-    <span class="d-show-sm help">
+    <span class="d-show-sm1 blockref_text">
             '.$sblockref->htmlFormNonEditable( '',
                                                $contact->$column_name,
                                                _G($sblockref->lname),
                                                false,
-                                               false).'</span><br class="d-show-sm">';
+                                               true).'</span><br class="d-show-sm">';
         else echo '
     <br class="d-show-sm">';
     }
@@ -74,24 +75,25 @@ $daysold = $date_modif->absDiff();
         $column_name = $sblockref->keyname;
         if( $contact->$column_name!='' and $contact->$column_name!=0 )
             echo '
-    <span class="d-show-md help">
+    <span class="d-show-md blockref_text">
             '.$sblockref->htmlFormNonEditable( '',
                                                $contact->$column_name,
                                                MySBUtil::str2abbrv(_G($sblockref->lname),4,4),
                                                false,
-                                               false).'</span><br class="d-show-md">';
+                                               true).'</span><br class="d-show-md">';
         else echo '
     <br class="d-show-md">';
     }
 ?>
   </p>
-</a>
-<div class="col-6 bg-primary-light">
-  <div class="display_plugins t-right">
-    <div class="plugins-int" style="">
+  <div style="right: 0; top: 0;">
+    <div class="display_plugins t-right">
+      <div class="plugins-int" style="">
 <?php
+/*
     foreach($as_textonlylist as $sblockref)
         echo $sblockref->displayPlugin( $contact, 'd-hide-sm' );
+*/
     foreach($as_textlist as $sblockref)
         echo $sblockref->displayPlugin( $contact, 'd-hide-md' );
     $as_showlist = MySBDBMFBlockRefHelper::loadAlwaysShown(MYSB_DBMF_BLOCKREF_ALWAYSSHOWN_ASPLUG);
@@ -100,13 +102,14 @@ $daysold = $date_modif->absDiff();
     foreach($showcols_blockrefs as $sblockref)
         echo $sblockref->displayPlugin( $contact, 'd-show-md' );
 ?>
-    </div>
-    <div class="plugins-ext d-show-md">
+      </div>
+      <div class="plugins-ext d-show-md">
 <?php
     $pluginsDisplay = MySBPluginHelper::loadByType('DBMFDisplay');
     foreach($pluginsDisplay as $plugin)
         echo $plugin->displayIcons(1,$contact);
 ?>
+      </div>
     </div>
   </div>
 </div>

@@ -16,8 +16,6 @@ global $app;
 
 if(!MySBRoleHelper::checkAccess('dbmf_user',false)) return;
 
-echo '';
-
 if( isset($_POST['dbmf_request'])
     or isset($_POST['dbmf_request_advanced'])
     or isset($_POST['dbmf_request_byid'])
@@ -38,6 +36,10 @@ if( isset($_POST['dbmf_request'])
 </div>
 </div>
 </div>';
+
+  $req_autofocus = "";
+} else {
+  $req_autofocus = "autofocus";
 }
 
 if( !isset($_POST['search_type']) ) $_POST['search_type'] = 'all_fields';
@@ -73,8 +75,7 @@ echo '
     <div class="col-sm-6">
       <input  type="text" name="search_name" id="search_name"
               value="'.$_POST['search_name'].'"
-              class="smart"
-              autofocus>
+              '.$req_autofocus.'>
     </div>
   </div>
 

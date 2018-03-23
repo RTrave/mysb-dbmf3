@@ -119,22 +119,25 @@ class MySBDBMFBlockRef extends MySBValue {
         elseif( $this->type==MYSB_VALUE_TYPE_TEL or
                 $this->type==MYSB_VALUE_TYPE_URL )
             $disp_class = 'w80';
-        $output .= '
-<div    class="cell_plug '.$class_string.' '.$disp_class.'"
-        style="display: inline-block;">
+        $output .= '<div class="cell_plug '.$class_string.' '.$disp_class.'"
+     style="display: inline-block;">
 <table title="'.$this->keyname.$contact->id.'"><tr>
-    <td class="title">
-        '.$this->getReducedName().'
-    </td>
+  <td class="title">
+    '.$this->getReducedName().'
+  </td>
 </tr><tr>
-    <td class="text">';
+  <td class="text">';
         $column_name = $this->keyname;
         if( $this->type==MYSB_VALUE_TYPE_VARCHAR64_SELECT )
             $column_value = _G($contact->$column_name);
         elseif( $this->type==MYSB_VALUE_TYPE_TEL or
                 $this->type==MYSB_VALUE_TYPE_URL )
             $column_value = '
-        <div style="vertical-align: middle; display: inline-block;">'.$this->htmlFormNonEditable('',$contact->$column_name,MySBUtil::str2abbrv(_G($this->lname),4,4)).'</div>';
+    <div style="vertical-align: middle; display: inline-block;">
+          '.$this->htmlFormNonEditable( '',
+                                        $contact->$column_name,
+                                        MySBUtil::str2abbrv(_G($this->lname),4,4),
+                                        true).'</div>';
         elseif( $this->type==MYSB_VALUE_TYPE_INT ) {
             $column_value = $contact->$column_name;
             if( $column_value=='' ) $column_value = '0';

@@ -73,11 +73,11 @@ if( isset($_GET['memento_id']) ) {
 <?php } else { ?>
 <div class="col-auto">
 <?php } ?>
-    <div class="date">
-      <b><?= $memento->getDate() ?></b><br>
-      <span class="help"><?= $m_catgname ?></span><br>
-      <?= $contact->lastname ?>
-    </div>
+  <div class="date">
+    <b><?= $memento->getDate() ?></b><br>
+    <span class="help"><?= $m_catgname ?></span><br>
+    <?= $contact->lastname ?>
+  </div>
   <div class="infos">
     <?= $memento->comments ?>
   </div>

@@ -239,7 +239,7 @@ while($data_print = MySBDB::fetch_array($search_m)) {
     $app->tpl_dbmf_currentcontact = $contact;
     echo '
     <div id="contact'.$contact->id.'"
-         class="row contact_display bg-primary-light">';
+         class="row contact_display bg-light">';
     include( _pathI('contact_display_ctrl','dbmf3') );
     echo '
     </div>';
