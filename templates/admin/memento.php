@@ -40,7 +40,7 @@ echo '
   <h1>'._G('DBMF_memcatg_new').'</h1>
 
   <div class="row label">
-    <label class="col-6" for="">
+    <label class="col-6" for="memcatg_name_new">
       <b>'._G('DBMF_memcatg_name').':</b>
     </label>
     <div class="col-6">
