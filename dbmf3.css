@@ -30,6 +30,10 @@
   }
 }
 
+#dbmfContact .row {
+  padding: .05rem .25rem;
+}
+
 .contact-mementolist {
   max-height: 80px;
   overflow: hidden;

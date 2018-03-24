@@ -196,16 +196,14 @@ foreach($mementos as $memento) {
 }
 
 echo '
-</div>
-
-<div class="row border-bottom">
+<div class="row">
   <div class="col-sm-3"></div>
   <div class="col-sm-6 t-center">
     <a class="btn overlayed btn-primary"
        href="index.php?mod=dbmf3&amp;tpl=memento_edit&amp;contact_id='.$contact->id.'"
        data-overconfirm="'.MySBUtil::str2strict(_G('DBMF_confirm_memento_edition')).'">
       '._G('DBMF_contact_mementos_create').'
-  </a>
+    </a>
   </div>
   <div class="col-sm-3"></div>
 </div>';

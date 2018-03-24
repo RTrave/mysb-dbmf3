@@ -1,4 +1,4 @@
-<?php 
+<?php
 /***************************************************************************
  *
  *   phpMySandBox/DBMF3 module - TRoman<abadcafe@free.fr> - 2012
@@ -16,15 +16,20 @@ global $app;
 
 if( !MySBRoleHelper::checkAccess('dbmf_user') ) return;
 
-if(isset($_POST['dbmf_contact_delete'])) {
-    $app->dbmf_hidemementos = array();
-    $mementos = MySBDBMFMementoHelper::load($_POST['dbmf_contact_delete']);
-    foreach($mementos as $memento) 
-        $app->dbmf_hidemementos[] = $memento->id;
-    MySBDBMFContactHelper::delete($_POST['dbmf_contact_delete']);
-    $app->pushMessage(_G('DBMF_contact_deleted'));
+if(isset($_GET['contact_delete'])) {
+  echo '
+<script>
+desactiveOverlay();';
+  $mementos = MySBDBMFMementoHelper::load($_GET['contact_delete']);
+  foreach($mementos as $memento) {
+    echo '
+hide("memento'.$memento->id.'");';
+  }
+  MySBDBMFContactHelper::delete($_GET['contact_delete']);
+  $app->pushMessage(_G('DBMF_contact_deleted'));
+  echo '
+slide_hide("contact'.$_GET['contact_delete'].'");
+</script>';
 }
-
-include( _pathT('contact_del','dbmf3') );
 
 ?>

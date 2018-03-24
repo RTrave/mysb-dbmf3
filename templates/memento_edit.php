@@ -108,7 +108,7 @@ echo '</span>
   </p>
 </div>
 
-<div class="modalBody memento-list">';
+<div class="modalBody memento-list" id="dbmfMemento">';
 
 $memento_date = new MySBDateTime($memento->date_memento);
 if($memento->id!=-1) $m_user = MySBUserHelper::getByID($memento->user_id);
@@ -176,7 +176,10 @@ echo '
   </label>
   <div class="col-sm-9">
       <select name="memento_type" id="memento_type"
-              onChange="hide_instant(\'memtype0\');hide_instant(\'memtype1\');show(this.options[this.selectedIndex].value);">
+              onChange="slide_hide(\'memtype0\');
+                        slide_hide(\'memtype1\');
+                        var value=this.options[this.selectedIndex].value;
+                        setTimeout(function(){ slide_show(value); },500);">
             <option value="memtype'.MYSB_DBMF_MEMENTO_TYPE_PUNCTUAL.'" '.MySBUtil::form_isselected($memento->type,MYSB_DBMF_MEMENTO_TYPE_PUNCTUAL).'>'._G('DBMF_memento_type_punctual').'</option>
             <option value="memtype'.MYSB_DBMF_MEMENTO_TYPE_MONTHOFYEAR.'" '.MySBUtil::form_isselected($memento->type,MYSB_DBMF_MEMENTO_TYPE_MONTHOFYEAR).'>'._G('DBMF_memento_type_monthofyear').'</option>
         </select>
@@ -185,9 +188,9 @@ echo '
 
     if($memento->type==MYSB_DBMF_MEMENTO_TYPE_PUNCTUAL) {
         $style_t0 = '';
-        $style_t1 = 'style="display: none;"';
+        $style_t1 = 'class="slide"';
     } elseif($memento->type==MYSB_DBMF_MEMENTO_TYPE_MONTHOFYEAR) {
-        $style_t0 = 'style="display: none;"';
+        $style_t0 = 'class="slide"';
         $style_t1 = '';
     }
     echo '

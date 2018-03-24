@@ -61,8 +61,13 @@ if( isset($app->dbmf_req_wcheck) and $app->dbmf_req_wcheck!='' ) {
     </form>
   </div>
 </div>
-<div id="newcontactok" style="display: none;">
-    '._G('DBMF_addcontact_newentry').' OK!
+<div id="newcontactok" class="slide">
+  <h1>'._G('DBMF_addcontact').'</h1>
+  <div class="row">
+    <p class="col-sm-12">
+      '._G('DBMF_addcontact_newentry').' OK!
+    </p>
+  </div>
 </div>';
 
 } else {
