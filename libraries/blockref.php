@@ -121,7 +121,7 @@ class MySBDBMFBlockRef extends MySBValue {
             $disp_class = 'w80';
         $output .= '<div class="cell_plug '.$class_string.' '.$disp_class.'"
      style="display: inline-block;">
-<table title="'.$this->keyname.$contact->id.'"><tr>
+<table title="'._G($this->lname).'"><tr>
   <td class="title">
     '.$this->getReducedName().'
   </td>

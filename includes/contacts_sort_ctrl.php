@@ -36,32 +36,33 @@ if( isset($_GET["pack"]) )
 
 function sortRange($pack) {
     global $app;
-    $output = '';
-    if( $pack['next_id']!=-1 ) {
+    $output = '
+<div class="content list" style="max-width: 150px;"><div class="row">';
+    if( $pack['prev_id']!=-1 ) {
         $output .= '
-<div class="col-1 t-left" style="padding: 0 2px;">
-    <img src="images/icons/go-last.png" class="btn"
-        alt="'._G('SBGT_last').'"
-        title="'._G('SBGT_last').'"
-        onclick="loadItem(\'contacts_results\',\'index.php?mod=dbmf3&inc=contacts_sort&sid='.$pack['last_id'].'\');">
+<div class="col-2 t-right" style="padding: 0 2px;">
+    <img src="images/icons/go-first.png" class="btn btn-light"
+        alt="'._G('SBGT_first').'"
+        title="'._G('SBGT_first').'"
+        onclick="loadItem(\'contacts_results\',\'index.php?mod=dbmf3&inc=contacts_sort&sid='.$pack['first_id'].'\');">
 </div>
-<div class="col-1 t-left" style="padding: 0 2px;">
-    <img src="images/icons/go-next.png" class="btn"
-        alt="'._G('SBGT_next').'"
-        title="'._G('SBGT_next').'"
-        onclick="loadItem(\'contacts_results\',\'index.php?mod=dbmf3&inc=contacts_sort&sid='.$pack['next_id'].'\');">
+<div class="col-2 t-right" style="padding: 0 2px;">
+    <img src="images/icons/go-previous.png" class="btn btn-light"
+        alt="'._G('SBGT_previous').'"
+        title="'._G('SBGT_previous').'"
+        onclick="loadItem(\'contacts_results\',\'index.php?mod=dbmf3&inc=contacts_sort&sid='.$pack['prev_id'].'\');">
 </div>';
     } else {
         $output .= '
-<div class="col-1 t-left" style="padding: 0 2px;">
-    <img src="images/blank.png" style="cursor: auto;" alt="blank-last" class="btn">
+<div class="col-2 t-right" style="padding: 0 2px;">
+    <img src="images/blank.png" style="cursor: auto;" alt="blank-first" class="btn">
 </div>
-<div class="col-1 t-left" style="padding: 0 2px;">
-    <img src="images/blank.png" style="cursor: auto;" alt="blank-next" class="btn">
+<div class="col-2 t-right" style="padding: 0 2px;">
+    <img src="images/blank.png" style="cursor: auto;" alt="blank-previous" class="btn">
 </div>';
     }
     $output .= '
-<div class="col-2 t-center" style="padding: 0 2px;">
+<div class="col-4 t-center" style="padding: 0 2px;">
 <select name="dbmf_exportdisplay_pack" onchange="changepack(this.value);"
         style="float1: right; margin: 0px 20px; width: auto;">
     <option value="5" '.MySBUtil::form_isselected('5',$_SESSION["dbmf_search_pack"]).'>5</option>
@@ -72,30 +73,31 @@ function sortRange($pack) {
     <option value="100" '.MySBUtil::form_isselected('100',$_SESSION["dbmf_search_pack"]).'>100</option>
 </select>
 </div>';
-    if( $pack['prev_id']!=-1 ) {
+    if( $pack['next_id']!=-1 ) {
         $output .= '
-<div class="col-1 t-right" style="padding: 0 2px;">
-    <img src="images/icons/go-previous.png" class="btn"
-        alt="'._G('SBGT_previous').'"
-        title="'._G('SBGT_previous').'"
-        onclick="loadItem(\'contacts_results\',\'index.php?mod=dbmf3&inc=contacts_sort&sid='.$pack['prev_id'].'\');">
+<div class="col-2 t-left" style="padding: 0 2px;">
+    <img src="images/icons/go-next.png" class="btn btn-light"
+        alt="'._G('SBGT_next').'"
+        title="'._G('SBGT_next').'"
+        onclick="loadItem(\'contacts_results\',\'index.php?mod=dbmf3&inc=contacts_sort&sid='.$pack['next_id'].'\');">
 </div>
-<div class="col-1 t-right" style="padding: 0 2px;">
-    <img src="images/icons/go-first.png" class="btn"
-        alt="'._G('SBGT_first').'"
-        title="'._G('SBGT_first').'"
-        onclick="loadItem(\'contacts_results\',\'index.php?mod=dbmf3&inc=contacts_sort&sid='.$pack['first_id'].'\');">
+<div class="col-2 t-left" style="padding: 0 2px;">
+    <img src="images/icons/go-last.png" class="btn btn-light"
+        alt="'._G('SBGT_last').'"
+        title="'._G('SBGT_last').'"
+        onclick="loadItem(\'contacts_results\',\'index.php?mod=dbmf3&inc=contacts_sort&sid='.$pack['last_id'].'\');">
 </div>';
     } else {
         $output .= '
-<div class="col-1 t-right" style="padding: 0 2px;">
-    <img src="images/blank.png" style="cursor: auto;" alt="blank-previous" class="btn">
+<div class="col-2 t-left" style="padding: 0 2px;">
+    <img src="images/blank.png" style="cursor: auto;" alt="blank-next" class="btn">
 </div>
-<div class="col-1 t-right" style="padding: 0 2px;">
-    <img src="images/blank.png" style="cursor: auto;" alt="blank-first" class="btn">
+<div class="col-2 t-left" style="padding: 0 2px;">
+    <img src="images/blank.png" style="cursor: auto;" alt="blank-last" class="btn">
 </div>';
     }
-    $output .= '';
+    $output .= '
+</div></div>';
 
     return $output;
 }
@@ -229,17 +231,27 @@ echo '
 </div>
 
 <div class="row collapse bg-primary" style="margin-bottom: 5px;">
-  <div class="col-sm-6"></div>
-  '.sortRange($packF).'
+  <div class="col-12 t-right">
+    '.sortRange($packF).'
+  </div>
 </div>';
 
+$pluginsDisplay = MySBPluginHelper::loadByType('DBMFDisplay');
+if( count($pluginsDisplay)==0 ) {
+  echo '
+<style>
+.contact_display > div.col-auto > p {
+  min-height: 64px;
+}
+</style>';
+}
 while($data_print = MySBDB::fetch_array($search_m)) {
 
     $contact = new MySBDBMFContact(null,$data_print);
     $app->tpl_dbmf_currentcontact = $contact;
     echo '
-    <div id="contact'.$contact->id.'"
-         class="row contact_display bg-light">';
+    <div id="contact'.$contact->id.'" style="opacity: 1;"
+         class="content list">';
     include( _pathI('contact_display_ctrl','dbmf3') );
     echo '
     </div>';

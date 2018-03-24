@@ -17,8 +17,13 @@ global $app;
 if( !MySBRoleHelper::checkAccess('dbmf_user',false) ) return;
 
 
-if(isset($_POST['dbmf_contact_delete'])) {
-    MySBDBMFContactHelper::delete($_POST['dbmf_contact_delete']);
+if(isset($_GET['dbmf_contact_delete'])) {
+    MySBDBMFContactHelper::delete($_GET['dbmf_contact_delete']);
+    echo '
+<script>
+slide_hide("contact'.$_GET['dbmf_contact_delete'].'");
+</script>';
+    return;
 }
 
 if(isset($_POST['dbmf_request_reuse'])) {

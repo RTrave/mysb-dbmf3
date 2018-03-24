@@ -1,4 +1,4 @@
-<?php 
+<?php
 /***************************************************************************
  *
  *   phpMySandBox/DBMF3 module - TRoman<abadcafe@free.fr> - 2012
@@ -18,11 +18,16 @@ if( !MySBRoleHelper::checkAccess('dbmf_user') ) return;
 
 
 $exports = MySBDBMFExportHelper::load();
-if(count($exports)<1) 
+if(count($exports)<1)
     $app->pushAlert(_G('DBMF_no_exportrights'));
 
-if(isset($_POST['dbmf_contact_delete'])) {
-    MySBDBMFContactHelper::delete($_POST['dbmf_contact_delete']);
+if(isset($_GET['dbmf_contact_delete'])) {
+    MySBDBMFContactHelper::delete($_GET['dbmf_contact_delete']);
+    echo '
+<script>
+slide_hide("contact'.$_GET['dbmf_contact_delete'].'");
+</script>';
+    return;
 }
 
 if(isset($_POST['dbmf_request_reuse'])) {
@@ -50,7 +55,7 @@ if(isset($_POST['dbmf_export_process'])) {
         $group_edit = MySBGroupHelper::getByID($block->groupedit_id);
         if(($clause=$block->htmlProcessWhereClause('b'))=='') {
             foreach($block->blockrefs as $blockref) {
-                if($block->isViewable() and $blockref->isActive()) {
+                if($blockref->isActive()) {
                     $refname = $blockref->keyname;
                     if(($clause_t = $blockref->htmlProcessWhereClause('br'))!=null) {
                         if($clause!='') $clause .= ' '.$_POST['blockref_andorflag_'.$block->id].' ';

@@ -92,8 +92,8 @@ $blocks = MySBDBMFBlockHelper::load();
 $blockn_flag = 0;
 foreach($blocks as $block) {
   $group_edit = MySBGroupHelper::getByID($block->groupedit_id);
-  if($blockn_flag==0 and $block->isViewable()) $blockn_flag = 1;
-  elseif($block->isViewable()) {
+  if($blockn_flag==0) $blockn_flag = 1;
+  else {
     echo '
   <div class="row border-top border-bottom" style1="text-align: center; background: transparent; border: 0px; padding-bottom: 0px;">
     <div class="col-sm-4"></div>
@@ -106,8 +106,7 @@ foreach($blocks as $block) {
     <div class="col-sm-4"></div>
   </div>';
   }
-  if($block->isViewable()) {
-    echo '
+  echo '
   <div class="row btn-primary-light">
     <div class="col-1 t-left">
       '.$block->htmlFormWhereClause('b').'
@@ -128,25 +127,16 @@ foreach($blocks as $block) {
         <input type="radio" name="blockref_andorflag_'.$block->id.'" value="and">AND
       </p>
     </div>';
-    foreach($block->blockrefs as $blockref) {
-      if($blockref->isActive()) {
-        echo '
+  foreach($block->blockrefs as $blockref) {
+    if($blockref->isActive()) {
+      echo '
     <div class="row label">
       '.$blockref->innerRowWhereClause('br',_G($blockref->lname)).'
-<!--
-      <label class="col-6" for="">
-        '._G($blockref->lname).'
-      </label>
-      <div class="col-6">
-        '.$blockref->htmlFormWhereClause('br').'
-      </div>
--->
     </div>';
-      }
     }
-echo '
-  </div>';
   }
+  echo '
+  </div>';
 }
 
 echo '

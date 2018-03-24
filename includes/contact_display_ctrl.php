@@ -32,10 +32,22 @@ else
     $contact = $app->tpl_dbmf_currentcontact;
 $date_modif = new MySBDateTime($contact->date_modif);
 $daysold = $date_modif->absDiff();
+
+$pluginsDisplay = MySBPluginHelper::loadByType('DBMFDisplay');
+# if( count($pluginsDisplay)==0 ) {
+#   echo '
+# <style>
+# .contact_display > div.col-auto > p {
+#   min-height: 64px;
+# }
+# </style>';
+# }
 ?>
 
+<div class="row contact_display bg-light">
+
 <?php if( $contact->mail!='' ) { ?>
-<a class="col-1 t-center btn-dark"
+<a class="col-1 t-center btn-primary-light"
    href="mailto:<?= $contact->mail ?>"
    title="<?= _G('DBMF_mailto') ?> <?= $contact->lastname ?> <?= $contact->firstname ?>">
   <img src="images/icons/mail-unread.png" alt="mail-unread">
@@ -45,7 +57,7 @@ $daysold = $date_modif->absDiff();
   <img src="images/blank.png" alt="blank">
 </a>
 <?php } ?>
-<a class="overlayed col-1 t-center btn-dark"
+<a class="overlayed col-1 t-center btn-primary-light"
    href="index.php?mod=dbmf3&amp;tpl=contact_edit&amp;contact_id=<?= $contact->id ?>"
    title="<?= _G('DBMF_edit') ?> <?= $contact->lastname ?> <?= $contact->firstname ?> (<?= $contact->id ?>)">
   <img src="images/icons/text-editor.png" alt="text-editor"><br>
@@ -61,14 +73,14 @@ $daysold = $date_modif->absDiff();
         $column_name = $sblockref->keyname;
         if( $contact->$column_name!='' and $contact->$column_name!=0 )
             echo '
-    <span class="d-show-sm1 blockref_text">
+    <span class="d-show-sm blockref_text">
             '.$sblockref->htmlFormNonEditable( '',
                                                $contact->$column_name,
                                                _G($sblockref->lname),
                                                false,
-                                               true).'</span><br class="d-show-sm">';
+                                               true).'<br></span>';
         else echo '
-    <br class="d-show-sm">';
+    <span class="d-show-sm blockref_text">.<br></span>';
     }
     $as_textlist = MySBDBMFBlockRefHelper::loadAlwaysShown(MYSB_DBMF_BLOCKREF_ALWAYSSHOWN_ASTEXT);
     foreach($as_textlist as $sblockref) {
@@ -80,9 +92,9 @@ $daysold = $date_modif->absDiff();
                                                $contact->$column_name,
                                                MySBUtil::str2abbrv(_G($sblockref->lname),4,4),
                                                false,
-                                               true).'</span><br class="d-show-md">';
+                                               true).'<br></span>';
         else echo '
-    <br class="d-show-md">';
+    <span class="d-show-md blockref_text">.<br></span>';
     }
 ?>
   </p>
@@ -105,7 +117,6 @@ $daysold = $date_modif->absDiff();
       </div>
       <div class="plugins-ext d-show-md">
 <?php
-    $pluginsDisplay = MySBPluginHelper::loadByType('DBMFDisplay');
     foreach($pluginsDisplay as $plugin)
         echo $plugin->displayIcons(1,$contact);
 ?>
@@ -115,7 +126,7 @@ $daysold = $date_modif->absDiff();
 </div>
 
 <a class="hidelayed col-1 t-center btn-danger-light"
-   href="index.php?mod=dbmf3&amp;tpl=contact_del&amp;contact_delete=<?= $contact->id ?>&amp;dbmf_request_reuse=1"
+   href="index.php?mod=dbmf3&amp;tpl=contact_del&amp;contact_delete=<?= $contact->id ?>"
    title="<?= sprintf(_G('DBMF_contact_delete'),$contact->lastname, $contact->firstname ) ?>"
    data-overconfirm="<?= MySBUtil::str2strict(sprintf(_G('DBMF_confirm_contact_delete'),$contact->lastname, $contact->firstname )) ?>">
   <img src="images/icons/user-trash.png"
@@ -263,3 +274,5 @@ if(count($pluginsDisplay)!=0) {
 ';
 
 ?>
+
+</div>
