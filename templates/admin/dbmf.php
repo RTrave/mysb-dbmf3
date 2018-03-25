@@ -234,12 +234,12 @@ echo '
     </div>
   </div>
 
-  <div class="row" label>
-    <label class="col-sm-4" for="export_type">
+  <div class="row label">
+    <label class="col-sm-4" for="export_groupid">
       <b>'._G('DBMF_export_group').'</b>
     </label>
     <div class="col-sm-8">
-      <select name="export_groupid">';
+      <select name="export_groupid" id="export_groupid">';
 foreach($dbmf_groups as $group)
     echo '
         <option value="'.$group->id.'">'.$group->comments.'</option>';
