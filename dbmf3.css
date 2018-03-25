@@ -309,6 +309,7 @@ padding: 5px;
   margin-right: 10px;
   position: absolute;
   overflow: hidden;
+  font-size: 90%;
   left: 5px;
   top: 5px;
   min-width: 110px;
@@ -318,11 +319,12 @@ padding: 5px;
 #dbmfMementoList .infos {
   display: inline-block;
   overflow: hidden;
-  font-size: 90%;
+  font-size: 80%;
   min-height: 60px;
   margin-left: 120px;
   padding: 5px 5px 0px;
   width: 65%;
+  max-height: 75px;
 }
 #dbmfMementoList .tooltip {
   position: absolute;
