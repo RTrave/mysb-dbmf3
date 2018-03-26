@@ -109,9 +109,13 @@ span.daysold_text {
 span.blockref_text {
   font-size: 80%;
 }
-span.blockref_text img {
+span.blockref_text img.mysbValue-directlink {
   width: 16px;
   float: left;
+  padding: 0rem;
+}
+.text img.mysbValue-directlink {
+  padding: 0.35rem;
 }
 
 .display_plugins {
