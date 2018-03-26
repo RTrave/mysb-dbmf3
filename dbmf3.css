@@ -9,15 +9,19 @@
 
 
 
+/* CONTACT LIST */
 
-/* div#mysbMiddle { */
-/* font-size: 95%; */
-/* } */
-
+.sort_actions {
+  /* background: rgba(0,123,255,.2); */
+  /* float: right; */
+  text-align: right;
+  /* margin: 3px 3px; */
+  padding: 2px 4px;
+}
+.sort_actions select {
+  width: auto;
+}
 .list > .contact_display {
-  /* background-color: #dddddd; */
-  /* background-color: rgba(0,123,255,.5); */
-  /* margin-bottom: 2px; */
   margin-top: 2px;
 }
 .contact_display > div.col-auto > p {
@@ -29,75 +33,6 @@
     min-height: 64px;
   }
 }
-
-#dbmfContact .row {
-  padding: .05rem .25rem;
-}
-
-.contact-mementolist {
-  max-height: 80px;
-  overflow: hidden;
-  padding: 1px 10px;
-  border-radius: 5px;
-  margin: 2px 8px;
-  width: auto;
-  display: block;
-  font-size: 80%;
-}
-.contact-mementolist > a {
-  text-decoration: none;
-  color: black;
-}
-
-.blockref_active,
- .blockref_active a,
- .blockref_active a:hover {
-  color: black;
-}
-.blockref_inactive {
-  color: gray;
-  background-color: rgba(210,210,210,1);
-}
-.blockref_inactive a,
-.blockref_inactive a:hover {
-  color: gray;
-}
-
-/*
-.contact_display table,
-.contact_display tr  {
-background: transparent;
-}
-
-.contact_display td.cell_names {
-width: 30%;
-}
-.contact_display td.cell_names b {
-position: absolute;
-}
-.contact_display td.cell_plugins {
-vertical-align: top;
-text-align: right;
-height: 100%;
-width: 100%;
-}
-
-.contact_display td.cell_ext {
-width: 1px;
-}
-
-.contact_display td.cell_infos {
-max-width: 80px;
-min-width: 180px;
-text-align: left;
-vertical-align: top;
-font-size: 90%;
-}
-.contact_display td.cell_infos img{
-width: 12px;
-}
-*/
-
 span.daysold_text {
   position: absolute;
   bottom: 0px;
@@ -144,11 +79,6 @@ span.blockref_text img.mysbValue-directlink {
   height: 64px;
   background: transparent;
 }
-
-.incell_floatshow {
-  display: none;
-}
-
 .cell_plug table {
   width: 100%;
   height: 100%;
@@ -181,7 +111,6 @@ span.blockref_text img.mysbValue-directlink {
 .contact_display .w80    { width: 74px; }
 .contact_display .w120   { width: 80px; }
 .contact_display .w180   { width: 100px; }
-
 @media (max-width: 480px) {
   .contact_display .w60    { width: 48px; }
   .contact_display .w80    { width: 48px; }
@@ -189,131 +118,46 @@ span.blockref_text img.mysbValue-directlink {
   .contact_display .w180   { width: 48px; }
 }
 
-/*
-.contact_display td.cell_icons {
-max-height: 20px;
-text-align: right;
-vertical-align: bottom;
-width: auto;
+
+/* CONTACT EDIT */
+
+#dbmfContact .row {
+  padding: .10rem .25rem;
 }
 
-.contact_display table.cell {
-width: 98%;
-background: transparent;
-vertical-align: middle;
-}
-.contact_display tr.cell {
-background: transparent;
-}
-.contact_display td {
-vertical-align: top;
-border: 0px solid black;
-}
-
-.contact_display td.lpadding {
-width: 33%;
-padding: 5px 5px 5px 20px;
-}
-
-.contact_display div.searchresults{
-display: inline-block;
-width: 80%;
-background-color: white;
-text-align: left;
-padding: 5px;
-}
-*/
-.sort_actions {
-  /* background: rgba(0,123,255,.2); */
-  /* float: right; */
-  text-align: right;
-  /* margin: 3px 3px; */
-  padding: 2px 4px;
-}
-.sort_actions select {
+#dbmfContact .contact-mementolist {
+  max-height: 80px;
+  overflow: hidden;
+  padding: 1px 10px;
+  border-radius: 5px;
+  margin: 2px 8px;
   width: auto;
+  display: block;
+  font-size: 80%;
+}
+#dbmfContact .contact-mementolist > a {
+  text-decoration: none;
+  color: black;
 }
 
 
-/* #mysbMiddle img.linked { */
-/* cursor: pointer; */
-/* margin: 0px 5px; */
-/* } */
+/* CONFIG: STRUCTURE */
 
-/* #mysbMiddle .mem_active { */
-/* background: #ff9292 !important; */
-/* } */
+.blockref_active,
+.blockref_active a,
+.blockref_active a:hover {
+  color: black;
+}
+.blockref_inactive {
+  color: gray;
+  background-color: rgba(210,210,210,1);
+}
+.blockref_inactive a,
+.blockref_inactive a:hover {
+  color: gray;
+}
 
-/* #mysbMiddle .mem_processed { */
-/* background: #98ff8d !important; */
-/* } */
-
-/* #mysbMiddle div.mem_maxh { */
-/* max-height: 100px; */
-/* overflow-y: hidden; */
-/* } */
-
-/* #rsvp_mailing_displaymail { */
-/* font-size: 80%; */
-/* background: grey; */
-/* width: 400px; */
-/* margin: 0px auto 0px auto; */
-/* } */
-
-/* #rsvp_mailing_displaymail p, */
-/* #rsvp_mailing_displaymail h1, */
-/* #rsvp_mailing_displaymail h2, */
-/* #rsvp_mailing_displaymail h3, */
-/* #rsvp_mailing_displaymail h4 { */
-/* padding: 0px 5px 0px 5px; */
-/* background: transparent; */
-/* } */
-
-/* div#dbmfContact {} */
-
-/* #dbmfContact div.list_support div.title, */
-/* #dbmfContact div.list_support div.row { */
-/*     padding: 1px 0px 6px; */
-/* } */
-
-/* #dbmfMemento div.list_support div.title, */
-/* #dbmfMemento div.list_support div.row { */
-/*     padding: 1px 0px 6px; */
-/* } */
-
-/* #dbmfContact table.cform { */
-/*     width: 100%; */
-/* } */
-/* #dbmfContact table.cform tr.title{ */
-/*     background: #bbbbbb; */
-/* } */
-/* table#rsvpContact { */
-/* width: 90%; */
-/* font-size: 80%; */
-/* } */
-
-/* #rsvpContact img.mysbIcons_valueok { */
-/* width: 18px; */
-/* } */
-
-/* #rsvpCriteria table { */
-/* font-size: 90%; */
-/* } */
-
-/* div#rsvpCriteria { */
-/*     font-size1: 80%; */
-/* } */
-
-/* #rsvpCriteria div.boxed div.title { */
-/*     padding1: 2px 5px; */
-/*     text-align: left; */
-/* } */
-
-/* #rsvpCriteria table, */
-/* #rsvpCriteria tr, */
-/* #rsvpCriteria td { */
-/* vertical-align: middle; */
-/* } */
+/* MEMENTO LIST */
 
 #dbmfMementoList .list a:hover {
   color: black;
@@ -334,7 +178,7 @@ padding: 5px;
   overflow: hidden;
   font-size: 80%;
   min-height: 60px;
-  margin-left: 120px;
+  margin-left: 110px;
   padding: 5px 5px 0px;
   width: 65%;
   max-height: 75px;
@@ -358,58 +202,3 @@ padding: 5px;
   }
 }
 
-
-/* div#dbmfMementoList { */
-/* font-size: 90%; */
-/* } */
-
-/* #dbmfMementoList table { */
-/* margin: 0px; */
-/* } */
-
-/* #dbmfMementoList tr { */
-/* background-color: transparent; */
-/* } */
-
-/* #dbmfMementoList td.infos { */
-/* width: 240px; */
-/* } */
-/* #dbmfMementoList div.floatingcell{ */
-/* float: left; */
-/* } */
-/* #dbmfMementoList div.date{ */
-/* width: 110px; */
-/* } */
-/* #dbmfMementoList div.name{ */
-/* text-align: left; */
-/* font-size: 90%; */
-/* width: 120px; */
-/* } */
-
-/* #dbmfMementoList td.comments{ */
-/* vertical-align: top; */
-/* text-align: left; */
-/* font-size: 90%; */
-/* } */
-
-/* #dbmfMementoList p.rteditor { */
-/* padding: 2px 3px; */
-/* } */
-
-/* #dbmfMementoList td.actions{ */
-/* width: 40px; */
-/* } */
-
-/* div#dbmfMemento { */
-/* } */
-
-/* #dbmfMemento table.cform { */
-/*     width: 100%; */
-/* } */
-/* #dbmfMemento td { */
-/*     vertical-align: top; */
-/* } */
-
-/* table.cform { */
-/*     border-collapse: collapse; */
-/* } */
