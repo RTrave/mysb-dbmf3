@@ -82,7 +82,7 @@ if( isset($_GET['memento_id']) ) {
     <?= $memento->comments ?>
   </div>
 <?php if( $memento->comments2!='' ) { ?>
-  <div class="tooltip">
+  <div class="tooltip d-show-md">
     <img src="images/icons/mail-attachment.png" alt="">
     <span class="left"><?= $memento->comments2 ?></span>
   </div>
