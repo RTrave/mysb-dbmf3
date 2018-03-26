@@ -166,14 +166,14 @@ foreach($exports as $export) {
       <input src="images/icons/text-editor.png"
              type="image" alt="">
     </form>
-    <p class="col-sm-7">
-      '.$export->name.'<br>
-      <span class="help">'.$export->comments.'</span>
-    </p>
-    <p class="col-sm-7 t-right">
-      '.$export->type.'<br>
-      <span class="help">'.$group->comments.'</span>
-    </p>
+    <div class="col-7">
+      <p>'.$export->name.'<br>
+      <span class="help">'.$export->comments.'</span></p>
+    </div>
+    <div class="col-6 t-right">
+      <p>'.$export->type.'<br>
+      <span class="help">'.$group->comments.'</span></p>
+    </div>
   </div>
   </div>
 <!--

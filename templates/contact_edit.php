@@ -38,8 +38,8 @@ echo '
     <img src="images/icons/user-trash.png" alt="">
   </a>
   <p class="col-auto">
-    '.$contact->lastname.'<br>
-    <small>'.$contact->firstname.'</small>
+    '.$contact->lastname.'&nbsp;<br>
+    <small>'.$contact->firstname.'&nbsp;</small>
   </p>
 </div>
 ';

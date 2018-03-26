@@ -103,7 +103,7 @@ if( $isEditor ) {
      class="col-sm-8 btn btn-primary-light t-center"
      style="padding: 0;"
      title="'._G('DBMF_common_addmail').'"
-     onClick="show(\'mailAdded\');hide(\'mailAdd\');">
+     onClick="hide(\'mailAdd\');setTimeout(function(){ show(\'mailAdded\'); },300);">
         <img src="images/icons/list-add.png"
              alt="">
   </a>

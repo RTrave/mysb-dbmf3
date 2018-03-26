@@ -134,21 +134,29 @@ class MySBDBMFExportMailing extends MySBDBMFExport {
 <h3>'._G('DBMF_exportmailing_advancedparams').'</h3>
 
 <div class="row label">
-  <label class="col-sm-11" for="dbmf_exportmailing_sendaslist">
+  <label class="col-12" for="dbmf_exportmailing_sendaslist">
+    <input type="checkbox" name="dbmf_exportmailing_sendaslist"
+           id="dbmf_exportmailing_sendaslist" class="mysbValue-checkbox">
     '._G('DBMF_exportmailing_sendaslist').':
   </label>
+<!--
   <div class="col-sm-1">
     <input type="checkbox" name="dbmf_exportmailing_sendaslist" id="dbmf_exportmailing_sendaslist">
   </div>
+-->
 </div>
 
 <div class="row label">
-  <label class="col-sm-11" for="dbmf_exportmailing_unsubscribefields">
+  <label class="col-12" for="dbmf_exportmailing_unsubscribefields">
+    <input type="checkbox" name="dbmf_exportmailing_unsubscribefields"
+           id="dbmf_exportmailing_unsubscribefields" class="mysbValue-checkbox">
     '._G('DBMF_exportmailing_unsubscribefields').':
   </label>
+<!--
   <div class="col-sm-1">
     <input type="checkbox" name="dbmf_exportmailing_unsubscribefields" id="dbmf_exportmailing_unsubscribefields">
   </div>
+-->
 </div>
 <div class="row label">
   <label class="col-md-4" for="dbmf_exportmailing_replyto">
@@ -163,10 +171,10 @@ class MySBDBMFExportMailing extends MySBDBMFExport {
   </div>
 </div>
 <div class="row label">
-  <label class="col-sm-10" for="dbmf_exportmailing_firstid">
+  <label class="col-9" for="dbmf_exportmailing_firstid">
     '._G('DBMF_exportmailing_firstid').':
   </label>
-  <div class="col-sm-2">
+  <div class="col-3">
     <input type="text" name="dbmf_exportmailing_firstid" id="dbmf_exportmailing_firstid" value="" size="8">
   </div>
 </div>
