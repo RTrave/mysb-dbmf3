@@ -100,58 +100,15 @@ if( $isEditor ) {
     '._G('DBMF_common_addmail').'
   </label>
   <a href="javascript:void(0);"
-     class="col-8 btn btn-primary-light t-center"
+     class="col-sm-8 btn btn-primary-light t-center"
      style="padding: 0;"
      title="'._G('DBMF_common_addmail').'"
      onClick="show(\'mailAdded\');hide(\'mailAdd\');">
         <img src="images/icons/list-add.png"
-             alt="'._G('DBMF_common_addmail').'"
-             id="" class="">
+             alt="">
   </a>
 </div>';
 }
-
-/*
-function mail_input( $i_mail, $email, $isEditor, $isLast=false, $style='' ) {
-    echo '
-<div class="row label" '.$style.'>
-  <label class="col-sm-3" for="mail'.$i_mail.'">
-    '._G('DBMF_common_mail').' '.$i_mail.'
-  </label>';
-if( $isEditor ) {
-    echo '
-  <a href="#"
-     class="col-1 btn-primary-light t-center"
-     title="'._G('DBMF_common_addmail').'"
-     onClick="show(\'dbmfmailadd\');hide(\'dbmfmailaddicon\')">';
-    if( $isLast ) echo '
-        <img src="images/icons/list-add.png"
-             alt="'._G('DBMF_common_addmail').'"
-             id="dbmfmailaddicon">';
-    echo '
-  </a>
-  <div class="col-sm-8">
-    <input type="email" name="mail'.$i_mail.'" id="mail'.$i_mail.'"
-           maxlength="64" value="'.$email.'">';
-} else echo '
-  <div class="col-sm-9">
-  '.$email;
-echo '
-  </div>
-</div>';
-}
-
-$cmail = explode(',',$contact->mail);
-$i_mail = 0;
-if( count($cmail)==0 ) mail_input( 1, '', $isEditor );
-foreach($cmail as $email) {
-    $i_mail++;
-    if( count($cmail)==$i_mail ) mail_input( $i_mail, $email, $isEditor, true );
-    else mail_input( $i_mail, $email, $isEditor );
-}
-$i_mail++;
-mail_input( $i_mail, '', $isEditor, false, 'style="display: none;" id="dbmfmailadd"' );
-*/
 
 echo '
 <h2 class="border-top">'._G('DBMF_contact_mementos_infos').'</h2>';
@@ -173,18 +130,17 @@ foreach($mementos as $memento) {
         echo '
   <a  href="index.php?mod=dbmf3&amp;tpl=memento_edit&amp;memento_id='.$memento->id.'"
       class="overlayed col-12 btn-light"
-      style="text-decoration: none; color: black;"
       data-overconfirm="'.MySBUtil::str2strict(_G('DBMF_confirm_memento_edition')).'">';
     echo '
     <div>
-      <div class="title1 roundtop1">
+      <div>
         <b>'.$memento->getDate().'</b>';
     if($memcatg!=null) $m_catgname = $memcatg->name;
     else $m_catgname = '<i>'.$m_user->login.'</i>';
     echo '
         <div class="f-right">'.$m_catgname.'</div>
       </div>
-      <div class="row1 '.$memclass.'1" style="font-size: 90%;">
+      <div>
         '.$memento->comments.'
       </div>
     </div>';
@@ -196,10 +152,10 @@ foreach($mementos as $memento) {
 }
 
 echo '
-<div class="row">
+<div class="row" style="padding-top: 0.5rem; padding-bottom: 0.5rem">
   <div class="col-sm-3"></div>
   <div class="col-sm-6 t-center">
-    <a class="btn overlayed btn-primary"
+    <a class="overlayed btn btn-primary"
        href="index.php?mod=dbmf3&amp;tpl=memento_edit&amp;contact_id='.$contact->id.'"
        data-overconfirm="'.MySBUtil::str2strict(_G('DBMF_confirm_memento_edition')).'">
       '._G('DBMF_contact_mementos_create').'
