@@ -42,29 +42,29 @@ function sortRange($pack) {
         $output .= '
 <div class="col-2 t-right" style="padding: 0 2px;">
     <img src="images/icons/go-first.png" class="btn btn-light"
-        alt="'._G('SBGT_first').'"
+        alt="'._G('SBGT_first').'" style="padding: 0.5rem 0.1rem;"
         title="'._G('SBGT_first').'"
         onclick="loadItem(\'contacts_results\',\'index.php?mod=dbmf3&inc=contacts_sort&sid='.$pack['first_id'].'\');">
 </div>
 <div class="col-2 t-right" style="padding: 0 2px;">
     <img src="images/icons/go-previous.png" class="btn btn-light"
-        alt="'._G('SBGT_previous').'"
+        alt="'._G('SBGT_previous').'" style="padding: 0.5rem 0.1rem;"
         title="'._G('SBGT_previous').'"
         onclick="loadItem(\'contacts_results\',\'index.php?mod=dbmf3&inc=contacts_sort&sid='.$pack['prev_id'].'\');">
 </div>';
     } else {
         $output .= '
 <div class="col-2 t-right" style="padding: 0 2px;">
-    <img src="images/blank.png" style="cursor: auto;" alt="blank-first" class="btn">
+    <img src="images/blank.png" style="cursor: auto;padding: 0.5rem 0.1rem;" alt="blank-first" class="btn">
 </div>
 <div class="col-2 t-right" style="padding: 0 2px;">
-    <img src="images/blank.png" style="cursor: auto;" alt="blank-previous" class="btn">
+    <img src="images/blank.png" style="cursor: auto;padding: 0.5rem 0.1rem;" alt="blank-previous" class="btn">
 </div>';
     }
     $output .= '
 <div class="col-4 t-center" style="padding: 0 2px;">
 <select name="dbmf_exportdisplay_pack" onchange="changepack(this.value);"
-        style="float1: right; margin: 0px 20px; width: auto;">
+        style="margin: 0px 5px; width: auto;">
     <option value="5" '.MySBUtil::form_isselected('5',$_SESSION["dbmf_search_pack"]).'>5</option>
     <option value="10" '.MySBUtil::form_isselected('10',$_SESSION["dbmf_search_pack"]).'>10</option>
     <option value="20" '.MySBUtil::form_isselected('20',$_SESSION["dbmf_search_pack"]).'>20</option>
@@ -77,23 +77,23 @@ function sortRange($pack) {
         $output .= '
 <div class="col-2 t-left" style="padding: 0 2px;">
     <img src="images/icons/go-next.png" class="btn btn-light"
-        alt="'._G('SBGT_next').'"
+        alt="'._G('SBGT_next').'" style="padding: 0.5rem 0.1rem;"
         title="'._G('SBGT_next').'"
         onclick="loadItem(\'contacts_results\',\'index.php?mod=dbmf3&inc=contacts_sort&sid='.$pack['next_id'].'\');">
 </div>
 <div class="col-2 t-left" style="padding: 0 2px;">
     <img src="images/icons/go-last.png" class="btn btn-light"
-        alt="'._G('SBGT_last').'"
+        alt="'._G('SBGT_last').'" style="padding: 0.5rem 0.1rem;"
         title="'._G('SBGT_last').'"
         onclick="loadItem(\'contacts_results\',\'index.php?mod=dbmf3&inc=contacts_sort&sid='.$pack['last_id'].'\');">
 </div>';
     } else {
         $output .= '
 <div class="col-2 t-left" style="padding: 0 2px;">
-    <img src="images/blank.png" style="cursor: auto;" alt="blank-next" class="btn">
+    <img src="images/blank.png" style="cursor: auto;padding: 0.5rem 0.1rem;" alt="blank-next" class="btn">
 </div>
 <div class="col-2 t-left" style="padding: 0 2px;">
-    <img src="images/blank.png" style="cursor: auto;" alt="blank-last" class="btn">
+    <img src="images/blank.png" style="cursor: auto;padding: 0.5rem 0.1rem;" alt="blank-last" class="btn">
 </div>';
     }
     $output .= '
