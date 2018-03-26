@@ -17,7 +17,7 @@ global $app;
 
 if( isset($_POST['dbmf_export_process']) ) {
   echo '
-<div class="col-md-10 col-unique">
+<div class="col-lg-10 col-unique">
   <div class="content list" id="search">
     <h1>'._G('DBMF_search_results').'</h1>';
   echo $app->dbmf_export_plugin->htmlResultOutput();
