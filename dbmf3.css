@@ -212,7 +212,7 @@ span.blockref_text img.mysbValue-directlink {
   position: fixed;
   right: 10px;
   top: 20px;
-  font-size: 110%;
+  font-size: 120%;
 }
 #dbmfAutosubs input[type="submit"] {
   /* width: 130px; */
@@ -232,3 +232,17 @@ span.blockref_text img.mysbValue-directlink {
   background: #ddd;
 }
 
+@media (max-width: 768px) {
+  #dbmfAutosubs .actions {
+    font-size: 110%;
+    top: 60px;
+    opacity: 0.7;
+    right: 15px;
+  }
+}
+@media (max-width: 480px) {
+  #dbmfAutosubs .actions {
+    font-size: 90%;
+    right: 5px;
+  }
+}
