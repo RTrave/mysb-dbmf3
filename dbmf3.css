@@ -202,3 +202,33 @@ span.blockref_text img.mysbValue-directlink {
   }
 }
 
+
+/* AUTOSUBS STYLES */
+#dbmfAutosubs h1 {
+  border-radius: .5rem;
+}
+#dbmfAutosubs .actions {
+  text-align: center;
+  position: fixed;
+  right: 10px;
+  top: 20px;
+  font-size: 110%;
+}
+#dbmfAutosubs input[type="submit"] {
+  /* width: 130px; */
+}
+#dbmfAutosubs a.btn {
+  margin-top: 20px;
+  width: 100%;
+}
+#dbmfAutosubs .btn {
+  display: inline-block;
+}
+#dbmfAutosubs .content.disabled-elems .label:hover {
+  background: transparent;
+}
+#dbmfAutosubs input[disabled="disabled"],
+ #dbmfAutosubs textarea[disabled="disabled"]{
+  background: #ddd;
+}
+

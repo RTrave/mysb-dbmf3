@@ -14,13 +14,13 @@ defined('_MySBEXEC') or die;
 
 global $app;
 
+if(!MySBRoleHelper::checkAccess('dbmf_autosubs')) return;
+
 // Process id
 if(isset($_GET['pid']))
     $pid = $_GET['pid'];
 else
     $pid = '';
-
-if(!MySBRoleHelper::checkAccess('dbmf_autosubs')) return;
 
 if( isset($_POST['autosubs_modifs']) ) {
     $today = getdate();
@@ -54,7 +54,7 @@ if( empty($_POST['email'.$pid]) ) {
     echo '<html>
 <head>
 <title>Redir</title>
-<meta http-equiv="refresh" content="0; URL=index.php?mod=dbmf3&amp;tpl=autosubs1&amp;blanklay=1">
+<meta http-equiv="refresh" content="0; URL=index.php?mod=dbmf3&amp;tpl=autosubs/step1">
 </head>
 <body>
 </body>
@@ -64,27 +64,15 @@ if( empty($_POST['email'.$pid]) ) {
     $sql_wcheck = 'SELECT * from '.MySB_DBPREFIX.'dbmfcontacts '.
         'WHERE ';
     $sql_wcheck_cond = '';
-/*
-    if( $_POST['lastname']!='' )
-        $sql_wcheck_cond = 'lastname RLIKE \''.MySBUtil::str2whereclause($_POST['lastname']).'\' ';
-    if( $_POST['firstname']!='' ) {
-        if( $sql_wcheck_cond!= '' )
-            $sql_wcheck_cond .= ' OR ';
-        $sql_wcheck_cond .= 'firstname RLIKE \''.MySBUtil::str2whereclause($_POST['firstname']).'\' ';
-    }
-*/
     if( $_POST['email'.$pid]!='' ) {
-        //if( $sql_wcheck_cond!='' ) $sql_wcheck_cond .= ' OR ';
         $sql_wcheck_cond .= 'mail RLIKE \''.MySBUtil::str2whereclause($_POST['email'.$pid]).'\' ';
     }
     $app->dbmf_req_wcheck = MySBDB::query($sql_wcheck.$sql_wcheck_cond.
         ' ORDER by id DESC;',
         "autosubs2_ctrl.php",
         true, "dbmf3");
-    //echo count($app->dbmf_req_wcheck).'B';
 
     if(MySBDB::num_rows($app->dbmf_req_wcheck)==0) {
-        //echo 'NEW<br>';
         $contact = MySBDBMFContactHelper::create('', '', $_POST['email'.$pid]);
         $app->dbmf_req_wcheck = MySBDB::query($sql_wcheck.$sql_wcheck_cond.
         ' ORDER by lastname;',
@@ -99,7 +87,6 @@ if( isset($_POST['new_email'] ) ) {
         'WHERE ';
     $sql_wcheck_cond = '';
     if( $_POST['new_email']!='' ) {
-        //if( $sql_wcheck_cond!='' ) $sql_wcheck_cond .= ' OR ';
         $sql_wcheck_cond .= 'mail RLIKE \''.MySBUtil::str2whereclause($_POST['new_email']).'\' ';
     }
     $contact = MySBDBMFContactHelper::create('', '', $_POST['new_email']);
@@ -110,6 +97,6 @@ if( isset($_POST['new_email'] ) ) {
     $_POST['email'.$pid] = $_POST['new_email'];
 }
 
-include( _pathT('autosubs2','dbmf3') );
+include( _pathT('autosubs/step2','dbmf3') );
 
 ?>

@@ -15,7 +15,7 @@ defined('_MySBEXEC') or die;
 class MySBModule_dbmf3 {
 
     public $lname = 'dbmf3';
-    public $version = 18;
+    public $version = 19;
     public $homelink = 'https://github.com/RTrave/mysb-dbmf3';
     public $require = array(
         'core' => 7
@@ -435,6 +435,13 @@ class MySBModule_dbmf3 {
             3,"dbmf_config",'dbmf3');
     }
 
+    public function init19() {
+        global $app;
+        MySBPluginHelper::create('autosubs_menutext','MenuItem',
+            array('DBMF_topmenu_autosubs', "autosubs/step1", 'DBMF_topmenu_autosubsinfos',''),
+            array(1,0,0,0),
+            6,"dbmf_autosubs",'dbmf3');
+    }
 
     public function uninit() {
         global $app;

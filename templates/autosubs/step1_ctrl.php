@@ -1,7 +1,7 @@
-<?php 
+<?php
 /***************************************************************************
  *
- *   phpMySandBox/DBMF3 module - TRoman<abadcafe@free.fr> - 2012
+ *   phpMySandBox/RSVP module - TRoman<abadcafe@free.fr> - 2012
  *   This program is free software; you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
  *   the Free Software Foundation; either version 2 of the License', or
@@ -15,12 +15,7 @@ defined('_MySBEXEC') or die;
 global $app;
 
 if(!MySBRoleHelper::checkAccess('dbmf_autosubs')) return;
+
+include( _pathT('autosubs/step1','dbmf3') );
+
 ?>
-
-</div>
-</div>
-</div>
-
-</body>
-</html>
-

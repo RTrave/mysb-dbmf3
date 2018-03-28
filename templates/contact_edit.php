@@ -32,7 +32,7 @@ echo '
 
 <div class="modalTitle">
   <a class="hidelayed col-1 t-center btn-danger"
-     href="index.php?mod=dbmf3&amp;tpl=contact_del&amp;contact_delete='.$contact->id.'"
+     href="index.php?mod=dbmf3&amp;inc=contact_del&amp;contact_delete='.$contact->id.'"
      data-overconfirm="'.MySBUtil::str2strict(sprintf(_G('DBMF_confirm_contact_delete'),$contact->lastname, $contact->firstname )).'"
      title="'.sprintf(_G('DBMF_contact_delete'),$contact->lastname, $contact->firstname ).'">
     <img src="images/icons/user-trash.png" alt="">
