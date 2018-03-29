@@ -67,17 +67,31 @@ class MySBDBMFExportMailsCSV extends MySBDBMFExport {
             false, 'dbmf3');
 
         $output = '
-<div class="searchresults" style="padding: 5px;">
-'.MySBDB::num_rows($results).' results<br>
-<br>Mails (by '.$app->tpl_dbmfexportmailscsv_modulo.'):<br><br>
-<code style="width: 70%;">
+<div class="content list searchresults">
+  <div class="row bg-primary">
+    <div class="col-4">
+      <p>'.MySBDB::num_rows($results).' results</p>
+    </div>
+    <div class="col-8">
+      <p>Mails (by '.$app->tpl_dbmfexportmailscsv_modulo.')</p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12">
+    <code style="width: 70%;">
 ';
         $modulo_index = 0;
         $count = 0;
         while($data_result = MySBDB::fetch_array($results)) {
             if($modulo_index>=$app->tpl_dbmfexportmailscsv_modulo) {
                 $modulo_index = 0;
-                $output .= "<br><br>\n";
+                $output .= '
+    </code>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12">
+    <code style="width: 70%;">';
             }
             $contact = new MySBDBMFContact(null,$data_result);
             if($contact->mail!='') {
@@ -87,10 +101,14 @@ class MySBDBMFExportMailsCSV extends MySBDBMFExport {
             }
         }
         $output .= '
-</code><br>
-';
-        $output .= '
-'.$count.' valids<br>
+    </code>
+    </div>
+  </div>
+  <div class="row bg-primary">
+    <div class="col-12">
+      <p>'.$count.' valids</p>
+    </div>
+  </div>
 </div>';
         return $output;
     }

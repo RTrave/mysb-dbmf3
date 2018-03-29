@@ -109,16 +109,27 @@ class MySBDBMFExportSummary extends MySBDBMFExport {
             false, 'dbmf3');
 
         echo '
-<div id="summary_results">';
-        echo '
-<p>Resultats:</p><br>
-<div class="boxed" style="width: 450px; margin: 10px auto 3px;">
-';
-        $complete_sum = 0;
+<div class="content list" id="summary_results">
+    <div class="row" style="min-height: 3rem;">
+      <div class="col-6 bg-primary">
+        <p>'._G("DBMF_summary_lname").'</p>
+      </div>
+      <div class="col-3 t-right bg-primary">
+        <p>'._G("DBMF_summary_sum").'</p>
+      </div>
+      <div class="col-3 t-right bg-primary">
+        <p>'._G("DBMF_summary_count").'</p>
+      </div>
+    </div>
+  ';
+    $complete_sum = 0;
         foreach( $app->dbmf_summary_blockrefs as $blockref ) {
             echo '
-    <div class="row">
-        <div class="right">';
+    <div class="row" style="min-height: 3rem;">
+      <div class="col-6 bg-primary-light">
+        <p>'._G($blockref->lname).'</p>
+      </div>
+      <div class="col-3 t-right bg-primary-light">';
             $sum = 0;
             $nb = 0;
             while( $data_summary = MySBDB::fetch_array($search_summary) ) {
@@ -129,17 +140,26 @@ class MySBDBMFExportSummary extends MySBDBMFExport {
             }
             MySBDB::data_seek($search_summary,0);
             $complete_sum += $sum;
-            echo $sum.' / '.$nb.' '._G('DBMF_common_contact');
-            echo '</div>
-        '._G($blockref->lname).'
+            echo '
+        <p>'.$sum.'</p>
+      </div>
+      <div class="col-3 t-right bg-primary-light">
+        <p>'.$nb.'</p>
+      </div>
     </div>';
         }
         echo '
     <div class="row">
-        <div class="right"><b>'.$complete_sum.' / '.MySBDB::num_rows($search_summary).' '._G('DBMF_common_contact').'</b></div>
-        '._G('DBMF_export_summary').'
+      <div class="col-6 bg-primary">
+        <p>'._G('DBMF_export_summary').'</p>
+      </div>
+      <div class="col-3 bg-primary t-right">
+        <p>'.$complete_sum.'</p>
+      </div>
+      <div class="col-3 bg-primary t-right">
+        <p>'.MySBDB::num_rows($search_summary).'</p>
+      </div>
     </div>
-</div>
 </div>';
 
     }

@@ -148,9 +148,9 @@ class MySBDBMFExportCSV extends MySBDBMFExport {
         fclose($ftable);
         echo '
 
-<div class="searchresults" style="padding: 5px;">
-CSV output: '.$count.' results
-</div><br>
+<div class="searchresults">
+  <p>CSV output: '.$count.' results</p>
+</div>
 ';
         $stmail = new MySBMail('sendtable','dbmf3');
         $stmail->addTO($app->auth_user->mail,$app->auth_user->firstname.' '.$app->auth_user->lastname);
