@@ -45,7 +45,7 @@ $pluginsDisplay = MySBPluginHelper::loadByType('DBMFDisplay');
   <img src="images/icons/mail-unread.png" alt="mail-unread">
 </a>
 <?php } else { ?>
-<a class="col-1 t-center inactive" href="javascript:void(0);">
+<a class="col-1 t-center inactive bg-primary-light" href="javascript:void(0);">
   <img src="images/blank.png" alt="blank">
 </a>
 <?php } ?>
