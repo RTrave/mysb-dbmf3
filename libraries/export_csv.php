@@ -52,14 +52,26 @@ class MySBDBMFExportCSV extends MySBDBMFExport {
     <textarea name="dbmf_exportcsv_fileinfos"
               id="dbmf_exportcsv_fileinfos"></textarea>
   </div>
+</div>
+<div class="row label">
+  <label class="col-md-4" for="dbmf_exportcsv_delimiter">
+    '._G('DBMF_exportcsv_delimiter').':<br>
+  </label>
+  <div class="col-md-8">
+    <select name="dbmf_exportcsv_delimiter" id="dbmf_exportcsv_delimiter">
+      <option value=",">,</option>
+      <option value=";">;</option>
+    </select>
+  </div>
 </div>';
         return $output;
     }
 
     public function htmlParamProcess() {
-        global $app;
+        global $app, $_POST;
         $this->csv_filename = $_POST['dbmf_exportcsv_filename'].'.csv';
         $this->csv_fileinfos = $_POST['dbmf_exportcsv_fileinfos'];
+        $this->csv_delimiter = $_POST['dbmf_exportcsv_delimiter'];
     }
 
     public function requestOrderBy() {
@@ -113,16 +125,20 @@ class MySBDBMFExportCSV extends MySBDBMFExport {
             "MySBDBMFExportCSV::htmlResultOutput()",
             false, 'dbmf3');
 
-        $csv_char = ';';
+        $csv_char = $this->csv_delimiter;
         $path_file = MySB_ROOTPATH.'/modules/dbmf3/files/sendtable.csv';
         $ftable = fopen($path_file, 'w');
+        fputs($ftable, $bom =( chr(0xEF) . chr(0xBB) . chr(0xBF) ));
 
-        $titles = '"Name"'.$csv_char.'"Firstname"'.$csv_char.'"Mail"';
+        $titles = '"'._G("DBMF_common_lastname").'"'.$csv_char.
+                  '"'._G("DBMF_common_firstname").'"'.$csv_char.
+                  '"'._G("DBMF_common_mail").'"';
         $blockrefs = MySBDBMFBlockRefHelper::load();
         foreach($blockrefs as $blockref) {
             if( $blockref->isActive() )
                 if( $blockref->getType()=='boolean' or $blockref->getType()=='int' )
-                    $titles .= $csv_char.MySBUtil::str2abbrv(_G($blockref->lname));
+                    $titles .= $csv_char._G($blockref->lname);
+                    //$titles .= $csv_char.MySBUtil::str2abbrv(_G($blockref->lname));
                 else
                     $titles .= $csv_char._G($blockref->lname);
         }
@@ -142,7 +158,7 @@ class MySBDBMFExportCSV extends MySBDBMFExport {
                         $tablin[] = $this->db2csv(_G($contact_data[$blockref->keyname]));
                 }
             }
-            fputcsv($ftable,$tablin,';','"');
+            fputcsv($ftable,$tablin,$csv_char,'"');
             $count++;
         }
         fclose($ftable);
