@@ -27,6 +27,8 @@ if( isset($_POST['autosubs_modifs']) ) {
     $today_date = $today['year'].'-'.$today['mon'].'-'.$today['mday'].' '.
                   $today['hours'].':'.$today['minutes'].':'.$today['seconds'];
     $autosubs_ids = explode(',',$_POST['autosubs_modifs']);
+    $ntf_mails = $_POST['email'];
+    $ntf_names = '';
     $blockrefs = MySBDBMFBlockRefHelper::load();
     foreach($autosubs_ids as $as_id) {
 
@@ -44,13 +46,24 @@ if( isset($_POST['autosubs_modifs']) ) {
         if( $bradd!='' )
             $contact_datas[$bradd] = 1;
         $contact->update($contact_datas);
+        //$ntf_mails .=
+        $ntf_names .= '<br>'.$contact->lastname.' '.$contact->firstname;
         $app->pushMessage(_G('DBMF_contact_modified'));
+    }
+    if( MySBConfigHelper::Value('dbmf_autosubs_mailconfirm','dbmf3')=='1' ) {
+        $ntf_mail = new MySBMail('autosubs','dbmf3');
+        $ntf_mail->addTO( $ntf_mails, '');
+        if( MySBConfigHelper::Value('dbmf_autosubs_mailaddress','dbmf3')!='' )
+          $ntf_mail->addTO( MySBConfigHelper::Value('dbmf_autosubs_mailaddress','dbmf3'), '');
+        //$ntf_mail->data['subject'] = "New auto-subscription";
+        $ntf_mail->data['body'] = $ntf_names;
+        $ntf_mail->send();
     }
 }
 
 if( isset($_POST['email'.$pid]) ) {
 if( empty($_POST['email'.$pid]) ) {
-    $app->pushMessage(_G('DBMF_addcontact_lastname_required'));
+    $app->pushMessage(_G('DBMF_addcontact_lastname_required')); // TODO: bad handling
     echo '<html>
 <head>
 <title>Redir</title>

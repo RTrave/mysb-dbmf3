@@ -15,7 +15,7 @@ defined('_MySBEXEC') or die;
 class MySBModule_dbmf3 {
 
     public $lname = 'dbmf3';
-    public $version = 19;
+    public $version = 20;
     public $homelink = 'https://github.com/RTrave/mysb-dbmf3';
     public $require = array(
         'core' => 7
@@ -443,6 +443,16 @@ class MySBModule_dbmf3 {
             6,"dbmf_autosubs",'dbmf3');
     }
 
+    public function init20() {
+        global $app;
+        MySBConfigHelper::create('dbmf_autosubs_blockreflock','',MYSB_VALUE_TYPE_VARCHAR512,
+            'Contact locked if this BlockRef is filled with 1', 'dbmf3');
+        MySBConfigHelper::create('dbmf_autosubs_mailconfirm','1',MYSB_VALUE_TYPE_BOOL,
+            'Send a confirmation mail', 'dbmf3');
+        MySBConfigHelper::create('dbmf_autosubs_mailaddress','',MYSB_VALUE_TYPE_VARCHAR512,
+            'Mail copy to', 'dbmf3');
+    }
+
     public function uninit() {
         global $app;
 
@@ -464,6 +474,9 @@ class MySBModule_dbmf3 {
         MySBConfigHelper::delete('dbmf_ln_infos','dbmf3');
         MySBConfigHelper::delete('dbmf_fn_infos','dbmf3');
         MySBConfigHelper::delete('dbmf_autosubs_blockref','dbmf3');
+        MySBConfigHelper::delete('dbmf_autosubs_blockreflock','dbmf3');
+        MySBConfigHelper::delete('dbmf_autosubs_mailconfirm','dbmf3');
+        MySBConfigHelper::delete('dbmf_autosubs_mailaddress','dbmf3');
 
         //plugins
         MySBPluginHelper::delete('dbmf_exportupdate','dbmf3');

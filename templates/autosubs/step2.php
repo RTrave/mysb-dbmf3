@@ -34,9 +34,6 @@ if( isset($_POST['autosubs_modifs']) )
 echo '
 <div class="col-md-8 col-unique">
 
-
-
-
 <div class="content'.$classdisabled.'">
 
   <h1 class="bg-primary">'.MySBConfigHelper::Value('website_name').'</h1>
@@ -45,6 +42,10 @@ $autosubs_id = '';
 $bordertop = '';
 
 while($data_wcheck = MySBDB::fetch_array($app->dbmf_req_wcheck)) {
+
+  $brlock = MySBConfigHelper::Value('dbmf_autosubs_blockreflock','dbmf3');
+  if( $brlock!='' and $data_wcheck[$brlock]!='' )
+    continue;
 
   if($autosubs_id!='') {
     $autosubs_id .= ',';
