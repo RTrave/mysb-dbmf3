@@ -451,6 +451,8 @@ class MySBModule_dbmf3 {
             'Send a confirmation mail', 'dbmf3');
         MySBConfigHelper::create('dbmf_autosubs_mailaddress','',MYSB_VALUE_TYPE_VARCHAR512,
             'Mail copy to', 'dbmf3');
+        MySBConfigHelper::create('dbmf_autosubs_anonaccess','',MYSB_VALUE_TYPE_BOOL,
+            'Anonymous access to autosubs', 'dbmf3');
     }
 
     public function uninit() {
@@ -477,6 +479,7 @@ class MySBModule_dbmf3 {
         MySBConfigHelper::delete('dbmf_autosubs_blockreflock','dbmf3');
         MySBConfigHelper::delete('dbmf_autosubs_mailconfirm','dbmf3');
         MySBConfigHelper::delete('dbmf_autosubs_mailaddress','dbmf3');
+        MySBConfigHelper::delete('dbmf_autosubs_anonaccess','dbmf3');
 
         //plugins
         MySBPluginHelper::delete('dbmf_exportupdate','dbmf3');

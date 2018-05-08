@@ -14,7 +14,8 @@ defined('_MySBEXEC') or die;
 
 global $app;
 
-if(!MySBRoleHelper::checkAccess('dbmf_autosubs')) return;
+if(MySBConfigHelper::Value('dbmf_autosubs_anonaccess','dbmf3')!=1)
+  if(!MySBRoleHelper::checkAccess('dbmf_autosubs')) return;
 
 // Process id
 if(isset($_GET['pid']))
