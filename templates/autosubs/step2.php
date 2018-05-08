@@ -43,22 +43,26 @@ $bordertop = '';
 
 while($data_wcheck = MySBDB::fetch_array($app->dbmf_req_wcheck)) {
 
+  $br_locked = false;
+  $br_locked_txt = '';
   $brlock = MySBConfigHelper::Value('dbmf_autosubs_blockreflock','dbmf3');
-  if( $brlock!='' and $data_wcheck[$brlock]!='' )
-    continue;
-
-  if($autosubs_id!='') {
-    $autosubs_id .= ',';
-    $bordertop = 'border-top';
+  if( $brlock!='' and $data_wcheck[$brlock]!=0 ) {
+    $br_locked = true;
+    $br_locked_txt = ' <i>(read-only)</i>';
+  } else {
+    if($autosubs_id!='') {
+      $autosubs_id .= ',';
+      //$bordertop = 'border-top';
+    }
+    $autosubs_id .= $data_wcheck['id'];
   }
-  $autosubs_id .= $data_wcheck['id'];
   $mails = str_replace(',','<br>',$data_wcheck['mail']);
-  if( isset($_POST['autosubs_modifs']) )
+  if( $br_locked or isset($_POST['autosubs_modifs']) )
     $isDisabled = 'disabled="disabled"';
   else $isDisabled = '';
 
   echo '
-  <h2 class="'.$bordertop.'" id="contact'.$data_wcheck['id'].'">'.$mails.'</h2>
+  <h2 class="border-top" id="contact'.$data_wcheck['id'].'">'.$mails.$br_locked_txt.'</h2>
 
   <div class="row label">
     <label class="col-sm-4" for="'.$data_wcheck['id'].'lastname">
@@ -92,7 +96,7 @@ while($data_wcheck = MySBDB::fetch_array($app->dbmf_req_wcheck)) {
 
   $blockrefs = MySBDBMFBlockRefHelper::load();
   foreach( $blockrefs as $blockref ) {
-    if($blockref->autosubs==1) {
+    if($blockref->autosubs==1 and !$br_locked) {
       echo '
   <div class="row label">';
       if( !isset($_POST['autosubs_modifs']) )
