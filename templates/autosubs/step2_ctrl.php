@@ -22,7 +22,7 @@ if(isset($_GET['pid']))
 else
     $pid = '';
 
-if( isset($_POST['autosubs_modifs']) ) {
+if( isset($_POST['autosubs_modifs']) and $_POST['autosubs_modifs']!='' ) {
     $today = getdate();
     $today_date = $today['year'].'-'.$today['mon'].'-'.$today['mday'].' '.
                   $today['hours'].':'.$today['minutes'].':'.$today['seconds'];
