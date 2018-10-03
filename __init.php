@@ -15,7 +15,7 @@ defined('_MySBEXEC') or die;
 class MySBModule_dbmf3 {
 
     public $lname = 'dbmf3';
-    public $version = 20;
+    public $version = 21;
     public $homelink = 'https://github.com/RTrave/mysb-dbmf3';
     public $require = array(
         'core' => 7
@@ -455,13 +455,27 @@ class MySBModule_dbmf3 {
             'Anonymous access to autosubs', 'dbmf3');
     }
 
+
+    public function init21() {
+        global $app;
+        MySBRoleHelper::delete('dbmf_autosubs');
+        MySBConfigHelper::delete('dbmf_autosubs_blockref','dbmf3');
+        MySBConfigHelper::delete('dbmf_autosubs_blockreflock','dbmf3');
+        MySBConfigHelper::delete('dbmf_autosubs_mailconfirm','dbmf3');
+        MySBConfigHelper::delete('dbmf_autosubs_mailaddress','dbmf3');
+        MySBConfigHelper::delete('dbmf_autosubs_anonaccess','dbmf3');
+        MySBPluginHelper::delete('autosubs_menutext','dbmf3');
+        $req = MySBDB::query('ALTER TABLE '.MySB_DBPREFIX.'dbmfblockrefs DROP COLUMN autosubs',
+            "__init.php",
+            false, "dbmf3");
+    }
+
     public function uninit() {
         global $app;
 
         MySBRoleHelper::delete('dbmf_user');
         MySBRoleHelper::delete('dbmf_editor');
         MySBRoleHelper::delete('dbmf_config');
-        MySBRoleHelper::delete('dbmf_autosubs');
 
         MySBDBMFExportHelper::delete(MySBDBMFExportHelper::getByName('DBMF_display')->id);
         $plugs = MySBPluginHelper::loadByType('DBMFExport');
@@ -475,11 +489,6 @@ class MySBModule_dbmf3 {
         MySBConfigHelper::delete('dbmf_notify_freq','dbmf3');
         MySBConfigHelper::delete('dbmf_ln_infos','dbmf3');
         MySBConfigHelper::delete('dbmf_fn_infos','dbmf3');
-        MySBConfigHelper::delete('dbmf_autosubs_blockref','dbmf3');
-        MySBConfigHelper::delete('dbmf_autosubs_blockreflock','dbmf3');
-        MySBConfigHelper::delete('dbmf_autosubs_mailconfirm','dbmf3');
-        MySBConfigHelper::delete('dbmf_autosubs_mailaddress','dbmf3');
-        MySBConfigHelper::delete('dbmf_autosubs_anonaccess','dbmf3');
 
         //plugins
         MySBPluginHelper::delete('dbmf_exportupdate','dbmf3');
@@ -496,7 +505,6 @@ class MySBModule_dbmf3 {
         MySBPluginHelper::delete('export_menutext','dbmf3');
         MySBPluginHelper::delete('config_menutext','dbmf3');
         MySBPluginHelper::delete('mementos_menutext','dbmf3');
-        MySBPluginHelper::delete('autosubs_menutext','dbmf3');
 
     }
 

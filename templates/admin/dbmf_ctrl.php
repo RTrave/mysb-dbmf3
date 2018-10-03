@@ -1,4 +1,4 @@
-<?php 
+<?php
 /***************************************************************************
  *
  *   phpMySandBox/DBMF3 module - TRoman<abadcafe@free.fr> - 2012
@@ -54,21 +54,6 @@ if(isset($_POST['dbmf_orphans']) or isset($_POST['dbmf_contact_delete'])) {
 	$_SESSION['dbmf_query_select'] = $sql_r;
 	$_SESSION['dbmf_query_where'] = $clause_owner;
 }
-
-if(isset($_POST['dbmf_autosubs'])) {
-    $blockrefs = MySBDBMFBlockRefHelper::load();
-    foreach( $blockrefs as $blockref ) {
-    //print_r($_POST);
-        //echo $blockref->keyname.':'.$_POST[$blockref->keyname].' / ';
-        if($blockref->autosubs==1) $autosubs='on';
-        else $autosubs='';
-        if(isset($_POST[$blockref->keyname]) and $_POST[$blockref->keyname]!=$autosubs)
-            $blockref->update( array('autosubs'=>'1') );
-        if(!isset($_POST[$blockref->keyname]) and $autosubs=='on')
-            $blockref->update( array('autosubs'=>'') );
-    }
-}
-
 include( _pathT('admin/dbmf','dbmf3') );
 
 ?>
