@@ -57,10 +57,37 @@ foreach( $memcatgs as $memcatg ) {
         <option value="'.$memcatg->id.'" '.MySBUtil::form_isselected($memcatg->id,$_SESSION["dbmf_memcatg_sort"]).'>'.$memcatg->name.'</option>';
 }
 echo '
-      </select>
+      </select><br>
+    <label for="expand" style="display:inline;">Expand:</label>
+    <input type="checkbox" id="expand" name="feature"
+           value="expand" onclick="checkExpand(this)"/>
     </div>
   </div>
-</div>';
+</div>
+<script>
+function checkExpand(checkbox)
+{
+  var x1 = document.getElementsByClassName("infos");
+  var x2 = document.getElementsByClassName("date");
+  var i;
+  if (checkbox.checked)
+  {
+    for (i = 0; i < x1.length; i++) {
+      x1[i].style.maxHeight = "none";
+    }
+    for (i = 0; i < x2.length; i++) {
+      x2[i].style.height = "auto";
+    }
+  } else {
+    for (i = 0; i < x1.length; i++) {
+      x1[i].style.maxHeight = \'\';
+    }
+    for (i = 0; i < x2.length; i++) {
+      x2[i].style.height = \'\';
+    }
+  }
+}
+</script>';
 
 
 
