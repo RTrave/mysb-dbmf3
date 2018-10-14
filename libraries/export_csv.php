@@ -22,6 +22,29 @@ class MySBDBMFExportCSV extends MySBDBMFExport {
     public function __construct($id=-1, $data_export = array()) {
         global $app;
         parent::__construct($id,(array) ($data_export));
+        if(file_exists(MySB_ROOTPATH.'/xlsxwriter.class.php'))
+          $this->xlsxwriter = true;
+        else
+          $this->xlsxwriter = false;
+    }
+
+    public function htmlConfigForm() {
+        global $app;
+        if($this->xlsxwriter)
+          $xlsxwriter_file = "yes";
+        else
+          $xlsxwriter_file = "no";
+        $str_res = '
+<div class="row">
+  <label class="col-sm-6">
+    is <i>/xlsxwriter.class.php</i> present?<br>
+    <span class="help">from <a href="https://github.com/mk-j/PHP_XLSXWriter" target="_new">PHP_XLSXWriter</a></span>
+  </label>
+  <p class="col-sm-6">
+        '.$xlsxwriter_file.'
+  </p>
+</div>';
+        return $str_res;
     }
 
     public function selectionProcess( $selection ) {
@@ -58,7 +81,11 @@ class MySBDBMFExportCSV extends MySBDBMFExport {
     '._G('DBMF_exportcsv_delimiter').':<br>
   </label>
   <div class="col-md-8">
-    <select name="dbmf_exportcsv_delimiter" id="dbmf_exportcsv_delimiter">
+    <select name="dbmf_exportcsv_delimiter" id="dbmf_exportcsv_delimiter">';
+        if($this->xlsxwriter)
+          $output .= '
+      <option value="xlsx">XLSX format</option>';
+        $output .= '
       <option value=",">,</option>
       <option value=";">;</option>
     </select>
@@ -125,47 +152,96 @@ class MySBDBMFExportCSV extends MySBDBMFExport {
             "MySBDBMFExportCSV::htmlResultOutput()",
             false, 'dbmf3');
 
-        $csv_char = $this->csv_delimiter;
-        $path_file = MySB_ROOTPATH.'/modules/dbmf3/files/sendtable.csv';
-        $ftable = fopen($path_file, 'w');
-        fputs($ftable, $bom =( chr(0xEF) . chr(0xBB) . chr(0xBF) ));
+        if($this->csv_delimiter=='xlsx') {
 
-        $titles = '"'._G("DBMF_common_lastname").'"'.$csv_char.
-                  '"'._G("DBMF_common_firstname").'"'.$csv_char.
-                  '"'._G("DBMF_common_mail").'"';
-        $blockrefs = MySBDBMFBlockRefHelper::load();
-        foreach($blockrefs as $blockref) {
-            if( $blockref->isActive() )
-                if( $blockref->getType()=='boolean' or $blockref->getType()=='int' )
-                    $titles .= $csv_char._G($blockref->lname);
-                    //$titles .= $csv_char.MySBUtil::str2abbrv(_G($blockref->lname));
-                else
-                    $titles .= $csv_char._G($blockref->lname);
-        }
-        fwrite($ftable,$titles."\n");
-        $count = 0;
-        while($contact_data=MySBDB::fetch_array($results)) {
-            $contact = new MySBDBMFContact(null,$contact_data);
-            $tablin = array();
-            $tablin[] = $contact->lastname;
-            $tablin[] = $contact->firstname;
-            $tablin[] = $contact->mail;
+            $path_file = MySB_ROOTPATH.'/modules/dbmf3/files/sendtable.xlsx';
+            $this->csv_filename = 'sendtable.xlsx';
+            include_once(MySB_ROOTPATH."/xlsxwriter.class.php");
+
+            $blockrefs = MySBDBMFBlockRefHelper::load();
+            $header = array(
+              _G("DBMF_common_lastname")=>'string',
+              _G("DBMF_common_firstname")=>'string',
+              _G("DBMF_common_mail")=>'string',
+            );
             foreach($blockrefs as $blockref) {
-                if( $blockref->isActive() ) {
-                    if( $blockref->getType()=='tel' )
-                        $tablin[] = sprintf( " %s", $contact_data[$blockref->keyname]);
-                    else
-                        $tablin[] = $this->db2csv(_G($contact_data[$blockref->keyname]));
-                }
+              if( $blockref->isActive() )
+                if( $blockref->getType()=='boolean' or $blockref->getType()=='int' )
+                  $header[_G($blockref->lname)] = 'integer';
+                else
+                  $header[_G($blockref->lname)] = 'string';
             }
-            fputcsv($ftable,$tablin,$csv_char,'"');
-            $count++;
-        }
-        fclose($ftable);
-        echo '
 
+            $writer = new XLSXWriter();
+            $writer->writeSheetHeader('Sheet1', $header );
+
+            $count = 0;
+            while($contact_data=MySBDB::fetch_array($results)) {
+                $contact = new MySBDBMFContact(null,$contact_data);
+                $tablin = array();
+                $tablin[] = $contact->lastname;
+                $tablin[] = $contact->firstname;
+                $tablin[] = $contact->mail;
+                foreach($blockrefs as $blockref) {
+                    if( $blockref->isActive() ) {
+                        if( $blockref->getType()=='tel' )
+                            $tablin[] = sprintf( " %s", $contact_data[$blockref->keyname]);
+                        else
+                            $tablin[] = $this->db2csv(_G($contact_data[$blockref->keyname]));
+                    }
+                }
+                $writer->writeSheetRow('Sheet1', $tablin );
+                $count++;
+            }
+            $writer->writeToFile($path_file);
+
+        } else {
+
+          $csv_char = $this->csv_delimiter;
+          $path_file = MySB_ROOTPATH.'/modules/dbmf3/files/sendtable.csv';
+
+          $ftable = fopen($path_file, 'w');
+          fputs($ftable, $bom =( chr(0xEF) . chr(0xBB) . chr(0xBF) ));
+
+          $titles = '"'._G("DBMF_common_lastname").'"'.$csv_char.
+                    '"'._G("DBMF_common_firstname").'"'.$csv_char.
+                    '"'._G("DBMF_common_mail").'"';
+          $blockrefs = MySBDBMFBlockRefHelper::load();
+          foreach($blockrefs as $blockref) {
+              if( $blockref->isActive() )
+                  if( $blockref->getType()=='boolean' or $blockref->getType()=='int' )
+                      $titles .= $csv_char._G($blockref->lname);
+                      //$titles .= $csv_char.MySBUtil::str2abbrv(_G($blockref->lname));
+                  else
+                      $titles .= $csv_char._G($blockref->lname);
+          }
+          fwrite($ftable,$titles."\n");
+          $count = 0;
+          while($contact_data=MySBDB::fetch_array($results)) {
+              $contact = new MySBDBMFContact(null,$contact_data);
+              $tablin = array();
+              $tablin[] = $contact->lastname;
+              $tablin[] = $contact->firstname;
+              $tablin[] = $contact->mail;
+              foreach($blockrefs as $blockref) {
+                  if( $blockref->isActive() ) {
+                      if( $blockref->getType()=='tel' )
+                          $tablin[] = sprintf( " %s", $contact_data[$blockref->keyname]);
+                      else
+                          $tablin[] = $this->db2csv(_G($contact_data[$blockref->keyname]));
+                  }
+              }
+              fputcsv($ftable,$tablin,$csv_char,'"');
+              $count++;
+          }
+          fclose($ftable);
+
+        }
+
+        echo '
 <div class="searchresults">
-  <p>CSV output: '.$count.' results</p>
+  <p>CSV output: '.$count.' results<br>
+  send by mail to: '.$app->auth_user->mail.'</p>
 </div>
 ';
         $stmail = new MySBMail('sendtable','dbmf3');
