@@ -16,6 +16,7 @@ class MySBModule_dbmf3 {
 
     public $lname = 'dbmf3';
     public $version = 21;
+    public $release_version = '4a';
     public $homelink = 'https://github.com/RTrave/mysb-dbmf3';
     public $require = array(
         'core' => 7
