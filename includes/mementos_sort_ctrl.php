@@ -67,23 +67,23 @@ echo '
 <script>
 function checkExpand(checkbox)
 {
-  var x1 = document.getElementsByClassName("infos");
-  var x2 = document.getElementsByClassName("date");
+  var xinfos = document.getElementsByClassName("infos");
+  var xdates = document.getElementsByClassName("date");
   var i;
   if (checkbox.checked)
   {
-    for (i = 0; i < x1.length; i++) {
-      x1[i].style.maxHeight = "none";
+    for (i = 0; i < xinfos.length; i++) {
+      xinfos[i].className += " expanded";
     }
-    for (i = 0; i < x2.length; i++) {
-      x2[i].style.height = "auto";
+    for (i = 0; i < xdates.length; i++) {
+      xdates[i].className += " expanded";
     }
   } else {
-    for (i = 0; i < x1.length; i++) {
-      x1[i].style.maxHeight = \'\';
+    for (i = 0; i < xinfos.length; i++) {
+      xinfos[i].className = "infos";
     }
-    for (i = 0; i < x2.length; i++) {
-      x2[i].style.height = \'\';
+    for (i = 0; i < xdates.length; i++) {
+      xdates[i].className = "date";
     }
   }
 }

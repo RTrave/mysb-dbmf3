@@ -183,6 +183,18 @@ span.blockref_text img.mysbValue-directlink {
   width: 65%;
   max-height: 75px;
 }
+#dbmfMementoList .date.expanded {
+  float: left;
+  position: relative;
+  height: auto;
+  top: 0px;
+  margin-right: 0px;
+}
+#dbmfMementoList .infos.expanded {
+  margin-left: 0;
+  float: left;
+  max-height: none;
+}
 #dbmfMementoList .tooltip {
   position: absolute;
   right: 5px;
