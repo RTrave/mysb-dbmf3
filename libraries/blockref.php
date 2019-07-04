@@ -117,7 +117,9 @@ class MySBDBMFBlockRef extends MySBValue {
                 $this->type==MYSB_VALUE_TYPE_VARCHAR64_SELECT )
             $disp_class = 'w120';
         elseif( $this->type==MYSB_VALUE_TYPE_TEL or
-                $this->type==MYSB_VALUE_TYPE_URL )
+                $this->type==MYSB_VALUE_TYPE_URL or
+                $this->type==MYSB_VALUE_TYPE_DATE or
+                $this->type==MYSB_VALUE_TYPE_DATETIME )
             $disp_class = 'w80';
         $output .= '<div class="cell_plug '.$class_string.' '.$disp_class.'"
      style="display: inline-block;">
@@ -142,6 +144,9 @@ class MySBDBMFBlockRef extends MySBValue {
             $column_value = $contact->$column_name;
             if( $column_value=='' ) $column_value = '0';
         } elseif( $this->type==MYSB_VALUE_TYPE_BOOL )
+            $column_value = $this->htmlFormNonEditable('',$contact->$column_name );
+        elseif( $this->type==MYSB_VALUE_TYPE_DATE or
+                $this->type==MYSB_VALUE_TYPE_DATETIME )
             $column_value = $this->htmlFormNonEditable('',$contact->$column_name );
         else $column_value = MySBUtil::str2html($contact->$column_name);
         $output .= '
