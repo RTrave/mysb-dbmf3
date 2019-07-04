@@ -15,7 +15,7 @@ defined('_MySBEXEC') or die;
 class MySBModule_dbmf3 {
 
     public $lname = 'dbmf3';
-    public $version = 21;
+    public $version = 22;
     public $release_version = '4a';
     public $homelink = 'https://github.com/RTrave/mysb-dbmf3';
     public $require = array(
@@ -467,6 +467,14 @@ class MySBModule_dbmf3 {
         MySBConfigHelper::delete('dbmf_autosubs_anonaccess','dbmf3');
         MySBPluginHelper::delete('autosubs_menutext','dbmf3');
         $req = MySBDB::query('ALTER TABLE '.MySB_DBPREFIX.'dbmfblockrefs DROP COLUMN autosubs',
+            "__init.php",
+            false, "dbmf3");
+    }
+
+    public function init22() {
+        global $app;
+        $req = MySBDB::query('ALTER TABLE '.MySB_DBPREFIX.'dbmfblockrefs '.
+            'ADD params varchar(256)',
             "__init.php",
             false, "dbmf3");
     }

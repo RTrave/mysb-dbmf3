@@ -64,6 +64,15 @@ if(isset($_POST['blockref_edit_process'])) {
         $blockref->switchOrderBy();
     $blockref->setAlwaysShown($_POST['blockref_alwaysshown']);
     $blockref->setInfos($_POST['infos']);
+    if( $blockref->type==MYSB_VALUE_TYPE_DATE or
+        $blockref->type==MYSB_VALUE_TYPE_DATETIME ) {
+        $params = '';
+        if($_POST['blockref_ymin']=='') $params = '2011,';
+        else $params = $_POST['blockref_ymin'].',';
+        if($_POST['blockref_ymax']=='') $params .= '2030';
+        else $params .= $_POST['blockref_ymax'];
+        $blockref->update( array('params'=>$params) );
+    }
     $app->tpl_blockref_edit = $blockref;
 }
 

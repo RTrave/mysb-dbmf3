@@ -91,8 +91,38 @@ echo '
     <div class="col-6">
       <textarea name="infos" id="infos">'.$blockref->infos.'</textarea>
     </div>
-  </div>
+  </div>';
 
+if( $blockref->type==MYSB_VALUE_TYPE_DATE or
+    $blockref->type==MYSB_VALUE_TYPE_DATETIME ) {
+    echo '
+  <h2 class="border-top">Parameters</h2>';
+    if($blockref->params!='')
+        $values = explode(',',$blockref->params);
+    else $values = array( 0=>'2019', 1=>'2030');
+    echo '
+<div class="row label">
+  <label class="col-10" for="blockref_ymin">
+    Year MIN
+  </label>
+  <div class="col-2">
+    <input type="text" name="blockref_ymin"
+           id="blockref_ymin" value="'.$values[0].'">
+  </div>
+</div>
+<div class="row label">
+  <label class="col-10" for="blockref_ymax">
+    Year MAX
+  </label>
+  <div class="col-2">
+    <input type="text" name="blockref_ymax"
+           id="blockref_ymax" value="'.$values[1].'">
+  </div>
+</div>
+    ';
+}
+
+echo '
   <div class="row">
     <div class="col-sm-3"></div>
     <div class="col-sm-6">
@@ -440,6 +470,8 @@ foreach($blocks as $block) {
         <option value="'.MYSB_VALUE_TYPE_VARCHAR512.'" >varchar(512)</option>
         <option value="'.MYSB_VALUE_TYPE_TEXT.'" >text/varchar(512)</option>
         <option value="'.MYSB_VALUE_TYPE_VARCHAR64_SELECT.'" >select/varchar(64)</option>
+        <option value="'.MYSB_VALUE_TYPE_DATE.'" >date</option>
+        <option value="'.MYSB_VALUE_TYPE_DATETIME.'" >date+time</option>
         <option value="'.MYSB_VALUE_TYPE_TEL.'" >tel/varchar(64)</option>
         <option value="'.MYSB_VALUE_TYPE_URL.'" >url/varchar(128)</option>
       </select>

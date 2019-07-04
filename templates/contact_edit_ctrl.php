@@ -1,4 +1,4 @@
-<?php 
+<?php
 /***************************************************************************
  *
  *   phpMySandBox/DBMF3 module - TRoman<abadcafe@free.fr> - 2012
@@ -30,13 +30,13 @@ if(isset($_GET['contact_id'])) {
     }
     $app->tpl_currentcontact = $contact;
 } else {
-    
+
 }
 
 if(isset($_POST['contact_edit']) and MySBRoleHelper::checkAccess('dbmf_editor',false)) {
 
     $pluginsEvent = MySBPluginHelper::loadByType('DBMFEvent');
-    foreach($pluginsEvent as $plugin) 
+    foreach($pluginsEvent as $plugin)
         $plugin->contactUpdate($app->tpl_currentcontact);
 
     $today = getdate();

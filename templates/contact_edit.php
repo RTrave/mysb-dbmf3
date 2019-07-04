@@ -70,13 +70,17 @@ foreach($blocks as $block) {
 
       echo '
   <div class="row label" style1="'.$class_edit.'">';
-      if($block->isEditable())
+      if( $block->isEditable() ) {
+        if( $blockref->type==MYSB_VALUE_TYPE_DATE or
+            $blockref->type==MYSB_VALUE_TYPE_DATETIME ) {
+          $blockref->parameter = explode(',',$blockref->params);
+        }
         echo $blockref->innerRow( 'blockref',
                                   $contact->$refname,
                                   true,
                                   _G($blockref->lname),
                                   $blockref->infos );
-      else
+      } else
         echo $blockref->innerRow( 'blockref',
                                   $contact->$refname,
                                   true,
