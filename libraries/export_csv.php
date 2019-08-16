@@ -146,8 +146,10 @@ class MySBDBMFExportCSV extends MySBDBMFExport {
     public function htmlResultOutput() {
         global $app;
 
-        $sql_all =  'SELECT * from '.MySB_DBPREFIX.'dbmfcontacts WHERE '.$_SESSION['dbmf_query_where'].
-            ' ORDER by id';
+        if($_SESSION['dbmf_query_where']!='')
+            $t_whereclause = 'WHERE '.$_SESSION['dbmf_query_where'].'';
+        else $t_whereclause = '';
+        $sql_all =  'SELECT * from '.MySB_DBPREFIX.'dbmfcontacts '.$t_whereclause.' ORDER by id';
         $results = MySBDB::query( $sql_all,
             "MySBDBMFExportCSV::htmlResultOutput()",
             false, 'dbmf3');
