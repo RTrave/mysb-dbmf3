@@ -29,7 +29,7 @@ MySBDateTimeHelper::html_formLoad('memento_date_');
             'monthofyear_memento' => MYSB_DBMF_MEMENTO_TYPE_PUNCTUAL ) );
     } elseif($memtype==MYSB_DBMF_MEMENTO_TYPE_MONTHOFYEAR) {
         $memento->update( array(
-            'date_memento' => '',
+            'date_memento' => '0000-00-00 00:00:00',
             'monthofyear_memento' => $_POST['memento_moy'] ) );
     }
     if( isset($_POST['memento_group_edition']) and
@@ -62,15 +62,15 @@ if( isset($_POST['memento_modify']) ) {
     if($_POST['memento_type']=='memtype0') $memtype = 0;
     elseif($_POST['memento_type']=='memtype1') $memtype = 1;
     $memento->setCategory($_POST['memento_category']);
+    $memento_date = MySBDateTimeHelper::html_formLoad('memento_date_');
     if($memtype==MYSB_DBMF_MEMENTO_TYPE_PUNCTUAL) {
-        $memento_date = MySBDateTimeHelper::html_formLoad('memento_date_');
         $memento->update( array(
             'date_memento' => $memento_date->date_string,
             'monthofyear_memento' => MYSB_DBMF_MEMENTO_TYPE_PUNCTUAL ) );
     } elseif($memtype==MYSB_DBMF_MEMENTO_TYPE_MONTHOFYEAR) {
         $memento->update( array(
             'monthofyear_memento' => $_POST['memento_moy'],
-            'date_memento' => '' ) );
+            'date_memento' => '0000-00-00 00:00:00' ) );
     }
     if( isset($_POST['memento_group_edition']) and
         $_POST['memento_group_edition']=='on') $group_edition = 1;

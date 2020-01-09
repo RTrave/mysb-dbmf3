@@ -143,6 +143,7 @@ class MySBDBMFMemento extends MySBObject {
                 $cmonth = (int) $current_date->str_get('%m');
                 $cyear = $current_date->str_get('%Y');
                 //echo $cmonth.' '.$cyear;
+                if($this->monthofyear_memento=='') return false;
                 $memento_date = new MySBDateTime($cyear.'-'.$this->monthofyear_memento.'-1');
                 //echo $memento_date->strEBY_l();
                 //echo '/'.$memento_date->getRest();
