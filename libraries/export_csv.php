@@ -90,8 +90,27 @@ class MySBDBMFExportCSV extends MySBDBMFExport {
       <option value=";">;</option>
     </select>
   </div>
+</div>
+<div class="row label">
+  <label class="col-md-4" for="dbmf_exportcsv_orderby">
+    '._G('DBMF_exportcsv_orderby').':<br>
+  </label>
+  <div class="col-md-8">
+    <select name="dbmf_exportcsv_orderby" id="dbmf_exportcsv_orderby">
+      <option value="lastname">'._G('DBMF_common_lastname').'</option>
+      <option value="date_modif">'._G('DBMF_date_modif').'</option>
+      <option value="date_creat">'._G('DBMF_date_creat').'</option>';
+      $blockref_orderby = MySBDBMFBlockRefHelper::load();
+      foreach($blockref_orderby as $oblockref) {
+        if($oblockref->orderby=='1')
+          $output .= '
+      <option value="'.$oblockref->keyname.'">'._G($oblockref->lname).'</option>';
+      }
+      $output .= '
+    </select>
+  </div>
 </div>';
-        return $output;
+      return $output;
     }
 
     public function htmlParamProcess() {
@@ -99,6 +118,7 @@ class MySBDBMFExportCSV extends MySBDBMFExport {
         $this->csv_filename = $_POST['dbmf_exportcsv_filename'].'.csv';
         $this->csv_fileinfos = $_POST['dbmf_exportcsv_fileinfos'];
         $this->csv_delimiter = $_POST['dbmf_exportcsv_delimiter'];
+        $this->csv_orderby = $_POST['dbmf_exportcsv_orderby'];
     }
 
     public function requestOrderBy() {
@@ -149,7 +169,8 @@ class MySBDBMFExportCSV extends MySBDBMFExport {
         if($_SESSION['dbmf_query_where']!='')
             $t_whereclause = 'WHERE '.$_SESSION['dbmf_query_where'].'';
         else $t_whereclause = '';
-        $sql_all =  'SELECT * from '.MySB_DBPREFIX.'dbmfcontacts '.$t_whereclause.' ORDER by id';
+        $sql_all =  'SELECT * from '.MySB_DBPREFIX.'dbmfcontacts '.$t_whereclause.
+                    ' ORDER by '.$this->csv_orderby;
         $results = MySBDB::query( $sql_all,
             "MySBDBMFExportCSV::htmlResultOutput()",
             false, 'dbmf3');
@@ -162,6 +183,8 @@ class MySBDBMFExportCSV extends MySBDBMFExport {
 
             $blockrefs = MySBDBMFBlockRefHelper::load();
             $header = array(
+              _G("DBMF_date_creat")=>'date',
+              _G("DBMF_date_modif")=>'date',
               _G("DBMF_common_lastname")=>'string',
               _G("DBMF_common_firstname")=>'string',
               _G("DBMF_common_mail")=>'string',
@@ -170,6 +193,8 @@ class MySBDBMFExportCSV extends MySBDBMFExport {
               if( $blockref->isActive() )
                 if( $blockref->getType()=='boolean' or $blockref->getType()=='int' )
                   $header[_G($blockref->lname)] = 'integer';
+                else if( $blockref->getType()=='date' or $blockref->getType()=='datetime' )
+                  $header[_G($blockref->lname)] = 'date';
                 else
                   $header[_G($blockref->lname)] = 'string';
             }
@@ -181,6 +206,8 @@ class MySBDBMFExportCSV extends MySBDBMFExport {
             while($contact_data=MySBDB::fetch_array($results)) {
                 $contact = new MySBDBMFContact(null,$contact_data);
                 $tablin = array();
+                $tablin[] = $contact->date_creat;
+                $tablin[] = $contact->date_modif;
                 $tablin[] = $contact->lastname;
                 $tablin[] = $contact->firstname;
                 $tablin[] = $contact->mail;
