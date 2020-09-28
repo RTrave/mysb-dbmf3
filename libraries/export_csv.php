@@ -86,8 +86,8 @@ class MySBDBMFExportCSV extends MySBDBMFExport {
           $output .= '
       <option value="xlsx">XLSX format</option>';
         $output .= '
-      <option value=",">,</option>
-      <option value=";">;</option>
+      <option value=",">,(CSV format)</option>
+      <option value=";">;(CSV format)</option>
     </select>
   </div>
 </div>
@@ -183,6 +183,7 @@ class MySBDBMFExportCSV extends MySBDBMFExport {
 
             $blockrefs = MySBDBMFBlockRefHelper::load();
             $header = array(
+              "ID"=>'string',
               _G("DBMF_date_creat")=>'date',
               _G("DBMF_date_modif")=>'date',
               _G("DBMF_common_lastname")=>'string',
@@ -206,6 +207,7 @@ class MySBDBMFExportCSV extends MySBDBMFExport {
             while($contact_data=MySBDB::fetch_array($results)) {
                 $contact = new MySBDBMFContact(null,$contact_data);
                 $tablin = array();
+                $tablin[] = $contact->id;
                 $tablin[] = $contact->date_creat;
                 $tablin[] = $contact->date_modif;
                 $tablin[] = $contact->lastname;
@@ -232,7 +234,10 @@ class MySBDBMFExportCSV extends MySBDBMFExport {
           $ftable = fopen($path_file, 'w');
           fputs($ftable, $bom =( chr(0xEF) . chr(0xBB) . chr(0xBF) ));
 
-          $titles = '"'._G("DBMF_common_lastname").'"'.$csv_char.
+          $titles = '"ID"'.$csv_char.
+                    '"'._G("DBMF_date_creat").'"'.$csv_char.
+                    '"'._G("DBMF_date_modif").'"'.$csv_char.
+                    '"'._G("DBMF_common_lastname").'"'.$csv_char.
                     '"'._G("DBMF_common_firstname").'"'.$csv_char.
                     '"'._G("DBMF_common_mail").'"';
           $blockrefs = MySBDBMFBlockRefHelper::load();
@@ -249,6 +254,9 @@ class MySBDBMFExportCSV extends MySBDBMFExport {
           while($contact_data=MySBDB::fetch_array($results)) {
               $contact = new MySBDBMFContact(null,$contact_data);
               $tablin = array();
+              $tablin[] = $contact->id;
+              $tablin[] = $contact->date_creat;
+              $tablin[] = $contact->date_modif;
               $tablin[] = $contact->lastname;
               $tablin[] = $contact->firstname;
               $tablin[] = $contact->mail;
