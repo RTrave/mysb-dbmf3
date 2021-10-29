@@ -474,6 +474,7 @@ foreach($blocks as $block) {
         <option value="'.MYSB_VALUE_TYPE_DATETIME.'" >date+time</option>
         <option value="'.MYSB_VALUE_TYPE_TEL.'" >tel/varchar(64)</option>
         <option value="'.MYSB_VALUE_TYPE_URL.'" >url/varchar(128)</option>
+        <option value="'.MYSB_VALUE_TYPE_PASSWORD.'" >password</option>
       </select>
     </div>
   </div>
