@@ -60,7 +60,10 @@ if(isset($_POST['contact_edit']) and MySBRoleHelper::checkAccess('dbmf_editor',f
     foreach($blocks as $block) {
         $group_edit = MySBGroupHelper::getByID($block->groupedit_id);
         foreach($block->blockrefs as $blockref) {
-            $contact_datas[$blockref->keyname] = $blockref->htmlProcessValue('blockref');
+            $getvalue = $blockref->htmlProcessValue('blockref');
+            if($blockref->updateOnEmpty() || !empty($getvalue)){
+                $contact_datas[$blockref->keyname] = $getvalue;
+            }
         }
     }
     $contact->update($contact_datas);

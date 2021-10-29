@@ -102,9 +102,13 @@ class MySBDBMFExportUpdate extends MySBDBMFExport {
                     if( $blockref->isActive() and
                         isset($_POST['upd_id_'.$blockref->id]) and
                         $_POST['upd_id_'.$blockref->id]=='on') {
+                        
+                        $getvalue = $blockref->htmlProcessValue('upd_val_');
 
-                        if($this->update_sql!='') $this->update_sql .= ', ';
-                        $this->update_sql .= $blockref->keyname.'=\''.$blockref->htmlProcessValue('upd_val_').'\'';
+                        if($blockref->updateOnEmpty() || !empty($getvalue)){
+                            if($this->update_sql!='') $this->update_sql .= ', ';
+                            $this->update_sql .= $blockref->keyname.'=\''.$getvalue.'\'';
+                        }
                     }
                 }
             }
