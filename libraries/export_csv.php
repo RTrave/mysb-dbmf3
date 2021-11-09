@@ -177,8 +177,10 @@ class MySBDBMFExportCSV extends MySBDBMFExport {
 
         if($this->csv_delimiter=='xlsx') {
 
-            $path_file = MySB_ROOTPATH.'/modules/dbmf3/files/sendtable.xlsx';
-            $this->csv_filename = 'sendtable.xlsx';
+            $path_file = MySB_ROOTPATH.'/modules/dbmf3/files/'.$app->auth_user->login.'sendtable.xlsx';
+            //$server_file = '/modules/dbmf3/files/'.$app->auth_user->login.'sendtable.xlsx';
+            unlink($path_file);
+            $this->csv_filename = $app->auth_user->login.'sendtable.xlsx';
             include_once(MySB_ROOTPATH."/xlsxwriter.class.php");
 
             $blockrefs = MySBDBMFBlockRefHelper::load();
@@ -229,7 +231,8 @@ class MySBDBMFExportCSV extends MySBDBMFExport {
         } else {
 
           $csv_char = $this->csv_delimiter;
-          $path_file = MySB_ROOTPATH.'/modules/dbmf3/files/sendtable.csv';
+          $path_file = MySB_ROOTPATH.'/modules/dbmf3/files/'.$app->auth_user->login.'sendtable.csv';
+          unlink($path_file);
 
           $ftable = fopen($path_file, 'w');
           fputs($ftable, $bom =( chr(0xEF) . chr(0xBB) . chr(0xBF) ));
@@ -275,22 +278,31 @@ class MySBDBMFExportCSV extends MySBDBMFExport {
 
         }
 
+        if($this->csv_filename=='.csv') $csv_filename = $app->auth_user->login.'sendtable.csv';
+        else $csv_filename = $this->csv_filename;
         echo '
 <div class="searchresults">
   <p>CSV output: '.$count.' results<br>
   send by mail to: '.$app->auth_user->mail.'</p>
+  <p>CSV (or XLSX) file is avaible here: <br>
+    <a href="/modules/dbmf3/files/'.$csv_filename.'">
+      '.$csv_filename.'
+    </a>
+  </p>
 </div>
 ';
-        $stmail = new MySBMail('sendtable','dbmf3');
-        $stmail->addTO($app->auth_user->mail,$app->auth_user->firstname.' '.$app->auth_user->lastname);
-        if($this->csv_filename=='.csv') $csv_filename = 'sendtable.csv';
-        else $csv_filename = $this->csv_filename;
-        $stmail->addAttachment($path_file,$csv_filename);
-        $stmail->data['geckos'] = $app->auth_user->firstname.' '.$app->auth_user->lastname;
-        $stmail->data['infos'] = $this->csv_fileinfos;
-        $stmail->send();
-        unlink($path_file);
-
+        $mail = false;
+        if($mail) {
+            $stmail = new MySBMail('sendtable','dbmf3');
+            $stmail->addTO($app->auth_user->mail,$app->auth_user->firstname.' '.$app->auth_user->lastname);
+            if($this->csv_filename=='.csv') $csv_filename = 'sendtable.csv';
+            else $csv_filename = $this->csv_filename;
+            $stmail->addAttachment($path_file,$csv_filename);
+            $stmail->data['geckos'] = $app->auth_user->firstname.' '.$app->auth_user->lastname;
+            $stmail->data['infos'] = $this->csv_fileinfos;
+            $stmail->send();
+            //unlink($path_file);
+        }
 
     }
 
