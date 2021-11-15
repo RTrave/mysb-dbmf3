@@ -224,14 +224,12 @@ class MySBDBMFBlockRefHelper {
         if(isset($app->cache_dbmfblockrefs) and $forced==false)
             return $app->cache_dbmfblockrefs;
         $app->cache_dbmfblockrefs = array();
-        $req_blockrefs = MySBDB::query("SELECT * FROM ".MySB_DBPREFIX."dbmfblockrefs ".
-            "ORDER BY block_id,i_index",
-            "MySBDBMFBlockRefHelper::load()",
-            true, 'dbmf3');
-        while($data_blockref = MySBDB::fetch_array($req_blockrefs)) {
-            $blockref = new MySBDBMFBlockRef(-1,(array) ($data_blockref));
-            $blockref->grp = 'dbmf3';
-            $app->cache_dbmfblockrefs[$data_blockref['id']] = $blockref;
+        $blocks = MySBDBMFBlockHelper::load();
+        foreach( $blocks as $block ) {
+            foreach( $block->blockrefs as $blockref ) {
+                $blockref->grp = 'dbmf3';
+                $app->cache_dbmfblockrefs[$blockref->id] = $blockref;
+            }
         }
         return $app->cache_dbmfblockrefs;
     }

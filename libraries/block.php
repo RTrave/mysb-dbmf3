@@ -36,14 +36,24 @@ class MySBDBMFBlock extends MySBObject {
         } else $id = $data_block['id'];
         parent::__construct((array) ($data_block));
         $this->blockrefs = array();
-        $blockrefs = MySBDBMFBlockRefHelper::load();
-        foreach($blockrefs as $blockref)
-            if($blockref->block_id==$this->id)
-                $this->blockrefs[$blockref->id] = $blockref;
+        $this->loadBlockRefs();
     }
 
     public function update($data_block) {
         parent::__update( 'dbmfblocks', $data_block );
+    }
+
+    public function loadBlockRefs() {
+        $req_blockrefs = MySBDB::query("SELECT * FROM ".MySB_DBPREFIX."dbmfblockrefs ".
+            "WHERE block_id=".$this->id." ".
+            "ORDER BY i_index",
+            "MySBDBMFBlock::loadBlockRefs()",
+            true, 'dbmf3');
+        while($data_blockref = MySBDB::fetch_array($req_blockrefs)) {
+            $blockref = new MySBDBMFBlockRef(-1,(array) ($data_blockref));
+            $blockref->grp = 'dbmf3';
+            $this->blockrefs[$data_blockref['id']] = $blockref;
+        }
     }
 
     public function isEditable() {
