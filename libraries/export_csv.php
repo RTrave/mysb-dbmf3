@@ -22,7 +22,7 @@ class MySBDBMFExportCSV extends MySBDBMFExport {
     public function __construct($id=-1, $data_export = array()) {
         global $app;
         parent::__construct($id,(array) ($data_export));
-        if(file_exists(MySB_ROOTPATH.'/xlsxwriter.class.php'))
+        if(file_exists(MySB_ROOTPATH.'/vendor/mk-j/php_xlsxwriter/xlsxwriter.class.php'))
           $this->xlsxwriter = true;
         else
           $this->xlsxwriter = false;
@@ -181,7 +181,7 @@ class MySBDBMFExportCSV extends MySBDBMFExport {
             //$server_file = '/modules/dbmf3/files/'.$app->auth_user->login.'sendtable.xlsx';
             unlink($path_file);
             $this->csv_filename = $app->auth_user->login.'sendtable.xlsx';
-            include_once(MySB_ROOTPATH."/xlsxwriter.class.php");
+            include_once(MySB_ROOTPATH."/vendor/mk-j/php_xlsxwriter/xlsxwriter.class.php");
 
             $blockrefs = MySBDBMFBlockRefHelper::load();
             $header = array(
