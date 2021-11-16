@@ -108,7 +108,8 @@ class MySBDBMFExportMailing extends MySBDBMFExport {
   </label>
   <div class="col-sm-8">
     <input type="hidden" name="MAX_FILE_SIZE" value="2000000" />
-    <input name="dbmf_exportmailing_att1" id="dbmf_exportmailing_att1" type="file" />
+    <input  name="dbmf_exportmailing_att1" id="dbmf_exportmailing_att1" type="file" 
+            onClick="document.getElementById(\'dbmf_exportmailing_att1\').value = \'\';"/>
   </div>
 </div>
 <div class="row label">
@@ -117,7 +118,8 @@ class MySBDBMFExportMailing extends MySBDBMFExport {
   </label>
   <div class="col-sm-8">
     <input type="hidden" name="MAX_FILE_SIZE" value="2000000" />
-    <input name="dbmf_exportmailing_att2" id="dbmf_exportmailing_att2" type="file" />
+    <input name="dbmf_exportmailing_att2" id="dbmf_exportmailing_att2" type="file" 
+            onClick="document.getElementById(\'dbmf_exportmailing_att2\').value = \'\';"/>
   </div>
 </div>
 <div class="row label">
@@ -126,7 +128,8 @@ class MySBDBMFExportMailing extends MySBDBMFExport {
   </label>
   <div class="col-sm-8">
     <input type="hidden" name="MAX_FILE_SIZE" value="2000000" />
-    <input name="dbmf_exportmailing_att3" id="dbmf_exportmailing_att3" type="file" />
+    <input name="dbmf_exportmailing_att3" id="dbmf_exportmailing_att3" type="file" 
+            onClick="document.getElementById(\'dbmf_exportmailing_att3\').value = \'\';"/>
   </div>
 </div>
 ';
