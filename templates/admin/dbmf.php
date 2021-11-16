@@ -92,6 +92,23 @@ if(isset($_POST['dbmf_editexport'])) {
   return;
 }
 
+$pathtestfile = MySB_ROOTPATH.'/modules/dbmf3/files/testfile';
+unlink($pathtestfile);
+$testfile = fopen($pathtestfile, "w");
+if(!$testfile) {
+  echo '
+<div class="content">
+  <h1 style="color: red;">!!! PERMISSIONS ALERT !!!</h1>
+  <div class="row">
+    <div class="col-sm-12">
+        The folder files/ in modules/dbmf3/ is read-only. <br>
+        Please fix this.
+    </div>
+  </div>
+</div>';
+}
+fclose($testfile);
+unlink($pathtestfile);
 
 echo '
 <div class="content">
