@@ -17,7 +17,22 @@ global $app;
 
 $contact = $app->tpl_currentcontact;
 
+if(isset($_POST['callback'])) {
+    echo '
+<script>
+loadItem("'.$_POST['callback_inc'].$_POST['callback_dat'].'",'.
+  '"index.php?mod='.$_POST['callback'].
+  '&inc='.$_POST['callback_inc'].
+  '&id='.$_POST['callback_dat'].'");
+</script>';
+}
+
 if(isset($_POST['contact_delete'])) return;
+
+if(isset($_GET['callback'])) {
+    $callback_get = '&callback='.$_GET['callback'].'&callback_inc='.$_GET['callback_inc'].'&callback_dat='.$_GET['callback_dat'];
+} else 
+    $callback_get = '';
 
 echo '
 <style>
@@ -32,7 +47,8 @@ echo '
 
 <div class="modalTitle">
   <a class="hidelayed col-1 t-center btn-danger"
-     href="index.php?mod=dbmf3&amp;inc=contact_del&amp;contact_delete='.$contact->id.'"
+     href="index.php?mod=dbmf3&amp;inc=contact_del&amp;contact_delete='.$contact->id.
+        $callback_get.'"
      data-overconfirm="'.MySBUtil::str2strict(sprintf(_G('DBMF_confirm_contact_delete'),$contact->lastname, $contact->firstname )).'"
      title="'.sprintf(_G('DBMF_contact_delete'),$contact->lastname, $contact->firstname ).'">
     <img src="images/icons/user-trash.png" alt="">
@@ -101,6 +117,13 @@ echo '
 <div class="modalFoot">
   <div class="col-12 t-center">';
 
+if(isset($_GET['callback'])) {
+    echo '
+    <input type="hidden" name="callback" value="'.$_GET['callback'].'">
+    <input type="hidden" name="callback_inc" value="'.$_GET['callback_inc'].'">
+    <input type="hidden" name="callback_dat" value="'.$_GET['callback_dat'].'">';
+}
+
 if(MySBRoleHelper::checkAccess('dbmf_editor',false)) echo '
     <input type="hidden" name="contact_edit" value="1">
     <input type="submit" class="btn-primary"
@@ -140,4 +163,6 @@ slide_hide("newcontactselection");
 slide_show("newcontactok");
 </script>';
 }
+
+
 ?>

@@ -32,4 +32,14 @@ slide_hide("contact'.$_GET['contact_delete'].'");
 </script>';
 }
 
+if(isset($_GET['callback'])) {
+    echo '
+<script>
+loadItem("'.$_GET['callback_inc'].$_GET['callback_dat'].'",'.
+  '"index.php?mod='.$_GET['callback'].
+  '&inc='.$_GET['callback_inc'].
+  '&id='.$_GET['callback_dat'].'");
+</script>';
+}
+
 ?>
