@@ -42,7 +42,7 @@ class MySBDBMFExportUpdate extends MySBDBMFExport {
 
         $col_nb = 1;
         foreach($blocks as $block) {
-            if($block->isViewable()) {
+            if($block->isEditable()) {
                 $output .= '
 <td style="vertical-align: top;">
 <table style="width: 100%; font-size: 80%; margin-left: 0px;"><tbody>
@@ -97,7 +97,7 @@ class MySBDBMFExportUpdate extends MySBDBMFExport {
         $this->update_sql = '';
         $blocks = MySBDBMFBlockHelper::load();
         foreach($blocks as $block) {
-            if($block->isViewable()) {
+            if($block->isEditable()) {
                 foreach($block->blockrefs as $blockref) {
                     if( $blockref->isActive() and
                         isset($_POST['upd_id_'.$blockref->id]) and

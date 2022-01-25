@@ -58,6 +58,7 @@ if(isset($_POST['contact_edit']) and MySBRoleHelper::checkAccess('dbmf_editor',f
         'date_modif' => $today_date );
     $blocks = MySBDBMFBlockHelper::load();
     foreach($blocks as $block) {
+      if( $block->isEditable()) {
         $group_edit = MySBGroupHelper::getByID($block->groupedit_id);
         foreach($block->blockrefs as $blockref) {
             $getvalue = $blockref->htmlProcessValue('blockref');
@@ -65,6 +66,7 @@ if(isset($_POST['contact_edit']) and MySBRoleHelper::checkAccess('dbmf_editor',f
                 $contact_datas[$blockref->keyname] = $getvalue;
             }
         }
+      }
     }
     $contact->update($contact_datas);
     $app->pushMessage(_G('DBMF_contact_modified'));
