@@ -139,7 +139,7 @@ class MySBDBMFMemento extends MySBObject {
                 if($memento_date->absDiff('h',$process_date)>=0) return false;
                 return true;
             case MYSB_DBMF_MEMENTO_TYPE_MONTHOFYEAR:
-                $current_date = new MySBDateTime('now');
+                $current_date = new MySBDateTime('NOW');
                 $cmonth = (int) $current_date->str_get('%m');
                 $cyear = $current_date->str_get('%Y');
                 //echo $cmonth.' '.$cyear;
@@ -161,7 +161,7 @@ class MySBDBMFMemento extends MySBObject {
 
     public function process() {
         global $app;
-        $current_date = new MySBDateTime();
+        $current_date = new MySBDateTime('NOW');
         $this->update(array(
             'date_process' => $current_date->date_string,
             'is_notified' => '0' ));
