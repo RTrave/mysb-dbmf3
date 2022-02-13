@@ -17,12 +17,14 @@ global $app;
 
 if( !MySBRoleHelper::checkAccess('dbmf_user') ) return;
 
-
+$crit_infos = '';
 if( isset($_GET['memento_id']) ) {
     $memento = new MySBDBMFMemento($_GET['memento_id']);
     $contact = new MySBDBMFContact($memento->contact_id);
 } else {
     $memento = $app->tpl_dbmf_currentmemento;
+    if(isset($memento->crit_infos))
+      $crit_infos = '<span style="font-size: 80%;"><b>'.$memento->crit_infos.'</b></span><br>';
     $contact = MySBDBMFMementoHelper::getContactInfos($memento->contact_id);
 }
 
@@ -79,6 +81,7 @@ if( isset($_GET['memento_id']) ) {
     <?= $contact->lastname ?>
   </div>
   <div class="infos">
+    <?= $crit_infos ?>
     <?= $memento->comments ?>
   </div>
 <?php if( $memento->comments2!='' ) { ?>

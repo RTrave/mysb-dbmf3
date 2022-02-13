@@ -218,7 +218,8 @@ class MySBDBMFMementoHelper {
 
     private static function loadContactInfos($mementos) {
         global $app;
-        $app->dbmfcontactinfos = array();
+        if(!isset($app->dbmfcontactinfos))
+          $app->dbmfcontactinfos = array();
         $mem_where = '';
         $mem_count = 0;
         foreach( $mementos as $memento ) {

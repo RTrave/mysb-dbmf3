@@ -479,6 +479,14 @@ class MySBModule_dbmf3 {
             false, "dbmf3");
     }
 
+    public function init23() {
+        global $app;
+        MySBPluginHelper::create('mementosort_menutext','MenuItem',
+            array('DBMF_topmenu_mementosort', "mementosort/step1", 'DBMF_topmenu_mementosortinfos',''),
+            array(1,0,0,0),
+            6,"dbmf_user",'dbmf3');
+    }
+
     public function uninit() {
         global $app;
 

@@ -1,7 +1,7 @@
 <?php
 /***************************************************************************
  *
- *   phpMySandBox/DBMF3 module - TRoman<abadcafe@free.fr> - 2012
+ *   phpMySandBox/DBMF3 module - TRoman<abadcafe@free.fr> - 2022
  *   This program is free software; you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
  *   the Free Software Foundation; either version 2 of the License', or
@@ -58,7 +58,7 @@ function isActive($tpl_code) {
 <div class="col-lg-9">
 
 <div id="mementos_results">
-<?php include( _pathI('mementos_sort_ctrl','dbmf3') ); ?>
+<?php include( _pathI('mementos_sortbycontact_ctrl','dbmf3') ); ?>
 </div>
 
 </div>
