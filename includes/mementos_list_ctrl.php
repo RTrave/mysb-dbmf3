@@ -17,50 +17,32 @@ global $app;
 
 if( !MySBRoleHelper::checkAccess('dbmf_user') ) return;
 
-/*
-if(isset($_SESSION['dbmf_mementos_list']))
-  $mementos_p1 = $_SESSION['dbmf_mementos_list'];
-else
-  $_SESSION['dbmf_mementos_list'] = $mementos_p;
-*/
+
 if( !isset($_SESSION["dbmf_memcatg_sort"]) )
     $_SESSION["dbmf_memcatg_sort"] = 0;
 if( isset($_GET["sort"]) )
     $_SESSION["dbmf_memcatg_sort"] = $_GET["sort"];
 
-//echo $_GET['filter'].'\n';
 if( isset($_GET['filter']) and $_GET['filter']=='all' ) {
-    //echo 'ALL';
     $mementos_p = MySBDBMFMementoHelper::load(null,$_SESSION["dbmf_memcatg_sort"]);
     $_SESSION["dbmf_memento_lastfilter"] = 'all';
-    //$mementos_title = _G('DBMF_mementos_all').' ('.count($mementos_p).')';
-#     echo '
-# <h2 class="border-top">'._G('DBMF_mementos_all').' ('.count($mementos_p).')</h2>';
 } elseif( isset($_GET['filter']) and $_GET['filter']!='bycontact' ) {
-    //echo "OTHER";
     $_GET['filter']='';
     $_SESSION["dbmf_memento_lastfilter"] = '';
     $mementos_p = MySBDBMFMementoHelper::loadActives($_SESSION["dbmf_memcatg_sort"]);
-    //$mementos_title = _G('DBMF_mementos_actives').' ('.count($mementos_p).')';
-#     echo '
-# <h2 class="border-top">'._G('DBMF_mementos_actives').' ('.count($mementos_p).')</h2>';
 }
 
-//MySBDBMFMementoHelper::loadContactInfos($mementos_p);
 echo '
 
 <div class="row bg-primary" style="margin-top: 25px;">
   <div class="col-sm-4">
-<!--
-    <h1 class="t-left">'.$mementos_title.'</h1>
--->
   </div>
-  <div class="col-sm-8">
-    <div class="sort_actions">
-    <label for="expand" style="display:inline;">'._G("DBMF_memento_expand").':</label>
+  <div class="col-sm-8 t-right">
+    <label for="expand" style="display:inline;">
+      '._G("DBMF_memento_expand").':
+    </label>
     <input type="checkbox" id="expand" name="feature"
            value="expand" onclick="checkExpand(this)"/>
-    </div>
   </div>
 </div>';
 
@@ -138,6 +120,8 @@ function checkExpand(checkbox)
 }
 </script>
 
+
+
 <div class="mementos-list content list ">';
 
 $mementos_nb = array();
@@ -167,34 +151,14 @@ while($memento_type!=2) {
   if($memento_type==0) $h3 = 'DBMF_memento_type_punctual';
   elseif($memento_type==1) $h3 = 'DBMF_memento_type_monthofyear';
   echo '
-<h2 class="bg-primary">'._G($h3).': 
+<h2 class="bg-primary" style="margin-top: 2px;">'._G($h3).': 
 '.$mementos_nb[$memento_type].' 
 ('._G("DBMF_memento_statut_active").': '.$mementos_nbactives[$memento_type].')</h2>';
 
   foreach($mementos_p as $memento) {
 
-  
-
-//   if($memento->type!=$memento_type) {
-//     $memento_type = $memento->type;
-//     if($memento_type==0) $h3 = 'DBMF_memento_type_punctual';
-//     elseif($memento_type==1) $h3 = 'DBMF_memento_type_monthofyear';
-//     echo '
-// <h2>'._G($h3).'</h2>';
-//   }
-
-
-  # if($memento->isActive()) $Active = true;
-  # else $Active = false;
-  # if($Active) $memclass = 'mem_active';
-  # elseif(!$Active and $memento->date_process!='') $memclass = 'mem_processed';
-  # else $memclass='';
-
-//  echo "TEST";
-
     if($memento->type==$memento_type) {
 
-//    echo "A\n";
       echo '
     <div class="content list slide slide-toggled" id="memento'.$memento->id.'">';
 
@@ -219,11 +183,14 @@ while($memento_type!=2) {
 
 }
 
-//if(count($mementos_p)==0)
-//  echo _G("DBMF_mementos_bycontact_noresults");
-
 echo '
-</div>';
+</div>
+
+<script>
+var xcheck = document.getElementById("expand");
+checkExpand(xcheck);
+</script>
+';
 
 
 ?>

@@ -30,22 +30,7 @@ echo '
       <h1 class="t-left">'._G('DBMF_mementosbycontact').'</h1>
     </div>
   </div>';
-/*
-if( isset($_GET['filter']) and $_GET['filter']=='all' ) {
-    $mementos_p = MySBDBMFMementoHelper::load(null,$_SESSION["dbmf_memcatg_sort"]);
-    $_SESSION["dbmf_memento_lastfilter"] = 'all';
-    $mementos_title = _G('DBMF_mementos_all').' ('.count($mementos_p).')';
-#     echo '
-# <h2 class="border-top">'._G('DBMF_mementos_all').' ('.count($mementos_p).')</h2>';
-} else {
-    $_GET['filter']='';
-    $_SESSION["dbmf_memento_lastfilter"] = '';
-    $mementos_p = MySBDBMFMementoHelper::loadActives($_SESSION["dbmf_memcatg_sort"]);
-    $mementos_title = _G('DBMF_mementos_actives').' ('.count($mementos_p).')';
-#     echo '
-# <h2 class="border-top">'._G('DBMF_mementos_actives').' ('.count($mementos_p).')</h2>';
-}
-*/
+
 echo '
   <form action="index.php?mod=dbmf3&amp;tpl=mementos&filter=bycontact" 
         method="post">
@@ -108,8 +93,6 @@ echo '
 ';
 
 
-
-//$memento_list = [];
 $clause_where = '';
 if(isset($_POST['crit_keyname']) and $_POST['crit_keyname']!='') {
   $contacts_sql = 'SELECT id,'.$_POST['crit_keyname'].' from '.MySB_DBPREFIX.'dbmfcontacts ';
@@ -121,8 +104,6 @@ if(isset($_POST['crit_keyname']) and $_POST['crit_keyname']!='') {
 } else {
   $contacts_sql = 'SELECT id from '.MySB_DBPREFIX.'dbmfcontacts ';
   $clause_sortby = '';
-  //if(isset($_POST['crit_value']) and $_POST['crit_value']!='')
-  //  $clause_where = 'WHERE ('.$_POST['crit_keyname'].'="'.$_POST['crit_value'].'") ';
 }
 $contacts_sql = $contacts_sql.$clause_where.$clause_sortby;
 //echo $contacts_sql.'<br>';
@@ -147,17 +128,18 @@ while($contact_data = MySBDB::fetch_array($contacts_req)) {
     }
   }
 }
+echo '
+<div id="dbmfMementoList" class="content list">';
 
 include(_pathI('mementos_list_ctrl','dbmf3'));
 
 echo '
 </div>
 
+</div>
+
 <script>
 show("mementos_results");
-function changesort(selvalue) {
-    loadItem( "mementos_results", "index.php?mod=dbmf3&inc=mementos_sortbycontact&sort="+selvalue+"&filter='.$_GET['filter'].'" );
-}
 function changekey(selvalue) {
     loadItem( "keysorting", "index.php?mod=dbmf3&inc=blockref_sorting&keyname="+selvalue+"&filter='.$_GET['filter'].'" );
 }

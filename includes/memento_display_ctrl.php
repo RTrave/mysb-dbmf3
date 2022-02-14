@@ -34,10 +34,7 @@ if( isset($_GET['memento_id']) ) {
     else $memcatg = null;
     if($memento->isActive()) $Active = true;
     else $Active = false;
-    //if($Active) $memclass = 'mem_active';
-    //elseif(!$Active and $memento->date_process!='') $memclass = 'mem_processed';
-    //else $memclass='';
-    //$anchor_nb++;
+
     if($Active) 
       $memclass = 'mem_active';
     elseif(!$Active and $memento->date_process!='' and $memento->type!=1) 
@@ -114,93 +111,3 @@ if( isset($_GET['memento_id']) ) {
 
 </div>
 
-<!--
-<?php
-    echo '
-<table style="width: 100%; background-color: transparent;" class="roundtop roundbottom '.$memclass.'"><tbody>
-<tr>
-    <td class="infos" style="background-color1: yellow;" class="roundtop roundbottom">
-        <div class="date floatingcell">';
-    if($memento->isEditable()) echo '
-        <a  href="index.php?mod=dbmf3&amp;tpl=memento_edit&amp;memento_id='.$memento->id.'"
-            class="overlayed"><b>'.$memento->getDate().'</b></a>';
-    else echo '
-        <b>'.$memento->getDate().'</b>';
-    echo '<br>
-        <span class="cell_hidem"><small>'.$m_catgname.'</small></span>
-        </div>
-        <div class="name floatingcell">
-        <div style="float: left;">
-        <a  href="index.php?mod=dbmf3&amp;tpl=contact_edit&amp;contact_id='.$contact->id.'"
-            class="overlayed">
-            <img    src="images/icons/text-editor.png"
-                    alt="Edition '.$contact->id.'"
-                    title="'._G('DBMF_edit').' '.$contact->lastname.' '.$contact->firstname.' (memento '.$memento->id.')">
-        </a>
-        </div>
-        <b>'.MySBUtil::str2abbrv($contact->lastname,10,10).'</b><br>
-        '.MySBUtil::str2abbrv($contact->firstname,10,10).'
-        </div>
-    </td>
-    <td class="comments">
-        <table style="width: 100%; background-color: transparent;"><tbody><tr>
-            <td style="min-width: 20%;"><div class="mem_maxh">'.$memento->comments.'</div></td>
-        </tr></tbody></table>
-    </td>';
-    if( $memento->comments2!='' ) {
-        echo '
-    <td class="actions" style="vertical-align: top;">
-        <div class="tooltip">
-        <img src="images/icons/mail-attachment.png"
-             alt="'._G('DBMF_memento_edition_delete').'">
-        <span>'.$memento->comments2.'
-        </div>
-    </td>';
-    }
-    echo '
-    <td class="actions" style="vertical-align: top;">';
-    if($Active) {
-        echo '
-        <form action="index.php?mod=dbmf3&tpl=memento_edit&amp;memento_id='.$memento->id.'"
-              method="post"
-              class="hidelayed">
-            <input type="hidden" name="memento_process" value="'.$memento->id.'">
-            <input src="images/icons/emblem-system.png"
-                   type="image"
-                   alt="'._G('DBMF_memento_process_submit').'"
-                   title="'._G('DBMF_memento_process_submit').'">
-        </form>';
-    } elseif(!$Active and $memento->date_process!='') {
-        echo '
-        <form action="index.php?mod=dbmf3&tpl=memento_edit&amp;memento_id='.$memento->id.'"
-              method="post"
-              class="hidelayed">
-            <input type="hidden" name="memento_unprocess" value="'.$memento->id.'">
-            <input src="images/icons/emblem-system-stop.png"
-                   type="image"
-                   alt="'._G('DBMF_memento_unprocess_submit').'"
-                   title="'._G('DBMF_memento_unprocess_submit').'">
-        </form>';
-    }
-    echo '
-    </td>
-    <td class="actions" style="vertical-align: top;">
-        <form action="index.php?mod=dbmf3&amp;tpl=memento_edit&amp;memento_id='.$memento->id.'"
-              method="post"
-              class="hidelayed"
-              data-overconfirm="'.MySBUtil::str2strict(_G('DBMF_confirm_memento_delete')).'">
-    <div class="action first">
-            <input type="hidden" name="memento_delete" value="'.$memento->id.'">
-            <input src="images/icons/user-trash.png"
-                   type="image"
-                   alt="'._G('DBMF_memento_edition_delete').'"
-                   title="'._G('DBMF_memento_edition_delete').'">
-    </div>
-        </form>
-    </td>
-</tr>
-</tbody></table>';
-
-?>
-
--->
