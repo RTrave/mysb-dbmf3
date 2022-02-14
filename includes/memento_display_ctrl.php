@@ -1,7 +1,7 @@
 <?php
 /***************************************************************************
  *
- *   phpMySandBox/DBMF3 module - TRoman<abadcafe@free.fr> - 2012
+ *   phpMySandBox/DBMF3 module - TRoman<roman.trave@abadcafe.org> - 2022
  *   This program is free software; you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
  *   the Free Software Foundation; either version 2 of the License', or
@@ -38,9 +38,12 @@ if( isset($_GET['memento_id']) ) {
     //elseif(!$Active and $memento->date_process!='') $memclass = 'mem_processed';
     //else $memclass='';
     //$anchor_nb++;
-    if($Active) $memclass = 'mem_active';
-    elseif(!$Active and $memento->date_process!='') $memclass = 'mem_processed';
-    else $memclass='mem_processed';
+    if($Active) 
+      $memclass = 'mem_active';
+    elseif(!$Active and $memento->date_process!='' and $memento->type!=1) 
+      $memclass = 'mem_processed';
+    else 
+      $memclass='mem_inactive';
 
     if($memcatg!=null) $m_catgname = $memcatg->name;
     else $m_catgname = '<i>'.$m_user->login.'</i>';
@@ -98,7 +101,7 @@ if( isset($_GET['memento_id']) ) {
 
 <a class="overlayed col-1 t-center btn-secondary-light d-show-sm"
    href="index.php?mod=dbmf3&amp;tpl=contact_edit&amp;contact_id=<?= $contact->id ?>"
-   title="<?= _G('DBMF_edit').' '.$contact->lastname.' '.$contact->firstname.' (memento '.$memento->id ?>)">
+   title="<?= _G('DBMF_contact_edition') ?>">
   <img src="images/icons/text-editor.png" alt="">
 </a>
 

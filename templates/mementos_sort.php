@@ -1,7 +1,7 @@
 <?php
 /***************************************************************************
  *
- *   phpMySandBox/DBMF3 module - TRoman<abadcafe@free.fr> - 2012
+ *   phpMySandBox/DBMF3 module - TRoman<roman.trave@abadcafe.org> - 2022
  *   This program is free software; you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
  *   the Free Software Foundation; either version 2 of the License', or
@@ -29,24 +29,24 @@ echo '
 if( isset($_GET['filter']) and $_GET['filter']=='all' ) {
     $mementos_p = MySBDBMFMementoHelper::load(null,$_SESSION["dbmf_memcatg_sort"]);
     $_SESSION["dbmf_memento_lastfilter"] = 'all';
-    $mementos_title = _G('DBMF_mementos_all').' ('.count($mementos_p).')';
+    $mementos_title = _G('DBMF_mementos_all').' '._G('DBMF_mementos_bydate');
 #     echo '
 # <h2 class="border-top">'._G('DBMF_mementos_all').' ('.count($mementos_p).')</h2>';
 } else {
     $_GET['filter']='';
     $_SESSION["dbmf_memento_lastfilter"] = '';
     $mementos_p = MySBDBMFMementoHelper::loadActives($_SESSION["dbmf_memcatg_sort"]);
-    $mementos_title = _G('DBMF_mementos_actives').' ('.count($mementos_p).')';
+    $mementos_title = _G('DBMF_mementos_actives').' '._G('DBMF_mementos_bydate');
 #     echo '
 # <h2 class="border-top">'._G('DBMF_mementos_actives').' ('.count($mementos_p).')</h2>';
 }
 
 echo '
 <div class="row bg-primary-light">
-  <div class="col-sm-4">
+  <div class="col-sm-6">
     <h1 class="t-left">'.$mementos_title.'</h1>
   </div>
-  <div class="col-sm-8">
+  <div class="col-sm-6">
     <div class="sort_actions">
       '._G('DBMF_mementos_sortby').':
       <select name="dbmf_mementos_sortby" onchange="changesort(this.value);">
@@ -58,12 +58,17 @@ foreach( $memcatgs as $memcatg ) {
 }
 echo '
       </select><br>
+    <!--
     <label for="expand" style="display:inline;">Expand:</label>
     <input type="checkbox" id="expand" name="feature"
            value="expand" onclick="checkExpand(this)"/>
+    -->
     </div>
   </div>
-</div>
+</div>';
+
+/*
+echo '
 <script>
 function checkExpand(checkbox)
 {
@@ -88,16 +93,20 @@ function checkExpand(checkbox)
   }
 }
 </script>';
-
+*/
 
 
 
 echo '
 <div id="dbmfMementoList" class="content list">';
 
-$memento_type = -1;
+include(_pathI('mementos_list_ctrl','dbmf3'));
 
-foreach($mementos_p as $memento) {
+
+//$memento_type = -1;
+
+//foreach($mementos_p as $memento) {
+/*
 
   if($memento->type!=$memento_type) {
     $memento_type = $memento->type;
@@ -106,12 +115,14 @@ foreach($mementos_p as $memento) {
     echo '
 <h2>'._G($h3).'</h2>';
   }
-
+*/
   # if($memento->isActive()) $Active = true;
   # else $Active = false;
   # if($Active) $memclass = 'mem_active';
   # elseif(!$Active and $memento->date_process!='') $memclass = 'mem_processed';
   # else $memclass='';
+
+/*
     echo '
   <div class="content list slide slide-toggled" id="memento'.$memento->id.'">';
 
@@ -122,7 +133,7 @@ foreach($mementos_p as $memento) {
   </div>';
 
 }
-
+*/
 echo '
 </div>
 
@@ -131,6 +142,9 @@ echo '
 <script>
 show("mementos_results");
 function changesort(selvalue) {
+    loadItem( "dbmfMementoList", "index.php?mod=dbmf3&inc=mementos_list&sort="+selvalue+"&filter='.$_GET['filter'].'" );
+}
+function changesort1(selvalue) {
     loadItem( "mementos_results", "index.php?mod=dbmf3&inc=mementos_sort&sort="+selvalue+"&filter='.$_GET['filter'].'" );
 }
 </script>';

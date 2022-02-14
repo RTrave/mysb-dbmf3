@@ -48,7 +48,7 @@ function isActive($tpl_code) {
     <a href="index.php?mod=dbmf3&amp;tpl=mementos&amp;filter=all">
     <?= _G('DBMF_mementos_all') ?></a>
   </li><li class="<?= isActive('bycontact') ?>">
-    <a href="index.php?mod=dbmf3&amp;tpl=mementos_bycontact&amp;filter=bycontact">
+    <a href="index.php?mod=dbmf3&amp;tpl=mementos&amp;filter=bycontact">
     <?= _G('DBMF_mementos_bycontact') ?></a>
   </li>
 </ul>
@@ -58,7 +58,13 @@ function isActive($tpl_code) {
 <div class="col-lg-9">
 
 <div id="mementos_results">
-<?php include( _pathI('mementos_sort_ctrl','dbmf3') ); ?>
+<?php 
+if($_GET['filter']=='actives' || $_GET['filter']=='all')
+  include( _pathT('mementos_sort','dbmf3') );
+  //include( _pathI('mementos_sort_ctrl','dbmf3') );
+elseif($_GET['filter']=='bycontact')
+  include( _pathT('mementos_sortbycontact','dbmf3') );
+?>
 </div>
 
 </div>

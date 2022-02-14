@@ -201,11 +201,67 @@ span.blockref_text img.mysbValue-directlink {
   top: 5px;
 }
 
+.mementos-list .list a:hover {
+  color: black;
+}
+.mementos-list .date {
+  margin-right: 10px;
+  position: absolute;
+  overflow: hidden;
+  font-size: 90%;
+  left: 5px;
+  top: 5px;
+  min-width: 110px;
+  width: 25%;
+  height: 60px;
+}
+.mementos-list .infos {
+  display: inline-block;
+  overflow: hidden;
+  font-size: 80%;
+  min-height: 60px;
+  margin-left: 110px;
+  padding: 5px 5px 0px;
+  width: 65%;
+  max-height: 75px;
+}
+.mementos-list .date.expanded {
+  float: left;
+  position: relative;
+  height: auto;
+  top: 0px;
+  margin-right: 0px;
+}
+.mementos-list .infos.expanded {
+  margin-left: 0;
+  float: left;
+  max-height: none;
+}
+.mementos-list .tooltip {
+  position: absolute;
+  right: 5px;
+  top: 5px;
+}
+
+
+
 .mem_active {
   background: #ff9292 !important;
 }
-.mem_processed {
+.mem_inactive {
   background: #98ff8d !important;
+}
+.mem_processed {
+  background: #dddddd !important;
+}
+.mem_active_check {
+  color: #ff9292 !important;
+}
+.mem_inactive_check {
+  color: #98ff8d !important;
+}
+.mem_processed_check {
+  color: #dddddd !important;
 }
 
 @media (max-width: 480px) {
