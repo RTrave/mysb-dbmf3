@@ -98,7 +98,7 @@ if( isset($_GET['memento_id']) ) {
 
 <a class="overlayed col-1 t-center btn-secondary-light d-show-sm"
    href="index.php?mod=dbmf3&amp;tpl=contact_edit&amp;contact_id=<?= $contact->id ?>"
-   title="<?= _G('DBMF_contact_edition') ?>">
+   title="<?= _G('DBMF_contact_edit') ?>">
   <img src="images/icons/text-editor.png" alt="">
 </a>
 

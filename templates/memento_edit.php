@@ -129,7 +129,7 @@ echo '
 if( $contact->mail!='' ) echo '
   <a class="col-1 btn btn-primary-light"
      href="mailto:'.$contact->mail.'"
-     title="'._G('DBMF_mailto').' '.$contact->lastname.' '.$contact->firstname.' ('.$contact->id.')">
+     title="'._G('DBMF_mailto').': '.$contact->mail.'">
     <img src="images/icons/mail-unread.png"
          alt="">
   </a>';

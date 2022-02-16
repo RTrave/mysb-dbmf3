@@ -15,7 +15,7 @@ defined('_MySBEXEC') or die;
 class MySBModule_dbmf3 {
 
     public $lname = 'dbmf3';
-    public $version = 22;
+    public $version = 23;
     public $release_version = '4c';
     public $homelink = 'https://github.com/RTrave/mysb-dbmf3';
     public $require = array(
@@ -481,10 +481,49 @@ class MySBModule_dbmf3 {
 
     public function init23() {
         global $app;
-        MySBPluginHelper::create('mementosort_menutext','MenuItem',
-            array('DBMF_topmenu_mementosort', "mementosort/step1", 'DBMF_topmenu_mementosortinfos',''),
-            array(1,0,0,0),
-            6,"dbmf_user",'dbmf3');
+        $req = MySBDB::query("
+ALTER TABLE ".MySB_DBPREFIX."dbmfcontacts
+  ADD PRIMARY KEY (id),
+  ADD UNIQUE KEY id (id);", "__init.php", false, "dbmf3");
+        $req = MySBDB::query("
+ALTER TABLE ".MySB_DBPREFIX."dbmfcontacts
+  MODIFY id int(11) NOT NULL AUTO_INCREMENT;", "__init.php", false, "dbmf3");
+        $req = MySBDB::query("
+ALTER TABLE ".MySB_DBPREFIX."dbmfblocks
+  ADD PRIMARY KEY (id),
+  ADD UNIQUE KEY id (id);", "__init.php", false, "dbmf3");
+        $req = MySBDB::query("
+ALTER TABLE ".MySB_DBPREFIX."dbmfblocks
+  MODIFY id int(11) NOT NULL AUTO_INCREMENT;", "__init.php", false, "dbmf3");
+        $req = MySBDB::query("
+ALTER TABLE ".MySB_DBPREFIX."dbmfblockrefs
+  ADD PRIMARY KEY (id),
+  ADD UNIQUE KEY id (id);", "__init.php", false, "dbmf3");
+        $req = MySBDB::query("
+ALTER TABLE ".MySB_DBPREFIX."dbmfblockrefs
+  MODIFY id int(11) NOT NULL AUTO_INCREMENT;", "__init.php", false, "dbmf3");
+        $req = MySBDB::query("
+ALTER TABLE ".MySB_DBPREFIX."dbmfexports
+  ADD PRIMARY KEY (id),
+  ADD UNIQUE KEY id (id);", "__init.php", false, "dbmf3");
+        $req = MySBDB::query("
+ALTER TABLE ".MySB_DBPREFIX."dbmfexports
+  MODIFY id int(11) NOT NULL AUTO_INCREMENT;", "__init.php", false, "dbmf3");
+        $req = MySBDB::query("
+ALTER TABLE ".MySB_DBPREFIX."dbmfmementos
+  ADD PRIMARY KEY (id),
+  ADD UNIQUE KEY id (id);", "__init.php", false, "dbmf3");
+        $req = MySBDB::query("
+ALTER TABLE ".MySB_DBPREFIX."dbmfmementos
+  MODIFY id int(11) NOT NULL AUTO_INCREMENT;", "__init.php", false, "dbmf3");
+        $req = MySBDB::query("
+ALTER TABLE ".MySB_DBPREFIX."dbmfmementocatgs
+  ADD PRIMARY KEY (id),
+  ADD UNIQUE KEY id (id);", "__init.php", false, "dbmf3");
+        $req = MySBDB::query("
+ALTER TABLE ".MySB_DBPREFIX."dbmfmementocatgs
+  MODIFY id int(11) NOT NULL AUTO_INCREMENT;", "__init.php", false, "dbmf3");
+        
     }
 
     public function uninit() {

@@ -41,7 +41,7 @@ $pluginsDisplay = MySBPluginHelper::loadByType('DBMFDisplay');
 <?php if( $contact->mail!='' ) { ?>
 <a class="col-1 t-center btn-primary-light"
    href="mailto:<?= $contact->mail ?>"
-   title="<?= _G('DBMF_mailto') ?> <?= $contact->lastname ?> <?= $contact->firstname ?>">
+   title="<?= _G('DBMF_mailto') ?>">
   <img src="images/icons/mail-unread.png" alt="mail-unread">
 </a>
 <?php } else { ?>
@@ -51,7 +51,7 @@ $pluginsDisplay = MySBPluginHelper::loadByType('DBMFDisplay');
 <?php } ?>
 <a class="overlayed col-1 t-center btn-primary-light"
    href="index.php?mod=dbmf3&amp;tpl=contact_edit&amp;contact_id=<?= $contact->id ?>"
-   title="<?= _G('DBMF_edit') ?> <?= $contact->lastname ?> <?= $contact->firstname ?> (<?= $contact->id ?>)">
+   title="<?= _G('DBMF_contact_edit') ?>">
   <img src="images/icons/text-editor.png" alt="text-editor"><br>
   <span class="daysold_text"><?= sprintf(_G('DBMF_days_old'),$daysold) ?></span>
 </a>
@@ -119,7 +119,7 @@ $pluginsDisplay = MySBPluginHelper::loadByType('DBMFDisplay');
 
 <a class="hidelayed col-1 t-center btn-danger-light"
    href="index.php?mod=dbmf3&amp;inc=contact_del&amp;contact_delete=<?= $contact->id ?>"
-   title="<?= sprintf(_G('DBMF_contact_delete'),$contact->lastname, $contact->firstname ) ?>"
+   title="<?= _G('DBMF_contact_delete') ?>"
    data-overconfirm="<?= MySBUtil::str2strict(sprintf(_G('DBMF_confirm_contact_delete'),$contact->lastname, $contact->firstname )) ?>">
   <img src="images/icons/user-trash.png"
        alt="user-trash">

@@ -57,7 +57,53 @@ class MySBDBMFContact extends MySBObject {
             'type' => 1 ) );
     }
 
+    public function duplicate() {
+        global $app;
+        //if($id==null) return null;
+        /*
+        $req_contact = MySBDB::query("SELECT * FROM ".MySB_DBPREFIX.'dbmfcontacts '.
+                    'WHERE id='.$this->id
+                    ,"MySBDBMFContact::duplicate()",
+                    false, 'dbmf3');
+        */
+        $cols_sql = "SELECT COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS ".
+                    "WHERE TABLE_NAME='".MySB_DBPREFIX."dbmfcontacts';";
+        $cols_req = MySBDB::query($cols_sql,
+                    "MySBDBMFContact::duplicate()",
+                    false, 'dbmf3');
+        $colstxt = "";
+        while($col = MySBDB::fetch_array($cols_req)) {
+            if($col[0]!='id') {
+              if($colstxt!='') $colstxt .= ',';
+              $colstxt .= $col[0];
+            }
+        }
+        //echo "console.log('SQL:_".$cols_sql."_');";
+        //echo "console.log('cols:".$colstxt."');";
+        $cid = MySBDB::lastID('dbmfcontacts')+1;
+        if($cid==0) $cid = 1;
+        $dup_sql =  "INSERT INTO ".MySB_DBPREFIX."dbmfcontacts (".$colstxt.") ".
+                    "SELECT ".$colstxt." FROM ".MySB_DBPREFIX."dbmfcontacts ".
+                    "WHERE id=".$this->id." ".
+                    "ON DUPLICATE KEY UPDATE id=".$cid;
+        //echo "console.log('new ID:".$cid."');";
+        MySBDB::query($dup_sql,
+                      "MySBDBMFContact::duplicate()",
+                      false, 'dbmf3');
+        $dup_contact = new MySBDBMFContact($cid);
+        $today = getdate();
+        $today_date = $today['year'].'-'.$today['mon'].'-'.$today['mday'].' '.$today['hours'].':'.$today['minutes'].':'.$today['seconds'];
+        //echo "console.log('rel ID:".$dup_contact->id."');";
+        $dup_contact->update( array(
+            'lastname' => $dup_contact->lastname.'(COPY)',
+            'date_creat' => $today_date,
+            'date_modif' => $today_date )
+        );
+        return $dup_contact;
+    }
+
 }
+
 
 class MySBDBMFContactHelper {
 

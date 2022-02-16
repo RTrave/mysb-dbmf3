@@ -50,8 +50,15 @@ echo '
      href="index.php?mod=dbmf3&amp;inc=contact_del&amp;contact_delete='.$contact->id.
         $callback_get.'"
      data-overconfirm="'.MySBUtil::str2strict(sprintf(_G('DBMF_confirm_contact_delete'),$contact->lastname, $contact->firstname )).'"
-     title="'.sprintf(_G('DBMF_contact_delete'),$contact->lastname, $contact->firstname ).'">
+     title="'._G('DBMF_contact_delete').'">
     <img src="images/icons/user-trash.png" alt="">
+  </a>
+  <a class="hidelayed col-1 t-center btn-secondary"
+     href="index.php?mod=dbmf3&amp;inc=contact_dup&amp;contact_duplicate='.$contact->id.
+        $callback_get.'"
+     data-overconfirm="'.MySBUtil::str2strict(sprintf(_G('DBMF_confirm_contact_duplicate'),$contact->lastname, $contact->firstname )).'"
+     title="'._G('DBMF_contact_duplicate').'">
+    <img src="images/icons/edit-copy.png" alt="">
   </a>
   <p class="col-auto">
     '.$contact->lastname.'&nbsp;<br>
