@@ -90,7 +90,13 @@ class MySBDBMFContact extends MySBObject {
         MySBDB::query($dup_sql,
                       "MySBDBMFContact::duplicate()",
                       false, 'dbmf3');
-        $dup_contact = new MySBDBMFContact($cid);
+        $lastid_req = MySBDB::query("SELECT LAST_INSERT_ID();",
+                      "MySBDBMFContact::duplicate()",
+                      false, 'dbmf3');
+        $lastid = MySBDB::fetch_array($lastid_req);
+        if(count($lastid)==0) return null;
+        echo "console.log('last ID:".$lastid[0]."');";
+        $dup_contact = new MySBDBMFContact($lastid[0]);
         $today = getdate();
         $today_date = $today['year'].'-'.$today['mon'].'-'.$today['mday'].' '.$today['hours'].':'.$today['minutes'].':'.$today['seconds'];
         //echo "console.log('rel ID:".$dup_contact->id."');";
