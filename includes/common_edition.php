@@ -119,7 +119,7 @@ foreach($mementos as $memento) {
     else $Active = false;
     if($Active) $memclass = 'mem_active';
     elseif(!$Active and $memento->date_process!='') $memclass = 'mem_processed';
-    else $memclass='mem_processed';
+    else $memclass='mem_inactive';
     $m_user = MySBUserHelper::getByID($memento->user_id);
     if($memento->memcatg_id!=0) $memcatg = MySBDBMFMementoCatgHelper::getByID($memento->memcatg_id);
     else $memcatg = null;
