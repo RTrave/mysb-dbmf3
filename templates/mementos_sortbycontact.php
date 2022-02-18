@@ -142,8 +142,11 @@ echo '
 show("mementos_results");
 function changekey(selvalue) {
     loadItem( "keysorting", "index.php?mod=dbmf3&inc=blockref_sorting&keyname="+selvalue+"&filter='.$_GET['filter'].'" );
-}
-changekey("'.$_POST['crit_keyname'].'");
+}';
+if(isset($_POST['crit_keyname']) and $_POST['crit_keyname']!='') 
+  echo '
+changekey("'.$_POST['crit_keyname'].'");';
+echo '
 </script>';
 
 
