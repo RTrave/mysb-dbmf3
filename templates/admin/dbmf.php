@@ -93,7 +93,8 @@ if(isset($_POST['dbmf_editexport'])) {
 }
 
 $pathtestfile = MySB_ROOTPATH.'/modules/dbmf3/files/testfile';
-unlink($pathtestfile);
+if(file_exists($pathtestfile))
+  unlink($pathtestfile);
 $testfile = fopen($pathtestfile, "w");
 if(!$testfile) {
   echo '

@@ -23,7 +23,7 @@ $contact = $app->tpl_dbmf_currentcontact;
     else $Active = false;
     if( $Active and $memento->id!=-1 ) $memclass = 'mem_active';
     elseif( !$Active and $memento->date_process!='' ) $memclass = 'mem_processed';
-    else $memclass='mem_processed';
+    else $memclass='mem_inactive';
 
 if(isset($_POST['memento_add'])) {
     if(!isset($_SESSION["dbmf_memento_lastfilter"]))
@@ -103,7 +103,8 @@ echo '
 if( !$Active and $memento->date_process!='' ) {
     $memento_process = new MySBDateTime($memento->date_process);
     echo ''._G('DBMF_memento_process_last').': '.$memento_process->strEBY_l().'';
-}
+} else 
+  echo ''._G('DBMF_memento_'.$memclass);
 echo '</span>
   </p>
 </div>
