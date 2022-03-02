@@ -285,13 +285,13 @@ class MySBDBMFExportCSV extends MySBDBMFExport {
   <p>CSV output: '.$count.' results<br>
   send by mail to: '.$app->auth_user->mail.'</p>
   <p>CSV (or XLSX) file is avaible here: <br>
-    <a href="/modules/dbmf3/files/'.$csv_filename.'">
+    <a href="modules/dbmf3/files/'.$csv_filename.'">
       '.$csv_filename.'
     </a>
   </p>
 </div>
 ';
-        $mail = false;
+        $mail = true;
         if($mail) {
             $stmail = new MySBMail('sendtable','dbmf3');
             $stmail->addTO($app->auth_user->mail,$app->auth_user->firstname.' '.$app->auth_user->lastname);
