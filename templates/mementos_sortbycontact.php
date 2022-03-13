@@ -21,6 +21,13 @@ if( !isset($_SESSION["dbmf_memcatg_sort"]) )
 if( isset($_GET["sort"]) )
     $_SESSION["dbmf_memcatg_sort"] = $_GET["sort"];
 
+if( !isset($_POST["dbmf_mementos_sortby"]) )
+    $_POST["dbmf_mementos_sortby"] = '';
+
+if( !isset($_POST["crit_keyname"]) )
+    $_POST["crit_keyname"] = '';
+
+$_SESSION["dbmf_memento_lastfilter"] = 'bycontact';
 
 echo '
 <div class="content list">

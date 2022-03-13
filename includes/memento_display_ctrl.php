@@ -44,6 +44,12 @@ if( isset($_GET['memento_id']) ) {
 
     if($memcatg!=null) $m_catgname = $memcatg->name;
     else $m_catgname = '<i>'.$m_user->login.'</i>';
+
+if(isset($_GET['memento_id'])) {
+  echo '
+    <div class="content list slide slide-toggled" id="memento'.$memento->id.'">';
+}
+
 ?>
 
 <div class="row <?= $memclass ?>" style="border-spacing: 0;">
@@ -110,4 +116,16 @@ if( isset($_GET['memento_id']) ) {
 </a>
 
 </div>
+
+<?php
+if(isset($_GET['memento_id'])) {
+  echo '
+    </div>
+
+<script>
+slide_show("mementos_new_title");
+</script>
+';
+}
+?>
 

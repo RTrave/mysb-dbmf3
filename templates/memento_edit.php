@@ -28,9 +28,26 @@ $contact = $app->tpl_dbmf_currentcontact;
 if(isset($_POST['memento_add'])) {
     if(!isset($_SESSION["dbmf_memento_lastfilter"]))
         $_SESSION["dbmf_memento_lastfilter"] = '';
+    switch($_SESSION["dbmf_memento_lastfilter"]) {
+        case "all":
+          $callbackinc = "memento_display";
+          $callbackfilter = '&memento_id='.$memento->id;
+          //$callbackfilter = '&filter=all';
+          break;
+        case "bycontact":
+          $callbackinc = "memento_display";
+          $callbackfilter = '&memento_id='.$memento->id;
+          //$callbackfilter = '&filter=bycontact';
+          break;
+        default:
+          $callbackinc = "memento_display";
+          $callbackfilter = '&memento_id='.$memento->id;
+          //$callbackfilter = '';
+          break;
+    }
     echo '
 <script>
-loadItem( "mementos_results", "index.php?mod=dbmf3&inc=mementos_sort&filter='.$_SESSION["dbmf_memento_lastfilter"].'" );
+loadItemAfter( "mementos_new", "index.php?mod=dbmf3&inc='.$callbackinc.$callbackfilter.'" );
 </script>';
 } elseif( isset($_POST['memento_modify']) or isset($_GET['memento_process']) or isset($_GET['memento_unprocess']) ) {
     echo '

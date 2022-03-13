@@ -146,6 +146,13 @@ foreach($mementos_p as $memento) {
 
 $memento_type = 0;
 
+echo '
+<div id="mementos_new_title" class="slide">
+  <h2 class="bg-primary" style="margin-top: 2px;">'.
+  _G("DBMF_memento_new").'</h2>
+</div>
+<div id="mementos_new" style="display: none;"></div>';
+
 while($memento_type!=2) {
 
   if($memento_type==0) $h3 = 'DBMF_memento_type_punctual';
