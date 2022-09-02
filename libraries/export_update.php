@@ -45,7 +45,7 @@ class MySBDBMFExportUpdate extends MySBDBMFExport {
             if($block->isEditable()) {
                 $output .= '
 <td style="vertical-align: top;">
-<table style="width: 100%; font-size: 80%; margin-left: 0px;"><tbody>
+<table style="width: 100%; font-size: 80%; margin-left: 0px; border: 1px black dashed;"><tbody>
 <tr class="title" >
     <td colspan="2">';
                 $output .= _G($block->lname).'
@@ -55,7 +55,7 @@ class MySBDBMFExportUpdate extends MySBDBMFExport {
                     if($blockref->isActive()) {
                         $refname = $blockref->keyname;
                         $output .= '
-<tr style="background-color: #fff;">
+<tr style="background-color: #ddd;">
     <td style="vertical-align: top; text-align: left;">
         <input type="checkbox" name="upd_id_'.$blockref->id.'">'._G($blockref->lname).':
     </td>
