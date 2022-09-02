@@ -224,7 +224,7 @@ class MySBDBMFBlockRefHelper {
         if(isset($app->cache_dbmfblockrefs) and $forced==false)
             return $app->cache_dbmfblockrefs;
         $app->cache_dbmfblockrefs = array();
-        $blocks = MySBDBMFBlockHelper::load();
+        $blocks = MySBDBMFBlockHelper::load("true");
         foreach( $blocks as $block ) {
             foreach( $block->blockrefs as $blockref ) {
                 $blockref->grp = 'dbmf3';

@@ -29,15 +29,16 @@ global $app;
 <?php
 
 if( isset($_GET['blockref_edit']) or
-    isset($_POST['blockref_edit_process']) or
-    isset($_POST['blockref_add']) ) {
+    //isset($_POST['blockref_edit_process']) or
+    isset($_POST['blockref_add']) 
+    ) {
 
 $blockref = $app->tpl_blockref_edit;
 echo '
 <div class="content">
 <h1>'._G($blockref->lname).' <span class="help">('.$blockref->keyname.')</span></h1>
 
-<form action="'.$hrefconfig.'" method="post">
+<form action="'.$hrefconfig.'#a_blockrefs'.$blockref->id.'" method="post">
 
   <div class="row">
     <p class="col-6">
@@ -322,10 +323,10 @@ foreach($blocks as $block) {
             $class_bref = ' blockref_active';
         else $class_bref = ' blockref_inactive';
         echo '
-  <div class="content list">
+  <div class="content list" id="a_blockrefs'.$blockref->id.'">
   <div class="row'.$class_bref.'">
 
-  <form action="'.$hrefconfig.'#a_blockrefs'.$block->id.'"
+  <form action="'.$hrefconfig.'#a_blockrefs'.$blockref->id.'"
         method="post"  class="col-1 btn btn-dark"
         title="&darr;">
     <input type="hidden" name="blockref_orderdown" value="'.$blockref->id.'">
@@ -333,7 +334,7 @@ foreach($blocks as $block) {
            type="image" alt="">
   </form>
 
-  <form action="'.$hrefconfig.'#a_blockrefs'.$block->id.'"
+  <form action="'.$hrefconfig.'#a_blockrefs'.$blockref->id.'"
         method="post"  class="col-1 btn btn-dark"
         title="&uarr;">
     <input type="hidden" name="blockref_orderup" value="'.$blockref->id.'">
@@ -347,7 +348,7 @@ foreach($blocks as $block) {
     <b>'._G($blockref->lname).'</b><br>
     <span class="help">'.$blockref->keyname.' ('.$blockref->getType().')</span>
   </a>
-  <form action="'.$hrefconfig.'#a_blockrefs'.$block->id.'"
+  <form action="'.$hrefconfig.'#a_blockrefs'.$blockref->id.'"
         method="post"  class="col-2 btn"
         title="">
     <input type="hidden" name="blockref_switchactive" value="'.$blockref->id.'">';
@@ -361,20 +362,8 @@ foreach($blocks as $block) {
            value="'._G('DBMF_blockref_active').'">';
         echo '
   </form>
-<!--
-    <a href="index.php?mod=dbmf3&amp;tpl=admin/config&amp;page=structure&amp;block_orderup='.$block->id.'#a_block'.$block->id.'"
-       class="col-2 t-center btn btn-success-light"
-       title="&uarr;">
-      Activer?
-    </a>
-    <a href="'.$hrefconfig.'&amp;blockref_del='.$blockref->id.'#a_block'.$block->id.'"
-     class="col-1 t-center btn btn-danger"
-     data-overconfirm=""
-     title="'._G('DBMF_block_delete').'">
-      <img src="images/icons/user-trash.png" alt="">
-    </a>
--->
-  <form action="'.$hrefconfig.'#a_blockrefs'.$block->id.'"
+
+  <form action="'.$hrefconfig.'#a_blockrefs'.$blockref->id.'"
         method="post"  class="col-1 btn btn-danger-light"
         OnSubmit="return mysb_confirm(\''.MySBUtil::str2strict(sprintf(_G('DBMF_confirm_blockref_delete'), $blockref->lname, $blockref->keyname )).'\')"
         title="'._G('DBMF_blockref_delete').'">
@@ -386,70 +375,11 @@ foreach($blocks as $block) {
 
   </div>
   </div>
-<!--
-    <div class="row'.$class_bref.'">
-        <div style="float: left;">
-        <form action="index.php?mod=dbmf3&amp;tpl=admin/structure" method="post">
-        <input type="hidden" name="blockref_edit" value="'.$blockref->id.'">
-        <input  src="images/icons/text-editor.png"
-                    type="image"
-                    alt="'._G('DBMF_blockref_edition').'"
-                    title="'._G('DBMF_blockref_edition').'">
-        </form>
-        </div>
-        <div style="float: right;">
-        <form action="index.php?mod=dbmf3&amp;tpl=admin/structure#a_block'.$block->id.'" method="post"
-        OnSubmit="return mysb_confirm(\''.MySBUtil::str2strict(sprintf(_G('DBMF_confirm_blockref_delete'), $blockref->lname, $blockref->keyname )).'\')">
-        <input type="hidden" name="block_id" value="'.$block->id.'">
-        <input type="hidden" name="blockref_del" value="'.$blockref->id.'">
-        <input  src="images/icons/user-trash.png"
-                    type="image"
-                    alt="'._G('DBMF_blockref_delete').'"
-                    title="'._G('DBMF_blockref_delete').'">
-        </form>
-        </div>
-        <div style="float: right;">
-        <form action="index.php?mod=dbmf3&amp;tpl=admin/structure#a_block'.$block->id.'" method="post">
-        <input type="hidden" name="blockref_switchactive" value="'.$blockref->id.'">';
-
-            if($blockref->status==MYSB_DBMF_BLOCKREF_STATUS_ACTIVE)
-                echo '
-        <input type="submit" value="'._G('DBMF_blockref_desactive').'">';
-            else
-                echo '
-        <input type="submit" value="'._G('DBMF_blockref_active').'">';
-
-            echo '
-        </form>
-        </div>
-        <div style="float: left; width: 80px; text-align: center;">
-        <div style="display: inline-block;">
-        <form action="index.php?mod=dbmf3&amp;tpl=admin/structure#a_block'.$block->id.'" method="post">
-        <input type="hidden" name="blockref_orderdown" value="'.$blockref->id.'">
-        <input  src="images/icons/go-down.png"
-                    type="image"
-                    alt="&darr;"
-                    title="&darr;">
-        </form>
-        </div>
-        <div style="display: inline-block;">
-        <form action="index.php?mod=dbmf3&amp;tpl=admin/structure#a_block'.$block->id.'" method="post">
-        <input type="hidden" name="blockref_orderup" value="'.$blockref->id.'">
-        <input  src="images/icons/go-up.png"
-                    type="image"
-                    alt="&uarr;"
-                    title="&uarr;">
-        </form>
-        </div>
-        </div>
-        '.$blockref->keyname.'<span class="cell_show"><br></span> <b>'._G($blockref->lname).'</b><br>
-         <small>'.$blockref->getType().'</small>
-    </div>
--->';
+';
     }
 
     echo '
-  <form action="'.$hrefconfig.'#a_blockrefs'.$block->id.'" method="post">
+  <form action="'.$hrefconfig.'" method="post">
   <div class="row label border-top">
     <label class="col-sm-6" for="lname'.$block->id.'">
       '._G('DBMF_blockref_name').'
