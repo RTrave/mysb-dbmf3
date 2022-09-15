@@ -196,8 +196,10 @@ class MySBDBMFExportCSV extends MySBDBMFExport {
               if( $blockref->isActive() )
                 if( $blockref->getType()=='boolean' or $blockref->getType()=='int' )
                   $header[_G($blockref->lname)] = 'integer';
-                else if( $blockref->getType()=='date' or $blockref->getType()=='datetime' )
+                else if( $blockref->getType()=='date' )
                   $header[_G($blockref->lname)] = 'date';
+                else if(  $blockref->getType()=='datetime' )
+                  $header[_G($blockref->lname)] = 'datetime';
                 else
                   $header[_G($blockref->lname)] = 'string';
             }
