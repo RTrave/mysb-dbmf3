@@ -41,6 +41,8 @@ if(isset($_POST['block_orderdown'])) {
 }
 
 if(isset($_POST['block_del'])) {
+    $block = MySBDBMFBlockHelper::getByID($_POST['block_del']);
+    $app->pushMessage(_G('DBMF_block_deleted').': '._G($block->lname));
     MySBDBMFBlockHelper::delete($_POST['block_del']);
 }
 
@@ -53,6 +55,8 @@ if(isset($_POST['blockref_add'])) {
 
 if(isset($_POST['blockref_del'])) {
     $block = MySBDBMFBlockHelper::getByID($_POST['block_id']);
+    $blockref = MySBDBMFBlockRefHelper::getByID($_POST['blockref_del']);
+    $app->pushMessage(_G('DBMF_blockref_deleted').': '._G($blockref->lname));
     $block->refDel($_POST['blockref_del']);
 }
 

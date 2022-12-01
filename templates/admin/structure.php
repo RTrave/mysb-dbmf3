@@ -236,7 +236,7 @@ return;
 echo '
 ';
 
-$blocks = MySBDBMFBlockHelper::load();
+$blocks = MySBDBMFBlockHelper::load(true);
 foreach($blocks as $block) {
 
     $group_edit = MySBGroupHelper::getByID($block->groupedit_id);
@@ -363,7 +363,7 @@ foreach($blocks as $block) {
         echo '
   </form>
 
-  <form action="'.$hrefconfig.'#a_blockrefs'.$blockref->id.'"
+  <form action="'.$hrefconfig.'#a_block'.$block->id.'"
         method="post"  class="col-1 btn btn-danger-light"
         OnSubmit="return mysb_confirm(\''.MySBUtil::str2strict(sprintf(_G('DBMF_confirm_blockref_delete'), $blockref->lname, $blockref->keyname )).'\')"
         title="'._G('DBMF_blockref_delete').'">
