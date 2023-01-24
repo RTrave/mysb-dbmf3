@@ -93,7 +93,7 @@ if(isset($_GET['memento_id'])) {
 <?php if( $memento->comments2!='' ) { ?>
   <div class="tooltip d-show-md">
     <img src="images/icons/mail-attachment.png" alt="">
-    <span class="left"><?= $memento->comments2 ?></span>
+    <span class="left tooltip-msg"><?= $memento->comments2 ?></span>
   </div>
 <?php } ?>
 <?php if($memento->isEditable()) { ?>
