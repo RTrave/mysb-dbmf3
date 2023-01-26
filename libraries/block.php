@@ -225,7 +225,8 @@ class MySBDBMFBlockHelper {
     public static function getByID($id) {
         global $app;
         $blocks = MySBDBMFBlockHelper::load();
-        return $blocks[$id];
+        if (isset($blocks[$id])) return $blocks[$id];
+        return null;
     }
 
     public static function indexBlocks() {

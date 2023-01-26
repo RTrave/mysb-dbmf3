@@ -140,8 +140,8 @@ class MySBDBMFMemento extends MySBObject {
                 return true;
             case MYSB_DBMF_MEMENTO_TYPE_MONTHOFYEAR:
                 $current_date = new MySBDateTime('NOW');
-                $cmonth = (int) $current_date->str_get('%m');
-                $cyear = $current_date->str_get('%Y');
+                $cmonth = (int) $current_date->str_get('MM');
+                $cyear = $current_date->str_get('yyyy');
                 //echo $cmonth.' '.$cyear;
                 if($this->monthofyear_memento=='') return false;
                 $memento_date = new MySBDateTime($cyear.'-'.$this->monthofyear_memento.'-1');
