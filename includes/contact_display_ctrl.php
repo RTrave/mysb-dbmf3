@@ -103,8 +103,9 @@ $pluginsDisplay = MySBPluginHelper::loadByType('DBMFDisplay');
     $as_showlist = MySBDBMFBlockRefHelper::loadAlwaysShown(MYSB_DBMF_BLOCKREF_ALWAYSSHOWN_ASPLUG);
     foreach($as_showlist as $sblockref)
         echo $sblockref->displayPlugin( $contact, 'd-show-sm' );
-    foreach($showcols_blockrefs as $sblockref)
+    foreach($showcols_blockrefs as $sblockref) {
         echo $sblockref->displayPlugin( $contact, 'd-show-md' );
+    }
 ?>
       </div>
       <div class="plugins-ext d-show-md">

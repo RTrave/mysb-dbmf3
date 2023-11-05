@@ -239,7 +239,9 @@ class MySBDBMFBlockRefHelper {
         $blockrefs = MySBDBMFBlockRefHelper::load();
         $as_array = array();
         foreach( $blockrefs as $blockref ) {
-            if( $value==0 and
+            if(!$blockref->isActive()) {
+                continue;
+            } elseif( $value==0 and
                 (   $blockref->alwaysshown==MYSB_DBMF_BLOCKREF_ALWAYSSHOWN_ASTEXT or
                     $blockref->alwaysshown==MYSB_DBMF_BLOCKREF_ALWAYSSHOWN_ASPLUG or
                     $blockref->alwaysshown==MYSB_DBMF_BLOCKREF_ALWAYSSHOWN_ASTEXTONLY ) ) {
