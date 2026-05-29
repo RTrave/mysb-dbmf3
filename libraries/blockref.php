@@ -32,6 +32,11 @@ class MySBDBMFBlockRef extends MySBValue {
     public $lname = null;
     public $disabled = null;
 
+    public $status = 0; 
+
+    public $i_index = 0; 
+
+    public $orderby;
 
     public function __construct( $id=-1, $data_blockref=array() ) {
         global $app;
@@ -163,7 +168,6 @@ class MySBDBMFBlockRef extends MySBValue {
 
 }
 
-
 class MySBDBMFBlockRefHelper {
 
     public static function create($lname,$type,$block_id) {
@@ -219,6 +223,11 @@ class MySBDBMFBlockRefHelper {
             unset($app->cache_dbmfblockrefs[$id]);
     }
 
+    /** 
+    * @brief BlockRef listing helper 
+    * @param $forced force update the cache array
+    * @return array 
+    **/
     public static function load($forced=false) {
         global $app;
         if(isset($app->cache_dbmfblockrefs) and $forced==false)

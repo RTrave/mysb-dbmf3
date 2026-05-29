@@ -185,12 +185,19 @@ class MySBDBMFExportHelper {
         return null;
     }
 
+    /**
+     * @brief Get Export by name 
+     * @param string name of export
+     * @return MySBDBMFExport|null
+     */
     public static function getByName($name) {
         global $app;
         $exports = MySBDBMFExportHelper::load();
         foreach($exports as $export) {
-            if($export->name==$name) return $export;
+            if($export->name==$name) 
+                return $export;
         }
+        return null;
     }
 
 }

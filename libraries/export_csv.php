@@ -19,6 +19,11 @@ defined('_MySBEXEC') or die;
  */
 class MySBDBMFExportCSV extends MySBDBMFExport {
 
+    /**
+	 * @var    boolean      xlsxwriter flag: true if present
+	 */
+    public $xlsxwriter = false;
+
     public function __construct($id=-1, $data_export = array()) {
         global $app;
         parent::__construct($id,(array) ($data_export));

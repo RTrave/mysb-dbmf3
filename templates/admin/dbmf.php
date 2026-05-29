@@ -185,7 +185,7 @@ foreach($exports as $export) {
              type="image" alt="">
     </form>
     <div class="col-7">
-      <p>'.$export->name.'<br>
+      <p>'.$export->name.'TODO<br>
       <span class="help">'.$export->comments.'</span></p>
     </div>
     <div class="col-6 t-right">

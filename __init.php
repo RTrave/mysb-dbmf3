@@ -12,7 +12,7 @@
 // No direct access.
 defined('_MySBEXEC') or die;
 
-class MySBModule_dbmf3 {
+class MySBModule_dbmf3 extends MySBModuleHelper {
 
     public $lname = 'dbmf3';
     public $version = 23;
@@ -200,7 +200,7 @@ class MySBModule_dbmf3 {
         $blockeditrole->assignToGroup('admin',true);
         $editrole = MySBRoleHelper::create('dbmf_editor','Can edit DB entries');
         $editrole->assignToGroup('admin',true);
-        $userrole = MySBRoleHelper::create('dbmf_user','Can view DB entries',true);
+        $userrole = MySBRoleHelper::create('dbmf_user','Can view DB entries');
         $userrole->assignToGroup('admin',true);
         $userrole->assignToGroup('users',true);
 
