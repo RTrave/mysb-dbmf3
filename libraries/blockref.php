@@ -223,6 +223,14 @@ class MySBDBMFBlockRefHelper {
             unset($app->cache_dbmfblockrefs[$id]);
     }
 
+    public static function deleteByName($lname) {
+        global $app;
+        $blockrefs = MySBDBMFBlockRefHelper::load();
+        foreach( $blockrefs as $blockref )
+            if( $blockref->lname==$lname )
+                MySBDBMFBlockRefHelper::delete($blockref->id);
+    }
+
     /** 
     * @brief BlockRef listing helper 
     * @param $forced force update the cache array

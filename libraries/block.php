@@ -54,6 +54,7 @@ class MySBDBMFBlock extends MySBObject {
             $blockref->grp = 'dbmf3';
             $this->blockrefs[$data_blockref['id']] = $blockref;
         }
+        return $this->blockrefs;
     }
 
     public function isEditable() {
@@ -196,15 +197,26 @@ class MySBDBMFBlockHelper {
 
     public static function delete($id) {
         $block = MySBDBMFBlockHelper::getByID($id);
-        MySBDB::query("DELETE FROM ".MySB_DBPREFIX.'dbmfblockrefs WHERE '.
-            "block_id=$id",
-            "MySBDBMFBlockHelper::delete($id)",
-            true, 'dbmf3');
+        $blockrefs = $block->loadBlockRefs();
+        foreach($blockrefs as $blockref)
+            MySBDBMFBlockRefHelper::delete($blockref->id);
+        // MySBDB::query("DELETE FROM ".MySB_DBPREFIX.'dbmfblockrefs WHERE '.
+        //     "block_id=$id",
+        //     "MySBDBMFBlockHelper::delete($id)",
+        //     true, 'dbmf3');
         MySBDB::query("DELETE FROM ".MySB_DBPREFIX.'dbmfblocks WHERE '.
             "id=$id",
             "MySBDBMFBlockHelper::delete($id)",
             true, 'dbmf3');
         MySBDBMFBlockHelper::load(true);
+    }
+
+    public static function deleteByName($lname) {
+        global $app;
+        $blocks = MySBDBMFBlockHelper::load();
+        foreach( $blocks as $block )
+            if( $block->lname===$lname )
+                MySBDBMFBlockHelper::delete($block->id);
     }
 
     public static function load($force=false) {

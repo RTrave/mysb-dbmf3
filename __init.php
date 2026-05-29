@@ -27,7 +27,7 @@ class MySBModule_dbmf3 extends MySBModuleHelper {
 
         //tables
         $req = MySBDB::query('CREATE TABLE '.MySB_DBPREFIX.'dbmfcontacts ( '.
-            'id int unique key, '.
+            'id int unique key AUTO_INCREMENT, '.
             'date_creat date, '.
             'date_modif date, '.
             'lastname varchar(64), '.
@@ -234,7 +234,7 @@ class MySBModule_dbmf3 extends MySBModuleHelper {
     public function init5() {
         global $app;
         $req = MySBDB::query('CREATE TABLE '.MySB_DBPREFIX.'dbmfmementos ( '.
-            'id int unique key, '.
+            'id int unique key AUTO_INCREMENT, '.
             'user_id int, '.
             'group_id int, '.
             'contact_id int, '.
@@ -481,48 +481,39 @@ class MySBModule_dbmf3 extends MySBModuleHelper {
 
     public function init23() {
         global $app;
-        $req = MySBDB::query("
-ALTER TABLE ".MySB_DBPREFIX."dbmfcontacts
-  ADD PRIMARY KEY (id),
-  ADD UNIQUE KEY id (id);", "__init.php", false, "dbmf3");
-        $req = MySBDB::query("
-ALTER TABLE ".MySB_DBPREFIX."dbmfcontacts
-  MODIFY id int(11) NOT NULL AUTO_INCREMENT;", "__init.php", false, "dbmf3");
-        $req = MySBDB::query("
-ALTER TABLE ".MySB_DBPREFIX."dbmfblocks
-  ADD PRIMARY KEY (id),
-  ADD UNIQUE KEY id (id);", "__init.php", false, "dbmf3");
-        $req = MySBDB::query("
-ALTER TABLE ".MySB_DBPREFIX."dbmfblocks
-  MODIFY id int(11) NOT NULL AUTO_INCREMENT;", "__init.php", false, "dbmf3");
-        $req = MySBDB::query("
-ALTER TABLE ".MySB_DBPREFIX."dbmfblockrefs
-  ADD PRIMARY KEY (id),
-  ADD UNIQUE KEY id (id);", "__init.php", false, "dbmf3");
-        $req = MySBDB::query("
-ALTER TABLE ".MySB_DBPREFIX."dbmfblockrefs
-  MODIFY id int(11) NOT NULL AUTO_INCREMENT;", "__init.php", false, "dbmf3");
-        $req = MySBDB::query("
-ALTER TABLE ".MySB_DBPREFIX."dbmfexports
-  ADD PRIMARY KEY (id),
-  ADD UNIQUE KEY id (id);", "__init.php", false, "dbmf3");
-        $req = MySBDB::query("
-ALTER TABLE ".MySB_DBPREFIX."dbmfexports
-  MODIFY id int(11) NOT NULL AUTO_INCREMENT;", "__init.php", false, "dbmf3");
-        $req = MySBDB::query("
-ALTER TABLE ".MySB_DBPREFIX."dbmfmementos
-  ADD PRIMARY KEY (id),
-  ADD UNIQUE KEY id (id);", "__init.php", false, "dbmf3");
-        $req = MySBDB::query("
-ALTER TABLE ".MySB_DBPREFIX."dbmfmementos
-  MODIFY id int(11) NOT NULL AUTO_INCREMENT;", "__init.php", false, "dbmf3");
-        $req = MySBDB::query("
-ALTER TABLE ".MySB_DBPREFIX."dbmfmementocatgs
-  ADD PRIMARY KEY (id),
-  ADD UNIQUE KEY id (id);", "__init.php", false, "dbmf3");
-        $req = MySBDB::query("
-ALTER TABLE ".MySB_DBPREFIX."dbmfmementocatgs
-  MODIFY id int(11) NOT NULL AUTO_INCREMENT;", "__init.php", false, "dbmf3");
+//         $req = MySBDB::query("
+// ALTER TABLE ".MySB_DBPREFIX."dbmfcontacts
+//   MODIFY id int(11) NOT NULL AUTO_INCREMENT=10;", "__init.php", false, "dbmf3");
+// //         $req = MySBDB::query("
+// // ALTER TABLE ".MySB_DBPREFIX."dbmfblocks
+// //   ADD UNIQUE KEY id (id);", "__init.php", false, "dbmf3");
+//         $req = MySBDB::query("
+// ALTER TABLE ".MySB_DBPREFIX."dbmfblocks
+//   MODIFY id int(11) NOT NULL AUTO_INCREMENT=10;", "__init.php", false, "dbmf3");
+// //         $req = MySBDB::query("
+// // ALTER TABLE ".MySB_DBPREFIX."dbmfblockrefs
+// //   ADD UNIQUE KEY id (id);", "__init.php", false, "dbmf3");
+//         $req = MySBDB::query("
+// ALTER TABLE ".MySB_DBPREFIX."dbmfblockrefs
+//   MODIFY id int(11) NOT NULL AUTO_INCREMENT=10;", "__init.php", false, "dbmf3");
+// //         $req = MySBDB::query("
+// // ALTER TABLE ".MySB_DBPREFIX."dbmfexports
+// //   ADD UNIQUE KEY id (id);", "__init.php", false, "dbmf3");
+//         $req = MySBDB::query("
+// ALTER TABLE ".MySB_DBPREFIX."dbmfexports
+//   MODIFY id int(11) NOT NULL AUTO_INCREMENT=10;", "__init.php", false, "dbmf3");
+// //         $req = MySBDB::query("
+// // ALTER TABLE ".MySB_DBPREFIX."dbmfmementos
+// //   ADD UNIQUE KEY id (id);", "__init.php", false, "dbmf3");
+//         $req = MySBDB::query("
+// ALTER TABLE ".MySB_DBPREFIX."dbmfmementos
+//   MODIFY id int(11) NOT NULL AUTO_INCREMENT=10;", "__init.php", false, "dbmf3");
+// //         $req = MySBDB::query("
+// // ALTER TABLE ".MySB_DBPREFIX."dbmfmementocatgs
+// //   ADD UNIQUE KEY id (id);", "__init.php", false, "dbmf3");
+//         $req = MySBDB::query("
+// ALTER TABLE ".MySB_DBPREFIX."dbmfmementocatgs
+//   MODIFY id int(11) NOT NULL AUTO_INCREMENT=10;", "__init.php", false, "dbmf3");
         
     }
 
