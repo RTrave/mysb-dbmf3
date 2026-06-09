@@ -241,6 +241,14 @@ class MySBDBMFBlockHelper {
         return null;
     }
 
+    public static function getByName($lname) {
+        global $app;
+        $blocks = MySBDBMFBlockHelper::load();
+        foreach( $blocks as $block )
+            if( $block->lname===$lname )return $block;
+        return null;
+    }
+
     public static function indexBlocks() {
         global $app;
         $index = 1;
