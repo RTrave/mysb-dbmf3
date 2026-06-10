@@ -60,6 +60,25 @@ class MySBDBMFBlockRef extends MySBValue {
             $this->update( array( 'status'=>MYSB_DBMF_BLOCKREF_STATUS_INACTIVE ) );
         else
             $this->update( array( 'status'=>MYSB_DBMF_BLOCKREF_STATUS_ACTIVE ) );
+        return $this;
+    }
+
+    public function setDefault($val) {
+        MySBDB::query("ALTER TABLE ".MySB_DBPREFIX."dbmfcontacts CHANGE ".
+                $this->keyname." ".$this->keyname." ".$this->getSQLType().
+                " NULL DEFAULT '".$val."'",
+                "MySBDBMFBlockRef::setDefault()",
+                true, 'dbmf3');
+        return $this;
+    }
+
+    public function setDefaultDate() {
+        MySBDB::query("ALTER TABLE ".MySB_DBPREFIX."dbmfcontacts CHANGE ".
+                $this->keyname." ".$this->keyname." DATETIME ".
+                " NULL DEFAULT CURRENT_TIMESTAMP",
+                "MySBDBMFBlockRef::setDefaultDate()",
+                true, 'dbmf3');
+        return $this;
     }
 
     public function isActive() {
