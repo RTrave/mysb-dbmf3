@@ -15,7 +15,7 @@ defined('_MySBEXEC') or die;
 class MySBModule_dbmf3 extends MySBModuleHelper {
 
     public $lname = 'dbmf3';
-    public $version = 23;
+    public $version = 24;
     public $release_version = '4d';
     public $homelink = 'https://github.com/RTrave/mysb-dbmf3';
     public $require = array(
@@ -486,35 +486,23 @@ class MySBModule_dbmf3 extends MySBModuleHelper {
 //   MODIFY id int(11) NOT NULL AUTO_INCREMENT=10;", "__init.php", false, "dbmf3");
 // //         $req = MySBDB::query("
 // // ALTER TABLE ".MySB_DBPREFIX."dbmfblocks
-// //   ADD UNIQUE KEY id (id);", "__init.php", false, "dbmf3");
-//         $req = MySBDB::query("
-// ALTER TABLE ".MySB_DBPREFIX."dbmfblocks
-//   MODIFY id int(11) NOT NULL AUTO_INCREMENT=10;", "__init.php", false, "dbmf3");
-// //         $req = MySBDB::query("
-// // ALTER TABLE ".MySB_DBPREFIX."dbmfblockrefs
-// //   ADD UNIQUE KEY id (id);", "__init.php", false, "dbmf3");
-//         $req = MySBDB::query("
-// ALTER TABLE ".MySB_DBPREFIX."dbmfblockrefs
-//   MODIFY id int(11) NOT NULL AUTO_INCREMENT=10;", "__init.php", false, "dbmf3");
-// //         $req = MySBDB::query("
-// // ALTER TABLE ".MySB_DBPREFIX."dbmfexports
-// //   ADD UNIQUE KEY id (id);", "__init.php", false, "dbmf3");
-//         $req = MySBDB::query("
-// ALTER TABLE ".MySB_DBPREFIX."dbmfexports
-//   MODIFY id int(11) NOT NULL AUTO_INCREMENT=10;", "__init.php", false, "dbmf3");
-// //         $req = MySBDB::query("
-// // ALTER TABLE ".MySB_DBPREFIX."dbmfmementos
-// //   ADD UNIQUE KEY id (id);", "__init.php", false, "dbmf3");
-//         $req = MySBDB::query("
-// ALTER TABLE ".MySB_DBPREFIX."dbmfmementos
-//   MODIFY id int(11) NOT NULL AUTO_INCREMENT=10;", "__init.php", false, "dbmf3");
-// //         $req = MySBDB::query("
-// // ALTER TABLE ".MySB_DBPREFIX."dbmfmementocatgs
-// //   ADD UNIQUE KEY id (id);", "__init.php", false, "dbmf3");
-//         $req = MySBDB::query("
-// ALTER TABLE ".MySB_DBPREFIX."dbmfmementocatgs
-//   MODIFY id int(11) NOT NULL AUTO_INCREMENT=10;", "__init.php", false, "dbmf3");
-        
+// //   ADD UNIQUE KEY id (id);", "__init.php", false, "dbmf3");        
+    }
+
+    public function init24() {
+        global $app;
+
+        $req = MySBDB::query( "ALTER TABLE ".MySB_DBPREFIX."dbmfcontacts ".
+            "MODIFY date_creat datetime;", "__init.php", false, "dbmf3");
+        $req = MySBDB::query( "ALTER TABLE ".MySB_DBPREFIX."dbmfcontacts ".
+            "MODIFY date_modif datetime;", "__init.php", false, "dbmf3");
+        $req = MySBDB::query( "ALTER TABLE ".MySB_DBPREFIX."dbmfcontacts ".
+            "CHANGE date_creat date_creat datetime NULL DEFAULT CURRENT_TIMESTAMP;", 
+            "__init.php", false, "dbmf3");
+        $req = MySBDB::query( "ALTER TABLE ".MySB_DBPREFIX."dbmfcontacts ".
+            "CHANGE date_modif date_modif datetime NULL DEFAULT CURRENT_TIMESTAMP;", 
+            "__init.php", false, "dbmf3");
+        // MySBDBMFBlockRefHelper::getByKeyname("date_creat")->setDefaultDate();
     }
 
     public function uninit() {
