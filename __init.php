@@ -16,7 +16,7 @@ class MySBModule_dbmf3 extends MySBModuleHelper {
 
     public $lname = 'dbmf3';
     public $version = 24;
-    public $release_version = '4e';
+    public $release_version = '4f';
     public $homelink = 'https://github.com/RTrave/mysb-dbmf3';
     public $require = array(
         'core' => 7
