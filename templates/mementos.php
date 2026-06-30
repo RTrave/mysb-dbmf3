@@ -57,6 +57,10 @@ function isActive($tpl_code) {
 </div>
 <div class="col-lg-9">
 
+<form   action="index.php?mod=dbmf3&amp;tpl=mementos_sel"
+        method="post"
+        class="overlayed">
+
 <div id="mementos_results">
 <?php 
 if($_GET['filter']=='actives' || $_GET['filter']=='all')
@@ -65,7 +69,28 @@ if($_GET['filter']=='actives' || $_GET['filter']=='all')
 elseif($_GET['filter']=='bycontact')
   include( _pathT('mementos_sortbycontact','dbmf3') );
 ?>
+
+<div class="row bg-primary">
+  <div class="col-sm-3">
+    <h1 class="t-left">Selection:</h1>
+  </div>
+  <div class="col-sm-6 row">
+    <select name="memsel_action">
+        <option value=""><?= _G('DBMF_memento_actiontype_selection') ?></option>
+        <option value="process"><?= _G('DBMF_memento_actiontype_process') ?></option>
+        <option value="unprocess"><?= _G('DBMF_memento_actiontype_unprocess') ?></option>
+        <option value="delete"><?= _G('DBMF_memento_actiontype_delete') ?></option>
+    </select>
+  </div>
+  <div class="col-sm-3 row">
+    <input type="hidden" name="memsel_ope" value="1">
+    <input type="submit" class="btn-primary-light" value="<?= _G('DBMF_memento_action_submit') ?>">
+  </div>
 </div>
+
+</div>
+
+</form>
 
 </div>
 </div>

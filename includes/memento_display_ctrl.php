@@ -45,7 +45,7 @@ if( isset($_GET['memento_id']) ) {
     if($memcatg!=null) $m_catgname = $memcatg->name;
     else $m_catgname = '<i>'.$m_user->login.'</i>';
 
-if(isset($_GET['memento_id'])) {
+if(isset($_GET['memento_id']) and !isset($_GET['iid'])) {
   echo '
     <div class="content list slide slide-toggled" id="memento'.$memento->id.'">';
 }
@@ -54,6 +54,12 @@ if(isset($_GET['memento_id'])) {
 
 <div class="row <?= $memclass ?>" style="border-spacing: 0;">
 
+<a class="col-1 t-center inactive"
+   href="#"
+   title="">
+  <input type="checkbox" class="checkbox" 
+        name="mem_select<?= $memento->id ?>" id="mem_select<?= $memento->id ?>">
+</a>
 <?php if( $Active ) { ?>
 <a class="hidelayed col-1 t-center btn-light"
    href="index.php?mod=dbmf3&tpl=memento_edit&amp;memento_id=<?= $memento->id ?>&amp;memento_process=1"
@@ -118,14 +124,16 @@ if(isset($_GET['memento_id'])) {
 </div>
 
 <?php
-if(isset($_GET['memento_id'])) {
+if(isset($_GET['memento_id']) and !isset($_GET['iid'])) {
   echo '
     </div>
-
-<script>
-slide_show("mementos_new_title");
-</script>
 ';
+
+//   echo '
+// <script>
+//   slide_show("mementos_new_title");
+// </script>
+// ';
 }
 ?>
 

@@ -20,10 +20,12 @@ defined('_MySBEXEC') or die;
  */
 class MySBDBMFBlock extends MySBObject {
 
-    public $id = null;
+    // public $id = null;
     public $name = null;
     public $lname = null;
     public $groupedit_id = null;
+    public $blockrefs = [];
+    public $i_index = 0;
 
     public function __construct($id=-1, $data_block = array()) {
         global $app;
@@ -35,7 +37,7 @@ class MySBDBMFBlock extends MySBObject {
             $data_block = MySBDB::fetch_array($req_block);
         } else $id = $data_block['id'];
         parent::__construct((array) ($data_block));
-        $this->blockrefs = array();
+        // $this->blockrefs = array();
         $this->loadBlockRefs();
     }
 
