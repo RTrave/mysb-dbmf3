@@ -33,6 +33,10 @@ if( isset($_GET['blockref_edit']) or
     isset($_POST['blockref_add']) 
     ) {
 
+$area_id = 'editor_id_' . rand(1, 999999);
+$editor = new MySBEditor();
+echo $editor->init($area_id, "simple");
+
 $blockref = $app->tpl_blockref_edit;
 echo '
 <div class="content">
@@ -86,11 +90,12 @@ echo '
     </div>
   </div>
   <div class="row label">
-    <label class="col-6" for="infos">
+    <label class="col-3" for="infos">
       '._G('DBMF_blockref_infos').'
     </label>
-    <div class="col-6">
-      <textarea name="infos" id="infos">'.$blockref->infos.'</textarea>
+    <div class="col-9">
+      <textarea name="infos"
+                class="mceEditor" id="' . $area_id . '">'.$blockref->infos.'</textarea>
     </div>
   </div>';
 

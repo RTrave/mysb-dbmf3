@@ -35,7 +35,7 @@ class MySBDBMFExport extends MySBObject {
             $data_export = MySBDB::fetch_array($req_export);
         } else $id = $data_export['id'];
         parent::__construct((array) ($data_export));
-        $this->config_array = array();
+        $this->config_array = array(); // TODO: config ????
         $config_values = explode(';',$this->config);
         foreach($config_values as $value) {
             $config = explode('=',$value);

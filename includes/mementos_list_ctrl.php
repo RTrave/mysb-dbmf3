@@ -146,12 +146,14 @@ foreach($mementos_p as $memento) {
 
 $memento_type = 0;
 
-echo '
-<div id="mementos_new_title" class="slide">
-  <h2 class="bg-primary" style="margin-top: 2px;">'.
-  _G("DBMF_memento_new").'</h2>
-</div>
-<div id="mementos_new" style="display: none;"></div>';
+// echo '
+// <div id="mementos_new_title" class="slide">
+//   <h2 class="bg-primary" style="margin-top: 2px;">'.
+//   _G("DBMF_memento_new").'</h2>
+// </div>';
+
+// echo '
+// <div id="mementos_new" style="display: none;"></div>';
 
 while($memento_type!=2) {
 
@@ -180,10 +182,12 @@ while($memento_type!=2) {
   }
   if($mementos_nb[$memento_type]==0) {
     echo '
+    <div class="content list">
     <div class="row">
       <p class="col-sm-12">'.
         _G("DBMF_mementos_bycontact_noresults").'
       </p>
+    </div>
     </div>';
   }
   $memento_type++;

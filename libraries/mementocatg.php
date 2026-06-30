@@ -21,6 +21,8 @@ class MySBDBMFMementoCatg extends MySBObject {
 
     public $groups = array();
 
+    public $name = "";
+
     public function __construct( $id=null, $data_mementocatg=array() ) {
         global $app;
         if( $id!=null ) {
@@ -78,6 +80,10 @@ class MySBDBMFMementoCatgHelper extends MySBObject {
                 true, 'dbmf3' );
     }
 
+    /** 
+     * @brief  Load mementos categories
+     * @return array
+     */
     public static function load() {
         global $app;
         if( isset($app->cache_dbmfmemcatgs) )
@@ -93,6 +99,10 @@ class MySBDBMFMementoCatgHelper extends MySBObject {
         return $app->cache_dbmfmemcatgs;
     }
 
+    /** 
+     * @brief  Load mementos categories available
+     * @return array
+     */
     public static function loadAvailable() {
         global $app;
         $memcatgs = MySBDBMFMementoCatgHelper::load();
