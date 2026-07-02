@@ -59,8 +59,11 @@ if (isset($_POST['mementos_sel_submit'])) {
         $mementos_sel[] = $memento_cur;
         // echo 'Mem' . $memento_curnb . ': ' . $memento_cur->id;
         if ($comment_add != '') {
+            $comment_new = $memento_cur->comments . $_POST['memento_comments'];
+            if($_POST["com_place"]=="top")
+                $comment_new =  $_POST['memento_comments'].$memento_cur->comments;
             $memento_cur->update(array(
-                'comments' => $memento_cur->comments . $_POST['memento_comments'],
+                'comments' => $comment_new,
             ));
         }
         if ($_POST["memento_type"] != "memtype2") {

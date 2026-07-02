@@ -151,6 +151,20 @@ if ($_POST["memsel_action"] != "delete") {
   </h2>
 </div>
 <div class="row">
+  <div class="col-1">
+    <input type="radio" id="top" name="com_place" value="top" checked="checked">
+  </div>
+  <div class="col-5">
+    <label for="top">'._G("DBMF_memento_complace_top").'</label>
+  </div>
+  <div class="col-1">
+    <input type="radio" id="bottom" name="com_place" value="bottom">
+  </div>
+  <div class="col-5">
+    <label for="bottom">'._G("DBMF_memento_complace_bottom").'</label>
+  </div>
+</div>
+<div class="row">
   <div class="col-12">
     <textarea name="memento_comments" cols="40" rows="3"
               class="mceEditor" id="' . $area_id . '"></textarea>
