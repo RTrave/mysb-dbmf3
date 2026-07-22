@@ -233,7 +233,7 @@ class MySBDBMFMementoHelper {
                     "MySBDBMFMementoHelper::loadContactInfos()",
                     true, 'dbmf3' );
                 while($data_contactinfos = MySBDB::fetch_array($req_contactinfos))
-                    $app->dbmfcontactinfos[$data_contactinfos['id']] = new MySBDBMFContact(-1, $data_contactinfos);
+                    $app->dbmfcontactinfos[$data_contactinfos['id']] = new MySBDBMFContact(null, $data_contactinfos);
                     // $app->dbmfcontactinfos[$data_contactinfos['id']] = new MySBDBMFGroup(-1, $data_contactinfos);
                 $mem_where = '';
             }
