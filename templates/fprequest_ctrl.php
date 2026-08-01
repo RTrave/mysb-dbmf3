@@ -46,7 +46,8 @@ if(isset($_POST['dbmf_request'])) {
    	        'mail RLIKE \''.$str_search_all.'\' ';
         $block_common = MySBDBMFBlockHelper::getByID(1);
         foreach($block_common->blockrefs as $blockref) {
-            $clause_a .= ' OR '.$blockref->keyname.' RLIKE \''.$str_search_all.'\'';
+            if($blockref->isActive())
+                $clause_a .= ' OR '.$blockref->keyname.' RLIKE \''.$str_search_all.'\'';
         }
     } elseif( $_POST['search_type']=='lastname' ) {
         $clause_a = 'lastname RLIKE \''.MySBUtil::str2whereclause($_POST['search_name']).'\' ';
