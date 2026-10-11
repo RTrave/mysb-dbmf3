@@ -69,6 +69,10 @@ class MySBDBMFBlockRef extends MySBValue {
                 " NULL DEFAULT '".$val."'",
                 "MySBDBMFBlockRef::setDefault()",
                 true, 'dbmf3');
+        MySBDB::query("UPDATE ".MySB_DBPREFIX."dbmfcontacts SET ".
+                $this->keyname."='".$val."'",
+                "MySBDBMFBlockRef::setDefault()",
+                true, 'dbmf3');
         return $this;
     }
 
